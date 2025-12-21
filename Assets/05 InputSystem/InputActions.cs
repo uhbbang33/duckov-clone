@@ -271,6 +271,15 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Look"",
+                    ""type"": ""Value"",
+                    ""id"": ""6d5bed91-8628-4922-8090-bfccc8bda0b5"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -603,6 +612,17 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""action"": ""ShowControls"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cb1fc378-8d18-4ed0-86f7-141ea65987b0"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -631,6 +651,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         m_Player_Map = m_Player.FindAction("Map", throwIfNotFound: true);
         m_Player_Quest = m_Player.FindAction("Quest", throwIfNotFound: true);
         m_Player_ShowControls = m_Player.FindAction("ShowControls", throwIfNotFound: true);
+        m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
     }
 
     ~@InputActions()
@@ -731,6 +752,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Map;
     private readonly InputAction m_Player_Quest;
     private readonly InputAction m_Player_ShowControls;
+    private readonly InputAction m_Player_Look;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -823,6 +845,10 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @ShowControls => m_Wrapper.m_Player_ShowControls;
         /// <summary>
+        /// Provides access to the underlying input action "Player/Look".
+        /// </summary>
+        public InputAction @Look => m_Wrapper.m_Player_Look;
+        /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
         public InputActionMap Get() { return m_Wrapper.m_Player; }
@@ -908,6 +934,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @ShowControls.started += instance.OnShowControls;
             @ShowControls.performed += instance.OnShowControls;
             @ShowControls.canceled += instance.OnShowControls;
+            @Look.started += instance.OnLook;
+            @Look.performed += instance.OnLook;
+            @Look.canceled += instance.OnLook;
         }
 
         /// <summary>
@@ -979,6 +1008,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @ShowControls.started -= instance.OnShowControls;
             @ShowControls.performed -= instance.OnShowControls;
             @ShowControls.canceled -= instance.OnShowControls;
+            @Look.started -= instance.OnLook;
+            @Look.performed -= instance.OnLook;
+            @Look.canceled -= instance.OnLook;
         }
 
         /// <summary>
@@ -1159,5 +1191,12 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnShowControls(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Look" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnLook(InputAction.CallbackContext context);
     }
 }

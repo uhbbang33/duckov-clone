@@ -68,6 +68,7 @@ public class PlayerMove : MonoBehaviour
         _isRun = true;
         _anim.SetBool("IsRun", true);
     }
+
     private void OnRunCanceled(InputAction.CallbackContext context)
     {
         _isRun = false;

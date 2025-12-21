@@ -206,7 +206,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.25697985, y: -0.36758152, z: 0.10644453, w: 0.88742036}
+  m_LocalRotation: {x: 0.26239592, y: -0.36692443, z: 0.108687945, w: 0.885834}
   m_LocalPosition: {x: 10, y: 10, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -632,13 +632,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1680202685}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.25697985, y: -0.36758152, z: 0.10644453, w: 0.88742036}
+  m_LocalRotation: {x: 0.26239592, y: -0.36692443, z: 0.108687945, w: 0.885834}
   m_LocalPosition: {x: 10, y: 10, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 32.3, y: -45, z: 0}
+  m_LocalEulerAnglesHint: {x: 33, y: -45, z: 0}
 --- !u!1 &1832000794
 GameObject:
   m_ObjectHideFlags: 0
@@ -1067,8 +1067,9 @@ GameObject:
   - component: {fileID: 5522063729559741274}
   - component: {fileID: 4579580697642508236}
   - component: {fileID: 6032076664905499552}
-  - component: {fileID: 6032076664905499553}
   - component: {fileID: 6032076664905499554}
+  - component: {fileID: 6032076664905499553}
+  - component: {fileID: 6032076664905499555}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1234,6 +1235,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!114 &6032076664905499555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2919116958976057407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89f1b450d5ae8bf4c8cbdb6b662fa7f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerLook
 --- !u!1 &6104561713744950228
 GameObject:
   m_ObjectHideFlags: 0
