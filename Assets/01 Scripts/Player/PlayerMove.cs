@@ -5,6 +5,7 @@ public class PlayerMove : MonoBehaviour
 {
     private InputActions _inputActions;
     private Rigidbody _rb;
+    private Animator _anim;
 
     private Vector2 _moveDirection;
     private bool _isRun;
@@ -16,6 +17,7 @@ public class PlayerMove : MonoBehaviour
     {
         _inputActions = new InputActions();
         _rb = GetComponent<Rigidbody>();
+        _anim = GetComponent<Animator>();
 
         _moveDirection = Vector2.zero;
         _isRun = false;
@@ -52,19 +54,23 @@ public class PlayerMove : MonoBehaviour
     private void OnMovePerformed(InputAction.CallbackContext context)
     {
         _moveDirection = context.ReadValue<Vector2>().normalized;
+        _anim.SetBool("IsWalk", true);
     }
 
     private void OnMoveCanceled(InputAction.CallbackContext context)
     {
         _moveDirection = Vector2.zero;
+        _anim.SetBool("IsWalk", false);
     }
 
     private void OnRunPerformed(InputAction.CallbackContext context)
     {
         _isRun = true;
+        _anim.SetBool("IsRun", true);
     }
     private void OnRunCanceled(InputAction.CallbackContext context)
     {
         _isRun = false;
+        _anim.SetBool("IsRun", false);
     }
 }
