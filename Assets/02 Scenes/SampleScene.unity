@@ -1853,6 +1853,8 @@ GameObject:
   - component: {fileID: 6032076664905499552}
   - component: {fileID: 6032076664905499554}
   - component: {fileID: 6032076664905499553}
+  - component: {fileID: 6032076664905499556}
+  - component: {fileID: 6032076664905499555}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1989,13 +1991,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ea0b58667a880a4f86272eb6cdbfa07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMove
+  _rollTickSPCost: 10
+  _runTickSPCost: 0.1
   _walkSpeed: 4
   _runSpeed: 7.8
   _rollSpeed: 10
   _rollTime: 0.5
   _rollMaxCoolTime: 1
-  _mouseTurnSpeed: 0.3
-  _runTurnSpeed: 0.1
+  _mouseTurnSpeed: 10
+  _runTurnSpeed: 3
 --- !u!54 &6032076664905499554
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2023,6 +2027,36 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &6032076664905499555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2919116958976057407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6382add82c5f7e40b3fa8d6d142bc9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthPoint
+  _maxHP: 40
+--- !u!114 &6032076664905499556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2919116958976057407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44796b3dbf6aec34eb190027b9bcc491, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StaminaPoint
+  _maxSP: 100
+  _healAmount: 0.1
+  _runDelayTime: 0.02
+  _healDelayTime: 0.1
+  _healFirstDelayTime: 1.5
 --- !u!1 &6104561713744950228
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,6 +7,7 @@ public class PlayerMove : MonoBehaviour
     private InputActions _inputActions;
     private Rigidbody _rb;
     private Animator _anim;
+    private StaminaPoint _sp;
 
     private Vector2 _moveInput;
     private Vector2 _mousePosition;
@@ -16,15 +17,14 @@ public class PlayerMove : MonoBehaviour
     private bool _isRun;
     private bool _isRoll;
 
+    [SerializeField] private float _rollTickSPCost;
+    [SerializeField] private float _runTickSPCost;
     [SerializeField] private float _walkSpeed;
     [SerializeField] private float _runSpeed;
     [SerializeField] private float _rollSpeed;
     [SerializeField] private float _rollTime;
     [SerializeField] private float _rollMaxCoolTime;
-
-    [Tooltip("0.1 - 1.0")]
     [SerializeField] private float _mouseTurnSpeed;
-    [Tooltip("0.1 - 1.0")]
     [SerializeField] private float _runTurnSpeed;
 
     private WaitForSeconds _waitForRoll;
@@ -82,12 +82,14 @@ public class PlayerMove : MonoBehaviour
 
     #endregion MonoBehaviour
 
+
     private void Initialize()
     {
         _inputActions = new InputActions();
 
         _rb = GetComponent<Rigidbody>();
         _anim = GetComponent<Animator>();
+        _sp = GetComponent<StaminaPoint>();
 
         _moveInput = Vector2.zero;
         _mousePosition = Vector2.zero;
@@ -122,13 +124,13 @@ public class PlayerMove : MonoBehaviour
                         if (runDir.sqrMagnitude > 0.01f)
                         {
                             targetRotation = Quaternion.LookRotation(runDir);
-                            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, _runTurnSpeed);
+                            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, _runTurnSpeed * Time.deltaTime);
                         }
                     }
                     else
                     {
                         targetRotation = Quaternion.LookRotation(lookDir);
-                        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, _mouseTurnSpeed);
+                        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, _mouseTurnSpeed * Time.deltaTime);
                     }
                 }
             }
@@ -148,6 +150,7 @@ public class PlayerMove : MonoBehaviour
 
         return camForward * input.y + camRight * input.x;
     }
+
 
     #region Input System
 
@@ -191,12 +194,18 @@ public class PlayerMove : MonoBehaviour
 
     private void OnRunPerformed(InputAction.CallbackContext context)
     {
+        if (_sp.CurrentSP < _runTickSPCost)
+            return;
+
+        _sp.ReduceSPPerSecond(_runTickSPCost);
+        
         _isRun = true;
         _anim.SetBool("IsRun", true);
     }
 
     private void OnRunCanceled(InputAction.CallbackContext context)
     {
+        _sp.IsReducing = false;
         _isRun = false;
         _anim.SetBool("IsRun", false);
     }
@@ -205,6 +214,11 @@ public class PlayerMove : MonoBehaviour
     {
         if (_isRoll || _rollCoolTime > 0f)
             return;
+
+        if (_sp.CurrentSP < _rollTickSPCost) 
+            return;
+
+        _sp.ReduceSPImmediately(_rollTickSPCost);
 
         _isRoll = true;
 
@@ -224,10 +238,9 @@ public class PlayerMove : MonoBehaviour
         }
 
         StartCoroutine(RollRoutine());
-
+        
         _anim.SetTrigger("Roll");
     }
-
 
     private void OnLook(InputAction.CallbackContext context)
     {
@@ -235,6 +248,7 @@ public class PlayerMove : MonoBehaviour
     }
 
     #endregion Input System
+
 
     private IEnumerator RollRoutine()
     {
