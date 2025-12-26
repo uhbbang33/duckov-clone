@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StaminaPoint : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class StaminaPoint : MonoBehaviour
     [SerializeField] private float _runDelayTime;
     [SerializeField] private float _healDelayTime;
     [SerializeField] private float _healFirstDelayTime;
+    [SerializeField] private Slider _SPSlider;
 
     private WaitForSeconds _waitRunDelay;
     private WaitForSeconds _waitHealDelay;
@@ -46,7 +48,9 @@ public class StaminaPoint : MonoBehaviour
         if (_reduceRoutine != null)
             _healRoutine = StartCoroutine(HealRoutine());
 
-        _currentSP = MathF.Round(_currentSP, 1);
+        _currentSP = MathF.Round(_currentSP, 2);
+
+        ChangeSPSliderValue();
     }
 
     public void ReduceSPPerSecond(float amount)
@@ -66,9 +70,21 @@ public class StaminaPoint : MonoBehaviour
         if (_currentSP > _maxSP)
             _currentSP = _maxSP;
 
-        _currentSP = MathF.Round(_currentSP, 1);
+        if (_currentSP == _maxSP)
+            _SPSlider.gameObject.SetActive(false);
+
+        _currentSP = MathF.Round(_currentSP, 2);
+
+        ChangeSPSliderValue();
     }
 
+    private void ChangeSPSliderValue()
+    {
+        if (!_SPSlider.gameObject.activeSelf)
+            _SPSlider.gameObject.SetActive(true);
+
+        _SPSlider.value = _currentSP / _maxSP;
+    }
 
     #region Coroutine
 
