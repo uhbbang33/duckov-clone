@@ -3,10 +3,6 @@ using UnityEngine.UI;
 
 public class InteractableBoxUI : InteractableStateUI
 {
-    [SerializeField] private Sprite _unopenedBoxSprite;
-    [SerializeField] private Sprite _openedBoxSprite;
-    [SerializeField] private Sprite _openableBoxSprite;
-
     private bool _isOpened;
 
     private void Awake()
@@ -16,14 +12,14 @@ public class InteractableBoxUI : InteractableStateUI
 
     public override void Selected()
     {
-        _stateImage.sprite = _openableBoxSprite;
+        _stateImage.sprite = GameResources.Instance.OpenableBoxSprite;
     }
 
     public override void Deselected()
     {
         if (_isOpened)
-            _stateImage.sprite = _openedBoxSprite;
+            _stateImage.sprite = GameResources.Instance.OpenedBoxSprite;
         else
-            _stateImage.sprite = _unopenedBoxSprite;
+            _stateImage.sprite = GameResources.Instance.UnopenedBoxSprite;
     }
 }
