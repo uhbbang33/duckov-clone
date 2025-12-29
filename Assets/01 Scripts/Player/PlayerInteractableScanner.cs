@@ -19,7 +19,7 @@ public class PlayerInteractableScanner : MonoBehaviour
 
     private void Start()
     {
-        InvokeRepeating(nameof(Check), 0f, 0.1f);
+        StartCheck();
     }
 
     private void Check()
@@ -79,4 +79,20 @@ public class PlayerInteractableScanner : MonoBehaviour
             _currentNearestUI.Selected();
     }
 
+    public void StartCheck()
+    {
+        InvokeRepeating(nameof(Check), 0f, 0.1f);
+    }
+
+    public void HideAllInteractUI()
+    {
+        CancelInvoke(nameof(Check));
+
+        _previous.Clear();
+        foreach (InteractableStateUI ui in _current)
+        {
+            ui.HideCanvas();
+        }
+
+    }
 }

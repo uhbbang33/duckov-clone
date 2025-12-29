@@ -142,7 +142,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "CancelAction",
+                    "name": "Cancel",
                     "type": "Button",
                     "id": "31b7a98e-bd2e-4da1-b005-69e8ccd0c200",
                     "expectedControlType": "",
@@ -479,7 +479,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "CancelAction",
+                    "action": "Cancel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "64595759-699e-4c44-a353-707659ae96e4",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cancel",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

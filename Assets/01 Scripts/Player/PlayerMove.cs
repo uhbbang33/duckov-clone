@@ -146,6 +146,23 @@ public class PlayerMove : MonoBehaviour
         return camForward * input.y + camRight * input.x;
     }
 
+    public void StopMove()
+    {
+        _anim.SetBool("IsWalk", false);
+
+        _inputActions.Player.Look.performed -= OnLook;
+
+        _inputActions.Player.Move.performed -= OnMovePerformed;
+        _inputActions.Player.Move.canceled -= OnMoveCanceled;
+    }
+
+    public void RestartMove()
+    {
+        _inputActions.Player.Move.performed += OnMovePerformed;
+        _inputActions.Player.Move.canceled += OnMoveCanceled;
+
+        _inputActions.Player.Look.performed += OnLook;
+    }
 
     #region Input System
 

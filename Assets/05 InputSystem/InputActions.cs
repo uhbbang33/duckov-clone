@@ -228,7 +228,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""CancelAction"",
+                    ""name"": ""Cancel"",
                     ""type"": ""Button"",
                     ""id"": ""31b7a98e-bd2e-4da1-b005-69e8ccd0c200"",
                     ""expectedControlType"": """",
@@ -565,7 +565,18 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""CancelAction"",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""64595759-699e-4c44-a353-707659ae96e4"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cancel"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -646,7 +657,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         m_Player_MarkItem = m_Player.FindAction("MarkItem", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_QuickSlot = m_Player.FindAction("QuickSlot", throwIfNotFound: true);
-        m_Player_CancelAction = m_Player.FindAction("CancelAction", throwIfNotFound: true);
+        m_Player_Cancel = m_Player.FindAction("Cancel", throwIfNotFound: true);
         m_Player_UseItem = m_Player.FindAction("UseItem", throwIfNotFound: true);
         m_Player_Map = m_Player.FindAction("Map", throwIfNotFound: true);
         m_Player_Quest = m_Player.FindAction("Quest", throwIfNotFound: true);
@@ -747,7 +758,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_MarkItem;
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_QuickSlot;
-    private readonly InputAction m_Player_CancelAction;
+    private readonly InputAction m_Player_Cancel;
     private readonly InputAction m_Player_UseItem;
     private readonly InputAction m_Player_Map;
     private readonly InputAction m_Player_Quest;
@@ -825,9 +836,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @QuickSlot => m_Wrapper.m_Player_QuickSlot;
         /// <summary>
-        /// Provides access to the underlying input action "Player/CancelAction".
+        /// Provides access to the underlying input action "Player/Cancel".
         /// </summary>
-        public InputAction @CancelAction => m_Wrapper.m_Player_CancelAction;
+        public InputAction @Cancel => m_Wrapper.m_Player_Cancel;
         /// <summary>
         /// Provides access to the underlying input action "Player/UseItem".
         /// </summary>
@@ -919,9 +930,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @QuickSlot.started += instance.OnQuickSlot;
             @QuickSlot.performed += instance.OnQuickSlot;
             @QuickSlot.canceled += instance.OnQuickSlot;
-            @CancelAction.started += instance.OnCancelAction;
-            @CancelAction.performed += instance.OnCancelAction;
-            @CancelAction.canceled += instance.OnCancelAction;
+            @Cancel.started += instance.OnCancel;
+            @Cancel.performed += instance.OnCancel;
+            @Cancel.canceled += instance.OnCancel;
             @UseItem.started += instance.OnUseItem;
             @UseItem.performed += instance.OnUseItem;
             @UseItem.canceled += instance.OnUseItem;
@@ -993,9 +1004,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @QuickSlot.started -= instance.OnQuickSlot;
             @QuickSlot.performed -= instance.OnQuickSlot;
             @QuickSlot.canceled -= instance.OnQuickSlot;
-            @CancelAction.started -= instance.OnCancelAction;
-            @CancelAction.performed -= instance.OnCancelAction;
-            @CancelAction.canceled -= instance.OnCancelAction;
+            @Cancel.started -= instance.OnCancel;
+            @Cancel.performed -= instance.OnCancel;
+            @Cancel.canceled -= instance.OnCancel;
             @UseItem.started -= instance.OnUseItem;
             @UseItem.performed -= instance.OnUseItem;
             @UseItem.canceled -= instance.OnUseItem;
@@ -1157,12 +1168,12 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnQuickSlot(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "CancelAction" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "Cancel" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnCancelAction(InputAction.CallbackContext context);
+        void OnCancel(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "UseItem" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
