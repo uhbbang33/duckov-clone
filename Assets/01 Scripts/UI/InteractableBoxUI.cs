@@ -12,11 +12,15 @@ public class InteractableBoxUI : InteractableStateUI
 
     public override void Selected()
     {
+        base.Selected();
+
         _stateImage.sprite = GameResources.Instance.OpenableBoxSprite;
     }
 
     public override void Deselected()
     {
+        base.Deselected();
+
         if (_isOpened)
             _stateImage.sprite = GameResources.Instance.OpenedBoxSprite;
         else

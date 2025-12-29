@@ -5,6 +5,7 @@ public class InteractableStateUI : MonoBehaviour
 {
     [SerializeField] private GameObject _canvas;
     [SerializeField] protected Image _stateImage;
+    [SerializeField] private GameObject _infoUI;
 
     public void ShowCanvas()
     {
@@ -18,9 +19,11 @@ public class InteractableStateUI : MonoBehaviour
 
     public virtual void Selected()
     {
+        _infoUI.SetActive(true);
     }
 
     public virtual void Deselected()
     {
+        _infoUI.SetActive(false);
     }
 }
