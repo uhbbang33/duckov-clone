@@ -38,16 +38,13 @@ public class PlayerMove : MonoBehaviour
 
     private void OnEnable()
     {
-        _inputActions.Player.Enable();
-
+        _inputActions = GetComponent<Player>().Actions;
         SubscribeInputActions();
     }
 
     private void OnDisable()
     {
         UnsubscribeInputActions();
-
-        _inputActions.Player.Disable();
     }
 
     private void FixedUpdate()
@@ -85,8 +82,6 @@ public class PlayerMove : MonoBehaviour
 
     private void Initialize()
     {
-        _inputActions = new InputActions();
-
         _rb = GetComponent<Rigidbody>();
         _anim = GetComponent<Animator>();
         _sp = GetComponent<StaminaPoint>();
