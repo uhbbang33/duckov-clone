@@ -36,7 +36,7 @@ public class PlayerMove : MonoBehaviour
         Initialize();
     }
 
-    private void OnEnable()
+    private void Start()
     {
         _inputActions = GetComponent<Player>().Actions;
         SubscribeInputActions();
