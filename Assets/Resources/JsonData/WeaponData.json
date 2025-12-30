@@ -1,0 +1,46 @@
+{
+  "WeaponDatas": [
+    {
+      "id": 258.0,
+      "itemType": "무기",
+      "name": "MP7",
+      "bulletType": "S",
+      "value": 4042.0,
+      "weight": 1.8,
+      "damage": 8.5,
+      "rps": 18.65,
+      "magazineCapacity": 30.0,
+      "range": 20.6,
+      "reloadTime": 2.3,
+      "adsTime": 0.4
+    },
+    {
+      "id": 780.0,
+      "itemType": "무기",
+      "name": "M700",
+      "bulletType": "저격",
+      "value": 8767.0,
+      "weight": 4.0,
+      "damage": 22.7,
+      "rps": 0.67,
+      "magazineCapacity": 10.0,
+      "range": 38.9,
+      "reloadTime": 4.0,
+      "adsTime": 0.5
+    },
+    {
+      "id": 254.0,
+      "itemType": "무기",
+      "name": "글록",
+      "bulletType": "S",
+      "value": 1030.0,
+      "weight": 0.65,
+      "damage": 14.0,
+      "rps": 7.0,
+      "magazineCapacity": 13.0,
+      "range": 16.5,
+      "reloadTime": 1.1,
+      "adsTime": 0.3
+    }
+  ]
+}

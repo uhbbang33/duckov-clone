@@ -58,7 +58,13 @@ public static class ExcelToJsonConverter
             }
             jsonData.Add(rowData);
         }
-        string json = JsonConvert.SerializeObject(jsonData, Formatting.Indented);
+
+        Dictionary<string, object> root = new()
+        {
+            {"WeaponData", jsonData }
+        };
+
+        string json = JsonConvert.SerializeObject(root, Formatting.Indented);
 
         return json;
     }
