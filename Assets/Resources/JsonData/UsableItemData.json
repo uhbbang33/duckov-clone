@@ -1,0 +1,136 @@
+{
+  "UsableItemData": [
+    {
+      "id": 10.0,
+      "itemType": "Medicine",
+      "name": "지혈 붕대",
+      "value": 240.0,
+      "weight": 0.05,
+      "healHP": 5.0,
+      "durabilityCost": 100.0,
+      "Hunger": 0.0,
+      "Hydration": 0.0,
+      "weightValue": 10.0
+    },
+    {
+      "id": 16.0,
+      "itemType": "Medicine",
+      "name": "구급상자",
+      "value": 807.0,
+      "weight": 0.75,
+      "healHP": 20.0,
+      "durabilityCost": 20.0,
+      "Hunger": 0.0,
+      "Hydration": 0.0,
+      "weightValue": 4.0
+    },
+    {
+      "id": 15.0,
+      "itemType": "Medicine",
+      "name": "대형 구급상자",
+      "value": 1322.0,
+      "weight": 1.2,
+      "healHP": 35.0,
+      "durabilityCost": 10.0,
+      "Hunger": 0.0,
+      "Hydration": 0.0,
+      "weightValue": 1.0
+    },
+    {
+      "id": 1256.0,
+      "itemType": "Food",
+      "name": "영혼의 밀주",
+      "value": 12490.0,
+      "weight": 0.78,
+      "healHP": 100.0,
+      "durabilityCost": 100.0,
+      "Hunger": 50.0,
+      "Hydration": -100.0,
+      "weightValue": 1.0
+    },
+    {
+      "id": 105.0,
+      "itemType": "Food",
+      "name": "코코아 우유",
+      "value": 124.0,
+      "weight": 0.19,
+      "healHP": 0.0,
+      "durabilityCost": 100.0,
+      "Hunger": 20.0,
+      "Hydration": 25.0,
+      "weightValue": 20.0
+    },
+    {
+      "id": 883.0,
+      "itemType": "Food",
+      "name": "단백질 파우더",
+      "value": 470.0,
+      "weight": 1.02,
+      "healHP": 0.0,
+      "durabilityCost": 100.0,
+      "Hunger": 100.0,
+      "Hydration": -30.0,
+      "weightValue": 2.0
+    },
+    {
+      "id": 403.0,
+      "itemType": "Food",
+      "name": "감자",
+      "value": 230.0,
+      "weight": 0.18,
+      "healHP": 0.0,
+      "durabilityCost": 100.0,
+      "Hunger": 40.0,
+      "Hydration": 0.0,
+      "weightValue": 12.0
+    },
+    {
+      "id": 133.0,
+      "itemType": "Food",
+      "name": "당근",
+      "value": 120.0,
+      "weight": 0.12,
+      "healHP": 0.0,
+      "durabilityCost": 100.0,
+      "Hunger": 20.0,
+      "Hydration": 10.0,
+      "weightValue": 15.0
+    },
+    {
+      "id": 428.0,
+      "itemType": "Food",
+      "name": "생수",
+      "value": 375.0,
+      "weight": 0.5,
+      "healHP": 0.0,
+      "durabilityCost": 25.0,
+      "Hunger": 0.0,
+      "Hydration": 50.0,
+      "weightValue": 8.0
+    },
+    {
+      "id": 106.0,
+      "itemType": "Food",
+      "name": "탄산수",
+      "value": 102.0,
+      "weight": 0.37,
+      "healHP": 0.0,
+      "durabilityCost": 100.0,
+      "Hunger": 0.0,
+      "Hydration": 40.0,
+      "weightValue": 10.0
+    },
+    {
+      "id": 14.0,
+      "itemType": "Food",
+      "name": "콜라",
+      "value": 1995.0,
+      "weight": 0.36,
+      "healHP": 60.0,
+      "durabilityCost": 100.0,
+      "Hunger": 30.0,
+      "Hydration": 35.0,
+      "weightValue": 3.0
+    }
+  ]
+}

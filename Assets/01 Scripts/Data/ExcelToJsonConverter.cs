@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 public static class ExcelToJsonConverter
 {
-    public static void ConvertExcelToJson(string excelPath, string jsonPath)
+    public static void ConvertExcelToJson(string excelPath, string jsonPath, string dataName)
     {
         // read excel file
         using FileStream stream = File.Open(excelPath, FileMode.Open, FileAccess.Read);
@@ -18,11 +18,12 @@ public static class ExcelToJsonConverter
             return;
         }
 
-        string json = Convert(reader);
+        string json = Convert(reader, dataName);
 
         File.WriteAllText(jsonPath, json);
 
         Debug.Log("Create json file From " + stream.Name);
+        Debug.Log("json file path : " + jsonPath);
     }
 
     private static IExcelDataReader CreateReader(FileStream stream, string path)
@@ -35,11 +36,10 @@ public static class ExcelToJsonConverter
         return null;
     }
 
-    private static string Convert(IExcelDataReader reader)
+    private static string Convert(IExcelDataReader reader, string dataName)
     {
         // Read excel file data
         DataSet dataSet = reader.AsDataSet();
-        reader.Close();
 
         // Convert excel to json
         List<Dictionary<string, object>> jsonData = new();
@@ -61,7 +61,7 @@ public static class ExcelToJsonConverter
 
         Dictionary<string, object> root = new()
         {
-            {"WeaponData", jsonData }
+            {dataName, jsonData }
         };
 
         string json = JsonConvert.SerializeObject(root, Formatting.Indented);
