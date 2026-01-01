@@ -12,10 +12,10 @@ public class TestScript : MonoBehaviour
         //    "Assets/Resources/JsonData/WeaponData.json");
 
         // Check parsing
-        WeaponData weaponData = _load.GetWeapon(258);
-        Debug.Log(weaponData.itemType);
-        Debug.Log(weaponData.name);
-        Debug.Log(weaponData.bulletType);
+        GunData gunData = _load.GetGun(258);
+        Debug.Log(gunData.itemType);
+        Debug.Log(gunData.name);
+        Debug.Log(gunData.bulletType);
 
     }
 }
