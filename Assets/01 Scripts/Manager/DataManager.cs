@@ -32,9 +32,6 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
 
             foreach(var data in value.UsableItemDatas)
             {
-                // ItemType으로 안받기 때문에 오류남
-                // string으로 받은다음 ItemType으로 변환
-                // 또는 그냥 string 값으로 - bulletType도 마찬가지
                 if (data.itemType == ItemType.Food)
                     _foodDatas.Add(data);
                 else if(data.itemType == ItemType.Medicine)
@@ -51,6 +48,8 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
 
     #endregion Property
 
+
+    #region Get 
     public GunData GetGun(int id)
     {
         foreach (var gun in _gunDataList.GunItemDatas)
@@ -83,6 +82,9 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
         return null;
     }
 
+    #endregion Get
+
+
     public Item GetRandomItem(string type)
     {
         if (type == ItemType.Gun)
@@ -99,6 +101,7 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
         return null;
     }
 
+    #region Create Item Based on Data
     private GunItem CreateItemBasedOnGunData(GunData data)
     {
         GunItem item = new(data.id, data.name, data.value, data.weight, data.weightValue, data.bulletType, data.damage, data.rps, data.magazineCapacity, data.range, data.reloadTime, data.adsTime);
@@ -134,38 +137,106 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
         return item;
     }
 
+    #endregion
+
+
+    //TODO : 중복 코드, 다른 방법 고민해보기
+    #region Get Random Data
+
     private GunData GetRandomGunData()
     {
-        int random = Random.Range(0, _gunDataList.GunItemDatas.Length);
+        float totalWeightValue = 0;
+        foreach (var w in _gunDataList.GunItemDatas)
+            totalWeightValue += w.weightValue;
 
-        return _gunDataList.GunItemDatas[random];
+        float random = Random.Range(0, totalWeightValue);
+        float current = 0;
+
+        foreach (var w in _gunDataList.GunItemDatas)
+        {
+            current += w.weightValue;
+            if (random < current)
+                return w;
+        }
+
+        return null;
     }
 
     private AmmoData GetRandomAmmoData()
     {
-        int random = Random.Range(0, _ammoDataList.AmmoItemDatas.Length);
+        float totalWeightValue = 0;
+        foreach (var w in _ammoDataList.AmmoItemDatas)
+            totalWeightValue += w.weightValue;
 
-        return _ammoDataList.AmmoItemDatas[random];
+        float random = Random.Range(0, totalWeightValue);
+        float current = 0;
+
+        foreach (var w in _ammoDataList.AmmoItemDatas)
+        {
+            current += w.weightValue;
+            if (random < current)
+                return w;
+        }
+
+        return null;
     }
 
     private UsableItemData GetRandomFoodData()
     {
-        int random = Random.Range(0, _foodDatas.Count);
+        float totalWeightValue = 0;
+        foreach (var w in _foodDatas)
+            totalWeightValue += w.weightValue;
 
-        return _foodDatas[random];
+        float random = Random.Range(0, totalWeightValue);
+        float current = 0;
+
+        foreach (var w in _foodDatas)
+        {
+            current += w.weightValue;
+            if (random < current)
+                return w;
+        }
+
+        return null;
     }
 
     private UsableItemData GetRandomMedicineData()
     {
-        int random = Random.Range(0, _medicineDatas.Count);
+        float totalWeightValue = 0;
+        foreach (var w in _medicineDatas)
+            totalWeightValue += w.weightValue;
 
-        return _medicineDatas[random];
+        float random = Random.Range(0, totalWeightValue);
+        float current = 0;
+
+        foreach (var w in _medicineDatas)
+        {
+            current += w.weightValue;
+            if (random < current)
+                return w;
+        }
+
+        return null;
     }
 
     private EtcItemData GetRandomEtcData()
     {
-        int random = Random.Range(0, _etcItemDataList.EtcItemDatas.Length);
+        float totalWeightValue = 0;
+        foreach (var w in _etcItemDataList.EtcItemDatas)
+            totalWeightValue += w.weightValue;
 
-        return _etcItemDataList.EtcItemDatas[random];
+        float random = Random.Range(0, totalWeightValue);
+        float current = 0;
+
+        foreach (var w in _etcItemDataList.EtcItemDatas)
+        {
+            current += w.weightValue;
+            if (random < current)
+                return w;
+        }
+
+        return null;
     }
+
+    #endregion
 }
