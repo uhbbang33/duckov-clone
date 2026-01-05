@@ -2,8 +2,8 @@
 public class AmmoData
 {
     public uint id;
-    public ItemType itemType;
-    public BulletType bulletType;
+    public string itemType;
+    public string bulletType;
     public string name;
     public uint value;
     public float weight;

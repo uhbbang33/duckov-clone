@@ -54,12 +54,12 @@ public abstract class Box : MonoBehaviour
 
     private Item GetRandomItemByType()
     {
-        ItemType type = SetItemType();
+        string type = SetItemType();
 
         return DataManager.Instance.GetRandomItem(type);
     }
 
-    protected ItemType SetItemType()
+    protected string SetItemType()
     {
         int totalWeightValue = 0;
         foreach (var w in _typeWeights)

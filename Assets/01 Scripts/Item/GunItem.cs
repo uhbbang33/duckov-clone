@@ -1,8 +1,8 @@
 
 public class GunItem : Item
 {
-    private ItemType _itemType;
-    private BulletType _bulletType;
+    private string _itemType;
+    private string _bulletType;
     private float _damage;
     private float _rps;
     private uint _magazineCapacity;
@@ -10,8 +10,8 @@ public class GunItem : Item
     private float _reloadTime;
     private float _adsTime;
 
-    public ItemType GunItemType { get { return _itemType; } }
-    public BulletType GunBulletType { get { return _bulletType; } }
+    public string GunItemType { get { return _itemType; } }
+    public string GunBulletType { get { return _bulletType; } }
     public float Damage { get { return _damage; } }
     public float Rps { get { return _rps; } }
     public uint MagazineCapacity { get { return _magazineCapacity; } }
@@ -19,7 +19,7 @@ public class GunItem : Item
     public float ReloadTime { get { return _reloadTime; } }
     public float AdsTime { get { return _adsTime; } }
 
-    public GunItem(uint id, string name, uint value, float weight, float weightValue, BulletType bulletType, float damage, float rps, uint magazineCapacity, float range, float reloadTime, float adsTime) : base(id, name, value, weight, weightValue)
+    public GunItem(uint id, string name, uint value, float weight, float weightValue, string bulletType, float damage, float rps, uint magazineCapacity, float range, float reloadTime, float adsTime) : base(id, name, value, weight, weightValue)
     {
         _itemType = ItemType.Gun;
         _bulletType = bulletType;

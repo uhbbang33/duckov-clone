@@ -3,9 +3,9 @@
 public class GunData
 {
     public uint id;
-    public ItemType itemType;
+    public string itemType;
     public string name;
-    public BulletType bulletType;
+    public string bulletType;
     public uint value;
     public float weight;
     public float damage;

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class JsonParsing : MonoBehaviour
 {
-    private void Awake()
+    private void Start()
     {
         TextAsset jsonText = LoadDataList("JsonData/GunItemData");
         DataManager.Instance.GunDatas = JsonUtility.FromJson<GunDataList>(jsonText.text);

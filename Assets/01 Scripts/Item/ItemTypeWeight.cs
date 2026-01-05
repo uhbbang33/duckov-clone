@@ -1,6 +1,6 @@
 
 public class ItemTypeWeight
 {
-    public ItemType Type;
+    public string Type;
     public int WeightValue;
 }

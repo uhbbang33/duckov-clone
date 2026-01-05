@@ -2,7 +2,7 @@
 public class EtcItemData
 {
     public uint id;
-    public ItemType itemType;
+    public string itemType;
     public string name;
     public uint value;
     public float weight;

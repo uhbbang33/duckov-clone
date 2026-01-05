@@ -83,7 +83,7 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
         return null;
     }
 
-    public Item GetRandomItem(ItemType type)
+    public Item GetRandomItem(string type)
     {
         if (type == ItemType.Gun)
             return CreateItemBasedOnGunData(GetRandomGunData());
