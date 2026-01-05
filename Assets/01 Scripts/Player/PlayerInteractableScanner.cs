@@ -11,10 +11,12 @@ public class PlayerInteractableScanner : MonoBehaviour
     private HashSet<InteractableStateUI> _current = new();
     private HashSet<InteractableStateUI> _previous = new();
     private InteractableStateUI _currentNearestUI;
+    private PlayerInteract _playerInteract;
     
     private void Awake()
     {
         _results = new Collider[10];
+        _playerInteract = GetComponent<PlayerInteract>();
     }
 
     private void Start()
@@ -32,12 +34,14 @@ public class PlayerInteractableScanner : MonoBehaviour
             _results,
             _interactObjectLayer);
 
+        GameObject nearestObj = null;
         InteractableStateUI nearestUI = null;
         float minDist = float.MaxValue;
 
         for (int i = 0; i < cnt; ++i)
         {
-            InteractableStateUI ui = _results[i].gameObject.GetComponent<InteractableStateUI>();
+            GameObject obj = _results[i].gameObject;
+            InteractableStateUI ui = obj.GetComponent<InteractableStateUI>();
 
             float dist = (transform.position - ui.transform.position).sqrMagnitude;
 
@@ -46,6 +50,7 @@ public class PlayerInteractableScanner : MonoBehaviour
             {
                 minDist = dist;
                 nearestUI = ui;
+                nearestObj = obj;
             }
 
             _current.Add(ui);
@@ -55,6 +60,7 @@ public class PlayerInteractableScanner : MonoBehaviour
         }
 
         ChangeNearestUI(nearestUI);
+        ChangeNearestObject(nearestObj);
 
         foreach (InteractableStateUI ui in _previous)
         {
@@ -77,6 +83,14 @@ public class PlayerInteractableScanner : MonoBehaviour
 
         if (_currentNearestUI != null)
             _currentNearestUI.Selected();
+    }
+
+    private void ChangeNearestObject(GameObject obj)
+    {
+        if (obj == null)
+            return;
+
+        _playerInteract.InteractingBox = obj.GetComponent<Box>();
     }
 
     public void StartCheck()

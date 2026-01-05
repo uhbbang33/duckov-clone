@@ -24,4 +24,9 @@ public class GameResources : MonoBehaviour
     public Sprite OpenableBoxSprite;
     #endregion
 
+    #region ITEMS
+    [Space(10)]
+    [Header("ITEMS")]
+    public Sprite[] ItemSprites;
+    #endregion
 }

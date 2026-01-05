@@ -6,6 +6,9 @@ public class PlayerInteract : MonoBehaviour
     // Temp
     [SerializeField] GameObject _boxUI;
 
+    // Temp
+    public Box InteractingBox;
+
     private InputActions _inputActions;
     private InteractableStateUI _ui;
     private PlayerInteractableScanner _scanner;
@@ -48,6 +51,8 @@ public class PlayerInteract : MonoBehaviour
         _scanner.HideAllInteractUI();
 
         _playerMove.StopMove();
+
+        InteractingBox.OpenBox();
     }
 
     private void OnCancel(InputAction.CallbackContext context)

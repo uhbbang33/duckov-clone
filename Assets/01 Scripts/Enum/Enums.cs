@@ -3,8 +3,9 @@ public enum ItemType
 {
     Gun,
     Ammo,
-    Etc,
-    Medicine
+    Medicine,
+    Food,
+    Etc
 }
 
 public enum BulletType

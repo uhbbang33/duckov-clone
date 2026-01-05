@@ -47,5 +47,26 @@ MonoBehaviour:
   UnopenedBoxSprite: {fileID: 21300000, guid: 540e0f4ec9473f84d96254909c11ff49, type: 3}
   OpenedBoxSprite: {fileID: 21300000, guid: b2f497899181d02418e2c0827d2c3c79, type: 3}
   OpenableBoxSprite: {fileID: 21300000, guid: fc2b83387e91a8b4cb32c9920671aa43, type: 3}
-  HPBarPrefab: {fileID: 7317048876261651493, guid: eff8a46bc10e77b4c949ecc723fa5650, type: 3}
-  SPBarPrefab: {fileID: 0}
+  ItemSprites:
+  - {fileID: 21300000, guid: b797301f4f2db674fb4d2a4cca72e23b, type: 3}
+  - {fileID: 21300000, guid: 432bd3fa4a4304a47b1c4ecdd56b9ff6, type: 3}
+  - {fileID: 21300000, guid: 583effc745f71d44588f8787305faaea, type: 3}
+  - {fileID: 21300000, guid: 5fe38d23979d47c4f8a0df535e7a951b, type: 3}
+  - {fileID: 21300000, guid: 2d3256f856e2c4749a7eed359d104425, type: 3}
+  - {fileID: 21300000, guid: ce4938681441f8e49b10737cad29a9f5, type: 3}
+  - {fileID: 21300000, guid: bce73bb6de8fc754a8bc179e66c98e50, type: 3}
+  - {fileID: 21300000, guid: f43cf80acb54e8343817fdfd1f540525, type: 3}
+  - {fileID: 21300000, guid: b2621b57379ff0848aab8486cbc28a5d, type: 3}
+  - {fileID: 21300000, guid: bd36348572291d74daae1f73e4836a83, type: 3}
+  - {fileID: 21300000, guid: f03a24e081be84a4193c4e0e7325d40d, type: 3}
+  - {fileID: 21300000, guid: 1fd321736c6cee54eb1831da44aaccf0, type: 3}
+  - {fileID: 21300000, guid: 7276946071bd3084992198e7ed207532, type: 3}
+  - {fileID: 21300000, guid: f441b59dd14b7ff4cbf77864a1d74d1e, type: 3}
+  - {fileID: 21300000, guid: e5147e5d5919b014eb5929dd56d8cdeb, type: 3}
+  - {fileID: 21300000, guid: 806054f9cd0ed514087a3866db4d8776, type: 3}
+  - {fileID: 21300000, guid: 838004fc750e643429838a12941e7573, type: 3}
+  - {fileID: 21300000, guid: 7798fca3ae606a445ae15be690697377, type: 3}
+  - {fileID: 21300000, guid: 846a3e7e4b59ad54eb6e63f44127e7c6, type: 3}
+  - {fileID: 21300000, guid: 6fb9d742e42d37848ba45282d516f1b0, type: 3}
+  - {fileID: 21300000, guid: f024affdc20b94344a4cfb0d11bc0f70, type: 3}
+  - {fileID: 21300000, guid: 38bdf3de76531424bbf0a65c427ec1ec, type: 3}
