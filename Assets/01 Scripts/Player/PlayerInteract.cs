@@ -3,10 +3,10 @@ using UnityEngine.InputSystem;
 
 public class PlayerInteract : MonoBehaviour
 {
-    // Temp
+    // TODO : Temp
     [SerializeField] GameObject _boxUI;
 
-    // Temp
+    // TODO : Temp
     public Box InteractingBox;
 
     private InputActions _inputActions;
