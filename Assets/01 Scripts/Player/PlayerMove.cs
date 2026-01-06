@@ -47,6 +47,7 @@ public class PlayerMove : MonoBehaviour
     private void OnDisable()
     {
         UnsubscribeInputActions();
+
         _sp.OnSPZero -= StopRun;
     }
 
@@ -68,7 +69,7 @@ public class PlayerMove : MonoBehaviour
 
         if (dir.sqrMagnitude > 0.01f)
             _rb.linearVelocity = new Vector3(dir.x * speed, _rb.linearVelocity.y, dir.z * speed);
-        else // TODO : Temp code - player slip
+        else
             _rb.linearVelocity = Vector3.zero;
     }
 
@@ -152,19 +153,14 @@ public class PlayerMove : MonoBehaviour
     public void StopMove()
     {
         _anim.SetBool("IsWalk", false);
+        _moveInput = Vector2.zero;
 
-        _inputActions.Player.Look.performed -= OnLook;
-
-        _inputActions.Player.Move.performed -= OnMovePerformed;
-        _inputActions.Player.Move.canceled -= OnMoveCanceled;
+        UnsubscribeInputActions();
     }
 
     public void RestartMove()
     {
-        _inputActions.Player.Move.performed += OnMovePerformed;
-        _inputActions.Player.Move.canceled += OnMoveCanceled;
-
-        _inputActions.Player.Look.performed += OnLook;
+        SubscribeInputActions();
     }
 
     #region Input System
