@@ -7,7 +7,8 @@ public class PlayerInteractableScanner : MonoBehaviour
     [SerializeField] private float _openableDistance;
     [SerializeField] private LayerMask _interactObjectLayer;
 
-    private Collider[] _results;
+    private Collider[] _farResults;
+    private Collider[] _nearResults;
     private HashSet<InteractableStateUI> _current = new();
     private HashSet<InteractableStateUI> _previous = new();
     private InteractableStateUI _currentNearestUI;
@@ -15,7 +16,8 @@ public class PlayerInteractableScanner : MonoBehaviour
     
     private void Awake()
     {
-        _results = new Collider[10];
+        _farResults = new Collider[10];
+        _nearResults = new Collider[10];
         _playerInteract = GetComponent<PlayerInteract>();
     }
 
@@ -26,41 +28,41 @@ public class PlayerInteractableScanner : MonoBehaviour
 
     private void Check()
     {
+        ShowInteractableUI();
+
+        GameObject nearestObj = FindNearestObject();
+
+        if (nearestObj != null)
+        {
+            ChangeNearestObject(nearestObj);
+            ChangeNearestUI(nearestObj.GetComponent<InteractableStateUI>());
+        }
+        else
+        {
+            ChangeNearestUI(null);
+        }
+    }
+
+    private void ShowInteractableUI()
+    {
         _current.Clear();
 
-        int cnt = Physics.OverlapSphereNonAlloc(
+        int farBoxCnt = Physics.OverlapSphereNonAlloc(
             transform.position,
             _showUIDistance,
-            _results,
+            _farResults,
             _interactObjectLayer);
 
-        GameObject nearestObj = null;
-        InteractableStateUI nearestUI = null;
-        float minDist = float.MaxValue;
-
-        for (int i = 0; i < cnt; ++i)
+        for (int i = 0; i < farBoxCnt; ++i)
         {
-            GameObject obj = _results[i].gameObject;
+            GameObject obj = _farResults[i].gameObject;
             InteractableStateUI ui = obj.GetComponent<InteractableStateUI>();
-
-            float dist = (transform.position - ui.transform.position).sqrMagnitude;
-
-            if (dist < minDist
-                && dist <= _openableDistance * _openableDistance)
-            {
-                minDist = dist;
-                nearestUI = ui;
-                nearestObj = obj;
-            }
 
             _current.Add(ui);
 
             if (!_previous.Contains(ui))
                 ui.ShowCanvas();
         }
-
-        ChangeNearestUI(nearestUI);
-        ChangeNearestObject(nearestObj);
 
         foreach (InteractableStateUI ui in _previous)
         {
@@ -69,6 +71,33 @@ public class PlayerInteractableScanner : MonoBehaviour
         }
 
         (_previous, _current) = (_current, _previous);
+    }
+
+    private GameObject FindNearestObject()
+    {
+        GameObject nearestObj = null;
+        float minDist = float.MaxValue;
+
+        int nearBoxCnt  = Physics.OverlapSphereNonAlloc(
+                transform.position,
+                _openableDistance,
+                _nearResults,
+                _interactObjectLayer);
+
+        for (int i = 0; i < nearBoxCnt; ++i)
+        {
+            GameObject obj = _nearResults[i].gameObject;
+
+            float dist = (transform.position - obj.transform.position).sqrMagnitude;
+
+            if (dist < minDist)
+            {
+                dist = minDist;
+                nearestObj = obj;
+            }
+        }
+
+        return nearestObj;
     }
 
     private void ChangeNearestUI(InteractableStateUI nearestUI)
@@ -107,6 +136,5 @@ public class PlayerInteractableScanner : MonoBehaviour
         {
             ui.HideCanvas();
         }
-
     }
 }
