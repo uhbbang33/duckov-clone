@@ -2,15 +2,21 @@ using UnityEngine;
 
 public abstract class Box : MonoBehaviour
 {
+    private ItemSlot[] _boxSlots;
+    protected ItemTypeWeight[] _typeWeights;
+
     private bool _isOpened = false;
-    protected Item[] _items;
-    protected ItemTypeWeight[] _typeWeights = new ItemTypeWeight[5];
+
+    private readonly int _slotNum = 5;
 
     private void Awake()
     {
-        _items = new Item[5];
+        _boxSlots = new ItemSlot[_slotNum];
+        for (int i = 0; i < _slotNum; ++i)
+            _boxSlots[i] = new ItemSlot();
 
-        for (int i = 0; i < 5; ++i)
+        _typeWeights = new ItemTypeWeight[_slotNum];
+        for (int i = 0; i < _slotNum; ++i)
             _typeWeights[i] = new ItemTypeWeight();
 
         SetWeightValue();
@@ -32,23 +38,25 @@ public abstract class Box : MonoBehaviour
             SetBoxItems();
             _isOpened = true;
         }
+
+        for (int i = 0; i < _slotNum; ++i)
+        {
+            if (_boxSlots[i].CurrentItem == null)
+                UIManager.Instance.ChangeBoxSlotUI(i, 0);
+            else
+                UIManager.Instance.ChangeBoxSlotUI(i,
+                _boxSlots[i].CurrentItem.ID);
+        }
     }
 
     private void SetBoxItems()
     {
-        int itemCnt = Random.Range(4, _items.Length + 1);
+        int itemCnt = Random.Range(1, _slotNum + 1);
 
         for (int i = 0; i < itemCnt; ++i)
         {
-            _items[i] = GetRandomItemByType();
-
-            UIManager.Instance.ChangeBoxSlotUI(i, _items[i].ID);
-        }
-        // TODO
-        for(int i= itemCnt; i < 5; ++i)
-        {
-            _items[i] = null;
-            UIManager.Instance.ChangeBoxSlotUI(i, 0);
+            Item item = GetRandomItemByType();
+            _boxSlots[i].CurrentItem = item;
         }
     }
 
