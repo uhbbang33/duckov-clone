@@ -2,19 +2,19 @@
 [System.Serializable]
 public class GunData
 {
-    public uint id;
-    public string itemType;
-    public string name;
-    public string bulletType;
-    public uint value;
-    public float weight;
-    public float damage;
-    public float rps;
-    public uint magazineCapacity;
-    public float range;
-    public float reloadTime;
-    public float adsTime;
-    public float weightValue;
+    public uint Id;
+    public string ItemType;
+    public string Name;
+    public string BulletType;
+    public uint Value;
+    public float Weight;
+    public float Damage;
+    public float Rps;
+    public uint MagazineCapacity;
+    public float Range;
+    public float ReloadTime;
+    public float AdsTime;
+    public float WeightValue;
 }
 
 [System.Serializable]

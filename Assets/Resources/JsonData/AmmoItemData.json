@@ -1,22 +1,22 @@
 {
   "AmmoItemDatas": [
     {
-      "id": 595.0,
-      "itemType": "Ammo",
-      "bulletType": "S",
-      "name": "S-일반 탄약",
-      "value": 150.0,
-      "weight": 0.01,
-      "weightValue": 8.0
+      "Id": 595.0,
+      "ItemType": "Ammo",
+      "BulletType": "S",
+      "Name": "S-일반 탄약",
+      "Value": 150.0,
+      "Weight": 0.01,
+      "WeightValue": 8.0
     },
     {
-      "id": 622.0,
-      "itemType": "Ammo",
-      "bulletType": "저격",
-      "name": "일반 저격탄",
-      "value": 350.0,
-      "weight": 0.05,
-      "weightValue": 2.0
+      "Id": 622.0,
+      "ItemType": "Ammo",
+      "BulletType": "저격",
+      "Name": "일반 저격탄",
+      "Value": 350.0,
+      "Weight": 0.05,
+      "WeightValue": 2.0
     }
   ]
 }

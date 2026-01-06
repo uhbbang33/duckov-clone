@@ -1,12 +1,12 @@
 [System.Serializable]
 public class EtcItemData
 {
-    public uint id;
-    public string itemType;
-    public string name;
-    public uint value;
-    public float weight;
-    public float weightValue;
+    public uint Id;
+    public string ItemType;
+    public string Name;
+    public uint Value;
+    public float Weight;
+    public float WeightValue;
 }
 
 [System.Serializable]

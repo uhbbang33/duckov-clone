@@ -32,9 +32,9 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
 
             foreach(var data in value.UsableItemDatas)
             {
-                if (data.itemType == ItemType.Food)
+                if (data.ItemType == ItemType.Food)
                     _foodDatas.Add(data);
-                else if(data.itemType == ItemType.Medicine)
+                else if(data.ItemType == ItemType.Medicine)
                     _medicineDatas.Add(data);
             }
         }
@@ -53,7 +53,7 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
     public GunData GetGun(int id)
     {
         foreach (var gun in _gunDataList.GunItemDatas)
-            if (gun.id == id)
+            if (gun.Id == id)
                 return gun;
         return null;
     }
@@ -61,7 +61,7 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
     public AmmoData GetAmmo(int id)
     {
         foreach (var ammo in _ammoDataList.AmmoItemDatas)
-            if (ammo.id == id)
+            if (ammo.Id == id)
                 return ammo;
         return null;
     }
@@ -69,7 +69,7 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
     public UsableItemData GetUsableItem(int id)
     {
         foreach (var usableItem in _usableItemDataList.UsableItemDatas)
-            if (usableItem.id == id)
+            if (usableItem.Id == id)
                 return usableItem;
         return null;
     }
@@ -77,7 +77,7 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
     public EtcItemData GetEtcItem(int id)
     {
         foreach (var etcItem in _etcItemDataList.EtcItemDatas)
-            if (etcItem.id == id)
+            if (etcItem.Id == id)
                 return etcItem;
         return null;
     }
@@ -104,35 +104,35 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
     #region Create Item Based on Data
     private GunItem CreateItemBasedOnGunData(GunData data)
     {
-        GunItem item = new(data.id, data.name, data.value, data.weight, data.weightValue, data.bulletType, data.damage, data.rps, data.magazineCapacity, data.range, data.reloadTime, data.adsTime);
+        GunItem item = new(data.Id, data.Name, data.Value, data.Weight, data.WeightValue, data.BulletType, data.Damage, data.Rps, data.MagazineCapacity, data.Range, data.ReloadTime, data.AdsTime);
 
         return item;
     }
 
     private AmmoItem CreateItemBasedOnAmmoData(AmmoData data)
     {
-        AmmoItem item = new(data.id, data.name, data.value, data.weight, data.weightValue, data.bulletType);
+        AmmoItem item = new(data.Id, data.Name, data.Value, data.Weight, data.WeightValue, data.BulletType);
 
         return item;
     }
 
     private UsableItem CreateItemBasedOnFoodData(UsableItemData data)
     {
-        UsableItem item = new(data.id, data.name, data.value, data.weight, data.weightValue, data.healHP, data.durabilityCost, data.Hunger, data.Hydration, ItemType.Food);
+        UsableItem item = new(data.Id, data.Name, data.Value, data.Weight, data.WeightValue, data.HealHP, data.DurabilityCost, data.Hunger, data.Hydration, ItemType.Food);
 
         return item;
     }
 
     private UsableItem CreateItemBasedOnMedicineData(UsableItemData data)
     {
-        UsableItem item = new(data.id, data.name, data.value, data.weight, data.weightValue, data.healHP, data.durabilityCost, data.Hunger, data.Hydration, ItemType.Medicine);
+        UsableItem item = new(data.Id, data.Name, data.Value, data.Weight, data.WeightValue, data.HealHP, data.DurabilityCost, data.Hunger, data.Hydration, ItemType.Medicine);
 
         return item;
     }
 
     private Item CreateItemBasedOnEtcData(EtcItemData data)
     {
-        Item item = new(data.id, data.name, data.value, data.value, data.weightValue);
+        Item item = new(data.Id, data.Name, data.Value, data.Value, data.WeightValue);
 
         return item;
     }
@@ -147,14 +147,14 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
     {
         float totalWeightValue = 0;
         foreach (var w in _gunDataList.GunItemDatas)
-            totalWeightValue += w.weightValue;
+            totalWeightValue += w.WeightValue;
 
         float random = Random.Range(0, totalWeightValue);
         float current = 0;
 
         foreach (var w in _gunDataList.GunItemDatas)
         {
-            current += w.weightValue;
+            current += w.WeightValue;
             if (random < current)
                 return w;
         }
@@ -166,14 +166,14 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
     {
         float totalWeightValue = 0;
         foreach (var w in _ammoDataList.AmmoItemDatas)
-            totalWeightValue += w.weightValue;
+            totalWeightValue += w.WeightValue;
 
         float random = Random.Range(0, totalWeightValue);
         float current = 0;
 
         foreach (var w in _ammoDataList.AmmoItemDatas)
         {
-            current += w.weightValue;
+            current += w.WeightValue;
             if (random < current)
                 return w;
         }
@@ -185,14 +185,14 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
     {
         float totalWeightValue = 0;
         foreach (var w in _foodDatas)
-            totalWeightValue += w.weightValue;
+            totalWeightValue += w.WeightValue;
 
         float random = Random.Range(0, totalWeightValue);
         float current = 0;
 
         foreach (var w in _foodDatas)
         {
-            current += w.weightValue;
+            current += w.WeightValue;
             if (random < current)
                 return w;
         }
@@ -204,14 +204,14 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
     {
         float totalWeightValue = 0;
         foreach (var w in _medicineDatas)
-            totalWeightValue += w.weightValue;
+            totalWeightValue += w.WeightValue;
 
         float random = Random.Range(0, totalWeightValue);
         float current = 0;
 
         foreach (var w in _medicineDatas)
         {
-            current += w.weightValue;
+            current += w.WeightValue;
             if (random < current)
                 return w;
         }
@@ -223,14 +223,14 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
     {
         float totalWeightValue = 0;
         foreach (var w in _etcItemDataList.EtcItemDatas)
-            totalWeightValue += w.weightValue;
+            totalWeightValue += w.WeightValue;
 
         float random = Random.Range(0, totalWeightValue);
         float current = 0;
 
         foreach (var w in _etcItemDataList.EtcItemDatas)
         {
-            current += w.weightValue;
+            current += w.WeightValue;
             if (random < current)
                 return w;
         }

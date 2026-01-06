@@ -1,16 +1,16 @@
 [System.Serializable]
 public class UsableItemData
 {
-    public uint id;
-    public string itemType;
-    public string name;
-    public uint value;
-    public float weight;
-    public float healHP;
-    public uint durabilityCost;
+    public uint Id;
+    public string ItemType;
+    public string Name;
+    public uint Value;
+    public float Weight;
+    public float HealHP;
+    public uint DurabilityCost;
     public float Hunger;
     public float Hydration;
-    public float weightValue;
+    public float WeightValue;
 }
 
 [System.Serializable]
