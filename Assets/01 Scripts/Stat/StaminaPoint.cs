@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class StaminaPoint : MonoBehaviour
@@ -26,6 +27,8 @@ public class StaminaPoint : MonoBehaviour
     public float CurrentSP { get { return _currentSP; } }
     public bool IsReducing { set { _isReducing = value; } }
 
+    public event Action OnSPZero;
+
     private void Awake()
     {
         _currentSP = _maxSP;
@@ -39,8 +42,12 @@ public class StaminaPoint : MonoBehaviour
     {
         _currentSP -= amount;
 
-        if (_currentSP < 0)
+        if (_currentSP <= 0)
+        {
             _currentSP = 0;
+
+            OnSPZero?.Invoke();
+        }
 
         if (_healRoutine != null)
             StopCoroutine(_healRoutine);

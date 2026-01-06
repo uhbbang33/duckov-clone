@@ -40,11 +40,14 @@ public class PlayerMove : MonoBehaviour
     {
         _inputActions = GetComponent<Player>().Actions;
         SubscribeInputActions();
+
+        _sp.OnSPZero += StopRun;
     }
 
     private void OnDisable()
     {
         UnsubscribeInputActions();
+        _sp.OnSPZero -= StopRun;
     }
 
     private void FixedUpdate()
@@ -217,9 +220,7 @@ public class PlayerMove : MonoBehaviour
 
     private void OnRunCanceled(InputAction.CallbackContext context)
     {
-        _sp.IsReducing = false;
-        _isRun = false;
-        _anim.SetBool("IsRun", false);
+        StopRun();
     }
 
     private void OnRollPerformed(InputAction.CallbackContext context)
@@ -260,6 +261,13 @@ public class PlayerMove : MonoBehaviour
     }
 
     #endregion Input System
+
+    private void StopRun()
+    {
+        _sp.IsReducing = false;
+        _isRun = false;
+        _anim.SetBool("IsRun", false);
+    }
 
 
     private IEnumerator RollRoutine()
