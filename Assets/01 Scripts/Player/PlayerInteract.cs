@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,6 +15,7 @@ public class PlayerInteract : MonoBehaviour
     private PlayerInteractableScanner _scanner;
     private PlayerMove _playerMove;
 
+    public event Action<bool> OnInteractEvent;
 
     public InteractableStateUI UI
     {
@@ -53,6 +55,8 @@ public class PlayerInteract : MonoBehaviour
         _playerMove.StopMove();
 
         InteractingBox.OpenBox();
+
+        OnInteractEvent?.Invoke(true);
     }
 
     private void OnCancel(InputAction.CallbackContext context)
@@ -62,5 +66,7 @@ public class PlayerInteract : MonoBehaviour
         _scanner.StartCheck();
 
         _playerMove.RestartMove();
+
+        OnInteractEvent?.Invoke(false);
     }
 }

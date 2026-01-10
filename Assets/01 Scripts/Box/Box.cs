@@ -5,12 +5,13 @@ public abstract class Box : MonoBehaviour
     private ItemSlot[] _boxSlots;
     protected ItemTypeWeight[] _typeWeights;
 
-    private bool _isOpened = false;
+    private bool _isOpened;
+    private int _slotNum;
 
-    private readonly int _slotNum = 5;
-
-    private void Awake()
+    private void Start()
     {
+        _slotNum = GameManager.Instance.BoxSlotNum;
+
         _boxSlots = new ItemSlot[_slotNum];
         for (int i = 0; i < _slotNum; ++i)
             _boxSlots[i] = new ItemSlot();
@@ -41,6 +42,8 @@ public abstract class Box : MonoBehaviour
 
         for (int i = 0; i < _slotNum; ++i)
         {
+            _boxSlots[i].UI = GameManager.Instance.BoxItemSlots[i].GetComponent<ItemSlotUI>();
+
             if (_boxSlots[i].CurrentItem == null)
                 UIManager.Instance.ChangeBoxSlotUI(i, 0);
             else
@@ -56,7 +59,7 @@ public abstract class Box : MonoBehaviour
         for (int i = 0; i < itemCnt; ++i)
         {
             Item item = GetRandomItemByType();
-            _boxSlots[i].CurrentItem = item;
+            _boxSlots[i].AddItem(item, 1);
         }
     }
 

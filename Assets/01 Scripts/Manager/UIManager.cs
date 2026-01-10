@@ -12,13 +12,20 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         if (id == 0)
         {
             _boxSlotsImage[index].sprite = null;
-            _boxSlotsImage[index].gameObject.SetActive(false);
+            ChangeImageAlpha(_boxSlotsImage[index], false);
         }
         else
         {
-            _boxSlotsImage[index].gameObject.SetActive(true);
             _boxSlotsImage[index].sprite = ItemSpriteDictionary.Instance.GetItemSprite(id);
+            ChangeImageAlpha(_boxSlotsImage[index], true);
         }
+    }
+
+    public void ChangeImageAlpha(Image image, bool showImage)
+    {
+        Color color = image.color;
+        color.a = showImage ? 255f : 0f;
+        image.color = color;
     }
 
 }
