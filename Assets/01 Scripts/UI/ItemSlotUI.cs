@@ -3,10 +3,13 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class ItemSlotUI : MonoBehaviour,
-    IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
+    IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerClickHandler
 {
     private ItemSlot _itemSlot;
     private Image _image;
+
+    private float _lastClickTime;
+    private const float _doubleClickThreshold = 0.25f;
 
     public ItemSlot Slot
     {
@@ -18,6 +21,9 @@ public class ItemSlotUI : MonoBehaviour,
     {
         _image = GetComponent<Image>();
     }
+
+
+    #region Drag And Drop
 
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -41,14 +47,7 @@ public class ItemSlotUI : MonoBehaviour,
         ItemSlotUI targetSlot = eventData.pointerDrag.GetComponent<ItemSlotUI>();
 
         if (targetSlot == null || targetSlot == this)
-        {
-            if (targetSlot == null)
-                Debug.Log("Target Slot null");
-            else if(targetSlot == this)
-                Debug.Log("Target Slot this");
-
             return;
-        }
 
         SwapItem(targetSlot);
     }
@@ -61,23 +60,6 @@ public class ItemSlotUI : MonoBehaviour,
 
     private void SwapItem(ItemSlotUI target)
     {
-        if (target._itemSlot.CurrentItem != null)
-        {
-            Debug.Log("Target : " + target._itemSlot.CurrentItem.Name);
-            Debug.Log("Target : " + target._itemSlot.Quantity);
-        }
-        else
-            Debug.Log("Target is Null");
-
-        if (_itemSlot.CurrentItem != null)
-        {
-            Debug.Log("origin : " + _itemSlot.CurrentItem.Name);
-            Debug.Log("origin : " + _itemSlot.Quantity);
-        }
-        else
-            Debug.Log("Origin is Null");
-
-
         (target._itemSlot.CurrentItem, _itemSlot.CurrentItem) = (_itemSlot.CurrentItem, target._itemSlot.CurrentItem);
 
         (target._itemSlot.Quantity, _itemSlot.Quantity) = (_itemSlot.Quantity, target._itemSlot.Quantity);
@@ -85,6 +67,87 @@ public class ItemSlotUI : MonoBehaviour,
         Refresh();
         target.Refresh();
     }
+
+    #endregion Drag And Drop
+
+   
+
+    #region Double Click
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (_itemSlot.CurrentItem == null)
+            return;
+
+        if (Time.unscaledTime - _lastClickTime <= _doubleClickThreshold)
+        {
+            OnDoubleClick();
+            _lastClickTime = 0f;
+        }
+        else
+            _lastClickTime = Time.unscaledTime;
+    }
+
+    private void OnDoubleClick()
+    {
+        if (_itemSlot.CurrentItem == null)
+            return;
+
+        if (IsBoxSlot())
+        {
+            TryMoveToInventory();
+        }
+        else if (IsInventorySlot())
+        {
+            TryMoveToBox();
+        }
+    }
+
+    private bool IsBoxSlot()
+    {
+        return transform.IsChildOf(GameManager.Instance.BoxRoot);
+    }
+
+    private bool IsInventorySlot()
+    {
+        return transform.IsChildOf(GameManager.Instance.InventoryRoot);
+    }
+
+    private void TryMoveToInventory()
+    {
+        if(GameManager.Instance.Inventory.TryAddItem(_itemSlot.CurrentItem, _itemSlot.Quantity))
+        {
+            RemoveItem();
+        }
+    }
+
+    private void TryMoveToBox()
+    {
+        for (int i = 0; i < GameManager.Instance.BoxSlotNum; ++i)
+        {
+            ItemSlot targetSlot = GameManager.Instance.BoxItemSlots[i].GetComponent<ItemSlotUI>()._itemSlot;
+
+            if (targetSlot.CurrentItem != null)
+                continue;
+
+            targetSlot.AddItem(_itemSlot.CurrentItem, _itemSlot.Quantity);
+
+            targetSlot.UI.Refresh();
+
+            RemoveItem();
+
+            return;
+        }
+    }
+
+    private void RemoveItem()
+    {
+        _itemSlot.SubtractItem(_itemSlot.Quantity);
+        _image.sprite = null;
+        UIManager.Instance.ChangeImageAlpha(_image, false);
+    }
+
+    #endregion Double Click
 
     private void Refresh()
     {
@@ -99,5 +162,4 @@ public class ItemSlotUI : MonoBehaviour,
             UIManager.Instance.ChangeImageAlpha(_image, false);
         }
     }
-
 }
