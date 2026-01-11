@@ -76,8 +76,15 @@ public class ItemSlotUI : MonoBehaviour,
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        // UI Slot 말고, 어디든 클릭하면 SLot Menu가 닫혀야 함
+        UIManager.Instance.CloseSlotMenu();
+
         if (_itemSlot.CurrentItem == null)
             return;
+
+        if (eventData.button == PointerEventData.InputButton.Right)
+            OpenSlotMenu();
+
 
         if (Time.unscaledTime - _lastClickTime <= _doubleClickThreshold)
         {
@@ -162,4 +169,10 @@ public class ItemSlotUI : MonoBehaviour,
             UIManager.Instance.ChangeImageAlpha(_image, false);
         }
     }
+
+    private void OpenSlotMenu()
+    {
+        UIManager.Instance.OpenSlotMenu(transform.position, IsInventorySlot());
+    }
+
 }
