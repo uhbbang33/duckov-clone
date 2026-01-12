@@ -1,7 +1,6 @@
 
 public class UsableItem : Item
 {
-    //private string _itemType;
     private float _healHP;
     private uint _durabilityCost;
     private float _hunger;

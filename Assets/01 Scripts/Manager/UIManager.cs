@@ -92,7 +92,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
             _useButton.SetActive(true);
             _splitButton.SetActive(true);
         }
-        else if (itemType == ItemType.Ammo || itemType == ItemType.Etc)
+        else
         {
             _splitButton.SetActive(true);
         }

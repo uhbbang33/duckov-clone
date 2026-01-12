@@ -1,7 +1,6 @@
 
 public class AmmoItem : Item
 {
-    //private string _itemType;
     private string _bulletType;
 
     public string AmmoItemType { get { return _itemType; } }

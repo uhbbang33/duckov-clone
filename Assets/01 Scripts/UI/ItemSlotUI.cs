@@ -100,19 +100,14 @@ public class ItemSlotUI : MonoBehaviour,
         if (_itemSlot.CurrentItem == null)
             return;
 
-        if (IsBoxSlot())
-        {
-            TryMoveToInventory();
-        }
         else if (IsInventorySlot())
         {
             TryMoveToBox();
         }
-    }
-
-    private bool IsBoxSlot()
-    {
-        return transform.IsChildOf(GameManager.Instance.BoxRoot);
+        else
+        {
+            TryMoveToInventory();
+        }
     }
 
     private bool IsInventorySlot()
@@ -172,9 +167,7 @@ public class ItemSlotUI : MonoBehaviour,
 
     private void OpenSlotMenu()
     {
-        // Itemtype ∫∏≥ª¡‡æﬂ«‘
         UIManager.Instance.OpenSlotMenu(transform.position, IsInventorySlot(),_itemSlot.CurrentItem.Type);
-
     }
 
 }
