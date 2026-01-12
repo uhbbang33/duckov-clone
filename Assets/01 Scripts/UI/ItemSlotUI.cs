@@ -172,7 +172,9 @@ public class ItemSlotUI : MonoBehaviour,
 
     private void OpenSlotMenu()
     {
-        UIManager.Instance.OpenSlotMenu(transform.position, IsInventorySlot());
+        // Itemtype ∫∏≥ª¡‡æﬂ«‘
+        UIManager.Instance.OpenSlotMenu(transform.position, IsInventorySlot(),_itemSlot.CurrentItem.Type);
+
     }
 
 }

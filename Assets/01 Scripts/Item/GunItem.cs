@@ -1,7 +1,7 @@
 
 public class GunItem : Item
 {
-    private string _itemType;
+    //private string _itemType;
     private string _bulletType;
     private float _damage;
     private float _rps;
