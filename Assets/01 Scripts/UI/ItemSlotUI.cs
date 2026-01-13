@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -5,16 +6,31 @@ using UnityEngine.UI;
 public class ItemSlotUI : MonoBehaviour,
     IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerClickHandler
 {
+    [SerializeField] private RectTransform _nameBackgroundRect;
+    [SerializeField] private TextMeshProUGUI _nameText;
     private ItemSlot _itemSlot;
     private Image _image;
 
     private float _lastClickTime;
     private const float _doubleClickThreshold = 0.25f;
+    private const float _nameBackgroundMaxWidth = 1000f;
 
     public ItemSlot Slot
     {
         get { return _itemSlot; }
-        set { _itemSlot = value; }
+        set
+        {
+            _itemSlot = value;
+
+            if (_itemSlot.CurrentItem == null)
+                return;
+
+            _nameText.text = _itemSlot.CurrentItem.Name;
+
+            //var size = _nameBackgroundRect.sizeDelta;
+            //size.x = Mathf.Min(_nameBackgroundMaxWidth, size.x);
+            //_nameBackgroundRect.sizeDelta = size;
+        }
     }
 
     private void Awake()
