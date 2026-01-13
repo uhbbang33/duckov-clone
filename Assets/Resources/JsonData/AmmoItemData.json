@@ -2,21 +2,25 @@
   "AmmoItemDatas": [
     {
       "Id": 595.0,
+      "Rarity": "일반",
       "ItemType": "Ammo",
       "BulletType": "S",
       "Name": "S-일반 탄약",
       "Value": 150.0,
       "Weight": 0.01,
-      "WeightValue": 8.0
+      "WeightValue": 8.0,
+      "MaxStackSize": 240.0
     },
     {
       "Id": 622.0,
+      "Rarity": "일반",
       "ItemType": "Ammo",
       "BulletType": "저격",
       "Name": "일반 저격탄",
       "Value": 350.0,
       "Weight": 0.05,
-      "WeightValue": 2.0
+      "WeightValue": 2.0,
+      "MaxStackSize": 240.0
     }
   ]
 }

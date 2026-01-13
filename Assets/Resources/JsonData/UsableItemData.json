@@ -2,6 +2,7 @@
   "UsableItemDatas": [
     {
       "Id": 10.0,
+      "Rarity": "일반",
       "ItemType": "Medicine",
       "Name": "지혈 붕대",
       "Value": 240.0,
@@ -10,10 +11,12 @@
       "DurabilityCost": 100.0,
       "Hunger": 0.0,
       "Hydration": 0.0,
-      "WeightValue": 10.0
+      "WeightValue": 10.0,
+      "MaxStackSize": 3.0
     },
     {
       "Id": 16.0,
+      "Rarity": "고급",
       "ItemType": "Medicine",
       "Name": "구급상자",
       "Value": 807.0,
@@ -22,10 +25,12 @@
       "DurabilityCost": 20.0,
       "Hunger": 0.0,
       "Hydration": 0.0,
-      "WeightValue": 4.0
+      "WeightValue": 4.0,
+      "MaxStackSize": 3.0
     },
     {
       "Id": 15.0,
+      "Rarity": "희귀",
       "ItemType": "Medicine",
       "Name": "대형 구급상자",
       "Value": 1322.0,
@@ -34,10 +39,12 @@
       "DurabilityCost": 10.0,
       "Hunger": 0.0,
       "Hydration": 0.0,
-      "WeightValue": 1.0
+      "WeightValue": 1.0,
+      "MaxStackSize": 3.0
     },
     {
       "Id": 1256.0,
+      "Rarity": "전설",
       "ItemType": "Food",
       "Name": "영혼의 밀주",
       "Value": 12490.0,
@@ -46,10 +53,12 @@
       "DurabilityCost": 100.0,
       "Hunger": 50.0,
       "Hydration": -100.0,
-      "WeightValue": 1.0
+      "WeightValue": 1.0,
+      "MaxStackSize": 3.0
     },
     {
       "Id": 105.0,
+      "Rarity": "일반",
       "ItemType": "Food",
       "Name": "코코아 우유",
       "Value": 124.0,
@@ -58,10 +67,12 @@
       "DurabilityCost": 100.0,
       "Hunger": 20.0,
       "Hydration": 25.0,
-      "WeightValue": 20.0
+      "WeightValue": 20.0,
+      "MaxStackSize": 3.0
     },
     {
       "Id": 883.0,
+      "Rarity": "희귀",
       "ItemType": "Food",
       "Name": "단백질 파우더",
       "Value": 470.0,
@@ -70,10 +81,12 @@
       "DurabilityCost": 100.0,
       "Hunger": 100.0,
       "Hydration": -30.0,
-      "WeightValue": 2.0
+      "WeightValue": 2.0,
+      "MaxStackSize": 3.0
     },
     {
       "Id": 403.0,
+      "Rarity": "일반",
       "ItemType": "Food",
       "Name": "감자",
       "Value": 230.0,
@@ -82,10 +95,12 @@
       "DurabilityCost": 100.0,
       "Hunger": 40.0,
       "Hydration": 0.0,
-      "WeightValue": 12.0
+      "WeightValue": 12.0,
+      "MaxStackSize": 3.0
     },
     {
       "Id": 133.0,
+      "Rarity": "일반",
       "ItemType": "Food",
       "Name": "당근",
       "Value": 120.0,
@@ -94,10 +109,12 @@
       "DurabilityCost": 100.0,
       "Hunger": 20.0,
       "Hydration": 10.0,
-      "WeightValue": 15.0
+      "WeightValue": 15.0,
+      "MaxStackSize": 3.0
     },
     {
       "Id": 428.0,
+      "Rarity": "고급",
       "ItemType": "Food",
       "Name": "생수",
       "Value": 375.0,
@@ -106,10 +123,12 @@
       "DurabilityCost": 25.0,
       "Hunger": 0.0,
       "Hydration": 50.0,
-      "WeightValue": 8.0
+      "WeightValue": 8.0,
+      "MaxStackSize": 3.0
     },
     {
       "Id": 106.0,
+      "Rarity": "일반",
       "ItemType": "Food",
       "Name": "탄산수",
       "Value": 102.0,
@@ -118,10 +137,12 @@
       "DurabilityCost": 100.0,
       "Hunger": 0.0,
       "Hydration": 40.0,
-      "WeightValue": 10.0
+      "WeightValue": 10.0,
+      "MaxStackSize": 3.0
     },
     {
       "Id": 14.0,
+      "Rarity": "희귀",
       "ItemType": "Food",
       "Name": "콜라",
       "Value": 1995.0,
@@ -130,7 +151,8 @@
       "DurabilityCost": 100.0,
       "Hunger": 30.0,
       "Hydration": 35.0,
-      "WeightValue": 3.0
+      "WeightValue": 3.0,
+      "MaxStackSize": 3.0
     }
   ]
 }

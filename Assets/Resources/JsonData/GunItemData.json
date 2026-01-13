@@ -2,6 +2,7 @@
   "GunItemDatas": [
     {
       "Id": 258.0,
+      "Rarity": "고급",
       "ItemType": "Gun",
       "Name": "MP7",
       "BulletType": "S",
@@ -13,10 +14,12 @@
       "Range": 20.6,
       "ReloadTime": 2.3,
       "AdsTime": 0.4,
-      "WeightValue": 3.0
+      "WeightValue": 3.0,
+      "MaxStackSize": 1.0
     },
     {
       "Id": 780.0,
+      "Rarity": "고급",
       "ItemType": "Gun",
       "Name": "M700",
       "BulletType": "저격",
@@ -28,10 +31,12 @@
       "Range": 38.9,
       "ReloadTime": 4.0,
       "AdsTime": 0.5,
-      "WeightValue": 1.0
+      "WeightValue": 1.0,
+      "MaxStackSize": 1.0
     },
     {
       "Id": 254.0,
+      "Rarity": "고급",
       "ItemType": "Gun",
       "Name": "글록",
       "BulletType": "S",
@@ -43,7 +48,8 @@
       "Range": 16.5,
       "ReloadTime": 1.1,
       "AdsTime": 0.3,
-      "WeightValue": 6.0
+      "WeightValue": 6.0,
+      "MaxStackSize": 1.0
     }
   ]
 }

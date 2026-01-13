@@ -104,35 +104,35 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
     #region Create Item Based on Data
     private GunItem CreateItemBasedOnGunData(GunData data)
     {
-        GunItem item = new(data.Id, data.Name, data.Value, data.Weight, data.WeightValue, data.BulletType, data.Damage, data.Rps, data.MagazineCapacity, data.Range, data.ReloadTime, data.AdsTime);
+        GunItem item = new(data.Id, data.Name, data.Value, data.Weight, data.WeightValue, data.BulletType, data.Damage, data.Rps, data.MagazineCapacity, data.Range, data.ReloadTime, data.AdsTime, data.MaxStackSize);
 
         return item;
     }
 
     private AmmoItem CreateItemBasedOnAmmoData(AmmoData data)
     {
-        AmmoItem item = new(data.Id, data.Name, data.Value, data.Weight, data.WeightValue, data.BulletType);
+        AmmoItem item = new(data.Id, data.Name, data.Value, data.Weight, data.WeightValue, data.MaxStackSize, data.BulletType);
 
         return item;
     }
 
     private UsableItem CreateItemBasedOnFoodData(UsableItemData data)
     {
-        UsableItem item = new(data.Id, data.Name, data.Value, data.Weight, data.WeightValue, data.HealHP, data.DurabilityCost, data.Hunger, data.Hydration, ItemType.Food);
+        UsableItem item = new(data.Id, data.Name, data.Value, data.Weight, data.WeightValue, data.HealHP, data.DurabilityCost, data.Hunger, data.Hydration, data.MaxStackSize, ItemType.Food);
 
         return item;
     }
 
     private UsableItem CreateItemBasedOnMedicineData(UsableItemData data)
     {
-        UsableItem item = new(data.Id, data.Name, data.Value, data.Weight, data.WeightValue, data.HealHP, data.DurabilityCost, data.Hunger, data.Hydration, ItemType.Medicine);
+        UsableItem item = new(data.Id, data.Name, data.Value, data.Weight, data.WeightValue, data.HealHP, data.DurabilityCost, data.Hunger, data.Hydration, data.MaxStackSize, ItemType.Medicine);
 
         return item;
     }
 
     private Item CreateItemBasedOnEtcData(EtcItemData data)
     {
-        Item item = new(data.Id, data.Name, data.Value, data.Value, data.WeightValue);
+        Item item = new(data.Id, data.Name, data.Value, data.Value, data.WeightValue, data.MaxStackSize);
 
         return item;
     }

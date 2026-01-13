@@ -2,6 +2,7 @@
 public class UsableItemData
 {
     public uint Id;
+    public string Rarity;
     public string ItemType;
     public string Name;
     public uint Value;
@@ -10,7 +11,8 @@ public class UsableItemData
     public uint DurabilityCost;
     public float Hunger;
     public float Hydration;
-    public float WeightValue;
+    public uint WeightValue;
+    public uint MaxStackSize;
 }
 
 [System.Serializable]

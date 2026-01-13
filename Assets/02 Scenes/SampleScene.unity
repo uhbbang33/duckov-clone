@@ -4275,9 +4275,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb493fdc5c3eb274baa36aa16f74aaaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ExcelToJson
-  _excelFileName: Gun_Item_Table
-  _jsonFileName: GunItemData
-  _dataName: GunItemDatas
+  _excelFileName: Usable_Item_Table
+  _jsonFileName: UsableItemData
+  _dataName: UsableItemDatas
 --- !u!4 &931226760
 Transform:
   m_ObjectHideFlags: 0

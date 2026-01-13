@@ -18,7 +18,7 @@ public class GunItem : Item
     public float ReloadTime { get { return _reloadTime; } }
     public float AdsTime { get { return _adsTime; } }
 
-    public GunItem(uint id, string name, uint value, float weight, float weightValue, string bulletType, float damage, float rps, uint magazineCapacity, float range, float reloadTime, float adsTime) : base(id, name, value, weight, weightValue)
+    public GunItem(uint id, string name, uint value, float weight, uint weightValue, string bulletType, float damage, float rps, uint magazineCapacity, float range, float reloadTime, float adsTime, uint maxStackSize) : base(id, name, value, weight, weightValue, maxStackSize)
     {
         _itemType = ItemType.Gun;
         _bulletType = bulletType;

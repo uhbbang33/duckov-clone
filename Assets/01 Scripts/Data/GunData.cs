@@ -3,6 +3,7 @@
 public class GunData
 {
     public uint Id;
+    public string Rarity;
     public string ItemType;
     public string Name;
     public string BulletType;
@@ -14,7 +15,8 @@ public class GunData
     public float Range;
     public float ReloadTime;
     public float AdsTime;
-    public float WeightValue;
+    public uint WeightValue;
+    public uint MaxStackSize;
 }
 
 [System.Serializable]
