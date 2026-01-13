@@ -43,12 +43,6 @@ public abstract class Box : MonoBehaviour
         for (int i = 0; i < _slotNum; ++i)
         {
             _boxSlots[i].UI = GameManager.Instance.BoxItemSlots[i].GetComponent<ItemSlotUI>();
-
-            if (_boxSlots[i].CurrentItem == null)
-                UIManager.Instance.ChangeBoxSlotUI(i, 0);
-            else
-                UIManager.Instance.ChangeBoxSlotUI(i,
-                _boxSlots[i].CurrentItem.ID);
         }
     }
 

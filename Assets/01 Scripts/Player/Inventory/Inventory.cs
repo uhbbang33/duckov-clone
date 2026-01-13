@@ -20,7 +20,7 @@ public class Inventory : MonoBehaviour
         _playerMove = GetComponent<PlayerMove>();
         _playerInteract = GetComponent<PlayerInteract>();
         _inventoryUI.SetActive(false);
-
+        
         _slotCnt = _slotObject.Length;
 
         for (int i = 0; i < _slotCnt; ++i)
@@ -104,20 +104,11 @@ public class Inventory : MonoBehaviour
             if (_inventorySlots[i].CurrentItem == null)
             {
                 _inventorySlots[i].AddItem(item, amount);
-                RefreshImage(i);
+                _inventorySlots[i].UI.Refresh();
                 return true;
             }
         }
         return false;
-    }
-
-    private void RefreshImage(int index)
-    {
-        uint id = _inventorySlots[index].CurrentItem.ID;
-
-        Image image = _slotObject[index].GetComponent<Image>();
-        image.sprite = ItemSpriteDictionary.Instance.GetItemSprite(id);
-        UIManager.Instance.ChangeImageAlpha(image, true);
     }
 
 }

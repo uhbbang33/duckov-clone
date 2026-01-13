@@ -6,14 +6,13 @@ using UnityEngine.UI;
 public class ItemSlotUI : MonoBehaviour,
     IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerClickHandler
 {
-    [SerializeField] private RectTransform _nameBackgroundRect;
     [SerializeField] private TextMeshProUGUI _nameText;
+    [SerializeField] private TextMeshProUGUI _countText;
     private ItemSlot _itemSlot;
     private Image _image;
 
     private float _lastClickTime;
     private const float _doubleClickThreshold = 0.25f;
-    private const float _nameBackgroundMaxWidth = 1000f;
 
     public ItemSlot Slot
     {
@@ -22,14 +21,10 @@ public class ItemSlotUI : MonoBehaviour,
         {
             _itemSlot = value;
 
-            if (_itemSlot.CurrentItem == null)
-                return;
-
-            _nameText.text = _itemSlot.CurrentItem.Name;
-
-            //var size = _nameBackgroundRect.sizeDelta;
-            //size.x = Mathf.Min(_nameBackgroundMaxWidth, size.x);
-            //_nameBackgroundRect.sizeDelta = size;
+            if (_image == null)
+                _image = GetComponent<Image>();
+            
+            Refresh();
         }
     }
 
@@ -158,16 +153,15 @@ public class ItemSlotUI : MonoBehaviour,
         }
     }
 
+    #endregion Double Click
+
     private void RemoveItem()
     {
         _itemSlot.SubtractItem(_itemSlot.Quantity);
-        _image.sprite = null;
-        UIManager.Instance.ChangeImageAlpha(_image, false);
+        Refresh();
     }
 
-    #endregion Double Click
-
-    private void Refresh()
+    public void Refresh()
     {
         if (_itemSlot.CurrentItem != null)
         {
@@ -179,11 +173,27 @@ public class ItemSlotUI : MonoBehaviour,
             _image.sprite = null;
             UIManager.Instance.ChangeImageAlpha(_image, false);
         }
+
+        ChangeTexts();
     }
 
     private void OpenSlotMenu()
     {
         UIManager.Instance.OpenSlotMenu(transform.position, IsInventorySlot(),_itemSlot.CurrentItem.Type);
+    }
+
+    private void ChangeTexts()
+    {
+        if (_itemSlot.CurrentItem == null)
+        {
+            _nameText.text = string.Empty;
+            _countText.text = string.Empty;
+            return;
+        }
+
+        _nameText.text = _itemSlot.CurrentItem.Name;
+        if (_itemSlot.Quantity > 1)
+            _countText.text = _itemSlot.Quantity.ToString();
     }
 
 }
