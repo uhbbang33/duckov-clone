@@ -250,7 +250,13 @@ public class ItemSlotUI : MonoBehaviour,
 
         _nameText.text = _itemSlot.CurrentItem.Name;
         if (_itemSlot.Quantity > 1)
+        {
             _countText.text = _itemSlot.Quantity.ToString();
+        }
+        else if(_itemSlot.Quantity == 1)
+        {
+            _countText.text = string.Empty;
+        }
     }
 
 }
