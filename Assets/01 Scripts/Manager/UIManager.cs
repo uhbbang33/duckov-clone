@@ -15,23 +15,6 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     [SerializeField] private GameObject _splitButton;
     [SerializeField] private GameObject _discardButton;
 
-
-    public Image[] BoxSlots { get { return _boxSlotsImage; } }
-
-    public void ChangeBoxSlotUI(int index, uint id)
-    {
-        if (id == 0)
-        {
-            _boxSlotsImage[index].sprite = null;
-            ChangeImageAlpha(_boxSlotsImage[index], false);
-        }
-        else
-        {
-            _boxSlotsImage[index].sprite = ItemSpriteDictionary.Instance.GetItemSprite(id);
-            ChangeImageAlpha(_boxSlotsImage[index], true);
-        }
-    }
-
     public void ChangeImageAlpha(Image image, bool showImage)
     {
         Color color = image.color;

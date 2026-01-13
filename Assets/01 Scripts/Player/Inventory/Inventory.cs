@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -15,12 +16,16 @@ public class Inventory : MonoBehaviour
     private int _slotCnt;
     private bool _inventoryToggle;
 
+    // key - id, value - slot count
+    private Dictionary<uint, int> _inventoryDict;
+
     private void Awake()
     {
         _playerMove = GetComponent<PlayerMove>();
         _playerInteract = GetComponent<PlayerInteract>();
         _inventoryUI.SetActive(false);
-        
+        _inventoryDict = new Dictionary<uint, int>();
+
         _slotCnt = _slotObject.Length;
 
         for (int i = 0; i < _slotCnt; ++i)
@@ -97,18 +102,58 @@ public class Inventory : MonoBehaviour
             _inputActions.Player.Inventory.performed += OnInventory;
     }
 
-    public bool TryAddItem(Item item, int amount)
+    public bool TryAddItemByDoubleClick(Item item, int amount)
     {
+        if (_inventoryDict.ContainsKey(item.ID) && item.Type != ItemType.Gun)
+        {
+            for (int i = 0; i < _slotCnt; ++i)
+            {
+                if (_inventorySlots[i].CurrentItem == null)
+                    continue;
+
+                if (_inventorySlots[i].CurrentItem.ID == item.ID)
+                {
+                    _inventorySlots[i].AddItem(item, amount);
+                    _inventorySlots[i].UI.RefreshUI();
+                    return true;
+                }
+            }
+        }
+
         for (int i = 0; i < _slotCnt; ++i)
         {
             if (_inventorySlots[i].CurrentItem == null)
             {
                 _inventorySlots[i].AddItem(item, amount);
-                _inventorySlots[i].UI.Refresh();
+                _inventorySlots[i].UI.RefreshUI();
+
+                if (item.Type == ItemType.Gun && _inventoryDict.ContainsKey(item.ID))
+                    _inventoryDict[item.ID] += 1;
+                else
+                    _inventoryDict.Add(item.ID, 1);
+
                 return true;
             }
         }
         return false;
+    }
+
+    public bool TryAddItemByDragAndDrop(uint id)
+    {
+        if (_inventoryDict.ContainsKey(id))
+            _inventoryDict[id] += 1;
+        else
+            _inventoryDict.Add(id, 1);
+
+        return false;
+    }
+
+    public void RemoveItemSlot(uint id)
+    {
+        _inventoryDict[id] -= 1;
+
+        if (_inventoryDict[id] == 0)
+            _inventoryDict.Remove(id);
     }
 
 }

@@ -12,6 +12,8 @@ public class ItemSlotUI : MonoBehaviour,
     private Image _image;
 
     private float _lastClickTime;
+    private bool _isInventorySlotUI;
+
     private const float _doubleClickThreshold = 0.25f;
 
     public ItemSlot Slot
@@ -24,13 +26,14 @@ public class ItemSlotUI : MonoBehaviour,
             if (_image == null)
                 _image = GetComponent<Image>();
             
-            Refresh();
+            RefreshUI();
         }
     }
 
     private void Awake()
     {
         _image = GetComponent<Image>();
+        _isInventorySlotUI = transform.IsChildOf(GameManager.Instance.InventoryRoot);
     }
 
 
@@ -55,12 +58,50 @@ public class ItemSlotUI : MonoBehaviour,
         if (eventData.pointerDrag == null)
             return;
 
-        ItemSlotUI targetSlot = eventData.pointerDrag.GetComponent<ItemSlotUI>();
+        ItemSlotUI dragUI = eventData.pointerDrag.GetComponent<ItemSlotUI>();
 
-        if (targetSlot == null || targetSlot == this)
+        if (dragUI == null || dragUI == this)
             return;
 
-        SwapItem(targetSlot);
+        Item dragItem = dragUI._itemSlot.CurrentItem;
+        Item dropItem = _itemSlot.CurrentItem;
+
+        // 같은 ID 일 경우 개수 합치기
+        if (dragItem != null && dropItem != null
+            && dragItem.ID == dropItem.ID
+            && dragItem.Type != ItemType.Gun)
+        {
+            int movedQuantity = dragUI._itemSlot.Quantity;
+
+            _itemSlot.Quantity += movedQuantity;
+            dragUI._itemSlot.SubtractItem(movedQuantity);
+
+            if (dragUI._itemSlot.Quantity == 0 && dragUI._isInventorySlotUI)
+            {
+                GameManager.Instance.Inventory.RemoveItemSlot(dragItem.ID);
+            }
+
+            RefreshUI();
+            dragUI.RefreshUI();
+
+            return;
+        }
+
+        SwapItem(dragUI);
+
+        // update inventory
+        if (dragUI._isInventorySlotUI && dragUI._itemSlot.CurrentItem == null)
+        {
+            GameManager.Instance.Inventory.RemoveItemSlot(dragItem.ID);
+        }
+
+        if (_isInventorySlotUI && _itemSlot.CurrentItem != null)
+        {
+            GameManager.Instance.Inventory.TryAddItemByDragAndDrop(_itemSlot.CurrentItem.ID);
+        }
+
+        RefreshUI();
+        dragUI.RefreshUI();
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -74,9 +115,6 @@ public class ItemSlotUI : MonoBehaviour,
         (target._itemSlot.CurrentItem, _itemSlot.CurrentItem) = (_itemSlot.CurrentItem, target._itemSlot.CurrentItem);
 
         (target._itemSlot.Quantity, _itemSlot.Quantity) = (_itemSlot.Quantity, target._itemSlot.Quantity);
-
-        Refresh();
-        target.Refresh();
     }
 
     #endregion Drag And Drop
@@ -111,7 +149,7 @@ public class ItemSlotUI : MonoBehaviour,
         if (_itemSlot.CurrentItem == null)
             return;
 
-        else if (IsInventorySlot())
+        else if (_isInventorySlotUI)
         {
             TryMoveToBox();
         }
@@ -121,14 +159,9 @@ public class ItemSlotUI : MonoBehaviour,
         }
     }
 
-    private bool IsInventorySlot()
-    {
-        return transform.IsChildOf(GameManager.Instance.InventoryRoot);
-    }
-
     private void TryMoveToInventory()
     {
-        if(GameManager.Instance.Inventory.TryAddItem(_itemSlot.CurrentItem, _itemSlot.Quantity))
+        if(GameManager.Instance.Inventory.TryAddItemByDoubleClick(_itemSlot.CurrentItem, _itemSlot.Quantity))
         {
             RemoveItem();
         }
@@ -136,20 +169,44 @@ public class ItemSlotUI : MonoBehaviour,
 
     private void TryMoveToBox()
     {
+        if (_itemSlot.CurrentItem.Type != ItemType.Gun)
+        {
+            // 같은 ID의 아이템이 있을 경우
+            for (int i = 0; i < GameManager.Instance.BoxSlotNum; ++i)
+            {
+                ItemSlot targetSlot = GameManager.Instance.BoxItemSlots[i].GetComponent<ItemSlotUI>()._itemSlot;
+
+                if (targetSlot.CurrentItem != null &&
+                    targetSlot.CurrentItem.ID == _itemSlot.CurrentItem.ID)
+                {
+                    GameManager.Instance.Inventory.RemoveItemSlot(_itemSlot.CurrentItem.ID);
+
+                    targetSlot.AddItem(_itemSlot.CurrentItem, _itemSlot.Quantity);
+
+                    targetSlot.UI.RefreshUI();
+                    RemoveItem();
+
+                    return;
+                }
+            }
+        }
+
+        // 그렇지 않을 경우
         for (int i = 0; i < GameManager.Instance.BoxSlotNum; ++i)
         {
             ItemSlot targetSlot = GameManager.Instance.BoxItemSlots[i].GetComponent<ItemSlotUI>()._itemSlot;
 
-            if (targetSlot.CurrentItem != null)
-                continue;
+            if (targetSlot.CurrentItem == null)
+            {
+                GameManager.Instance.Inventory.RemoveItemSlot(_itemSlot.CurrentItem.ID);
 
-            targetSlot.AddItem(_itemSlot.CurrentItem, _itemSlot.Quantity);
+                targetSlot.AddItem(_itemSlot.CurrentItem, _itemSlot.Quantity);
 
-            targetSlot.UI.Refresh();
+                targetSlot.UI.RefreshUI();
+                RemoveItem();
 
-            RemoveItem();
-
-            return;
+                return;
+            }
         }
     }
 
@@ -158,10 +215,10 @@ public class ItemSlotUI : MonoBehaviour,
     private void RemoveItem()
     {
         _itemSlot.SubtractItem(_itemSlot.Quantity);
-        Refresh();
+        RefreshUI();
     }
 
-    public void Refresh()
+    public void RefreshUI()
     {
         if (_itemSlot.CurrentItem != null)
         {
@@ -179,7 +236,7 @@ public class ItemSlotUI : MonoBehaviour,
 
     private void OpenSlotMenu()
     {
-        UIManager.Instance.OpenSlotMenu(transform.position, IsInventorySlot(),_itemSlot.CurrentItem.Type);
+        UIManager.Instance.OpenSlotMenu(transform.position, _isInventorySlotUI, _itemSlot.CurrentItem.Type);
     }
 
     private void ChangeTexts()
