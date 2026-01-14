@@ -138,14 +138,27 @@ public class Inventory : MonoBehaviour
         return false;
     }
 
-    public bool TryAddItemByDragAndDrop(uint id)
+    public void AddItemToEmptySlot(Item item, int amount)
+    {
+        for (int i = 0; i < _slotCnt; ++i)
+        {
+            if (_inventorySlots[i].CurrentItem == null)
+            {
+                _inventorySlots[i].AddItem(item, amount);
+                _inventorySlots[i].UI.RefreshUI();
+                AddToDictionaryByID(item.ID);
+
+                return;
+            }
+        }
+    }
+
+    public void AddToDictionaryByID(uint id)
     {
         if (_inventoryDict.ContainsKey(id))
             _inventoryDict[id] += 1;
         else
             _inventoryDict.Add(id, 1);
-
-        return false;
     }
 
     public void RemoveItemSlot(uint id)

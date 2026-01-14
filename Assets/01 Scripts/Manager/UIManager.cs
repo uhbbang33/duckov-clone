@@ -15,6 +15,17 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     [SerializeField] private GameObject _splitButton;
     [SerializeField] private GameObject _discardButton;
 
+    [SerializeField] private ItemSplitUI _splitUI;
+
+    private ItemSlot _currentSlot;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        _currentSlot = new ItemSlot();
+    }
+
     public void ChangeImageAlpha(Image image, bool showImage)
     {
         Color color = image.color;
@@ -22,25 +33,22 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         image.color = color;
     }
 
-    public void OpenSlotMenu(Vector3 pos, bool isInventorySlot, string itemType)
+    public void OpenSlotMenu(ItemSlot slot, Vector3 pos, bool isInventorySlot)
     {
         _slotMenuUI.transform.position = pos;
 
         if (isInventorySlot)
-        {
             _slotMenuUI.transform.position += _inventorySlotMenuOffset;
-        }
         else
-        {
             _slotMenuUI.transform.position += _boxSlotMenuOffset;
-        }
 
         if (IsUpperHalf(_slotMenuUI.transform.position))
         {
             // TODO
         }
 
-        ShowButtonsByItemtype(itemType, isInventorySlot);
+        ShowButtonsByItemtype(slot.CurrentItem.Type, isInventorySlot);
+        _currentSlot = slot;
 
         _slotMenuUI.SetActive(true);
     }
@@ -85,4 +93,14 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
             _discardButton.SetActive(true);
         }
     }
+
+    // On Split Button Click
+    public void ActivateSplitUI()
+    {
+        //분할을 눌렀을 경우 호출
+        _splitUI.CurrentSlot = _currentSlot;
+        _splitUI.gameObject.SetActive(true);
+        CloseSlotMenu();
+    }
+
 }

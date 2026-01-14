@@ -97,7 +97,7 @@ public class ItemSlotUI : MonoBehaviour,
 
         if (_isInventorySlotUI && _itemSlot.CurrentItem != null)
         {
-            GameManager.Instance.Inventory.TryAddItemByDragAndDrop(_itemSlot.CurrentItem.ID);
+            GameManager.Instance.Inventory.AddToDictionaryByID(_itemSlot.CurrentItem.ID);
         }
 
         RefreshUI();
@@ -125,7 +125,7 @@ public class ItemSlotUI : MonoBehaviour,
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        // UI Slot 말고, 어디든 클릭하면 SLot Menu가 닫혀야 함
+        // TODO: UI Slot 말고, 어디든 클릭하면 SLot Menu가 닫혀야 함
         UIManager.Instance.CloseSlotMenu();
 
         if (_itemSlot.CurrentItem == null)
@@ -236,7 +236,7 @@ public class ItemSlotUI : MonoBehaviour,
 
     private void OpenSlotMenu()
     {
-        UIManager.Instance.OpenSlotMenu(transform.position, _isInventorySlotUI, _itemSlot.CurrentItem.Type);
+        UIManager.Instance.OpenSlotMenu(_itemSlot, transform.position, _isInventorySlotUI);
     }
 
     private void ChangeTexts()
