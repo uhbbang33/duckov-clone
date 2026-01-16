@@ -119,7 +119,7 @@ public class PlayerInteractableScanner : MonoBehaviour
         if (obj == null)
             return;
 
-        _playerInteract.InteractingBox = obj.GetComponent<Box>();
+        GameManager.Instance.CurrentBox = obj.GetComponent<Box>();
     }
 
     public void StartCheck()

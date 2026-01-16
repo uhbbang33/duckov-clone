@@ -33,11 +33,11 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         image.color = color;
     }
 
-    public void OpenSlotMenu(ItemSlot slot, Vector3 pos, bool isInventorySlot)
+    public void OpenSlotMenu(ItemSlot slot, Vector3 pos)
     {
         _slotMenuUI.transform.position = pos;
 
-        if (isInventorySlot)
+        if (slot.Type == SlotType.INVENTORY)
             _slotMenuUI.transform.position += _inventorySlotMenuOffset;
         else
             _slotMenuUI.transform.position += _boxSlotMenuOffset;
@@ -47,8 +47,8 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
             // TODO
         }
 
-        ShowButtonsByItemtype(slot.CurrentItem.Type, isInventorySlot);
         _currentSlot = slot;
+        ShowButtonsByItemtype();
 
         _slotMenuUI.SetActive(true);
     }
@@ -64,8 +64,10 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         return screenPos.y > Screen.height * 0.5f;
     }
 
-    private void ShowButtonsByItemtype(string itemType, bool isInventorySlot)
+    private void ShowButtonsByItemtype()
     {
+        string itemType = _currentSlot.CurrentItem.Type;
+
         // Temp
         _equipButton.SetActive(false);
         _unloadButton.SetActive(false);
@@ -88,9 +90,19 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
             _splitButton.SetActive(true);
         }
 
-        if (isInventorySlot)
+        if (_currentSlot.Type == SlotType.INVENTORY)
         {
             _discardButton.SetActive(true);
+
+            if (GameManager.Instance.Inventory.FindFirstEmptySlot() == -1
+                || _currentSlot.Quantity < 2)
+                _splitButton.SetActive(false);
+        }
+        else if(_currentSlot.Type == SlotType.BOX)
+        {
+            if (GameManager.Instance.CurrentBox.FindFirstEmptySlot() == -1 
+                || _currentSlot.Quantity < 2)
+                _splitButton.SetActive(false);
         }
     }
 

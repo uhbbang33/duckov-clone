@@ -36,6 +36,7 @@ public class Inventory : MonoBehaviour
         {
             _inventorySlots[i] = new ItemSlot();
             _inventorySlots[i].UI = _slotObject[i].GetComponent<ItemSlotUI>();
+            _inventorySlots[i].Type = SlotType.INVENTORY;
         }
     }
 
@@ -120,37 +121,44 @@ public class Inventory : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < _slotCnt; ++i)
-        {
-            if (_inventorySlots[i].CurrentItem == null)
-            {
-                _inventorySlots[i].AddItem(item, amount);
-                _inventorySlots[i].UI.RefreshUI();
+        int slotIndex = FindFirstEmptySlot();
+        if (slotIndex == -1)
+            return false;
 
-                if (item.Type == ItemType.Gun && _inventoryDict.ContainsKey(item.ID))
-                    _inventoryDict[item.ID] += 1;
-                else
-                    _inventoryDict.Add(item.ID, 1);
+        _inventorySlots[slotIndex].AddItem(item, amount);
+        _inventorySlots[slotIndex].UI.RefreshUI();
 
-                return true;
-            }
-        }
-        return false;
+        if (item.Type == ItemType.Gun && _inventoryDict.ContainsKey(item.ID))
+            _inventoryDict[item.ID] += 1;
+        else
+            _inventoryDict.Add(item.ID, 1);
+
+        return true;
     }
 
     public void AddItemToEmptySlot(Item item, int amount)
+    {
+        int slotIndex = FindFirstEmptySlot();
+
+        if (slotIndex == -1)
+            return;
+
+        _inventorySlots[slotIndex].AddItem(item, amount);
+        _inventorySlots[slotIndex].UI.RefreshUI();
+        AddToDictionaryByID(item.ID);
+    }
+
+    public int FindFirstEmptySlot()
     {
         for (int i = 0; i < _slotCnt; ++i)
         {
             if (_inventorySlots[i].CurrentItem == null)
             {
-                _inventorySlots[i].AddItem(item, amount);
-                _inventorySlots[i].UI.RefreshUI();
-                AddToDictionaryByID(item.ID);
-
-                return;
+                return i;
             }
         }
+
+        return -1;
     }
 
     public void AddToDictionaryByID(uint id)

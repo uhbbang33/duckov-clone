@@ -6,18 +6,21 @@ public abstract class Box : MonoBehaviour
     protected ItemTypeWeight[] _typeWeights;
 
     private bool _isOpened;
-    private int _slotNum;
+    private int _slotCnt;
 
     private void Start()
     {
-        _slotNum = GameManager.Instance.BoxSlotNum;
+        _slotCnt = GameManager.Instance.BoxSlotNum;
 
-        _boxSlots = new ItemSlot[_slotNum];
-        for (int i = 0; i < _slotNum; ++i)
+        _boxSlots = new ItemSlot[_slotCnt];
+        for (int i = 0; i < _slotCnt; ++i)
+        {
             _boxSlots[i] = new ItemSlot();
+            _boxSlots[i].Type = SlotType.BOX;
+        }
 
-        _typeWeights = new ItemTypeWeight[_slotNum];
-        for (int i = 0; i < _slotNum; ++i)
+        _typeWeights = new ItemTypeWeight[_slotCnt];
+        for (int i = 0; i < _slotCnt; ++i)
             _typeWeights[i] = new ItemTypeWeight();
 
         SetWeightValue();
@@ -40,7 +43,7 @@ public abstract class Box : MonoBehaviour
             _isOpened = true;
         }
 
-        for (int i = 0; i < _slotNum; ++i)
+        for (int i = 0; i < _slotCnt; ++i)
         {
             _boxSlots[i].UI = GameManager.Instance.BoxItemSlots[i].GetComponent<ItemSlotUI>();
         }
@@ -48,7 +51,7 @@ public abstract class Box : MonoBehaviour
 
     private void SetBoxItems()
     {
-        int itemCnt = Random.Range(1, _slotNum + 1);
+        int itemCnt = Random.Range(1, _slotCnt + 1);
 
         for (int i = 0; i < itemCnt; ++i)
         {
@@ -82,5 +85,29 @@ public abstract class Box : MonoBehaviour
 
         Debug.Log("weight value random error");
         return ItemType.Etc;
+    }
+
+    public void AddItemToEmptySlot(Item item, int amount)
+    {
+        int slotIndex = FindFirstEmptySlot();
+
+        if (slotIndex == -1)
+            return;
+
+        _boxSlots[slotIndex].AddItem(item, amount);
+        _boxSlots[slotIndex].UI.RefreshUI();
+    }
+
+    public int FindFirstEmptySlot()
+    {
+        for (int i = 0; i < _slotCnt; ++i)
+        {
+            if (_boxSlots[i].CurrentItem == null)
+            {
+                return i;
+            }
+        }
+
+        return -1;
     }
 }

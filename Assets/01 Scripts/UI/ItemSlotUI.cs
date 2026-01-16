@@ -12,7 +12,6 @@ public class ItemSlotUI : MonoBehaviour,
     private Image _image;
 
     private float _lastClickTime;
-    private bool _isInventorySlotUI;
 
     private const float _doubleClickThreshold = 0.25f;
 
@@ -33,7 +32,6 @@ public class ItemSlotUI : MonoBehaviour,
     private void Awake()
     {
         _image = GetComponent<Image>();
-        _isInventorySlotUI = transform.IsChildOf(GameManager.Instance.InventoryRoot);
     }
 
 
@@ -76,7 +74,7 @@ public class ItemSlotUI : MonoBehaviour,
             _itemSlot.Quantity += movedQuantity;
             dragUI._itemSlot.SubtractItem(movedQuantity);
 
-            if (dragUI._itemSlot.Quantity == 0 && dragUI._isInventorySlotUI)
+            if (dragUI._itemSlot.Quantity == 0 && dragUI.Slot.Type == SlotType.INVENTORY)
             {
                 GameManager.Instance.Inventory.RemoveItemSlot(dragItem.ID);
             }
@@ -90,12 +88,12 @@ public class ItemSlotUI : MonoBehaviour,
         SwapItem(dragUI);
 
         // update inventory
-        if (dragUI._isInventorySlotUI && dragUI._itemSlot.CurrentItem == null)
+        if (dragUI._itemSlot.Type == SlotType.INVENTORY && dragUI._itemSlot.CurrentItem == null)
         {
             GameManager.Instance.Inventory.RemoveItemSlot(dragItem.ID);
         }
 
-        if (_isInventorySlotUI && _itemSlot.CurrentItem != null)
+        if (_itemSlot.Type == SlotType.INVENTORY && _itemSlot.CurrentItem != null)
         {
             GameManager.Instance.Inventory.AddToDictionaryByID(_itemSlot.CurrentItem.ID);
         }
@@ -149,7 +147,7 @@ public class ItemSlotUI : MonoBehaviour,
         if (_itemSlot.CurrentItem == null)
             return;
 
-        else if (_isInventorySlotUI)
+        else if (_itemSlot.Type == SlotType.INVENTORY)
         {
             TryMoveToBox();
         }
@@ -236,7 +234,7 @@ public class ItemSlotUI : MonoBehaviour,
 
     private void OpenSlotMenu()
     {
-        UIManager.Instance.OpenSlotMenu(_itemSlot, transform.position, _isInventorySlotUI);
+        UIManager.Instance.OpenSlotMenu(_itemSlot, transform.position);
     }
 
     private void ChangeTexts()

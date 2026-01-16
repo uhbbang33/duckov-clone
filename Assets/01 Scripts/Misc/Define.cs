@@ -12,3 +12,10 @@ public struct BulletType
     public const string S = "S";
     public const string Sniping = "РњАн";
 }
+
+public enum SlotType
+{
+    INVENTORY,
+    BOX,
+    STORAGE
+}

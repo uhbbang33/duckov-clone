@@ -35,8 +35,7 @@ public class ItemSplitUI : MonoBehaviour
     {
         _currentSlot.Quantity -= (int)_slider.value;
         _currentSlot.UI.RefreshUI();
-
-        GameManager.Instance.Inventory.AddItemToEmptySlot(_currentSlot.CurrentItem, (int)_slider.value);
+        _currentSlot.SplitItem((int)_slider.value);
 
         gameObject.SetActive(false);
     }

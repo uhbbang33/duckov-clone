@@ -7,9 +7,6 @@ public class PlayerInteract : MonoBehaviour
     // TODO : Temp
     [SerializeField] GameObject _boxUI;
 
-    // TODO : Temp
-    public Box InteractingBox;
-
     private InputActions _inputActions;
     private InteractableStateUI _ui;
     private PlayerInteractableScanner _scanner;
@@ -54,7 +51,7 @@ public class PlayerInteract : MonoBehaviour
 
         _playerMove.StopMove();
 
-        InteractingBox.OpenBox();
+        GameManager.Instance.CurrentBox.OpenBox();
 
         OnInteractEvent?.Invoke(true);
     }
