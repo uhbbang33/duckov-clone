@@ -4569,8 +4569,6 @@ MonoBehaviour:
   - {fileID: 2103291853}
   - {fileID: 1306601074}
   - {fileID: 1147827719}
-  _boxUIRoot: {fileID: 1165222470}
-  _inventoryUIRoot: {fileID: 798599926}
 --- !u!4 &914186001
 Transform:
   m_ObjectHideFlags: 0
@@ -8696,7 +8694,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6574008491500966438, guid: 6e062c2c863e5b74aa736e9c2e8fe605, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ActivateSplitUI
+      value: OnSplitButtonClick
       objectReference: {fileID: 0}
     - target: {fileID: 6574008491500966438, guid: 6e062c2c863e5b74aa736e9c2e8fe605, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -10983,7 +10981,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInteract
   _boxUI: {fileID: 1165222469}
-  InteractingBox: {fileID: 0}
 --- !u!114 &6032076664905499560
 MonoBehaviour:
   m_ObjectHideFlags: 0

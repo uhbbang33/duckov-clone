@@ -115,7 +115,6 @@ public class Inventory : MonoBehaviour
                 if (_inventorySlots[i].CurrentItem.ID == item.ID)
                 {
                     _inventorySlots[i].AddItem(item, amount);
-                    _inventorySlots[i].UI.RefreshUI();
                     return true;
                 }
             }
@@ -126,7 +125,6 @@ public class Inventory : MonoBehaviour
             return false;
 
         _inventorySlots[slotIndex].AddItem(item, amount);
-        _inventorySlots[slotIndex].UI.RefreshUI();
 
         if (item.Type == ItemType.Gun && _inventoryDict.ContainsKey(item.ID))
             _inventoryDict[item.ID] += 1;
@@ -144,7 +142,6 @@ public class Inventory : MonoBehaviour
             return;
 
         _inventorySlots[slotIndex].AddItem(item, amount);
-        _inventorySlots[slotIndex].UI.RefreshUI();
         AddToDictionaryByID(item.ID);
     }
 

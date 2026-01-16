@@ -37,15 +37,15 @@ public abstract class Box : MonoBehaviour
 
     public void OpenBox()
     {
+        for (int i = 0; i < _slotCnt; ++i)
+        {
+            _boxSlots[i].UI = GameManager.Instance.BoxItemSlots[i].GetComponent<ItemSlotUI>();
+        }
+
         if (!_isOpened)
         {
             SetBoxItems();
             _isOpened = true;
-        }
-
-        for (int i = 0; i < _slotCnt; ++i)
-        {
-            _boxSlots[i].UI = GameManager.Instance.BoxItemSlots[i].GetComponent<ItemSlotUI>();
         }
     }
 
@@ -95,7 +95,6 @@ public abstract class Box : MonoBehaviour
             return;
 
         _boxSlots[slotIndex].AddItem(item, amount);
-        _boxSlots[slotIndex].UI.RefreshUI();
     }
 
     public int FindFirstEmptySlot()

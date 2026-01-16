@@ -213,7 +213,6 @@ public class ItemSlotUI : MonoBehaviour,
     private void RemoveItem()
     {
         _itemSlot.SubtractItem(_itemSlot.Quantity);
-        RefreshUI();
     }
 
     public void RefreshUI()

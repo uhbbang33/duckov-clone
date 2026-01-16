@@ -50,12 +50,14 @@ public class ItemSlot
             _currentItem = null;
             _quantity = 0;
         }
+        _ui.RefreshUI();
     }
 
     public void AddItem(Item item, int amount = 1)
     {
         _currentItem = item;
         _quantity += amount;
+        _ui.RefreshUI();
     }
 
     public void SplitItem(int amount)

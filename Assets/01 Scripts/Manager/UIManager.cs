@@ -107,12 +107,16 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     }
 
     // On Split Button Click
-    public void ActivateSplitUI()
+    public void OnSplitButtonClick()
     {
-        //분할을 눌렀을 경우 호출
         _splitUI.CurrentSlot = _currentSlot;
         _splitUI.gameObject.SetActive(true);
         CloseSlotMenu();
     }
 
+    public void OnDiscardButtonClick()
+    {
+        _currentSlot.SubtractItem(_currentSlot.Quantity);
+        
+    }
 }
