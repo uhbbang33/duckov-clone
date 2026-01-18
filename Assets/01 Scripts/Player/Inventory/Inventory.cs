@@ -2,11 +2,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using System;
 
 public class Inventory : MonoBehaviour
 {
     [SerializeField] private GameObject _inventoryUI;
     [SerializeField] private GameObject[] _slotObject;
+
+    // TODO : Temp
+    [SerializeField] private float _maxWeight;
 
     private InputActions _inputActions;
     private PlayerMove _playerMove;
@@ -15,9 +19,12 @@ public class Inventory : MonoBehaviour
     private ItemSlot[] _inventorySlots;
     private int _slotCnt;
     private bool _inventoryToggle;
+    private float _carryWeight;
 
     // key - id, value - slot count
     private Dictionary<uint, int> _inventoryDict;
+
+    public event Action<float, float> OnWeightChange;
 
     private void Awake()
     {
@@ -44,17 +51,17 @@ public class Inventory : MonoBehaviour
     {
         _inputActions = GetComponent<Player>().Actions;
         _inputActions.Player.Inventory.performed += OnInventory;
-        //_inputActions.Player.Interact.performed += OnInventoryOpenWithBox;
         _inputActions.Player.Cancel.performed += OnInventoryClose;
         // TODO : Inventory에 player가 가지고 있는 물품 넣기
 
         _playerInteract.OnInteractEvent += OnInventoryCloseBlocked;
+
+        
     }
 
     private void OnDisable()
     {
         _inputActions.Player.Inventory.performed -= OnInventory;
-        //_inputActions.Player.Interact.performed -= OnInventoryOpenWithBox;
         _inputActions.Player.Cancel.performed -= OnInventoryClose;
 
         _playerInteract.OnInteractEvent -= OnInventoryCloseBlocked;
@@ -98,6 +105,8 @@ public class Inventory : MonoBehaviour
             _playerMove.StopMove();
         else
             _playerMove.RestartMove();
+
+        OnWeightChange?.Invoke(_carryWeight, _maxWeight);
     }
 
     private void OnInventoryCloseBlocked(bool isBlock)
@@ -110,6 +119,9 @@ public class Inventory : MonoBehaviour
 
     public bool TryAddItem(Item item, int amount)
     {
+        if (!CanAddItemByWeight(item.Weight * amount))
+            return false;
+
         if (_inventoryDict.ContainsKey(item.ID) && item.Type != ItemType.Gun)
         {
             for (int i = 0; i < _slotCnt; ++i)
@@ -120,6 +132,7 @@ public class Inventory : MonoBehaviour
                 if (_inventorySlots[i].CurrentItem.ID == item.ID)
                 {
                     _inventorySlots[i].AddItem(item, amount);
+                    AddWeight(item.Weight * amount);
                     return true;
                 }
             }
@@ -136,6 +149,8 @@ public class Inventory : MonoBehaviour
         else
             _inventoryDict.Add(item.ID, 1);
 
+        AddWeight(item.Weight * amount);
+
         return true;
     }
 
@@ -143,11 +158,12 @@ public class Inventory : MonoBehaviour
     {
         int slotIndex = FindFirstEmptySlot();
 
-        if (slotIndex == -1)
+        if (slotIndex == -1 || !CanAddItemByWeight(item.Weight * amount))
             return;
 
         _inventorySlots[slotIndex].AddItem(item, amount);
         AddToDictionaryByID(item.ID);
+        AddWeight(item.Weight * amount);
     }
 
     public int FindFirstEmptySlot()
@@ -177,6 +193,32 @@ public class Inventory : MonoBehaviour
 
         if (_inventoryDict[id] == 0)
             _inventoryDict.Remove(id);
+    }
+
+    private bool CanAddItemByWeight(float weight)
+    {
+        if(_maxWeight < _carryWeight + weight)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    private void AddWeight(float weight)
+    {
+        _carryWeight += weight;
+
+        OnWeightChange?.Invoke(_carryWeight, _maxWeight);
+
+        // TODO 이동속도 변화 함수
+    }
+
+    public void LoseWeight(float weight)
+    {
+        _carryWeight -= weight;
+
+        OnWeightChange?.Invoke(_carryWeight, _maxWeight);
     }
 
 }

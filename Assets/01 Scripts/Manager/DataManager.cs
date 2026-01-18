@@ -132,7 +132,7 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
 
     private Item CreateItemBasedOnEtcData(EtcItemData data)
     {
-        Item item = new(data.Id, data.Name, data.Value, data.Value, data.WeightValue, data.MaxStackSize);
+        Item item = new(data.Id, data.Name, data.Value, data.Weight, data.WeightValue, data.MaxStackSize);
 
         return item;
     }
