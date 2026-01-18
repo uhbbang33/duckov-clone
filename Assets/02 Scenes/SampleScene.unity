@@ -1126,6 +1126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarryWeightUI
   _weightText: {fileID: 1450381737}
+  _weightSlider: {fileID: 1783888433}
 --- !u!1 &214549875
 GameObject:
   m_ObjectHideFlags: 0
@@ -11798,7 +11799,7 @@ MonoBehaviour:
   - {fileID: 1256022077}
   - {fileID: 400631886}
   - {fileID: 1738152228}
-  _maxWeight: 20000
+  _maxWeight: 25
 --- !u!1 &6104561713744950228
 GameObject:
   m_ObjectHideFlags: 0
