@@ -11,6 +11,7 @@ public class PlayerInteract : MonoBehaviour
     private InteractableStateUI _ui;
     private PlayerInteractableScanner _scanner;
     private PlayerMove _playerMove;
+    private Inventory _inventory;
 
     public event Action<bool> OnInteractEvent;
 
@@ -24,6 +25,7 @@ public class PlayerInteract : MonoBehaviour
     {
         _scanner = GetComponent<PlayerInteractableScanner>();
         _playerMove = GetComponent<PlayerMove>();
+        _inventory = GetComponent<Inventory>();
     }
 
     private void Start()
@@ -45,25 +47,34 @@ public class PlayerInteract : MonoBehaviour
 
         _ui.HideCanvas();
 
-        _boxUI.SetActive(true);
+        // TODO : OnInteractæ»¿∏∑Œ
+        if (_ui.Type == InteractableType.BOX)
+        {
+            _boxUI.SetActive(true);
 
-        _scanner.HideAllInteractUI();
+            _scanner.HideAllInteractUI();
 
-        _playerMove.StopMove();
+            _playerMove.StopMove();
 
-        GameManager.Instance.CurrentBox.OpenBox();
+            GameManager.Instance.CurrentBox.OpenBox();
 
-        OnInteractEvent?.Invoke(true);
+            OnInteractEvent?.Invoke(true);
+        }
+
+        _ui.OnInteract();
     }
 
     private void OnCancel(InputAction.CallbackContext context)
     {
-        _boxUI.SetActive(false);
+        if (_ui.Type == InteractableType.BOX)
+        {
+            _boxUI.SetActive(false);
 
-        _scanner.StartCheck();
+            _scanner.StartCheck();
 
-        _playerMove.RestartMove();
+            _playerMove.RestartMove();
 
-        OnInteractEvent?.Invoke(false);
+            OnInteractEvent?.Invoke(false);
+        }
     }
 }

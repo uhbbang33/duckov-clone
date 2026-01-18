@@ -64,7 +64,7 @@ public class PlayerInteractableScanner : MonoBehaviour
 
         foreach (InteractableStateUI ui in _previous)
         {
-            if (!_current.Contains(ui))
+            if (!_current.Contains(ui) && ui != null)
                 ui.HideCanvas();
         }
 

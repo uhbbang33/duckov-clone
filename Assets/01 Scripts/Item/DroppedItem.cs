@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
@@ -12,9 +13,12 @@ public class DroppedItem : MonoBehaviour
     public int Quantity { get { return _quantity; } }
 
     private Vector3 _positionOffset = new Vector3(0f, 0.6f, 0f);
-    private const int _sectorAngle = 30;
+    private const int _sectorAngle = 40;
     private const float _dropMinDistance = 0.5f;
-    private const float _dropMaxDistance = 1f;
+    private const float _dropMaxDistance = 1.5f;
+    private const float _overlapDistance = 0.1f;
+
+    public event Action FinshInitialize;
 
     public void InitializeDroppedItem(Item item, int quantity)
     {
@@ -24,20 +28,22 @@ public class DroppedItem : MonoBehaviour
         GetComponent<SpriteRenderer>().sprite = ItemSpriteDictionary.Instance.GetItemSprite(item.ID);
 
         SetPosition();
+
+        FinshInitialize?.Invoke();
     }
 
     private void SetPosition()
     {
         Transform playerTransform = GameManager.Instance.PlayerObject.transform;
 
-        const int tryNum = 5;
+        const int tryNum = 10;
 
         for (int i = 0; i < tryNum; ++i)
         {
-            float angle = Random.Range(-_sectorAngle, _sectorAngle);
+            float angle = UnityEngine.Random.Range(-_sectorAngle, _sectorAngle);
             Vector3 direction = Quaternion.Euler(0f, angle, 0f) * playerTransform.forward;
 
-            float distance = Random.Range(_dropMinDistance, _dropMaxDistance);
+            float distance = UnityEngine.Random.Range(_dropMinDistance, _dropMaxDistance);
             Vector3 pos = playerTransform.position + direction * distance;
 
             if (!TryGetGroundPosition(pos, out Vector3 groundPos)
@@ -63,6 +69,13 @@ public class DroppedItem : MonoBehaviour
 
     private bool IsOverlapWithOthers(Vector3 pos)
     {
-        return Physics.OverlapSphere(pos, 0.5f, _interactableLayer).Length != 0;
+        return Physics.OverlapSphere(pos, _overlapDistance, _interactableLayer).Length != 0;
+    }
+
+    public void OnInteract()
+    {
+        GameManager.Instance.Inventory.TryAddItem(_item, _quantity);
+
+        Destroy(gameObject);
     }
 }

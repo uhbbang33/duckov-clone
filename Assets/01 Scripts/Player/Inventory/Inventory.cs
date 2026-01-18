@@ -44,7 +44,7 @@ public class Inventory : MonoBehaviour
     {
         _inputActions = GetComponent<Player>().Actions;
         _inputActions.Player.Inventory.performed += OnInventory;
-        _inputActions.Player.Interact.performed += OnInventoryOpenWithBox;
+        //_inputActions.Player.Interact.performed += OnInventoryOpenWithBox;
         _inputActions.Player.Cancel.performed += OnInventoryClose;
         // TODO : Inventory에 player가 가지고 있는 물품 넣기
 
@@ -54,7 +54,7 @@ public class Inventory : MonoBehaviour
     private void OnDisable()
     {
         _inputActions.Player.Inventory.performed -= OnInventory;
-        _inputActions.Player.Interact.performed -= OnInventoryOpenWithBox;
+        //_inputActions.Player.Interact.performed -= OnInventoryOpenWithBox;
         _inputActions.Player.Cancel.performed -= OnInventoryClose;
 
         _playerInteract.OnInteractEvent -= OnInventoryCloseBlocked;
@@ -62,25 +62,15 @@ public class Inventory : MonoBehaviour
 
     private void OnInventory(InputAction.CallbackContext context)
     {
-        // TODO : 상호작용 UI도 없어져야함
-        // TODO : UIManager에서 
-        // TODO : Player HP, SP Bar hide
-        _inventoryToggle = !_inventoryToggle;
-
-        _inventoryUI.SetActive(_inventoryToggle);
-
-        if (_inventoryToggle)
-            _playerMove.StopMove();
-        else
-            _playerMove.RestartMove();
+        OpenInventory();
     }
 
-    private void OnInventoryOpenWithBox(InputAction.CallbackContext context)
+    public void OnInventoryOpenWithBox()
     {
         if (_playerInteract.UI == null || _inventoryToggle)
             return;
 
-        OnInventory(context);
+        OpenInventory();
     }
 
     private void OnInventoryClose(InputAction.CallbackContext context)
@@ -95,6 +85,21 @@ public class Inventory : MonoBehaviour
         _inventoryToggle = false;
     }
 
+    private void OpenInventory()
+    {
+        // TODO : 상호작용 UI도 없어져야함
+        // TODO : UIManager에서 
+        // TODO : Player HP, SP Bar hide
+        _inventoryToggle = !_inventoryToggle;
+
+        _inventoryUI.SetActive(_inventoryToggle);
+
+        if (_inventoryToggle)
+            _playerMove.StopMove();
+        else
+            _playerMove.RestartMove();
+    }
+
     private void OnInventoryCloseBlocked(bool isBlock)
     {
         if (isBlock)
@@ -103,7 +108,7 @@ public class Inventory : MonoBehaviour
             _inputActions.Player.Inventory.performed += OnInventory;
     }
 
-    public bool TryAddItemByDoubleClick(Item item, int amount)
+    public bool TryAddItem(Item item, int amount)
     {
         if (_inventoryDict.ContainsKey(item.ID) && item.Type != ItemType.Gun)
         {

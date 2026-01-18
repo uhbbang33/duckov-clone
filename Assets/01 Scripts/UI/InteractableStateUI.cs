@@ -6,8 +6,14 @@ public class InteractableStateUI : MonoBehaviour
     [SerializeField] private GameObject _canvas;
     [SerializeField] protected Image _stateImage;
     [SerializeField] private GameObject _infoUI;
+    [SerializeField] private InteractableType _type;
 
     private PlayerInteract _interact;
+
+    public InteractableType Type
+    {
+        get { return _type; }
+    }
 
     private void Start()
     {
@@ -28,9 +34,6 @@ public class InteractableStateUI : MonoBehaviour
     {
         _infoUI.SetActive(true);
 
-        _stateImage.sprite = GameResources.Instance.OpenableBoxSprite;
-
-        // PlayerInteract에 넘겨주기
         _interact.UI = this;
     }
 
@@ -38,9 +41,8 @@ public class InteractableStateUI : MonoBehaviour
     {
         _infoUI.SetActive(false);
 
-        _stateImage.sprite = GameResources.Instance.UnopenedBoxSprite;
-
-        // PlayerInteract에서 빠지기
         _interact.UI = null;
     }
+
+    public virtual void OnInteract() { }
 }

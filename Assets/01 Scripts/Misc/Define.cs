@@ -19,3 +19,10 @@ public enum SlotType
     BOX,
     STORAGE
 }
+
+public enum InteractableType
+{
+    BOX,
+    DROPPEDITEM,
+
+}

@@ -154,7 +154,7 @@ public class ItemSlotUI : MonoBehaviour,
 
     private void TryMoveToInventory()
     {
-        if(GameManager.Instance.Inventory.TryAddItemByDoubleClick(_itemSlot.CurrentItem, _itemSlot.Quantity))
+        if(GameManager.Instance.Inventory.TryAddItem(_itemSlot.CurrentItem, _itemSlot.Quantity))
         {
             RemoveItem();
         }
