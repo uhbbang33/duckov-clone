@@ -12,13 +12,11 @@ public class PlayerInteractableScanner : MonoBehaviour
     private HashSet<InteractableStateUI> _current = new();
     private HashSet<InteractableStateUI> _previous = new();
     private InteractableStateUI _currentNearestUI;
-    private PlayerInteract _playerInteract;
     
     private void Awake()
     {
         _farResults = new Collider[10];
         _nearResults = new Collider[10];
-        _playerInteract = GetComponent<PlayerInteract>();
     }
 
     private void Start()

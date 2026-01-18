@@ -74,11 +74,6 @@ public class ItemSlotUI : MonoBehaviour,
             _itemSlot.Quantity += movedQuantity;
             dragUI._itemSlot.SubtractItem(movedQuantity);
 
-            if (dragUI._itemSlot.Quantity == 0 && dragUI.Slot.Type == SlotType.INVENTORY)
-            {
-                GameManager.Instance.Inventory.RemoveItemSlot(dragItem.ID);
-            }
-
             RefreshUI();
             dragUI.RefreshUI();
 

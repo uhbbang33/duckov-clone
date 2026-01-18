@@ -47,6 +47,9 @@ public class ItemSlot
         _quantity -= amount;
         if (_quantity <= 0)
         {
+            if (_slotType == SlotType.INVENTORY)
+                GameManager.Instance.Inventory.RemoveItemSlot(_currentItem.ID);
+
             _currentItem = null;
             _quantity = 0;
         }

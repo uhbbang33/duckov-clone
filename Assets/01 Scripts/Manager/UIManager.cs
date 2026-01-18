@@ -106,7 +106,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         }
     }
 
-    // On Split Button Click
+    #region On Button Click
     public void OnSplitButtonClick()
     {
         _splitUI.CurrentSlot = _currentSlot;
@@ -116,7 +116,11 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 
     public void OnDiscardButtonClick()
     {
+        GameManager.Instance.CreateDropItemObject(_currentSlot.CurrentItem, _currentSlot.Quantity);
+
         _currentSlot.SubtractItem(_currentSlot.Quantity);
-        
+        CloseSlotMenu();
     }
+
+    #endregion On Button Click
 }
