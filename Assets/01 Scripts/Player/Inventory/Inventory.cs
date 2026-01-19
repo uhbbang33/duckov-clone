@@ -122,6 +122,7 @@ public class Inventory : MonoBehaviour
         if (!CanAddItemByWeight(item.Weight * amount))
             return false;
 
+        // 인벤토리에 같은 아이템이 있을 경우
         if (_inventoryDict.ContainsKey(item.ID) && item.Type != ItemType.Gun)
         {
             for (int i = 0; i < _slotCnt; ++i)
@@ -137,6 +138,7 @@ public class Inventory : MonoBehaviour
             }
         }
 
+        // 빈 슬롯에 아이템을 넣는 경우
         int slotIndex = FindFirstEmptySlot();
         if (slotIndex == -1)
             return false;
