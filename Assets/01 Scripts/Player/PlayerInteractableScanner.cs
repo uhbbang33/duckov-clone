@@ -88,14 +88,15 @@ public class PlayerInteractableScanner : MonoBehaviour
 
         for (int i = 0; i < nearBoxCnt; ++i)
         {
-            GameObject obj = _nearResults[i].gameObject;
+            Collider obj = _nearResults[i];
 
-            float dist = (scanPos - obj.transform.position).sqrMagnitude;
+            Vector3 closestPoint = obj.ClosestPoint(scanPos);
+            float dist = (scanPos - closestPoint).sqrMagnitude;
 
             if (dist < minDist)
             {
-                dist = minDist;
-                nearestObj = obj;
+                minDist = dist;
+                nearestObj = obj.gameObject;
             }
         }
 
@@ -104,7 +105,7 @@ public class PlayerInteractableScanner : MonoBehaviour
 
     private void ChangeNearestUI(InteractableStateUI nearestUI)
     {
-        if (_currentNearestUI == nearestUI)
+        if (_currentNearestUI?.GetInstanceID() == nearestUI?.GetInstanceID())
             return;
 
         if (_currentNearestUI != null)
