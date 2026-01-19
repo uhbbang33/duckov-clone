@@ -119,9 +119,6 @@ public class Inventory : MonoBehaviour
 
     public bool TryAddItem(Item item, int amount)
     {
-        if (!CanAddItemByWeight(item.Weight * amount))
-            return false;
-
         // 인벤토리에 같은 아이템이 있을 경우
         if (_inventoryDict.ContainsKey(item.ID) && item.Type != ItemType.Gun)
         {
@@ -158,7 +155,7 @@ public class Inventory : MonoBehaviour
     {
         int slotIndex = FindFirstEmptySlot();
 
-        if (slotIndex == -1 || !CanAddItemByWeight(item.Weight * amount))
+        if (slotIndex == -1)
             return;
 
         _inventorySlots[slotIndex].AddItem(item, amount);
@@ -194,16 +191,6 @@ public class Inventory : MonoBehaviour
             _inventoryDict.Remove(id);
     }
 
-    private bool CanAddItemByWeight(float weight)
-    {
-        if(_maxWeight < _carryWeight + weight)
-        {
-            return false;
-        }
-
-        return true;
-    }
-
     public void AddWeight(float weight)
     {
         _carryWeight += weight;
@@ -211,7 +198,7 @@ public class Inventory : MonoBehaviour
 
         OnWeightChange?.Invoke(_carryWeight, _maxWeight);
 
-        // TODO 이동속도 변화 함수
+        ChangePlayerSpeed();
     }
 
     public void LoseWeight(float weight)
@@ -220,6 +207,14 @@ public class Inventory : MonoBehaviour
         _carryWeight = Mathf.Round(_carryWeight * 1000f) / 1000f;
 
         OnWeightChange?.Invoke(_carryWeight, _maxWeight);
+
+        ChangePlayerSpeed();
+    }
+
+    private void ChangePlayerSpeed()
+    {
+        float weightPercentage = (_carryWeight / _maxWeight) * 100f;
+        _playerMove.ChangeSpeed(weightPercentage);
     }
 
 }

@@ -16,6 +16,7 @@ public class PlayerMove : MonoBehaviour
     private float _rollCoolTime;
     private bool _isRun;
     private bool _isRoll;
+    private float _speedDebuffRate;
 
     [SerializeField] private float _rollTickSPCost;
     [SerializeField] private float _runTickSPCost;
@@ -66,6 +67,8 @@ public class PlayerMove : MonoBehaviour
             dir = SetDirection(_moveInput);
             speed = _isRun ? _runSpeed : _walkSpeed;
         }
+
+        speed *= ((100f - _speedDebuffRate) / 100f);
 
         if (dir.sqrMagnitude > 0.01f)
             _rb.linearVelocity = new Vector3(dir.x * speed, _rb.linearVelocity.y, dir.z * speed);
@@ -263,6 +266,20 @@ public class PlayerMove : MonoBehaviour
         _sp.IsReducing = false;
         _isRun = false;
         _anim.SetBool("IsRun", false);
+    }
+
+    public void ChangeSpeed(float ReducePercentage)
+    {
+        if (ReducePercentage >= 25f && ReducePercentage < 50f)
+            _speedDebuffRate = 0f;
+        else if (ReducePercentage >= 25f && ReducePercentage < 50f)
+            _speedDebuffRate = 10f;
+        else if (ReducePercentage >= 50f && ReducePercentage < 75f)
+            _speedDebuffRate = 20f;
+        else if (ReducePercentage >= 75f && ReducePercentage < 100f)
+            _speedDebuffRate = 40f;
+        else if (_speedDebuffRate >= 100f)
+            _speedDebuffRate = 100f;
     }
 
 
