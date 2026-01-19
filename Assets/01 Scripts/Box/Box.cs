@@ -8,6 +8,7 @@ public abstract class Box : MonoBehaviour
     private bool _isOpened;
     private int _slotCnt;
 
+    private const int _ammoQuantity = 30;
     private void Start()
     {
         _slotCnt = GameManager.Instance.BoxSlotNum;
@@ -56,7 +57,12 @@ public abstract class Box : MonoBehaviour
         for (int i = 0; i < itemCnt; ++i)
         {
             Item item = GetRandomItemByType();
-            _boxSlots[i].AddItem(item, 1);
+
+            int itemQuantity = 1;
+            if (item.Type == ItemType.Ammo)
+                itemQuantity = _ammoQuantity;
+
+            _boxSlots[i].AddItem(item, itemQuantity);
         }
     }
 
