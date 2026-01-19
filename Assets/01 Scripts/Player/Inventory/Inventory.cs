@@ -205,6 +205,7 @@ public class Inventory : MonoBehaviour
     public void AddWeight(float weight)
     {
         _carryWeight += weight;
+        _carryWeight = Mathf.Round(_carryWeight * 1000f) / 1000f;
 
         OnWeightChange?.Invoke(_carryWeight, _maxWeight);
 
@@ -214,6 +215,7 @@ public class Inventory : MonoBehaviour
     public void LoseWeight(float weight)
     {
         _carryWeight -= weight;
+        _carryWeight = Mathf.Round(_carryWeight * 1000f) / 1000f;
 
         OnWeightChange?.Invoke(_carryWeight, _maxWeight);
     }
