@@ -120,33 +120,37 @@ public class Inventory : MonoBehaviour
     public bool TryAddItem(Item item, int amount)
     {
         // 인벤토리에 같은 아이템이 있을 경우
-        if (_inventoryDict.ContainsKey(item.ID) && item.Type != ItemType.Gun)
+        if (_inventoryDict.ContainsKey(item.ID))
         {
             for (int i = 0; i < _slotCnt; ++i)
             {
                 if (_inventorySlots[i].CurrentItem == null)
                     continue;
 
-                if (_inventorySlots[i].CurrentItem.ID == item.ID)
+                if (_inventorySlots[i].CurrentItem.ID == item.ID &&
+                    _inventorySlots[i].CurrentItem.MaxStackSize != _inventorySlots[i].Quantity) // 두번째 조건 삭제
                 {
-                    _inventorySlots[i].AddItem(item, amount);
-                    return true;
+                    int remainAmount = _inventorySlots[i].AddItem(item, amount);
+
+                    if (remainAmount == 0)
+                        return true;
+
+                    amount = remainAmount;
                 }
             }
         }
 
-        // 빈 슬롯에 아이템을 넣는 경우
+        // 같은 아이템이 없어서 빈 슬롯에 아이템을 넣는 경우
         int slotIndex = FindFirstEmptySlot();
         if (slotIndex == -1)
             return false;
 
         _inventorySlots[slotIndex].AddItem(item, amount);
 
-        if (item.Type == ItemType.Gun && _inventoryDict.ContainsKey(item.ID))
+        if (_inventoryDict.ContainsKey(item.ID))
             _inventoryDict[item.ID] += 1;
         else
             _inventoryDict.Add(item.ID, 1);
-
 
         return true;
     }

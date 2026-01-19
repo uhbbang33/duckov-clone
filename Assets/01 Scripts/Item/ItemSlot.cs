@@ -44,6 +44,8 @@ public class ItemSlot
 
     public void SubtractItem(int amount = 1)
     {
+        if (amount == 0) return;
+
         _quantity -= amount;
 
         if (_slotType == SlotType.INVENTORY)
@@ -63,17 +65,39 @@ public class ItemSlot
         _ui.RefreshUI();
     }
 
-    public void AddItem(Item item, int amount = 1)
+    public int AddItem(Item item, int amount = 1)
     {
+        if (amount == 0) return amount;
+
+        if (_currentItem == null)
+        {
+            GameManager.Instance.Inventory.AddToDictionaryByID(item.ID);
+        }
+
         _currentItem = item;
-        _quantity += amount;
+
+        int addableItemCount = (int)item.MaxStackSize - _quantity;
+        int addAmount = 0;
+
+        if(addableItemCount >= amount)
+        {
+            _quantity += amount;
+            addAmount = amount;
+        }
+        else
+        {
+            _quantity += addableItemCount;
+            addAmount = addableItemCount;
+        }
 
         if (_slotType == SlotType.INVENTORY)
         {
-            GameManager.Instance.Inventory.AddWeight(_currentItem.Weight * amount);
+            GameManager.Instance.Inventory.AddWeight(_currentItem.Weight * addAmount);
         }
 
         _ui.RefreshUI();
+
+        return amount - addAmount;
     }
 
     public void SplitItem(int amount)
