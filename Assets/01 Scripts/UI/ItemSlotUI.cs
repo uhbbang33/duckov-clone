@@ -56,36 +56,48 @@ public class ItemSlotUI : MonoBehaviour,
         if (eventData.pointerDrag == null)
             return;
 
-        ItemSlotUI dragUI = eventData.pointerDrag.GetComponent<ItemSlotUI>();
+        ItemSlotUI startUI = eventData.pointerDrag.GetComponent<ItemSlotUI>();
 
-        if (dragUI == null || dragUI == this)
+        if (startUI == null || startUI == this)
             return;
 
-        Item dragItem = dragUI._itemSlot.CurrentItem;
-        Item dropItem = _itemSlot.CurrentItem;
+        Item startItem = startUI._itemSlot.CurrentItem;
+        Item endItem = _itemSlot.CurrentItem;
+
+        // Inventory Weight
+        if (startUI._itemSlot.Type == SlotType.INVENTORY)
+        {
+            GameManager.Instance.Inventory.LoseWeight(startItem.Weight * startUI._itemSlot.Quantity);
+        }
+
+        if (_itemSlot.Type == SlotType.INVENTORY)
+        {
+            GameManager.Instance.Inventory.AddWeight(startItem.Weight * startUI._itemSlot.Quantity);
+        }
+
 
         // 같은 ID 일 경우 개수 합치기
-        if (dragItem != null && dropItem != null
-            && dragItem.ID == dropItem.ID
-            && dragItem.Type != ItemType.Gun)
+        if (startItem != null && endItem != null
+            && startItem.ID == endItem.ID
+            && startItem.Type != ItemType.Gun)
         {
-            int movedQuantity = dragUI._itemSlot.Quantity;
+            int movedQuantity = startUI._itemSlot.Quantity;
 
             _itemSlot.Quantity += movedQuantity;
-            dragUI._itemSlot.SubtractItem(movedQuantity);
+            startUI._itemSlot.SubtractItem(movedQuantity);
 
             RefreshUI();
-            dragUI.RefreshUI();
+            startUI.RefreshUI();
 
             return;
         }
 
-        SwapItem(dragUI);
+        SwapItem(startUI);
 
         // update inventory
-        if (dragUI._itemSlot.Type == SlotType.INVENTORY && dragUI._itemSlot.CurrentItem == null)
+        if (startUI._itemSlot.Type == SlotType.INVENTORY && startUI._itemSlot.CurrentItem == null)
         {
-            GameManager.Instance.Inventory.RemoveItemSlot(dragItem.ID);
+            GameManager.Instance.Inventory.RemoveItemSlot(startItem.ID);
         }
 
         if (_itemSlot.Type == SlotType.INVENTORY && _itemSlot.CurrentItem != null)
@@ -94,7 +106,7 @@ public class ItemSlotUI : MonoBehaviour,
         }
 
         RefreshUI();
-        dragUI.RefreshUI();
+        startUI.RefreshUI();
     }
 
     public void OnEndDrag(PointerEventData eventData)

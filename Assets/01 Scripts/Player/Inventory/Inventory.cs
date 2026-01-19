@@ -132,7 +132,6 @@ public class Inventory : MonoBehaviour
                 if (_inventorySlots[i].CurrentItem.ID == item.ID)
                 {
                     _inventorySlots[i].AddItem(item, amount);
-                    AddWeight(item.Weight * amount);
                     return true;
                 }
             }
@@ -149,7 +148,6 @@ public class Inventory : MonoBehaviour
         else
             _inventoryDict.Add(item.ID, 1);
 
-        AddWeight(item.Weight * amount);
 
         return true;
     }
@@ -163,7 +161,6 @@ public class Inventory : MonoBehaviour
 
         _inventorySlots[slotIndex].AddItem(item, amount);
         AddToDictionaryByID(item.ID);
-        AddWeight(item.Weight * amount);
     }
 
     public int FindFirstEmptySlot()
@@ -205,7 +202,7 @@ public class Inventory : MonoBehaviour
         return true;
     }
 
-    private void AddWeight(float weight)
+    public void AddWeight(float weight)
     {
         _carryWeight += weight;
 

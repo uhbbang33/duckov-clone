@@ -48,7 +48,6 @@ public class ItemSlot
 
         if (_slotType == SlotType.INVENTORY)
         {
-            // TODO
             GameManager.Instance.Inventory.LoseWeight(_currentItem.Weight * amount);
         }
 
@@ -68,6 +67,12 @@ public class ItemSlot
     {
         _currentItem = item;
         _quantity += amount;
+
+        if (_slotType == SlotType.INVENTORY)
+        {
+            GameManager.Instance.Inventory.AddWeight(_currentItem.Weight * amount);
+        }
+
         _ui.RefreshUI();
     }
 
