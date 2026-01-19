@@ -6,7 +6,8 @@ public class PlayerInteractableScanner : MonoBehaviour
     [SerializeField] private float _showUIDistance;
     [SerializeField] private float _openableDistance;
     [SerializeField] private LayerMask _interactObjectLayer;
-    [SerializeField] private float _nearestSphereOffset;
+    [SerializeField] private float _nearestSphereZOffset;
+    [SerializeField] private float _nearestSphereYOffset;
 
     private Collider[] _farResults;
     private Collider[] _nearResults;
@@ -77,7 +78,7 @@ public class PlayerInteractableScanner : MonoBehaviour
         GameObject nearestObj = null;
         float minDist = float.MaxValue;
 
-        Vector3 scanPos = transform.position + transform.forward * _nearestSphereOffset;
+        Vector3 scanPos = transform.position + transform.forward * _nearestSphereZOffset + transform.up * _nearestSphereYOffset;
 
         int nearBoxCnt  = Physics.OverlapSphereNonAlloc(
                  scanPos,
@@ -142,6 +143,6 @@ public class PlayerInteractableScanner : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position + transform.forward * _nearestSphereOffset, _openableDistance);
+        Gizmos.DrawWireSphere(transform.position + transform.forward * _nearestSphereZOffset + transform.up * _nearestSphereYOffset, _openableDistance);
     }
 }
