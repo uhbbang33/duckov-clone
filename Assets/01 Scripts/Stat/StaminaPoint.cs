@@ -11,7 +11,7 @@ public class StaminaPoint : MonoBehaviour
 
     // TODO: Json Data
     [SerializeField] private float _maxSP;
-    [SerializeField] private float _healAmount;
+    [SerializeField] private float _healAmountPerTick;
     [SerializeField] private float _runDelayTime;
     [SerializeField] private float _healDelayTime;
     [SerializeField] private float _healFirstDelayTime;
@@ -70,15 +70,18 @@ public class StaminaPoint : MonoBehaviour
         _reduceRoutine = StartCoroutine(ReducePerSecondRoutine(amount));
     }
 
-    private void HealStamina()
+    private void HealStamina(float healAmount)
     {
-        _currentSP += _healAmount;
+        _currentSP += healAmount;
 
         if (_currentSP > _maxSP)
             _currentSP = _maxSP;
 
         if (_currentSP == _maxSP)
+        {
             _SPSlider.gameObject.SetActive(false);
+            return;
+        }
 
         _currentSP = MathF.Round(_currentSP, 2);
 
@@ -112,7 +115,7 @@ public class StaminaPoint : MonoBehaviour
 
         while (_currentSP < _maxSP)
         {
-            HealStamina();
+            HealStamina(_healAmountPerTick);
             yield return _waitHealDelay;
         }
         

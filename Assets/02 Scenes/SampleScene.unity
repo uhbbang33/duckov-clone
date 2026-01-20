@@ -11816,7 +11816,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StaminaPoint
   _maxSP: 100
-  _healAmount: 0.1
+  _healAmountPerTick: 0.1
   _runDelayTime: 0.02
   _healDelayTime: 0.1
   _healFirstDelayTime: 1.5
