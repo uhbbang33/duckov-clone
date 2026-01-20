@@ -12,6 +12,8 @@ public class ItemSlotUI : MonoBehaviour,
 
     private ItemSlot _itemSlot;
     private Image _image;
+    private Transform _originParent;
+    private Vector2 _originAncghoredPos;
 
     private float _lastClickTime;
 
@@ -44,7 +46,11 @@ public class ItemSlotUI : MonoBehaviour,
         if(_itemSlot == null || _itemSlot.Quantity == 0)
             return;
 
-        transform.SetAsLastSibling();
+        _originParent = transform.parent;
+        _originAncghoredPos = ((RectTransform)transform).anchoredPosition;
+        
+        transform.SetParent(UIManager.Instance.DragCanvasTransform);
+
         _image.raycastTarget = false;
     }
 
@@ -105,6 +111,9 @@ public class ItemSlotUI : MonoBehaviour,
     {
         transform.localPosition = Vector3.zero;
         _image.raycastTarget = true;
+
+        transform.SetParent(_originParent);
+        ((RectTransform)transform).anchoredPosition = _originAncghoredPos;
     }
 
     private void SwapItem(ItemSlotUI target)
@@ -214,7 +223,7 @@ public class ItemSlotUI : MonoBehaviour,
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (_itemSlot.CurrentItem != null)
+        if (_itemSlot != null && _itemSlot.CurrentItem != null)
             _infoUI.ShowUI();
     }
 

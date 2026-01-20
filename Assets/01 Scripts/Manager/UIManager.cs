@@ -16,8 +16,11 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     [SerializeField] private GameObject _discardButton;
 
     [SerializeField] private ItemSplitUI _splitUI;
+    [SerializeField] private Transform _dragCanvasTransform;
 
     private ItemSlot _currentSlot;
+
+    public Transform DragCanvasTransform { get { return _dragCanvasTransform; } }
 
     protected override void Awake()
     {
