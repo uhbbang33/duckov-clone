@@ -4,11 +4,17 @@ public abstract class Box : MonoBehaviour
 {
     private ItemSlot[] _boxSlots;
     protected ItemTypeWeight[] _typeWeights;
+    private InteractableBoxUI _boxInteractableUI;
 
-    private bool _isOpened;
     private int _slotCnt;
 
     private const int _ammoQuantity = 30;
+
+    private void Awake()
+    {
+        _boxInteractableUI = GetComponent<InteractableBoxUI>();
+    }
+
     private void Start()
     {
         _slotCnt = GameManager.Instance.BoxSlotNum;
@@ -43,10 +49,10 @@ public abstract class Box : MonoBehaviour
             _boxSlots[i].UI = GameManager.Instance.BoxItemSlots[i].GetComponent<ItemSlotUI>();
         }
 
-        if (!_isOpened)
+        if (!_boxInteractableUI.HasBeenOpened)
         {
             SetBoxItems();
-            _isOpened = true;
+            _boxInteractableUI.HasBeenOpened = true;
         }
     }
 

@@ -1,11 +1,17 @@
 
 public class InteractableBoxUI : InteractableStateUI
 {
-    private bool _isOpened;
+    private bool _hasBeenOpened;
+
+    public bool HasBeenOpened
+    {
+        get { return _hasBeenOpened; }
+        set { _hasBeenOpened = value; }
+    }
 
     private void Awake()
     {
-        _isOpened = false;
+        _hasBeenOpened = false;
     }
 
     public override void Selected()
@@ -19,7 +25,7 @@ public class InteractableBoxUI : InteractableStateUI
     {
         base.Deselected();
 
-        if (_isOpened)
+        if (_hasBeenOpened)
             _stateImage.sprite = GameResources.Instance.OpenedBoxSprite;
         else
             _stateImage.sprite = GameResources.Instance.UnopenedBoxSprite;
