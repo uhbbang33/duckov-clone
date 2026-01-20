@@ -59,8 +59,8 @@ public class ItemInfoUI : MonoBehaviour
 
         _nameText.text = item.Name;
         _idText.text = "#" + item.ID.ToString();
-        _weightText.text = item.Weight.ToString();
-        _valueText.text = "$" + item.Value.ToString();
+        _weightText.text = item.Weight.ToString() + " kg";
+        _valueText.text = "$ " + item.Value.ToString();
 
         if (item.Type == ItemType.Medicine || item.Type == ItemType.Food)
         {
@@ -90,13 +90,18 @@ public class ItemInfoUI : MonoBehaviour
         _medicineFoodEffectText.text = "- ";
 
         if (item.HealHP != 0)
-            _medicineFoodEffectText.text += "회복량: " + item.HealHP.ToString();
-        if(item.DurabilityCost != 0)
-            _medicineFoodEffectText.text += "회복량: " + item.DurabilityCost.ToString();
+            _medicineFoodEffectText.text += "회복량: " + item.HealHP.ToString() + "  ";
+        
         if (item.Hunger != 0)
-            _medicineFoodEffectText.text += "에너지: " + item.Hunger.ToString();
+            _medicineFoodEffectText.text += "포만감: " + item.Hunger.ToString() + "  ";
         if (item.Hydration != 0)
             _medicineFoodEffectText.text += "수분: " + item.Hydration.ToString();
+
+        if (item.DurabilityCost != 0 && item.DurabilityCost != 100)
+        {
+            _medicineFoodEffectText.text += "\n- ";
+            _medicineFoodEffectText.text += "내구도 소모: " + item.DurabilityCost.ToString();
+        }
     }
 
     private void SetGunValueText(GunItem item)
