@@ -4,10 +4,12 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class ItemSlotUI : MonoBehaviour,
-    IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerClickHandler
+    IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private TextMeshProUGUI _nameText;
     [SerializeField] private TextMeshProUGUI _countText;
+    [SerializeField] private ItemInfoUI _infoUI;
+
     private ItemSlot _itemSlot;
     private Image _image;
 
@@ -96,6 +98,7 @@ public class ItemSlotUI : MonoBehaviour,
         }
 
         SwapItem(startUI);
+        _infoUI.ShowUI();
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -146,7 +149,9 @@ public class ItemSlotUI : MonoBehaviour,
         if (_itemSlot.CurrentItem == null)
             return;
 
-        else if (_itemSlot.Type == SlotType.INVENTORY)
+        _infoUI.HideUI();
+
+        if (_itemSlot.Type == SlotType.INVENTORY)
         {
             TryMoveToBox();
         }
@@ -204,6 +209,23 @@ public class ItemSlotUI : MonoBehaviour,
 
     #endregion Double Click
 
+
+    #region Hover
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (_itemSlot.CurrentItem != null)
+            _infoUI.ShowUI();
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        _infoUI.HideUI();
+    }
+
+    #endregion Hover
+
+
     public void RefreshUI()
     {
         if (_itemSlot.CurrentItem != null)
@@ -245,4 +267,8 @@ public class ItemSlotUI : MonoBehaviour,
         }
     }
 
+    public void SetInfoUI(Item item)
+    {
+        _infoUI.SetInfoUI(item);
+    }
 }

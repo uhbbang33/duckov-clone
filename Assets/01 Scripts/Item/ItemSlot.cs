@@ -16,7 +16,11 @@ public class ItemSlot
     public Item CurrentItem
     {
         get { return _currentItem; }
-        set { _currentItem = value; }
+        set
+        {
+            _currentItem = value;
+            _ui.SetInfoUI(_currentItem);
+        }
     }
 
     public int Quantity
@@ -75,6 +79,7 @@ public class ItemSlot
         }
 
         _currentItem = item;
+        _ui.SetInfoUI(_currentItem);
 
         int addableItemCount = (int)item.MaxStackSize - _quantity;
         int addAmount = 0;
