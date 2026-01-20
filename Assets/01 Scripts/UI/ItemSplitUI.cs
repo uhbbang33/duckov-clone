@@ -33,8 +33,6 @@ public class ItemSplitUI : MonoBehaviour
     // On Split Button Click
     public void SplitItem()
     {
-        _currentSlot.Quantity -= (int)_slider.value;
-        _currentSlot.UI.RefreshUI();
         _currentSlot.SplitItem((int)_slider.value);
 
         gameObject.SetActive(false);

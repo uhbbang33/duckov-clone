@@ -107,8 +107,12 @@ public class ItemSlot
 
     public void SplitItem(int amount)
     {
+        SubtractItem(amount);
+
         if (_slotType == SlotType.INVENTORY)
+        {
             GameManager.Instance.Inventory.AddItemToEmptySlot(_currentItem, amount);
+        }
         else if (_slotType == SlotType.BOX)
         {
             GameManager.Instance.CurrentBox.AddItemToEmptySlot(_currentItem, amount);
