@@ -129,6 +129,7 @@ MonoBehaviour:
   _canvas: {fileID: 2067115349593974077}
   _stateImage: {fileID: 8952180848829287501}
   _infoUI: {fileID: 432575496164260880}
+  _type: 0
 --- !u!1001 &155292251259357331
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -137,9 +138,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4654872282747445529}
     m_Modifications:
+    - target: {fileID: 299318289019434115, guid: a7c188ee053654d44ada55e4cd30a380, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2200126132469181870, guid: a7c188ee053654d44ada55e4cd30a380, type: 3}
       propertyPath: m_Name
       value: InteractableUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 2200126132469181870, guid: a7c188ee053654d44ada55e4cd30a380, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6854254998573590498, guid: a7c188ee053654d44ada55e4cd30a380, type: 3}
       propertyPath: m_Pivot.x
