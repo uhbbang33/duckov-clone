@@ -11,9 +11,9 @@ public class PlayerInteract : MonoBehaviour
     private InteractableStateUI _ui;
     private PlayerInteractableScanner _scanner;
     private PlayerMove _playerMove;
-    private Inventory _inventory;
 
     public event Action<bool> OnInteractEvent;
+    public event Action OnCloseUIEvent;
 
     public InteractableStateUI UI
     {
@@ -25,7 +25,6 @@ public class PlayerInteract : MonoBehaviour
     {
         _scanner = GetComponent<PlayerInteractableScanner>();
         _playerMove = GetComponent<PlayerMove>();
-        _inventory = GetComponent<Inventory>();
     }
 
     private void Start()
@@ -66,6 +65,10 @@ public class PlayerInteract : MonoBehaviour
 
     private void OnCancel(InputAction.CallbackContext context)
     {
+        if (_ui == null) return;
+
+        OnCloseUIEvent?.Invoke();
+
         if (_ui.Type == InteractableType.BOX)
         {
             _boxUI.SetActive(false);

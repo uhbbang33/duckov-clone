@@ -23,6 +23,15 @@ public class ItemInfoUI : MonoBehaviour
     [Header("Offset")]
     [SerializeField] private Vector2 _positionOffest;
 
+    private PlayerInteract _playerInteract;
+
+    private void Start()
+    {
+     // TODO
+        _playerInteract = GameManager.Instance.PlayerObject.GetComponent<PlayerInteract>();
+        _playerInteract.OnCloseUIEvent += HideUI;
+    }
+
     private void Update()
     {
         if (Mouse.current == null)
