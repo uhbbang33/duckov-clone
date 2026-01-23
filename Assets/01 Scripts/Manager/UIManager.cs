@@ -1,22 +1,32 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIManager : SingletonMonoBehaviour<UIManager>
 {
-    [SerializeField] private Image[] _boxSlotsImage;
-    [SerializeField] private GameObject _slotMenuUI;
-
+    [Space(10)]
+    [Header("Offset")]
     [SerializeField] private Vector3 _inventorySlotMenuOffset;
     [SerializeField] private Vector3 _boxSlotMenuOffset;
 
+    [Space(10)]
+    [Header("Button")]
     [SerializeField] private GameObject _equipButton;
     [SerializeField] private GameObject _unloadButton;
     [SerializeField] private GameObject _useButton;
     [SerializeField] private GameObject _splitButton;
     [SerializeField] private GameObject _discardButton;
 
+    [Space(10)]
+    [Header("Text")]
+    [SerializeField] private TextMeshProUGUI _boxItemCountText;
+    [SerializeField] private TextMeshProUGUI _inventoryItemCountText;
+
+    [Space(10)]
     [SerializeField] private ItemSplitUI _splitUI;
     [SerializeField] private Transform _dragCanvasTransform;
+    [SerializeField] private Image[] _boxSlotsImage;
+    [SerializeField] private GameObject _slotMenuUI;
 
     private ItemSlot _currentSlot;
 
