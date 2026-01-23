@@ -157,6 +157,7 @@ public class PlayerMove : MonoBehaviour
     {
         _anim.SetBool("IsWalk", false);
         _moveInput = Vector2.zero;
+        _sp.IsReducing = false;
 
         UnsubscribeInputActions();
     }
@@ -198,12 +199,17 @@ public class PlayerMove : MonoBehaviour
     {
         _moveInput = context.ReadValue<Vector2>().normalized;
         _anim.SetBool("IsWalk", true);
+
+        if(_isRun)
+            _sp.ReduceSPPerSecond(_runTickSPCost);
     }
 
     private void OnMoveCanceled(InputAction.CallbackContext context)
     {
         _moveInput = Vector2.zero;
         _anim.SetBool("IsWalk", false);
+
+        _sp.IsReducing = false;
     }
 
     private void OnRunPerformed(InputAction.CallbackContext context)
@@ -211,7 +217,8 @@ public class PlayerMove : MonoBehaviour
         if (_sp.CurrentSP < _runTickSPCost)
             return;
 
-        _sp.ReduceSPPerSecond(_runTickSPCost);
+        if (_rb.linearVelocity != Vector3.zero)
+            _sp.ReduceSPPerSecond(_runTickSPCost);
         
         _isRun = true;
         _anim.SetBool("IsRun", true);
