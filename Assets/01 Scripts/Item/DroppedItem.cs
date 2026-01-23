@@ -30,6 +30,8 @@ public class DroppedItem : MonoBehaviour
         SetPosition();
 
         FinshInitialize?.Invoke();
+
+        transform.forward = Camera.main.transform.forward;
     }
 
     private void SetPosition()
