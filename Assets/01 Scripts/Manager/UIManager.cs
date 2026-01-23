@@ -22,7 +22,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     [SerializeField] private TextMeshProUGUI _boxItemCountText;
     [SerializeField] private TextMeshProUGUI _inventoryItemCountText;
 
-    [Space(10)]
+    [Space(20)]
     [SerializeField] private ItemSplitUI _splitUI;
     [SerializeField] private Transform _dragCanvasTransform;
     [SerializeField] private Image[] _boxSlotsImage;
@@ -118,6 +118,18 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
                 _splitButton.SetActive(false);
         }
     }
+
+    public void ChangeBoxItemCountText(int itemCnt, int maxCnt)
+    {
+        _boxItemCountText.text = "상자 (" + itemCnt + " / " + maxCnt + ")";
+    }
+
+    public void ChangeInventoryItemCountText(int itemCnt, int maxCnt)
+    {
+        _inventoryItemCountText.text 
+            = "가방 (" + itemCnt + " / " + maxCnt + ")";
+    }
+
 
     #region On Button Click
     public void OnSplitButtonClick()

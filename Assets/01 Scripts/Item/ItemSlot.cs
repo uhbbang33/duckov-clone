@@ -60,10 +60,17 @@ public class ItemSlot
         if (_quantity <= 0)
         {
             if (_slotType == SlotType.INVENTORY)
+            {
                 GameManager.Instance.Inventory.RemoveItemSlot(_currentItem.ID);
+            }
+            else if (_slotType == SlotType.BOX)
+            {
+                GameManager.Instance.CurrentOpenBox.ChangeBoxItemCount(false);
+            }
 
             _currentItem = null;
             _quantity = 0;
+            
         }
 
         _ui.RefreshUI();
@@ -75,7 +82,11 @@ public class ItemSlot
 
         if (_currentItem == null)
         {
-            GameManager.Instance.Inventory.AddToDictionaryByID(item.ID);
+            if (_slotType == SlotType.INVENTORY)
+                GameManager.Instance.Inventory.AddToDictionaryByID(item.ID);
+
+            if (_slotType == SlotType.BOX)
+                GameManager.Instance.CurrentOpenBox.ChangeBoxItemCount(true);
         }
 
         _currentItem = item;

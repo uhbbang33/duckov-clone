@@ -7,6 +7,7 @@ public abstract class Box : MonoBehaviour
     private InteractableBoxUI _boxInteractableUI;
 
     private int _slotCnt;
+    private int _itemCnt;
 
     private const int _ammoQuantity = 30;
 
@@ -44,6 +45,8 @@ public abstract class Box : MonoBehaviour
 
     public void OpenBox()
     {
+        GameManager.Instance.CurrentOpenBox = this;
+
         for (int i = 0; i < _slotCnt; ++i)
         {
             _boxSlots[i].UI = GameManager.Instance.BoxItemSlots[i].GetComponent<ItemSlotUI>();
@@ -54,8 +57,6 @@ public abstract class Box : MonoBehaviour
             SetBoxItems();
             _boxInteractableUI.HasBeenOpened = true;
         }
-
-        GameManager.Instance.CurrentOpenBox = this;
     }
 
     private void SetBoxItems()
@@ -72,6 +73,8 @@ public abstract class Box : MonoBehaviour
 
             _boxSlots[i].AddItem(item, itemQuantity);
         }
+
+        _itemCnt = itemCnt;
     }
 
     private Item GetRandomItemByType()
@@ -122,5 +125,15 @@ public abstract class Box : MonoBehaviour
         }
 
         return -1;
+    }
+
+    public void ChangeBoxItemCount(bool isAdd)
+    {
+        if (isAdd)
+            ++_itemCnt;
+        else
+            --_itemCnt;
+
+        UIManager.Instance.ChangeBoxItemCountText(_itemCnt, _slotCnt);
     }
 }

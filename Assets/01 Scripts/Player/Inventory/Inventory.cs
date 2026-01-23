@@ -17,6 +17,7 @@ public class Inventory : MonoBehaviour
     private PlayerInteract _playerInteract;
 
     private ItemSlot[] _inventorySlots;
+    private int _itemCnt;
     private int _slotCnt;
     private bool _inventoryToggle;
     private float _carryWeight;
@@ -107,6 +108,8 @@ public class Inventory : MonoBehaviour
             _playerMove.RestartMove();
 
         OnWeightChange?.Invoke(_carryWeight, _maxWeight);
+
+        UIManager.Instance.ChangeInventoryItemCountText(_itemCnt, _slotCnt);
     }
 
     private void OnInventoryCloseBlocked(bool isBlock)
@@ -141,16 +144,7 @@ public class Inventory : MonoBehaviour
         }
 
         // 같은 아이템이 없어서 빈 슬롯에 아이템을 넣는 경우
-        int slotIndex = FindFirstEmptySlot();
-        if (slotIndex == -1)
-            return false;
-
-        _inventorySlots[slotIndex].AddItem(item, amount);
-
-        if (_inventoryDict.ContainsKey(item.ID))
-            _inventoryDict[item.ID] += 1;
-        else
-            _inventoryDict.Add(item.ID, 1);
+        AddItemToEmptySlot(item, amount);
 
         return true;
     }
@@ -164,6 +158,7 @@ public class Inventory : MonoBehaviour
 
         _inventorySlots[slotIndex].AddItem(item, amount);
         AddToDictionaryByID(item.ID);
+        ChangeItemCount(true);
     }
 
     public int FindFirstEmptySlot()
@@ -185,6 +180,7 @@ public class Inventory : MonoBehaviour
             _inventoryDict[id] += 1;
         else
             _inventoryDict.Add(id, 1);
+
     }
 
     public void RemoveItemSlot(uint id)
@@ -193,6 +189,18 @@ public class Inventory : MonoBehaviour
 
         if (_inventoryDict[id] == 0)
             _inventoryDict.Remove(id);
+
+        ChangeItemCount(false);
+    }
+
+    public void ChangeItemCount(bool isAdd)
+    {
+        if (isAdd)
+            ++_itemCnt;
+        else
+            --_itemCnt;
+
+        UIManager.Instance.ChangeInventoryItemCountText(_itemCnt, _slotCnt);
     }
 
     public void AddWeight(float weight)
