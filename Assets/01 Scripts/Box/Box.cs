@@ -54,6 +54,8 @@ public abstract class Box : MonoBehaviour
             SetBoxItems();
             _boxInteractableUI.HasBeenOpened = true;
         }
+
+        GameManager.Instance.CurrentOpenBox = this;
     }
 
     private void SetBoxItems()

@@ -9,6 +9,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     [SerializeField] private GameObject _dropItemPrefab;
 
     private Box _currentBox;
+    private Box _currentOpenBox;
 
     public readonly int BoxSlotNum = 5;
 
@@ -25,6 +26,12 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     {
         get { return _currentBox; }
         set { _currentBox = value; }
+    }
+
+    public Box CurrentOpenBox
+    {
+        get { return _currentOpenBox; }
+        set { _currentOpenBox = value; }
     }
 
     // TODO : PoolManager?

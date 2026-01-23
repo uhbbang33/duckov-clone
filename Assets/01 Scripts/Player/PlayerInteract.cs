@@ -71,6 +71,8 @@ public class PlayerInteract : MonoBehaviour
 
         if (_ui.Type == InteractableType.BOX)
         {
+            GameManager.Instance.CurrentOpenBox = null;
+
             _boxUI.SetActive(false);
 
             _scanner.StartCheck();

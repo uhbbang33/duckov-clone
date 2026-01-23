@@ -155,7 +155,8 @@ public class ItemSlotUI : MonoBehaviour,
 
     private void OnDoubleClick()
     {
-        if (_itemSlot.CurrentItem == null)
+        if (_itemSlot.CurrentItem == null
+            || GameManager.Instance.CurrentOpenBox == null)
             return;
 
         _infoUI.HideUI();
