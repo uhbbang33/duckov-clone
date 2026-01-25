@@ -26,6 +26,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     [SerializeField] private ItemSplitUI _splitUI;
     [SerializeField] private Transform _dragCanvasTransform;
     [SerializeField] private GameObject _slotMenuUI;
+    [SerializeField] private GameObject _buttonsObject;
 
     private ItemSlot _currentSlot;
 
@@ -47,14 +48,14 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 
     public void OpenSlotMenu(ItemSlot slot, Vector3 pos)
     {
-        _slotMenuUI.transform.position = pos;
+        _buttonsObject.transform.position = pos;
 
         if (slot.Type == SlotType.INVENTORY)
-            _slotMenuUI.transform.position += _inventorySlotMenuOffset;
+            _buttonsObject.transform.position += _inventorySlotMenuOffset;
         else
-            _slotMenuUI.transform.position += _boxSlotMenuOffset;
+            _buttonsObject.transform.position += _boxSlotMenuOffset;
 
-        if (IsUpperHalf(_slotMenuUI.transform.position))
+        if (IsUpperHalf(_buttonsObject.transform.position))
         {
             // TODO
         }

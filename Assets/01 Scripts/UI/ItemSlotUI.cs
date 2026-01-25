@@ -137,7 +137,6 @@ public class ItemSlotUI : MonoBehaviour,
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        // TODO: UI Slot 말고, 어디든 클릭하면 SLot Menu가 닫혀야 함
         _uiManager.CloseSlotMenu();
 
         if (_itemSlot.CurrentItem == null)
@@ -259,8 +258,11 @@ public class ItemSlotUI : MonoBehaviour,
         ChangeTexts();
     }
 
-    private void OpenSlotMenu()
+    public void OpenSlotMenu()
     {
+        if (_itemSlot.CurrentItem == null)
+            return;
+
         _uiManager.OpenSlotMenu(_itemSlot, transform.position);
     }
 
