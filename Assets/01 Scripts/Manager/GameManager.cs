@@ -38,10 +38,16 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     }
 
     // TODO : PoolManager?
-    public void CreateDropItemObject(Item item, int quantity)
+    public bool CreateDropItemObject(Item item, int quantity)
     {
         GameObject dropItem = Instantiate(_dropItemPrefab);
 
-        dropItem.GetComponent<DroppedItem>().InitializeDroppedItem(item, quantity);
+        if (!dropItem.GetComponent<DroppedItem>().InitializeDroppedItem(item, quantity))
+        {
+            Destroy(dropItem);
+            return false;
+        }
+
+        return true;
     }
 }

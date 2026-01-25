@@ -17,8 +17,8 @@ public class PlayerInteractableScanner : MonoBehaviour
     
     private void Awake()
     {
-        _farResults = new Collider[10];
-        _nearResults = new Collider[10];
+        _farResults = new Collider[100];
+        _nearResults = new Collider[100];
     }
 
     private void Start()

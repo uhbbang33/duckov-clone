@@ -140,9 +140,15 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 
     public void OnDiscardButtonClick()
     {
-        GameManager.Instance.CreateDropItemObject(_currentSlot.CurrentItem, _currentSlot.Quantity);
+        if (GameManager.Instance.CreateDropItemObject(_currentSlot.CurrentItem, _currentSlot.Quantity))
+        {
+            _currentSlot.SubtractItem(_currentSlot.Quantity);
+        }
+        else // TODO: 버릴 수 없습니다 UI
+        {
+            Debug.Log("버릴 수 없습니다.");
+        }
 
-        _currentSlot.SubtractItem(_currentSlot.Quantity);
         CloseSlotMenu();
     }
 
