@@ -4,8 +4,6 @@ using UnityEngine.EventSystems;
 
 public class BackgroundForCloseMenu : MonoBehaviour, IPointerDownHandler
 {
-    [SerializeField] private LayerMask _slotUILayer;
-
     public void OnPointerDown(PointerEventData eventData)
     {
         if (eventData.button != PointerEventData.InputButton.Right)
