@@ -201,19 +201,9 @@ public class Inventory : MonoBehaviour
         _uiManager.ChangeInventoryItemCountText(_itemCnt, _slotCnt);
     }
 
-    public void AddWeight(float weight)
+    public void ChangeWeight(bool isAdd, float weightAmount)
     {
-        _carryWeight += weight;
-        _carryWeight = Mathf.Round(_carryWeight * 1000f) / 1000f;
-
-        OnWeightChange?.Invoke(_carryWeight, _maxWeight);
-
-        ChangePlayerSpeed();
-    }
-
-    public void LoseWeight(float weight)
-    {
-        _carryWeight -= weight;
+        _carryWeight += isAdd ? weightAmount : -weightAmount;
         _carryWeight = Mathf.Round(_carryWeight * 1000f) / 1000f;
 
         OnWeightChange?.Invoke(_carryWeight, _maxWeight);
@@ -224,6 +214,7 @@ public class Inventory : MonoBehaviour
     private void ChangePlayerSpeed()
     {
         float weightPercentage = (_carryWeight / _maxWeight) * 100f;
+
         _playerMove.ChangeSpeed(weightPercentage);
     }
 

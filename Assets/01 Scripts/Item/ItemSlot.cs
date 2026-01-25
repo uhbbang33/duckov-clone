@@ -56,7 +56,7 @@ public class ItemSlot
         _quantity -= amount;
 
         if (_slotType == SlotType.INVENTORY)
-            _inventory.LoseWeight(_currentItem.Weight * amount);
+            _inventory.ChangeWeight(false ,_currentItem.Weight * amount);
 
         if (_quantity <= 0)
         {
@@ -104,7 +104,7 @@ public class ItemSlot
 
         if (_slotType == SlotType.INVENTORY)
         {
-            _inventory.AddWeight(_currentItem.Weight * addAmount);
+            _inventory.ChangeWeight(true, _currentItem.Weight * addAmount);
         }
 
         _ui.SetInfoUI(_currentItem);
