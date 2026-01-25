@@ -10,7 +10,9 @@ public class ItemSlotUI : MonoBehaviour,
     [SerializeField] private TextMeshProUGUI _countText;
     [SerializeField] private ItemInfoUI _infoUI;
 
+    private UIManager _uiManager;
     private ItemSlot _itemSlot;
+    private Inventory _inventory;
     private Image _image;
     private Transform _originParent;
     private Vector2 _originAncghoredPos;
@@ -28,14 +30,16 @@ public class ItemSlotUI : MonoBehaviour,
 
             if (_image == null)
                 _image = GetComponent<Image>();
-            
-            RefreshUI();
         }
     }
 
     private void Awake()
     {
         _image = GetComponent<Image>();
+        _inventory = GameManager.Instance.Inventory;
+        _originParent = transform.parent;
+        _originAncghoredPos = ((RectTransform)transform).anchoredPosition;
+        _uiManager = UIManager.Instance;
     }
 
 
@@ -43,13 +47,10 @@ public class ItemSlotUI : MonoBehaviour,
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if(_itemSlot == null || _itemSlot.Quantity == 0)
+        if (_itemSlot == null || _itemSlot.Quantity == 0)
             return;
 
-        _originParent = transform.parent;
-        _originAncghoredPos = ((RectTransform)transform).anchoredPosition;
-        
-        transform.SetParent(UIManager.Instance.DragCanvasTransform);
+        transform.SetParent(_uiManager.DragCanvasTransform);
 
         _image.raycastTarget = false;
     }
@@ -66,22 +67,16 @@ public class ItemSlotUI : MonoBehaviour,
 
         ItemSlotUI startUI = eventData.pointerDrag.GetComponent<ItemSlotUI>();
 
-        if (startUI == null || startUI == this)
+        if (startUI == null)
             return;
+        if (startUI == this)
+        {
+            _infoUI.ShowUI();
+            return;
+        }
 
         Item startItem = startUI._itemSlot.CurrentItem;
         Item endItem = _itemSlot.CurrentItem;
-
-        // Inventory Weight
-        if (startUI._itemSlot.Type == SlotType.INVENTORY)
-        {
-            GameManager.Instance.Inventory.LoseWeight(startItem.Weight * startUI._itemSlot.Quantity);
-        }
-
-        if (_itemSlot.Type == SlotType.INVENTORY)
-        {
-            GameManager.Instance.Inventory.AddWeight(startItem.Weight * startUI._itemSlot.Quantity);
-        }
 
         // 같은 ID 일 경우 개수 합치기
         if (startItem != null
@@ -94,17 +89,18 @@ public class ItemSlotUI : MonoBehaviour,
             if (remainItemCount == startUI._itemSlot.Quantity)
             {
                 SwapItem(startUI);
-                return;
             }
-
-            int subtractCount = startUI._itemSlot.Quantity - remainItemCount;
-            startUI._itemSlot.SubtractItem(subtractCount);
-
-            return;
+            else
+            {
+                int subtractCount = startUI._itemSlot.Quantity - remainItemCount;
+                startUI._itemSlot.SubtractItem(subtractCount);
+            }
         }
+        else if(startUI._itemSlot.CurrentItem != null)
+            SwapItem(startUI);
 
-        SwapItem(startUI);
-        _infoUI.ShowUI();
+        if (_itemSlot.CurrentItem != null)
+            _infoUI.ShowUI();
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -118,24 +114,26 @@ public class ItemSlotUI : MonoBehaviour,
 
     private void SwapItem(ItemSlotUI target)
     {
-        (target._itemSlot.CurrentItem, _itemSlot.CurrentItem) = (_itemSlot.CurrentItem, target._itemSlot.CurrentItem);
+        Item tempItem = _itemSlot.CurrentItem;
+        int tempQauntity = _itemSlot.Quantity;
 
-        (target._itemSlot.Quantity, _itemSlot.Quantity) = (_itemSlot.Quantity, target._itemSlot.Quantity);
+        _itemSlot.SubtractItem(_itemSlot.Quantity);
+        _itemSlot.AddItem(target._itemSlot.CurrentItem, target._itemSlot.Quantity);
 
-        RefreshUI();
-        target.RefreshUI();
+        target._itemSlot.SubtractItem(target._itemSlot.Quantity);
+        target._itemSlot.AddItem(tempItem, tempQauntity);
     }
 
     #endregion Drag And Drop
 
-   
+
 
     #region Double Click
 
     public void OnPointerClick(PointerEventData eventData)
     {
         // TODO: UI Slot 말고, 어디든 클릭하면 SLot Menu가 닫혀야 함
-        UIManager.Instance.CloseSlotMenu();
+        _uiManager.CloseSlotMenu();
 
         if (_itemSlot.CurrentItem == null)
             return;
@@ -163,23 +161,27 @@ public class ItemSlotUI : MonoBehaviour,
 
         if (_itemSlot.Type == SlotType.INVENTORY)
         {
-            TryMoveToBox();
+            TryMoveToBoxByDoubleClick();
         }
         else
         {
-            TryMoveToInventory();
+            TryMoveToInventoryByDoubleClick();
         }
     }
 
-    private void TryMoveToInventory()
+    private void TryMoveToInventoryByDoubleClick()
     {
-        if(GameManager.Instance.Inventory.TryAddItem(_itemSlot.CurrentItem, _itemSlot.Quantity))
+        if (_inventory.TryAddItem(_itemSlot.CurrentItem, _itemSlot.Quantity))
         {
             _itemSlot.SubtractItem(_itemSlot.Quantity);
         }
+        else // TODO : 빈공간이 없습니다 UI 표시
+        {
+
+        }
     }
 
-    private void TryMoveToBox()
+    private void TryMoveToBoxByDoubleClick()
     {
         if (_itemSlot.CurrentItem.Type != ItemType.Gun)
         {
@@ -241,12 +243,12 @@ public class ItemSlotUI : MonoBehaviour,
         if (_itemSlot.CurrentItem != null)
         {
             _image.sprite = ItemSpriteDictionary.Instance.GetItemSprite(_itemSlot.CurrentItem.ID);
-            UIManager.Instance.ChangeImageAlpha(_image, true);
+            _uiManager.ChangeImageAlpha(_image, true);
         }
         else
         {
             _image.sprite = null;
-            UIManager.Instance.ChangeImageAlpha(_image, false);
+            _uiManager.ChangeImageAlpha(_image, false);
         }
 
         ChangeTexts();
@@ -254,7 +256,7 @@ public class ItemSlotUI : MonoBehaviour,
 
     private void OpenSlotMenu()
     {
-        UIManager.Instance.OpenSlotMenu(_itemSlot, transform.position);
+        _uiManager.OpenSlotMenu(_itemSlot, transform.position);
     }
 
     private void ChangeTexts()
@@ -271,7 +273,7 @@ public class ItemSlotUI : MonoBehaviour,
         {
             _countText.text = _itemSlot.Quantity.ToString();
         }
-        else if(_itemSlot.Quantity == 1)
+        else if (_itemSlot.Quantity == 1)
         {
             _countText.text = string.Empty;
         }

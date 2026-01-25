@@ -25,7 +25,6 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     [Space(20)]
     [SerializeField] private ItemSplitUI _splitUI;
     [SerializeField] private Transform _dragCanvasTransform;
-    [SerializeField] private Image[] _boxSlotsImage;
     [SerializeField] private GameObject _slotMenuUI;
 
     private ItemSlot _currentSlot;

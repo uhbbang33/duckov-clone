@@ -10,17 +10,13 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     private Box _currentBox;
     private Box _currentOpenBox;
+    private Inventory _inventory;
 
     public readonly int BoxSlotNum = 5;
 
     public GameObject PlayerObject { get { return _playerObject; } }
-
-    public GameObject[] BoxItemSlots
-    {
-        get { return _boxItemSlots; }
-    }
-
-    public Inventory Inventory { get { return _playerObject.GetComponent<Inventory>(); } }
+    public GameObject[] BoxItemSlots { get { return _boxItemSlots; } }
+    public Inventory Inventory { get { return _inventory; } }
 
     public Box CurrentBox
     {
@@ -32,6 +28,13 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     {
         get { return _currentOpenBox; }
         set { _currentOpenBox = value; }
+    }
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        _inventory = _playerObject.GetComponent<Inventory>();
     }
 
     // TODO : PoolManager?

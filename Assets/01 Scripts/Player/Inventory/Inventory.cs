@@ -8,10 +8,9 @@ public class Inventory : MonoBehaviour
 {
     [SerializeField] private GameObject _inventoryUI;
     [SerializeField] private GameObject[] _slotObject;
-
-    // TODO : Temp
     [SerializeField] private float _maxWeight;
 
+    private UIManager _uiManager;
     private InputActions _inputActions;
     private PlayerMove _playerMove;
     private PlayerInteract _playerInteract;
@@ -29,6 +28,7 @@ public class Inventory : MonoBehaviour
 
     private void Awake()
     {
+        _uiManager = UIManager.Instance;
         _playerMove = GetComponent<PlayerMove>();
         _playerInteract = GetComponent<PlayerInteract>();
         _inventoryUI.SetActive(false);
@@ -37,7 +37,7 @@ public class Inventory : MonoBehaviour
         _slotCnt = _slotObject.Length;
 
         for (int i = 0; i < _slotCnt; ++i)
-            UIManager.Instance.ChangeImageAlpha(_slotObject[i].GetComponent<Image>(), false);
+            _uiManager.ChangeImageAlpha(_slotObject[i].GetComponent<Image>(), false);
 
         _inventorySlots = new ItemSlot[_slotCnt];
         for (int i = 0; i < _slotCnt; ++i)
@@ -53,11 +53,9 @@ public class Inventory : MonoBehaviour
         _inputActions = GetComponent<Player>().Actions;
         _inputActions.Player.Inventory.performed += OnInventory;
         _inputActions.Player.Cancel.performed += OnInventoryClose;
-        // TODO : Inventory에 player가 가지고 있는 물품 넣기
+        // TODO : Inventory에 player가 가지고 있는 물품 넣기 (저장)
 
         _playerInteract.OnInteractEvent += OnInventoryCloseBlocked;
-
-        
     }
 
     private void OnDisable()
@@ -109,7 +107,7 @@ public class Inventory : MonoBehaviour
 
         OnWeightChange?.Invoke(_carryWeight, _maxWeight);
 
-        UIManager.Instance.ChangeInventoryItemCountText(_itemCnt, _slotCnt);
+        _uiManager.ChangeInventoryItemCountText(_itemCnt, _slotCnt);
     }
 
     private void OnInventoryCloseBlocked(bool isBlock)
@@ -130,8 +128,7 @@ public class Inventory : MonoBehaviour
                 if (_inventorySlots[i].CurrentItem == null)
                     continue;
 
-                if (_inventorySlots[i].CurrentItem.ID == item.ID &&
-                    _inventorySlots[i].CurrentItem.MaxStackSize != _inventorySlots[i].Quantity) // 두번째 조건 삭제
+                if (_inventorySlots[i].CurrentItem.ID == item.ID)
                 {
                     int remainAmount = _inventorySlots[i].AddItem(item, amount);
 
@@ -144,21 +141,21 @@ public class Inventory : MonoBehaviour
         }
 
         // 같은 아이템이 없어서 빈 슬롯에 아이템을 넣는 경우
-        AddItemToEmptySlot(item, amount);
+        if (TryAddItemToEmptySlot(item, amount))
+            return true;
 
-        return true;
+        return false;
     }
 
-    public void AddItemToEmptySlot(Item item, int amount)
+    public bool TryAddItemToEmptySlot(Item item, int amount)
     {
         int slotIndex = FindFirstEmptySlot();
 
         if (slotIndex == -1)
-            return;
+            return false;
 
         _inventorySlots[slotIndex].AddItem(item, amount);
-        AddToDictionaryByID(item.ID);
-        ChangeItemCount(true);
+        return true;
     }
 
     public int FindFirstEmptySlot()
@@ -181,6 +178,7 @@ public class Inventory : MonoBehaviour
         else
             _inventoryDict.Add(id, 1);
 
+        ChangeItemCount(true);
     }
 
     public void RemoveItemSlot(uint id)
@@ -200,7 +198,7 @@ public class Inventory : MonoBehaviour
         else
             --_itemCnt;
 
-        UIManager.Instance.ChangeInventoryItemCountText(_itemCnt, _slotCnt);
+        _uiManager.ChangeInventoryItemCountText(_itemCnt, _slotCnt);
     }
 
     public void AddWeight(float weight)

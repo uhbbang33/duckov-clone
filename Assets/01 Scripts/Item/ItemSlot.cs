@@ -2,15 +2,18 @@
 public class ItemSlot 
 {
     private Item _currentItem;
-    private int _quantity;
     private ItemSlotUI _ui;
+    private Inventory _inventory;
+
     private SlotType _slotType;
-    
+    private int _quantity;
+
     public ItemSlot()
     {
         _currentItem = null;
         _quantity = 0;
         _ui = null;
+        _inventory = GameManager.Instance.Inventory;
     }
 
     public Item CurrentItem
@@ -53,20 +56,14 @@ public class ItemSlot
         _quantity -= amount;
 
         if (_slotType == SlotType.INVENTORY)
-        {
-            GameManager.Instance.Inventory.LoseWeight(_currentItem.Weight * amount);
-        }
+            _inventory.LoseWeight(_currentItem.Weight * amount);
 
         if (_quantity <= 0)
         {
             if (_slotType == SlotType.INVENTORY)
-            {
-                GameManager.Instance.Inventory.RemoveItemSlot(_currentItem.ID);
-            }
+                _inventory.RemoveItemSlot(_currentItem.ID);
             else if (_slotType == SlotType.BOX)
-            {
                 GameManager.Instance.CurrentOpenBox.ChangeBoxItemCount(false);
-            }
 
             _currentItem = null;
             _quantity = 0;
@@ -83,14 +80,13 @@ public class ItemSlot
         if (_currentItem == null)
         {
             if (_slotType == SlotType.INVENTORY)
-                GameManager.Instance.Inventory.AddToDictionaryByID(item.ID);
+                _inventory.AddToDictionaryByID(item.ID);
 
             if (_slotType == SlotType.BOX)
                 GameManager.Instance.CurrentOpenBox.ChangeBoxItemCount(true);
         }
 
         _currentItem = item;
-        _ui.SetInfoUI(_currentItem);
 
         int addableItemCount = (int)item.MaxStackSize - _quantity;
         int addAmount = 0;
@@ -108,9 +104,10 @@ public class ItemSlot
 
         if (_slotType == SlotType.INVENTORY)
         {
-            GameManager.Instance.Inventory.AddWeight(_currentItem.Weight * addAmount);
+            _inventory.AddWeight(_currentItem.Weight * addAmount);
         }
 
+        _ui.SetInfoUI(_currentItem);
         _ui.RefreshUI();
 
         return amount - addAmount;
@@ -122,7 +119,7 @@ public class ItemSlot
 
         if (_slotType == SlotType.INVENTORY)
         {
-            GameManager.Instance.Inventory.AddItemToEmptySlot(_currentItem, amount);
+            _inventory.TryAddItemToEmptySlot(_currentItem, amount);
         }
         else if (_slotType == SlotType.BOX)
         {

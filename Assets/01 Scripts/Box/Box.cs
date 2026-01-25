@@ -129,11 +129,7 @@ public abstract class Box : MonoBehaviour
 
     public void ChangeBoxItemCount(bool isAdd)
     {
-        if (isAdd)
-            ++_itemCnt;
-        else
-            --_itemCnt;
-
+        _itemCnt += isAdd ? 1 : -1;
         UIManager.Instance.ChangeBoxItemCountText(_itemCnt, _slotCnt);
     }
 }
