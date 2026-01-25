@@ -69,6 +69,8 @@ public class PlayerInteract : MonoBehaviour
 
         OnCloseUIEvent?.Invoke();
 
+        UIManager.Instance.CloseSlotMenu();
+
         if (_ui.Type == InteractableType.BOX)
         {
             GameManager.Instance.CurrentOpenBox = null;
