@@ -30,6 +30,11 @@ public class ItemSlotUI : MonoBehaviour,
 
             if (_image == null)
                 _image = GetComponent<Image>();
+
+            if (_uiManager == null)
+                _uiManager = UIManager.Instance;
+
+            RefreshUI();
         }
     }
 
