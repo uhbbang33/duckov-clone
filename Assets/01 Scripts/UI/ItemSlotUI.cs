@@ -192,7 +192,7 @@ public class ItemSlotUI : MonoBehaviour,
             // 같은 ID의 아이템이 있을 경우
             for (int i = 0; i < GameManager.Instance.BoxSlotNum; ++i)
             {
-                ItemSlot targetSlot = GameManager.Instance.BoxItemSlots[i].GetComponent<ItemSlotUI>()._itemSlot;
+                ItemSlot targetSlot = GameManager.Instance.BoxItemSlots[i].GetComponentInChildren<ItemSlotUI>()._itemSlot;
 
                 if (targetSlot.CurrentItem != null &&
                     targetSlot.CurrentItem.ID == _itemSlot.CurrentItem.ID)
@@ -210,7 +210,7 @@ public class ItemSlotUI : MonoBehaviour,
         // 그렇지 않을 경우
         for (int i = 0; i < GameManager.Instance.BoxSlotNum; ++i)
         {
-            ItemSlot targetSlot = GameManager.Instance.BoxItemSlots[i].GetComponent<ItemSlotUI>()._itemSlot;
+            ItemSlot targetSlot = GameManager.Instance.BoxItemSlots[i].GetComponentInChildren<ItemSlotUI>()._itemSlot;
 
             if (targetSlot.CurrentItem == null)
             {

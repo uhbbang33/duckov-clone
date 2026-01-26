@@ -1,14 +1,19 @@
+using System.Collections;
 using UnityEngine;
 
 public abstract class Box : MonoBehaviour
 {
     private ItemSlot[] _boxSlots;
+    private BoxSlotLoad[] _boxSlotLoad;
     protected ItemTypeWeight[] _typeWeights;
     private InteractableBoxUI _boxInteractableUI;
 
     private int _slotCnt;
     private int _itemCnt;
 
+    private bool _allRarityOpened;
+
+    //TODO Define¿∏∑Œ
     private const int _ammoQuantity = 30;
 
     private void Awake()
@@ -26,6 +31,8 @@ public abstract class Box : MonoBehaviour
             _boxSlots[i] = new ItemSlot();
             _boxSlots[i].Type = SlotType.BOX;
         }
+
+        _boxSlotLoad = new BoxSlotLoad[_slotCnt];
 
         _typeWeights = new ItemTypeWeight[_slotCnt];
         for (int i = 0; i < _slotCnt; ++i)
@@ -49,13 +56,20 @@ public abstract class Box : MonoBehaviour
 
         for (int i = 0; i < _slotCnt; ++i)
         {
-            _boxSlots[i].UI = GameManager.Instance.BoxItemSlots[i].GetComponent<ItemSlotUI>();
+            _boxSlots[i].UI = GameManager.Instance.BoxItemSlots[i].GetComponentInChildren<ItemSlotUI>();
+
+            _boxSlotLoad[i] = GameManager.Instance.BoxItemSlots[i].GetComponent<BoxSlotLoad>();
         }
 
         if (!_boxInteractableUI.HasBeenOpened)
         {
             SetBoxItems();
             _boxInteractableUI.HasBeenOpened = true;
+        }
+
+        if (!_allRarityOpened)
+        {
+            StartCoroutine(SlotLoadRoutine());
         }
     }
 
@@ -131,5 +145,44 @@ public abstract class Box : MonoBehaviour
     {
         _itemCnt += isAdd ? 1 : -1;
         UIManager.Instance.ChangeBoxItemCountText(_itemCnt, _slotCnt);
+    }
+
+    private IEnumerator SlotLoadRoutine()
+    {
+        for (int i = 0; i < _itemCnt; ++i)
+            _boxSlotLoad[i].SetItemSlotBeforeLoad();
+
+        for (int i = _itemCnt; i < _slotCnt; ++i)
+            _boxSlotLoad[i].SetEmptySlot();
+
+        for (int i = 0; i < _itemCnt; ++i)
+        {
+            _boxSlotLoad[i].StartLoad();
+
+            float loadingTime = SetLoadingTime(_boxSlots[i].CurrentItem.Rarity);
+            yield return new WaitForSeconds(loadingTime);
+
+            _boxSlotLoad[i].LoadComplete();
+        }
+
+        _allRarityOpened = true;
+
+        yield return null;
+    }
+
+    private float SetLoadingTime(string rarity)
+    {
+        if (rarity == "¿œπ›")
+            return RarityLoadingTime.Common;
+        else if (rarity == "∞Ì±ﬁ")
+            return RarityLoadingTime.Uncommon;
+        else if (rarity == "»Ò±Õ")
+            return RarityLoadingTime.Rare;
+        else if (rarity == "¿¸º≥")
+            return RarityLoadingTime.Legendary;
+
+        Debug.Log("«ÿ¥Áæ»µ  " + rarity);
+
+        return 0;
     }
 }

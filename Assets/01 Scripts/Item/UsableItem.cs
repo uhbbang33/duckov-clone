@@ -12,7 +12,7 @@ public class UsableItem : Item
     public float Hunger {  get { return _hunger; } }
     public float Hydration { get { return _hydration; } }
 
-    public UsableItem(uint id, string name, uint value, float weight, uint weightValue, float healHP, uint durabilityCost, float hunger, float hydration, uint maxStackSize, string itemType) : base(id, name, value, weight, weightValue, maxStackSize)
+    public UsableItem(uint id, string rarity, string name, uint value, float weight, uint weightValue, float healHP, uint durabilityCost, float hunger, float hydration, uint maxStackSize, string itemType) : base(id, rarity, name, value, weight, weightValue, maxStackSize)
     {
         _healHP = healHP;
         _durabilityCost = durabilityCost;

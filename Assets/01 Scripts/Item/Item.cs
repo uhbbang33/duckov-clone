@@ -2,6 +2,7 @@
 public class Item
 {
     protected uint _id;
+    protected string _rarity;
     protected string _name;
     protected uint _value;
     protected float _weight;
@@ -10,6 +11,7 @@ public class Item
     protected string _itemType;
 
     public uint ID { get { return _id; } }
+    public string Rarity { get { return _rarity; } }
     public string Name { get { return _name; } }
     public uint Value { get { return _value; } }
     public float Weight { get { return _weight; } }
@@ -17,9 +19,10 @@ public class Item
     public uint MaxStackSize { get { return _maxStackSize; } }
     public string Type { get { return _itemType; } }
 
-    public Item(uint id, string name, uint value, float weight, uint weightValue, uint maxStackSize)
+    public Item(uint id, string rarity, string name, uint value, float weight, uint weightValue, uint maxStackSize)
     {
         _id = id;
+        _rarity = rarity;
         _name = name;
         _value = value;
         _weight = weight;
