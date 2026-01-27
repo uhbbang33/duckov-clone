@@ -21,6 +21,12 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     [Header("Text")]
     [SerializeField] private TextMeshProUGUI _boxItemCountText;
     [SerializeField] private TextMeshProUGUI _inventoryItemCountText;
+    [SerializeField] private TextMeshProUGUI _mainUIHPBarText;
+
+    [Space(10)]
+    [Header("Slider")]
+    [SerializeField] private Slider _mainUIHPBarSlider;
+
 
     [Space(20)]
     [SerializeField] private ItemSplitUI _splitUI;
@@ -111,9 +117,9 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
                 || _currentSlot.Quantity < 2)
                 _splitButton.SetActive(false);
         }
-        else if(_currentSlot.Type == SlotType.BOX)
+        else if (_currentSlot.Type == SlotType.BOX)
         {
-            if (GameManager.Instance.CurrentBox.FindFirstEmptySlot() == -1 
+            if (GameManager.Instance.CurrentBox.FindFirstEmptySlot() == -1
                 || _currentSlot.Quantity < 2)
                 _splitButton.SetActive(false);
         }
@@ -126,8 +132,14 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 
     public void ChangeInventoryItemCountText(int itemCnt, int maxCnt)
     {
-        _inventoryItemCountText.text 
+        _inventoryItemCountText.text
             = "가방 (" + itemCnt + " / " + maxCnt + ")";
+    }
+
+    public void ChangeMainUIHPBar(float currentHp, float maxHp)
+    {
+        _mainUIHPBarSlider.value = currentHp / maxHp;
+        _mainUIHPBarText.text = currentHp.ToString() + " / " + maxHp.ToString();
     }
 
 
@@ -155,18 +167,20 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 
     public void OnUsebuttonClick()
     {
+        CloseSlotMenu();
+
         UsableItem item = _currentSlot.CurrentItem as UsableItem;
 
-        if(item.DurabilityCost > 0)
+        if (item.HealHP > 0
+            && !GameManager.Instance.PlayerObject.GetComponent<Player>().UseItem(item))
+            return;
+
+        if (item.DurabilityCost > 0)
         {
             // item의 내구도 감소
         }
 
-        GameManager.Instance.PlayerObject.GetComponent<Player>().UseItem(item);
-
         _currentSlot.SubtractItem();
-
-        CloseSlotMenu();
     }
 
     #endregion On Button Click

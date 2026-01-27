@@ -8356,6 +8356,8 @@ MonoBehaviour:
   _discardButton: {fileID: 1311518926}
   _boxItemCountText: {fileID: 704705165}
   _inventoryItemCountText: {fileID: 962400843}
+  _mainUIHPBarText: {fileID: 1698283796}
+  _mainUIHPBarSlider: {fileID: 2125551449}
   _splitUI: {fileID: 94495574}
   _dragCanvasTransform: {fileID: 461288160}
   _slotMenuUI: {fileID: 301001545}
@@ -9234,6 +9236,17 @@ Transform:
   - {fileID: 2081990346}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 45, y: -45, z: 0}
+--- !u!114 &1698283796 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6815796581366849539, guid: 0db39dc1988ea7f4ba1ca125b28b3a1b, type: 3}
+  m_PrefabInstance: {fileID: 708964952}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1001 &1717412319
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11842,6 +11855,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5129812366079841060, guid: 6e062c2c863e5b74aa736e9c2e8fe605, type: 3}
   m_PrefabInstance: {fileID: 1770942760}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2125551449 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4551583833446312160, guid: 0db39dc1988ea7f4ba1ca125b28b3a1b, type: 3}
+  m_PrefabInstance: {fileID: 708964952}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
 --- !u!1 &2142310466
 GameObject:
   m_ObjectHideFlags: 0
@@ -12489,7 +12513,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HealthPoint
   _maxHP: 40
   _HPBarSlider: {fileID: 831032853}
-  _tempCurrentHP: 20
+  _tempCurrentHP: 35
 --- !u!114 &6032076664905499556
 MonoBehaviour:
   m_ObjectHideFlags: 0

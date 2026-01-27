@@ -23,14 +23,18 @@ public class HealthPoint : MonoBehaviour
         ChangeHPSliderValue();
     }
 
-    public void Heal(float amount)
+    public bool Heal(float amount)
     {
+        if (_currentHP == _maxHP)
+            return false;
+
         _currentHP += amount;
 
         if (_currentHP > _maxHP)
             _currentHP = _maxHP;
 
         ChangeHPSliderValue();
+        return true;
     }
 
     public void TakeDamage(float damageAmount)
@@ -50,5 +54,8 @@ public class HealthPoint : MonoBehaviour
     private void ChangeHPSliderValue()
     {
         _HPBarSlider.value = _currentHP / _maxHP;
+
+        UIManager.Instance.ChangeMainUIHPBar(_currentHP, _maxHP);
+
     }
 }

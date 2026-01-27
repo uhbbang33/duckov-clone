@@ -22,13 +22,17 @@ public class Player : MonoBehaviour
         _inputActions.Player.Disable();
     }
 
-    public void UseItem(UsableItem item)
+    public bool UseItem(UsableItem item)
     {
-        _hp.Heal(item.HealHP);
+        if (!_hp.Heal(item.HealHP))
+        {
+            return false;
+        }
 
         //item.Hunger;
 
         //item.Hydration;
 
+        return true;
     }
 }
