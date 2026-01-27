@@ -24,6 +24,18 @@ public class ItemInfoUI : MonoBehaviour
     [SerializeField] private Vector2 _positionOffest;
 
     private PlayerInteract _playerInteract;
+    private RectTransform _rectTransform;
+
+    private float _rectWidth;
+    private float _rectHeight;
+
+    private void Awake()
+    {
+        _rectTransform = GetComponent<RectTransform>();
+
+        _rectWidth = _rectTransform.rect.width;
+        _rectHeight = _rectTransform.rect.height;
+    }
 
     private void Start()
     {
@@ -135,7 +147,11 @@ public class ItemInfoUI : MonoBehaviour
     private void FollowMouse()
     {
         Vector2 mousePos = Mouse.current.position.ReadValue();
-        transform.position = mousePos + _positionOffest;
-    }
+        Vector2 targetPos = mousePos + _positionOffest;
 
+        float clampedX = Mathf.Clamp(targetPos.x, 0f, Screen.width - _rectWidth);
+        float clampedY = Mathf.Clamp(targetPos.y, 0f, Screen.height - _rectHeight);
+
+        transform.position = new Vector2(clampedX, clampedY);
+    }
 }
