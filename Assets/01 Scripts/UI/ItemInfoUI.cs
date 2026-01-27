@@ -136,7 +136,6 @@ public class ItemInfoUI : MonoBehaviour
     public void ShowUI()
     {
         gameObject.SetActive(true);
-        FollowMouse();
     }
 
     public void HideUI()
@@ -149,8 +148,8 @@ public class ItemInfoUI : MonoBehaviour
         Vector2 mousePos = Mouse.current.position.ReadValue();
         Vector2 targetPos = mousePos + _positionOffest;
 
-        float clampedX = Mathf.Clamp(targetPos.x, 0f, Screen.width - _rectWidth);
-        float clampedY = Mathf.Clamp(targetPos.y, 0f, Screen.height - _rectHeight);
+        float clampedX = Mathf.Clamp(targetPos.x, 0f, Screen.width - _rectWidth * 2);
+        float clampedY = Mathf.Clamp(targetPos.y, 0f, Screen.height - _rectHeight * 2);
 
         transform.position = new Vector2(clampedX, clampedY);
     }
