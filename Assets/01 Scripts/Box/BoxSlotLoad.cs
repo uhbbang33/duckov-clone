@@ -9,11 +9,14 @@ public class BoxSlotLoad : MonoBehaviour
     [SerializeField] private float _iconRotateRadius = 10f;
 
     private Vector3 _centerPosition;
-    float _angle = 1f;
+    float _angle = 0f;
 
     private void OnEnable()
     {
         _centerPosition = gameObject.transform.position;
+
+        _angle = 0f;
+        SetIconPosition(_angle);
     }
 
     private void Update()
@@ -25,9 +28,13 @@ public class BoxSlotLoad : MonoBehaviour
     private void IconAnimation()
     {
         _angle -= _iconRotateSpeed * Time.deltaTime;
+        SetIconPosition(_angle);
+    }
 
-        float x = _centerPosition.x + Mathf.Cos(_angle) * _iconRotateRadius;
-        float y = _centerPosition.y + Mathf.Sin(_angle) * _iconRotateRadius;
+    private void SetIconPosition(float angle)
+    {
+        float x = _centerPosition.x + Mathf.Cos(angle) * _iconRotateRadius;
+        float y = _centerPosition.y + Mathf.Sin(angle) * _iconRotateRadius;
 
         _loadingIcon.transform.position = new Vector3(x, y, _loadingIcon.transform.position.z);
     }
