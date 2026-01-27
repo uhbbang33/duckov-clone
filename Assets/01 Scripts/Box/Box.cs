@@ -165,6 +165,11 @@ public abstract class Box : MonoBehaviour
             _boxSlotLoad[i].LoadComplete();
         }
 
+        for (int i = 0; i < _itemCnt; ++i)
+        {
+            _boxSlotLoad[i].AllBoxSlotsLoaded();
+        }
+
         _allRarityOpened = true;
 
         yield return null;
