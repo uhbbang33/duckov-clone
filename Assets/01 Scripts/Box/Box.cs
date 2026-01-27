@@ -10,8 +10,12 @@ public abstract class Box : MonoBehaviour
 
     private int _slotCnt;
     private int _itemCnt;
+    private int _loadCnt;
 
+    private bool[] _loaded;
     private bool _allRarityOpened;
+
+    private Coroutine _currentCoroutine;
 
     //TODO Define¿∏∑Œ
     private const int _ammoQuantity = 30;
@@ -33,6 +37,7 @@ public abstract class Box : MonoBehaviour
         }
 
         _boxSlotLoad = new BoxSlotLoad[_slotCnt];
+        _loaded = new bool[_slotCnt];
 
         _typeWeights = new ItemTypeWeight[_slotCnt];
         for (int i = 0; i < _slotCnt; ++i)
@@ -46,6 +51,9 @@ public abstract class Box : MonoBehaviour
         _typeWeights[2].Type = ItemType.Medicine;
         _typeWeights[3].Type = ItemType.Food;
         _typeWeights[4].Type = ItemType.Etc;
+
+
+        GameManager.Instance.PlayerObject.GetComponent<PlayerInteract>().OnCloseUIEvent += OnCloseUI;
     }
 
     protected abstract void SetWeightValue();
@@ -65,11 +73,14 @@ public abstract class Box : MonoBehaviour
         {
             SetBoxItems();
             _boxInteractableUI.HasBeenOpened = true;
+            _loadCnt = _itemCnt;
         }
+        else
+            UIManager.Instance.ChangeBoxItemCountText(_itemCnt, _slotCnt);
 
         if (!_allRarityOpened)
         {
-            StartCoroutine(SlotLoadRoutine());
+            _currentCoroutine = StartCoroutine(SlotLoadRoutine(_loadCnt));
         }
     }
 
@@ -147,28 +158,39 @@ public abstract class Box : MonoBehaviour
         UIManager.Instance.ChangeBoxItemCountText(_itemCnt, _slotCnt);
     }
 
-    private IEnumerator SlotLoadRoutine()
+    private IEnumerator SlotLoadRoutine(int curItemCnt)
     {
-        for (int i = 0; i < _itemCnt; ++i)
-            _boxSlotLoad[i].SetItemSlotBeforeLoad(_boxSlots[i].CurrentItem.Rarity);
-
-        for (int i = _itemCnt; i < _slotCnt; ++i)
-            _boxSlotLoad[i].SetEmptySlot();
-
-        for (int i = 0; i < _itemCnt; ++i)
+        for (int i = 0; i < curItemCnt; ++i)
         {
+            if (!_loaded[i])
+                _boxSlotLoad[i].SetItemSlotBeforeLoad(_boxSlots[i].CurrentItem.Rarity);
+        }
+
+        for (int i = 0; i < curItemCnt; ++i)
+        {
+            if (_loaded[i])
+                continue;
+
             _boxSlotLoad[i].StartLoad();
 
             yield return new WaitForSeconds(_boxSlotLoad[i].LoadingTime);
 
             _boxSlotLoad[i].LoadComplete();
-        }
 
-        for (int i = 0; i < _itemCnt; ++i)
-            _boxSlotLoad[i].AllBoxSlotsLoaded();
+            _loaded[i] = true;
+        }
 
         _allRarityOpened = true;
 
         yield return null;
+    }
+
+    private void OnCloseUI()
+    {
+        if (_currentCoroutine != null)
+        {
+            StopCoroutine(_currentCoroutine);
+            _currentCoroutine = null;
+        }
     }
 }

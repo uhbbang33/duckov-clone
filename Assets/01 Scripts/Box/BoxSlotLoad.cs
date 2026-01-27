@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class BoxSlotLoad : MonoBehaviour
 {
-    [SerializeField] private Image _unloadedImage;
+    [SerializeField] private GameObject _unloadedImage;
     [SerializeField] private GameObject _loadingIcon;
 
     [SerializeField] private float _iconRotateSpeed = 5f;
@@ -22,6 +22,9 @@ public class BoxSlotLoad : MonoBehaviour
 
         _angle = 0f;
         SetIconPosition(_angle);
+
+        _unloadedImage.SetActive(false);
+        _loadingIcon.SetActive(false);
     }
 
     private void Update()
@@ -44,19 +47,12 @@ public class BoxSlotLoad : MonoBehaviour
         _loadingIcon.transform.position = new Vector3(x, y, _loadingIcon.transform.position.z);
     }
 
-    public void SetEmptySlot()
-    {
-        _unloadedImage.gameObject.SetActive(false);
-        _loadingIcon.SetActive(false);
-    }
-
     public void SetItemSlotBeforeLoad(string rarity)
     {
         _loadingTime = SetLoadingTime(rarity);
 
-        _unloadedImage.gameObject.SetActive(true);
-        UIManager.Instance.ChangeImageAlpha(_unloadedImage, true);
-        _unloadedImage.gameObject.transform.SetAsLastSibling();
+        _unloadedImage.SetActive(true);
+        _unloadedImage.transform.SetAsLastSibling();
     }
 
     public void StartLoad()
@@ -66,13 +62,8 @@ public class BoxSlotLoad : MonoBehaviour
 
     public void LoadComplete()
     {
-        UIManager.Instance.ChangeImageAlpha(_unloadedImage, false);
+        _unloadedImage.SetActive(false);
         _loadingIcon.SetActive(false);
-    }
-
-    public void AllBoxSlotsLoaded()
-    {
-        _unloadedImage.gameObject.SetActive(false);
     }
 
     public float SetLoadingTime(string rarity)
