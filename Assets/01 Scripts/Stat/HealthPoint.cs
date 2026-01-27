@@ -3,9 +3,12 @@ using UnityEngine.UI;
 
 public class HealthPoint : MonoBehaviour
 {
-    // TODO: Json Data
     [SerializeField] private float _maxHP;
     [SerializeField] private Slider _HPBarSlider;
+
+    [Space(10)]
+    [Header("FOR TEST")]
+    [SerializeField] private float _tempCurrentHP;
 
     private float _currentHP;
     public float CurrentHP
@@ -15,7 +18,18 @@ public class HealthPoint : MonoBehaviour
 
     private void Start()
     {
-        _currentHP = _maxHP;
+        //_currentHP = _maxHP;
+        _currentHP = _tempCurrentHP;
+        ChangeHPSliderValue();
+    }
+
+    public void Heal(float amount)
+    {
+        _currentHP += amount;
+
+        if (_currentHP > _maxHP)
+            _currentHP = _maxHP;
+
         ChangeHPSliderValue();
     }
 
