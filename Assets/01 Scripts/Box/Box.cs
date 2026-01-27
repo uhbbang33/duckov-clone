@@ -150,7 +150,7 @@ public abstract class Box : MonoBehaviour
     private IEnumerator SlotLoadRoutine()
     {
         for (int i = 0; i < _itemCnt; ++i)
-            _boxSlotLoad[i].SetItemSlotBeforeLoad();
+            _boxSlotLoad[i].SetItemSlotBeforeLoad(_boxSlots[i].CurrentItem.Rarity);
 
         for (int i = _itemCnt; i < _slotCnt; ++i)
             _boxSlotLoad[i].SetEmptySlot();
@@ -159,35 +159,16 @@ public abstract class Box : MonoBehaviour
         {
             _boxSlotLoad[i].StartLoad();
 
-            float loadingTime = SetLoadingTime(_boxSlots[i].CurrentItem.Rarity);
-            yield return new WaitForSeconds(loadingTime);
+            yield return new WaitForSeconds(_boxSlotLoad[i].LoadingTime);
 
             _boxSlotLoad[i].LoadComplete();
         }
 
         for (int i = 0; i < _itemCnt; ++i)
-        {
             _boxSlotLoad[i].AllBoxSlotsLoaded();
-        }
 
         _allRarityOpened = true;
 
         yield return null;
-    }
-
-    private float SetLoadingTime(string rarity)
-    {
-        if (rarity == "ÀÏ¹Ý")
-            return RarityLoadingTime.Common;
-        else if (rarity == "°í±Þ")
-            return RarityLoadingTime.Uncommon;
-        else if (rarity == "Èñ±Í")
-            return RarityLoadingTime.Rare;
-        else if (rarity == "Àü¼³")
-            return RarityLoadingTime.Legendary;
-
-        Debug.Log("ÇØ´ç¾ÈµÊ " + rarity);
-
-        return 0;
     }
 }

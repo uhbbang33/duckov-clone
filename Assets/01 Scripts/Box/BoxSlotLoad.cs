@@ -10,7 +10,11 @@ public class BoxSlotLoad : MonoBehaviour
     [SerializeField] private float _iconRotateRadius = 10f;
 
     private Vector3 _centerPosition;
-    float _angle = 0f;
+    private float _angle = 0f;
+
+    private float _loadingTime;
+
+    public float LoadingTime { get { return _loadingTime; } }
 
     private void OnEnable()
     {
@@ -46,8 +50,10 @@ public class BoxSlotLoad : MonoBehaviour
         _loadingIcon.SetActive(false);
     }
 
-    public void SetItemSlotBeforeLoad()
+    public void SetItemSlotBeforeLoad(string rarity)
     {
+        _loadingTime = SetLoadingTime(rarity);
+
         _unloadedImage.gameObject.SetActive(true);
         UIManager.Instance.ChangeImageAlpha(_unloadedImage, true);
         _unloadedImage.gameObject.transform.SetAsLastSibling();
@@ -67,5 +73,19 @@ public class BoxSlotLoad : MonoBehaviour
     public void AllBoxSlotsLoaded()
     {
         _unloadedImage.gameObject.SetActive(false);
+    }
+
+    public float SetLoadingTime(string rarity)
+    {
+        if (rarity == "ÀÏ¹Ý")
+            return RarityLoadingTime.Common;
+        else if (rarity == "°í±Þ")
+            return RarityLoadingTime.Uncommon;
+        else if (rarity == "Èñ±Í")
+            return RarityLoadingTime.Rare;
+        else if (rarity == "Àü¼³")
+            return RarityLoadingTime.Legendary;
+        
+        return 0;
     }
 }
