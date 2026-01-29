@@ -26,6 +26,8 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     [Space(10)]
     [Header("Slider")]
     [SerializeField] private Slider _mainUIHPBarSlider;
+    [SerializeField] private Slider _mainUIHydrationSlider;
+    [SerializeField] private Slider _mainUIHungerSlider;
 
 
     [Space(20)]
@@ -140,6 +142,16 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     {
         _mainUIHPBarSlider.value = currentHp / maxHp;
         _mainUIHPBarText.text = currentHp.ToString() + " / " + maxHp.ToString();
+    }
+
+    public void ChangeMainUIHydrationSlider(float current, float max)
+    {
+        _mainUIHydrationSlider.value = current / max;
+    }
+
+    public void ChangeMainUIHungerSlider(float current, float max)
+    {
+        _mainUIHungerSlider.value = current / max;
     }
 
 
