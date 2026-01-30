@@ -9,13 +9,16 @@ public class ItemSlotUI : MonoBehaviour,
     [SerializeField] private TextMeshProUGUI _nameText;
     [SerializeField] private TextMeshProUGUI _countText;
     [SerializeField] private ItemInfoUI _infoUI;
+    [SerializeField] private Image _iconImage;
+    [SerializeField] private GameObject _durabilityUI;
+    [SerializeField] private GameObject _countUI;
 
     private UIManager _uiManager;
     private ItemSlot _itemSlot;
     private Inventory _inventory;
-    private Image _image;
     private Transform _originParent;
     private Vector2 _originAncghoredPos;
+    private RectTransform _rect;
 
     private float _lastClickTime;
 
@@ -28,9 +31,6 @@ public class ItemSlotUI : MonoBehaviour,
         {
             _itemSlot = value;
 
-            if (_image == null)
-                _image = GetComponent<Image>();
-
             if (_uiManager == null)
                 _uiManager = UIManager.Instance;
 
@@ -40,13 +40,12 @@ public class ItemSlotUI : MonoBehaviour,
 
     private void Awake()
     {
-        _image = GetComponent<Image>();
         _inventory = GameManager.Instance.Inventory;
         _originParent = transform.parent;
         _originAncghoredPos = ((RectTransform)transform).anchoredPosition;
         _uiManager = UIManager.Instance;
+        _uiManager.ChangeImageAlpha(_iconImage, false);
     }
-
 
     #region Drag And Drop
 
@@ -57,7 +56,7 @@ public class ItemSlotUI : MonoBehaviour,
 
         transform.SetParent(_uiManager.DragCanvasTransform);
 
-        _image.raycastTarget = false;
+        _iconImage.raycastTarget = false;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -111,7 +110,7 @@ public class ItemSlotUI : MonoBehaviour,
     public void OnEndDrag(PointerEventData eventData)
     {
         transform.localPosition = Vector3.zero;
-        _image.raycastTarget = true;
+        _iconImage.raycastTarget = true;
 
         transform.SetParent(_originParent);
         ((RectTransform)transform).anchoredPosition = _originAncghoredPos;
@@ -244,18 +243,27 @@ public class ItemSlotUI : MonoBehaviour,
 
     public void RefreshUI()
     {
-        if (_itemSlot.CurrentItem != null)
+        Item item = _itemSlot.CurrentItem;
+
+        if (item != null)
         {
-            _image.sprite = ItemSpriteDictionary.Instance.GetItemSprite(_itemSlot.CurrentItem.ID);
-            _uiManager.ChangeImageAlpha(_image, true);
+            _iconImage.sprite = ItemSpriteDictionary.Instance.GetItemSprite(item.ID);
+            _uiManager.ChangeImageAlpha(_iconImage, true);
         }
         else
         {
-            _image.sprite = null;
-            _uiManager.ChangeImageAlpha(_image, false);
+            _iconImage.sprite = null;
+            _uiManager.ChangeImageAlpha(_iconImage, false);
         }
 
+        _infoUI.SetInfoUI(item);
         ChangeTexts();
+        SetDurabilityOrCountUI(item);
+
+        if(_rect == null)
+            _rect = GetComponent<RectTransform>();
+        // Vertical Layout Group ÀçÁ¤·Ä
+        LayoutRebuilder.ForceRebuildLayoutImmediate(_rect);
     }
 
     public void OpenSlotMenu()
@@ -286,8 +294,23 @@ public class ItemSlotUI : MonoBehaviour,
         }
     }
 
-    public void SetInfoUI(Item item)
+    private void SetDurabilityOrCountUI(Item item)
     {
-        _infoUI.SetInfoUI(item);
+        _durabilityUI.SetActive(false);
+        _countUI.SetActive(false);
+
+        if (item == null)
+            return;
+
+        if (item.Type == ItemType.Food || item.Type == ItemType.Medicine)
+        {
+            UsableItem usableItem = item as UsableItem;
+            
+            if(usableItem.DurabilityCost != DurabilityCost.MaxDurability)
+                _durabilityUI.SetActive(true);
+        }
+
+        if (!_durabilityUI.activeSelf)
+            _countUI.SetActive(true);
     }
 }

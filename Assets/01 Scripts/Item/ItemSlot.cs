@@ -19,11 +19,6 @@ public class ItemSlot
     public Item CurrentItem
     {
         get { return _currentItem; }
-        set
-        {
-            _currentItem = value;
-            _ui.SetInfoUI(_currentItem);
-        }
     }
 
     public int Quantity
@@ -107,7 +102,6 @@ public class ItemSlot
             _inventory.ChangeWeight(true, _currentItem.Weight * addAmount);
         }
 
-        _ui.SetInfoUI(_currentItem);
         _ui.RefreshUI();
 
         return amount - addAmount;

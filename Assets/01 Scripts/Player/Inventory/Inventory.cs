@@ -36,20 +36,21 @@ public class Inventory : MonoBehaviour
 
         _slotCnt = _slotObject.Length;
 
-        for (int i = 0; i < _slotCnt; ++i)
-            _uiManager.ChangeImageAlpha(_slotObject[i].GetComponent<Image>(), false);
-
         _inventorySlots = new ItemSlot[_slotCnt];
-        for (int i = 0; i < _slotCnt; ++i)
-        {
-            _inventorySlots[i] = new ItemSlot();
-            _inventorySlots[i].UI = _slotObject[i].GetComponent<ItemSlotUI>();
-            _inventorySlots[i].Type = SlotType.INVENTORY;
-        }
     }
 
     private void Start()
     {
+        for (int i = 0; i < _slotCnt; ++i)
+        {
+            ItemSlotUI slotUI = _slotObject[i].GetComponentInChildren<ItemSlotUI>();
+
+            _inventorySlots[i] = new ItemSlot();
+            _inventorySlots[i].UI = slotUI;
+            _inventorySlots[i].Type = SlotType.INVENTORY;
+        }
+
+
         _inputActions = GetComponent<Player>().Actions;
         _inputActions.Player.Inventory.performed += OnInventory;
         _inputActions.Player.Cancel.performed += OnInventoryClose;
