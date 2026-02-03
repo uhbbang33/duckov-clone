@@ -20,7 +20,7 @@ public class PlayerHealthPoint : HealthPoint
         base.Start();
 
         GetComponent<Hunger>().OnEnterZeroHunger += StartReduceHP;
-        GetComponent<Hunger>().OnEnterZeroHunger += StopReduceHP;
+        GetComponent<Hunger>().OnExitZeroHunger += StopReduceHP;
 
     }
 

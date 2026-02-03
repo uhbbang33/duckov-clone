@@ -31,7 +31,7 @@ public class TimeDecreasingStat : MonoBehaviour
 
     protected virtual void OnExitZeroStat() { }
 
-    public void Heal(int amount)
+    public void Heal(float amount)
     {
         _current += amount;
         OnExitZeroStat();
