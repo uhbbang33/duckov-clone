@@ -28,6 +28,8 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     [SerializeField] private Slider _mainUIHPBarSlider;
     [SerializeField] private Slider _mainUIHydrationSlider;
     [SerializeField] private Slider _mainUIHungerSlider;
+    [SerializeField] private Image _mainUIHydrationSliderBackground;
+    [SerializeField] private Image _mainUIHungerSliderBackground;
 
 
     [Space(20)]
@@ -37,6 +39,8 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     [SerializeField] private GameObject _buttonsObject;
 
     private ItemSlot _currentSlot;
+    private Color _hydrationBackgroundOriginColor;
+    private Color _hungerBackgroundOriginColor;
 
     public Transform DragCanvasTransform { get { return _dragCanvasTransform; } }
 
@@ -45,6 +49,10 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         base.Awake();
 
         _currentSlot = new ItemSlot();
+
+        _hungerBackgroundOriginColor = _mainUIHungerSliderBackground.color;
+        _hydrationBackgroundOriginColor = _mainUIHydrationSliderBackground.color;
+
     }
 
     public void ChangeImageAlpha(Image image, bool showImage)
@@ -154,6 +162,39 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         _mainUIHungerSlider.value = current / max;
     }
 
+    public void ChangeHungerSliderBackgroundColor(bool isRed)
+    {
+        Color targetColor = new Color();
+
+        if (isRed)
+        {
+            targetColor = Color.red;
+            targetColor = new Color(targetColor.r, targetColor.g, targetColor.b, _hungerBackgroundOriginColor.a);
+        }
+        else
+        {
+            targetColor = _hungerBackgroundOriginColor;
+        }
+
+        _mainUIHungerSliderBackground.color = targetColor;
+    }
+
+    public void ChangeHydrationSliderBackgroundColor(bool isRed)
+    {
+        Color targetColor = new Color();
+
+        if (isRed)
+        {
+            targetColor = Color.red;
+            targetColor = new Color(targetColor.r, targetColor.g, targetColor.b, _hydrationBackgroundOriginColor.a);
+        }
+        else
+        {
+            targetColor = _hydrationBackgroundOriginColor;
+        }
+
+        _mainUIHydrationSliderBackground.color = targetColor;
+    }
 
     #region On Button Click
     public void OnSplitButtonClick()

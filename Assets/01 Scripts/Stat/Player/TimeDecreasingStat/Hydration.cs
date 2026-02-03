@@ -1,4 +1,3 @@
-
 using System;
 
 public class Hydration : TimeDecreasingStat
@@ -9,12 +8,14 @@ public class Hydration : TimeDecreasingStat
 
     protected override void RefreshUI()
     {
-        UIManager.Instance.ChangeMainUIHydrationSlider(_current, _max);
+        _uiManager.ChangeMainUIHydrationSlider(_current, _max);
     }
 
     protected override void OnEnterZeroStat()
     {
         base.OnEnterZeroStat();
+
+        _uiManager.ChangeHydrationSliderBackgroundColor(true);
 
         OnEnterZeroHydration?.Invoke();
     }
@@ -22,6 +23,8 @@ public class Hydration : TimeDecreasingStat
     protected override void OnExitZeroStat()
     {
         base.OnExitZeroStat();
+        
+        _uiManager.ChangeHydrationSliderBackgroundColor(false);
 
         OnExitZeroHydration?.Invoke();
     }

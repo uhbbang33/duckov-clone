@@ -1,4 +1,3 @@
-
 using System;
 
 public class Hunger : TimeDecreasingStat
@@ -8,12 +7,14 @@ public class Hunger : TimeDecreasingStat
 
     protected override void RefreshUI()
     {
-        UIManager.Instance.ChangeMainUIHungerSlider(_current, _max);
+        _uiManager.ChangeMainUIHungerSlider(_current, _max);
     }
 
     protected override void OnEnterZeroStat()
     {
         base.OnEnterZeroStat();
+
+        _uiManager.ChangeHungerSliderBackgroundColor(true);
 
         OnEnterZeroHunger?.Invoke();
     }
@@ -21,6 +22,8 @@ public class Hunger : TimeDecreasingStat
     protected override void OnExitZeroStat()
     {
         base.OnExitZeroStat();
+
+        _uiManager.ChangeHungerSliderBackgroundColor(false);
 
         OnExitZeroHunger?.Invoke();
     }

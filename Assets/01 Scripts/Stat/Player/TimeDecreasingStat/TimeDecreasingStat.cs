@@ -13,6 +13,7 @@ public class TimeDecreasingStat : MonoBehaviour
     private WaitForSeconds _waitForReduceDelay;
     protected bool _isZeroStat;
     private float _currentReduceAmountPerTick;
+    protected UIManager _uiManager;
 
     private void Awake()
     {
@@ -23,6 +24,8 @@ public class TimeDecreasingStat : MonoBehaviour
 
     protected virtual void Start()
     {
+        _uiManager = UIManager.Instance;
+        
         StartCoroutine(ReducePerTickRoutine());
 
         _playerMove = GetComponent<PlayerMove>();

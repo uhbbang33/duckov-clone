@@ -7554,6 +7554,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b6fe89eba95b6419ad27dae29e57c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CanvasLookAtCamera
+--- !u!114 &1277172059 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6503555873198434804, guid: 1a294bc40ce0c2543a110d2f22ab9c25, type: 3}
+  m_PrefabInstance: {fileID: 2030537793}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!1001 &1287853928
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9018,6 +9029,8 @@ MonoBehaviour:
   _mainUIHPBarSlider: {fileID: 2125551449}
   _mainUIHydrationSlider: {fileID: 434734456}
   _mainUIHungerSlider: {fileID: 2030537795}
+  _mainUIHydrationSliderBackground: {fileID: 1967062002}
+  _mainUIHungerSliderBackground: {fileID: 1277172059}
   _splitUI: {fileID: 94495574}
   _dragCanvasTransform: {fileID: 461288160}
   _slotMenuUI: {fileID: 301001545}
@@ -11716,6 +11729,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2f01033240955a48aa8a03d8d01abe4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponBox
+--- !u!114 &1967062002 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 297169441214981819, guid: 7715b96d7f945a1439fef651c30c89de, type: 3}
+  m_PrefabInstance: {fileID: 434734454}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!1001 &1996674339
 PrefabInstance:
   m_ObjectHideFlags: 0
