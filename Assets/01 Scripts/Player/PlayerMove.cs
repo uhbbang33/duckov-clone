@@ -18,6 +18,7 @@ public class PlayerMove : MonoBehaviour
     private bool _isRun;
     private bool _isRoll;
     private float _speedDebuffRate;
+    private bool _isZeroHydration;
 
     [SerializeField] private float _rollTickSPCost;
     [SerializeField] private float _runTickSPCost;
@@ -233,7 +234,6 @@ public class PlayerMove : MonoBehaviour
     private void OnRunCanceled(InputAction.CallbackContext context)
     {
         StopRun();
-        OnRunCancel?.Invoke();
     }
 
     private void OnRollPerformed(InputAction.CallbackContext context)
@@ -277,6 +277,7 @@ public class PlayerMove : MonoBehaviour
 
     private void StopRun()
     {
+        OnRunCancel?.Invoke();
         _sp.IsReducing = false;
         _isRun = false;
         _anim.SetBool("IsRun", false);

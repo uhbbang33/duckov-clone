@@ -13,11 +13,15 @@ public class Hunger : TimeDecreasingStat
 
     protected override void OnEnterZeroStat()
     {
+        base.OnEnterZeroStat();
+
         OnEnterZeroHunger?.Invoke();
     }
 
     protected override void OnExitZeroStat()
     {
+        base.OnExitZeroStat();
+
         OnExitZeroHunger?.Invoke();
     }
 }

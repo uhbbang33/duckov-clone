@@ -56,7 +56,8 @@ public class Inventory : MonoBehaviour
         _inputActions.Player.Cancel.performed += OnInventoryClose;
         // TODO : Inventory에 player가 가지고 있는 물품 넣기 (저장)
 
-        _playerInteract.OnInteractEvent += OnInventoryCloseBlocked;
+        _playerInteract.OnEnableInteractEvent += OnInventoryCloseBlocked;
+        _playerInteract.OnDisableInteractEvent += OnInventoryCloseAllowed;
     }
 
     private void OnDisable()
@@ -64,7 +65,8 @@ public class Inventory : MonoBehaviour
         _inputActions.Player.Inventory.performed -= OnInventory;
         _inputActions.Player.Cancel.performed -= OnInventoryClose;
 
-        _playerInteract.OnInteractEvent -= OnInventoryCloseBlocked;
+        _playerInteract.OnEnableInteractEvent -= OnInventoryCloseBlocked;
+        _playerInteract.OnDisableInteractEvent -= OnInventoryCloseAllowed;
     }
 
     private void OnInventory(InputAction.CallbackContext context)
@@ -111,12 +113,15 @@ public class Inventory : MonoBehaviour
         _uiManager.ChangeInventoryItemCountText(_itemCnt, _slotCnt);
     }
 
-    private void OnInventoryCloseBlocked(bool isBlock)
+
+    private void OnInventoryCloseBlocked()
     {
-        if (isBlock)
-            _inputActions.Player.Inventory.performed -= OnInventory;
-        else
-            _inputActions.Player.Inventory.performed += OnInventory;
+        _inputActions.Player.Inventory.performed -= OnInventory;
+    }
+
+    private void OnInventoryCloseAllowed()
+    {
+        _inputActions.Player.Inventory.performed += OnInventory;
     }
 
     public bool TryAddItem(Item item, int amount)

@@ -6,6 +6,8 @@ public class PlayerHealthPoint : HealthPoint
     [SerializeField] private float _reduceDelay;
     [SerializeField] private float _reduceAmountPerTick;
 
+    private bool _isReducingByHungerZero;
+    private Hunger _hunger;
     private WaitForSeconds _waitForReduceDelay;
 
     protected override void Awake()
@@ -19,19 +21,26 @@ public class PlayerHealthPoint : HealthPoint
     {
         base.Start();
 
-        GetComponent<Hunger>().OnEnterZeroHunger += StartReduceHP;
-        GetComponent<Hunger>().OnExitZeroHunger += StopReduceHP;
+        _hunger = GetComponent<Hunger>();
+        _hunger.OnEnterZeroHunger += StartReduceHP;
+        _hunger.OnExitZeroHunger += StopReduceHP;
+    }
 
+    private void OnDisable()
+    {
+        _hunger.OnEnterZeroHunger -= StartReduceHP;
+        _hunger.OnExitZeroHunger -= StopReduceHP;
     }
 
     private void StartReduceHP()
     {
-        StartCoroutine(ReduceHPRoutine());
+        _isReducingByHungerZero = true;
+        _reduceCoroutine = StartCoroutine(ReduceHPRoutine());
     }
 
     private void StopReduceHP()
     {
-        StopCoroutine(ReduceHPRoutine());
+        _isReducingByHungerZero = false;
     }
 
     protected override void ChangeHPSliderValue()
@@ -43,15 +52,12 @@ public class PlayerHealthPoint : HealthPoint
 
     private IEnumerator ReduceHPRoutine()
     {
-        while(_currentHP > 0)
+        while (_isReducingByHungerZero)
         {
-            TakeDamage(_reduceAmountPerTick);
+            if (_currentHP > 0)
+                TakeDamage(_reduceAmountPerTick);
 
             yield return _waitForReduceDelay;
         }
-
-        yield return null;
     }
-
-
 }

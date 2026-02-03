@@ -4,37 +4,63 @@ using UnityEngine;
 public class TimeDecreasingStat : MonoBehaviour
 {
     [SerializeField] protected float _max;
-    [SerializeField] private float _reduceAmountPerTick;
+    [SerializeField] private float _originReduceAmountPerTick;
     [SerializeField] private float _reduceDelay;
 
+    private PlayerMove _playerMove;
+    private PlayerInteract _playerInteract;
     protected float _current;
     private WaitForSeconds _waitForReduceDelay;
     protected bool _isZeroStat;
+    private float _currentReduceAmountPerTick;
 
     private void Awake()
     {
         _waitForReduceDelay = new WaitForSeconds(_reduceDelay);
         _current = _max;
+        _currentReduceAmountPerTick = _originReduceAmountPerTick;
     }
 
     protected virtual void Start()
     {
         StartCoroutine(ReducePerTickRoutine());
 
-        GetComponent<PlayerMove>().OnRun += EnableDouble;
-        GetComponent<PlayerMove>().OnRunCancel += DisableDouble;
+        _playerMove = GetComponent<PlayerMove>();
+        _playerMove.OnRun += DoubleReduceAmount;
+        _playerMove.OnRunCancel += RestoreReduceAmount;
+
+        _playerInteract = GetComponent<PlayerInteract>();
+        _playerInteract.OnEnableInteractEvent += RestoreReduceAmount;
+    }
+
+    private void OnDisable()
+    {
+        _playerMove.OnRun -= DoubleReduceAmount;
+        _playerMove.OnRunCancel -= RestoreReduceAmount;
+        _playerInteract.OnEnableInteractEvent -= RestoreReduceAmount;
     }
 
     protected virtual void RefreshUI() { }
 
-    protected virtual void OnEnterZeroStat() { }
+    protected virtual void OnEnterZeroStat()
+    {
+        _isZeroStat = true;
+    }
 
-    protected virtual void OnExitZeroStat() { }
+    protected virtual void OnExitZeroStat() 
+    {
+        StartCoroutine(ReducePerTickRoutine());
+    }
 
     public void Heal(float amount)
     {
         _current += amount;
-        OnExitZeroStat();
+
+        if (_isZeroStat)
+        {
+            OnExitZeroStat();
+            _isZeroStat = false;
+        }
 
         if (_current > _max)
             _current = _max;
@@ -42,21 +68,21 @@ public class TimeDecreasingStat : MonoBehaviour
         RefreshUI();
     }
 
-    private void EnableDouble()
+    private void DoubleReduceAmount()
     {
-        _reduceAmountPerTick *= 2;
+        _currentReduceAmountPerTick = 2 * _originReduceAmountPerTick;
     }
 
-    private void DisableDouble()
+    private void RestoreReduceAmount()
     {
-        _reduceAmountPerTick /= 2;
+        _currentReduceAmountPerTick = _originReduceAmountPerTick;
     }
 
     private IEnumerator ReducePerTickRoutine()
     {
         while (_current > 0)
         {
-            _current -= _reduceAmountPerTick;
+            _current -= _currentReduceAmountPerTick;
 
             RefreshUI();
 

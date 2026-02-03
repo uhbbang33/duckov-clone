@@ -12,7 +12,8 @@ public class PlayerInteract : MonoBehaviour
     private PlayerInteractableScanner _scanner;
     private PlayerMove _playerMove;
 
-    public event Action<bool> OnInteractEvent;
+    public event Action OnEnableInteractEvent;
+    public event Action OnDisableInteractEvent;
     public event Action OnCloseUIEvent;
 
     public InteractableStateUI UI
@@ -57,7 +58,7 @@ public class PlayerInteract : MonoBehaviour
 
             GameManager.Instance.CurrentBox.OpenBox();
 
-            OnInteractEvent?.Invoke(true);
+            OnEnableInteractEvent?.Invoke();
         }
 
         _ui.OnInteract();
@@ -81,7 +82,7 @@ public class PlayerInteract : MonoBehaviour
 
             _playerMove.RestartMove();
 
-            OnInteractEvent?.Invoke(false);
+            OnDisableInteractEvent?.Invoke();
         }
     }
 }

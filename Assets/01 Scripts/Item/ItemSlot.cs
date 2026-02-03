@@ -125,13 +125,11 @@ public class ItemSlot
     {
         UsableItem item = _currentItem as UsableItem;
 
-        // 여기가 문제 !!!
         if (!GameManager.Instance.PlayerObject.GetComponent<Player>().UseItem(item))
             return;
 
         if (item.DurabilityCost > 0)
         {
-            // item의 내구도 감소
             item.CurrentDurability -= (int)item.DurabilityCost;
             if (item.CurrentDurability > 0)
             {

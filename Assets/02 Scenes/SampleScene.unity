@@ -13492,7 +13492,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StaminaPoint
   _maxSP: 100
-  _healAmountPerTick: 0.1
+  _originHealAmountPerTick: 0.1
   _runDelayTime: 0.02
   _healDelayTime: 0.1
   _healFirstDelayTime: 1.5
@@ -13594,7 +13594,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Hunger
   _max: 100
-  _reduceAmountPerTick: 0.1
+  _originReduceAmountPerTick: 0.1
   _reduceDelay: 0.1
 --- !u!114 &6032076664905499562
 MonoBehaviour:
@@ -13609,7 +13609,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Hydration
   _max: 100
-  _reduceAmountPerTick: 0.1
+  _originReduceAmountPerTick: 0.1
   _reduceDelay: 0.1
 --- !u!114 &6032076664905499563
 MonoBehaviour:

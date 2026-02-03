@@ -3,7 +3,9 @@ using System;
 
 public class Hydration : TimeDecreasingStat
 {
-    public event Action OnZeroHydration;
+    public event Action OnEnterZeroHydration;
+    public event Action OnExitZeroHydration;
+
 
     protected override void RefreshUI()
     {
@@ -12,12 +14,16 @@ public class Hydration : TimeDecreasingStat
 
     protected override void OnEnterZeroStat()
     {
-        OnZeroHydration?.Invoke();
+        base.OnEnterZeroStat();
+
+        OnEnterZeroHydration?.Invoke();
     }
 
     protected override void OnExitZeroStat()
     {
+        base.OnExitZeroStat();
 
+        OnExitZeroHydration?.Invoke();
     }
 
 }

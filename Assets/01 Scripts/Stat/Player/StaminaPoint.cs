@@ -1,21 +1,23 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class StaminaPoint : MonoBehaviour
 {
     private float _currentSP;
     private bool _isReducing;
+    Hydration _hydration;
 
     // TODO: Json Data
     [SerializeField] private float _maxSP;
-    [SerializeField] private float _healAmountPerTick;
+    [SerializeField] private float _originHealAmountPerTick;
     [SerializeField] private float _runDelayTime;
     [SerializeField] private float _healDelayTime;
     [SerializeField] private float _healFirstDelayTime;
     [SerializeField] private Slider _SPSlider;
+
+    private float _currentHealAmountPerTick;
 
     private WaitForSeconds _waitRunDelay;
     private WaitForSeconds _waitHealDelay;
@@ -32,10 +34,24 @@ public class StaminaPoint : MonoBehaviour
     private void Awake()
     {
         _currentSP = _maxSP;
+        _currentHealAmountPerTick = _originHealAmountPerTick;
         _isReducing = false;
         _waitRunDelay = new WaitForSeconds(_runDelayTime);
         _waitHealDelay = new WaitForSeconds(_healDelayTime);
         _waitHealFirstDelay = new WaitForSeconds(_healFirstDelayTime);
+    }
+
+    private void Start()
+    {
+        _hydration = GetComponent<Hydration>();
+        _hydration.OnEnterZeroHydration += HalveHealAmountPerTick;
+        _hydration.OnExitZeroHydration += RestoreHealAmountPerTick;
+    }
+
+    private void OnDisable()
+    {
+        _hydration.OnEnterZeroHydration -= HalveHealAmountPerTick;
+        _hydration.OnExitZeroHydration -= RestoreHealAmountPerTick;
     }
 
     public void ReduceSPImmediately(float amount)
@@ -96,6 +112,17 @@ public class StaminaPoint : MonoBehaviour
         _SPSlider.value = _currentSP / _maxSP;
     }
 
+    private void HalveHealAmountPerTick()
+    {
+        _currentHealAmountPerTick = _originHealAmountPerTick / 2;
+    }
+
+    private void RestoreHealAmountPerTick()
+    {
+        _currentHealAmountPerTick = _originHealAmountPerTick;
+    }
+
+
     #region Coroutine
 
     private IEnumerator ReducePerSecondRoutine(float amount)
@@ -115,7 +142,7 @@ public class StaminaPoint : MonoBehaviour
 
         while (_currentSP < _maxSP)
         {
-            HealStamina(_healAmountPerTick);
+            HealStamina(_currentHealAmountPerTick);
             yield return _waitHealDelay;
         }
         
