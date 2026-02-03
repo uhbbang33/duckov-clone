@@ -6,8 +6,8 @@ public class BoxSlotLoad : MonoBehaviour
     [SerializeField] private GameObject _unloadedImage;
     [SerializeField] private GameObject _loadingIcon;
 
-    [SerializeField] private float _iconRotateSpeed = 5f;
-    [SerializeField] private float _iconRotateRadius = 10f;
+    [SerializeField] private float _iconRotateSpeed = 6.5f;
+    [SerializeField] private float _iconRotateRadius = 5f;
 
     private Vector3 _centerPosition;
     private float _angle = 0f;

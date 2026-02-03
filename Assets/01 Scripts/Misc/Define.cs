@@ -29,10 +29,10 @@ public enum InteractableType
 
 public struct RarityLoadingTime
 {
-    public const float Common = 0.5f;
-    public const float Uncommon = 1f;
-    public const float Rare = 2f;
-    public const float Legendary = 3f;
+    public const float Common = 0.8f;
+    public const float Uncommon = 1.5f;
+    public const float Rare = 3f;
+    public const float Legendary = 4.8f;
 }
 
 public struct Durability
