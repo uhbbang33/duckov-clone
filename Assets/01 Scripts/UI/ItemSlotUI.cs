@@ -317,6 +317,6 @@ public class ItemSlotUI : MonoBehaviour,
 
     public void ChangeDurabilitySliderValue(int current, int max)
     {
-        _durabilitySlider.value = current / max;
+        _durabilitySlider.value = (float)current / (float)max;
     }
 }

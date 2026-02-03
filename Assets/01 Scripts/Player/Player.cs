@@ -28,7 +28,9 @@ public class Player : MonoBehaviour
 
     public bool UseItem(UsableItem item)
     {
-        if (!_hp.Heal(item.HealHP))
+        if (!_hp.Heal(item.HealHP)
+            && item.Hunger == 0
+            && item.Hydration == 0)
         {
             return false;
         }
