@@ -9,6 +9,7 @@ public class PlayerMove : MonoBehaviour
     private Rigidbody _rb;
     private Animator _anim;
     private StaminaPoint _sp;
+    private Hydration _hydration;
 
     private Vector2 _moveInput;
     private Vector2 _mousePosition;
@@ -48,6 +49,8 @@ public class PlayerMove : MonoBehaviour
         SubscribeInputActions();
 
         _sp.OnSPZero += StopRun;
+        _hydration.OnEnterZeroHydration += EnableZeroHydration;
+        _hydration.OnExitZeroHydration += DisableZeroHydration;
     }
 
     private void OnDisable()
@@ -55,6 +58,8 @@ public class PlayerMove : MonoBehaviour
         UnsubscribeInputActions();
 
         _sp.OnSPZero -= StopRun;
+        _hydration.OnEnterZeroHydration -= EnableZeroHydration;
+        _hydration.OnExitZeroHydration -= DisableZeroHydration;
     }
 
     private void FixedUpdate()
@@ -74,7 +79,9 @@ public class PlayerMove : MonoBehaviour
         }
 
         speed *= ((100f - _speedDebuffRate) / 100f);
-        //Debug.Log("Speed " + speed);
+
+        if (_isZeroHydration)
+            speed /= 2;
 
         if (dir.sqrMagnitude > 0.01f)
             _rb.linearVelocity = new Vector3(dir.x * speed, _rb.linearVelocity.y, dir.z * speed);
@@ -98,6 +105,7 @@ public class PlayerMove : MonoBehaviour
         _rb = GetComponent<Rigidbody>();
         _anim = GetComponent<Animator>();
         _sp = GetComponent<StaminaPoint>();
+        _hydration = GetComponent<Hydration>();
 
         _moveInput = Vector2.zero;
         _mousePosition = Vector2.zero;
@@ -281,6 +289,16 @@ public class PlayerMove : MonoBehaviour
         _sp.IsReducing = false;
         _isRun = false;
         _anim.SetBool("IsRun", false);
+    }
+
+    private void EnableZeroHydration()
+    {
+        _isZeroHydration = true;
+    }
+
+    private void DisableZeroHydration()
+    {
+        _isZeroHydration = false;
     }
 
     public void ChangeSpeed(float ReducePercentage)

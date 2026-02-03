@@ -35,6 +35,7 @@ public class PlayerHealthPoint : HealthPoint
     private void StartReduceHP()
     {
         _isReducingByHungerZero = true;
+        StartCoroutine(ReduceHPRoutine());
     }
 
     private void StopReduceHP()
