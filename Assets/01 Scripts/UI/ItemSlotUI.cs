@@ -12,6 +12,7 @@ public class ItemSlotUI : MonoBehaviour,
     [SerializeField] private Image _iconImage;
     [SerializeField] private GameObject _durabilityUI;
     [SerializeField] private GameObject _countUI;
+    [SerializeField] private Slider _durabilitySlider;
 
     private UIManager _uiManager;
     private ItemSlot _itemSlot;
@@ -306,11 +307,16 @@ public class ItemSlotUI : MonoBehaviour,
         {
             UsableItem usableItem = item as UsableItem;
             
-            if(usableItem.DurabilityCost != DurabilityCost.MaxDurability)
+            if(usableItem.DurabilityCost != Durability.MaxDurability)
                 _durabilityUI.SetActive(true);
         }
 
         if (!_durabilityUI.activeSelf)
             _countUI.SetActive(true);
+    }
+
+    public void ChangeDurabilitySliderValue(int current, int max)
+    {
+        _durabilitySlider.value = current / max;
     }
 }

@@ -179,20 +179,8 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 
     public void OnUsebuttonClick()
     {
+        _currentSlot.UseItem();
         CloseSlotMenu();
-
-        UsableItem item = _currentSlot.CurrentItem as UsableItem;
-
-        if (item.HealHP > 0
-            && !GameManager.Instance.PlayerObject.GetComponent<Player>().UseItem(item))
-            return;
-
-        if (item.DurabilityCost > 0)
-        {
-            // item의 내구도 감소
-        }
-
-        _currentSlot.SubtractItem();
     }
 
     #endregion On Button Click

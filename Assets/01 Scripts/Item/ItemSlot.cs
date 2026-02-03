@@ -120,4 +120,26 @@ public class ItemSlot
             GameManager.Instance.CurrentBox.AddItemToEmptySlot(_currentItem, amount);
         }
     }
+
+    public void UseItem()
+    {
+        UsableItem item = _currentItem as UsableItem;
+
+        // 여기가 문제 !!!
+        if (!GameManager.Instance.PlayerObject.GetComponent<Player>().UseItem(item))
+            return;
+
+        if (item.DurabilityCost > 0)
+        {
+            // item의 내구도 감소
+            item.CurrentDurability -= (int)item.DurabilityCost;
+            if (item.CurrentDurability > 0)
+            {
+                _ui.ChangeDurabilitySliderValue(item.CurrentDurability, Durability.MaxDurability);
+                return;
+            }
+        }
+        
+        SubtractItem();
+    }
 }

@@ -35,7 +35,7 @@ public struct RarityLoadingTime
     public const float Legendary = 3f;
 }
 
-public struct DurabilityCost
+public struct Durability
 {
     public const int MaxDurability = 100;
 }

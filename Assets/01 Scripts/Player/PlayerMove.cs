@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -29,6 +30,9 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float _runTurnSpeed;
 
     private WaitForSeconds _waitForRoll;
+
+    public event Action OnRun;
+    public event Action OnRunCancel;
 
     #region MonoBehaviour
 
@@ -223,11 +227,13 @@ public class PlayerMove : MonoBehaviour
         
         _isRun = true;
         _anim.SetBool("IsRun", true);
+        OnRun?.Invoke();
     }
 
     private void OnRunCanceled(InputAction.CallbackContext context)
     {
         StopRun();
+        OnRunCancel?.Invoke();
     }
 
     private void OnRollPerformed(InputAction.CallbackContext context)

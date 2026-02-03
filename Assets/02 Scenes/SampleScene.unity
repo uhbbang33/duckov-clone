@@ -12655,8 +12655,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Hunger
   _max: 100
-  _healAmountPerTick: 0.2
-  _reduceAmountPerTick: 0.2
+  _reduceAmountPerTick: 0.1
   _reduceDelay: 0.1
 --- !u!114 &6032076664905499562
 MonoBehaviour:
@@ -12670,9 +12669,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04534f615eb89e1489c8956514e9312e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Hydration
-  _maxHydration: 100
-  _healAmountPerTick: 0.2
-  _reduceAmountPerTick: 0.2
+  _max: 100
+  _reduceAmountPerTick: 0.1
   _reduceDelay: 0.1
 --- !u!1 &6104561713744950228
 GameObject:
