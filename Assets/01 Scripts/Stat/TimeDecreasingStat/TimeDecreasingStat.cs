@@ -9,6 +9,7 @@ public class TimeDecreasingStat : MonoBehaviour
 
     protected float _current;
     private WaitForSeconds _waitForReduceDelay;
+    protected bool _isZeroStat;
 
     private void Awake()
     {
@@ -26,9 +27,15 @@ public class TimeDecreasingStat : MonoBehaviour
 
     protected virtual void RefreshUI() { }
 
+    protected virtual void OnEnterZeroStat() { }
+
+    protected virtual void OnExitZeroStat() { }
+
     public void Heal(int amount)
     {
         _current += amount;
+        OnExitZeroStat();
+
         if (_current > _max)
             _current = _max;
 
@@ -59,12 +66,10 @@ public class TimeDecreasingStat : MonoBehaviour
         if (_current <= 0)
         {
             _current = 0;
-
-            //TODO 에너지가 고갈되었을 때
-
+            OnEnterZeroStat();
         }
-
 
         yield return null;
     }
+
 }

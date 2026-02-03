@@ -12346,7 +12346,7 @@ GameObject:
   - component: {fileID: 6032076664905499558}
   - component: {fileID: 6032076664905499553}
   - component: {fileID: 6032076664905499556}
-  - component: {fileID: 6032076664905499555}
+  - component: {fileID: 6032076664905499563}
   - component: {fileID: 6032076664905499557}
   - component: {fileID: 6032076664905499559}
   - component: {fileID: 6032076664905499560}
@@ -12525,21 +12525,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &6032076664905499555
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2919116958976057407}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6382add82c5f7e40b3fa8d6d142bc9a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HealthPoint
-  _maxHP: 40
-  _HPBarSlider: {fileID: 831032853}
-  _tempCurrentHP: 35
 --- !u!114 &6032076664905499556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12672,6 +12657,23 @@ MonoBehaviour:
   _max: 100
   _reduceAmountPerTick: 0.1
   _reduceDelay: 0.1
+--- !u!114 &6032076664905499563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2919116958976057407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 224e7b28718f2ce4b86a5ffac13fae82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealthPoint
+  _maxHP: 40
+  _HPBarSlider: {fileID: 831032853}
+  _tempCurrentHP: 35
+  _reduceDelay: 2
+  _reduceAmountPerTick: 1
 --- !u!1 &6104561713744950228
 GameObject:
   m_ObjectHideFlags: 0

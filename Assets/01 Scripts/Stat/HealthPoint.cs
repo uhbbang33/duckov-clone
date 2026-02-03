@@ -1,25 +1,31 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HealthPoint : MonoBehaviour
 {
-    [SerializeField] private float _maxHP;
+    [SerializeField] protected float _maxHP;
     [SerializeField] private Slider _HPBarSlider;
+
 
     [Space(10)]
     [Header("FOR TEST")]
     [SerializeField] private float _tempCurrentHP;
 
-    private float _currentHP;
+    protected float _currentHP;
     public float CurrentHP
     {
         get { return _currentHP; }
     }
 
-    private void Start()
+    protected virtual void Awake()
     {
         //_currentHP = _maxHP;
         _currentHP = _tempCurrentHP;
+    }
+
+    protected virtual void Start()
+    {
         ChangeHPSliderValue();
     }
 
@@ -51,11 +57,8 @@ public class HealthPoint : MonoBehaviour
         ChangeHPSliderValue();
     }
 
-    private void ChangeHPSliderValue()
+    protected virtual void ChangeHPSliderValue()
     {
         _HPBarSlider.value = _currentHP / _maxHP;
-
-        UIManager.Instance.ChangeMainUIHPBar(_currentHP, _maxHP);
-
     }
 }
