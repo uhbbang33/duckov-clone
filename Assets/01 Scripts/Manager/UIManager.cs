@@ -2,6 +2,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using System.Collections.Generic;
 
 public class UIManager : SingletonMonoBehaviour<UIManager>
 {
@@ -52,21 +54,21 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 
         _currentSlot = new ItemSlot();
         _inputActions = new InputActions();
-        _inputActions.UI.Enable();
 
         _hungerBackgroundOriginColor = _mainUIHungerSliderBackground.color;
         _hydrationBackgroundOriginColor = _mainUIHydrationSliderBackground.color;
 
     }
 
-    private void Start()
+    private void OnEnable()
     {
-        _inputActions.UI.CloseSlotMenuUI.performed += OnCloseSlotMenuUI;
+        _inputActions.UI.Enable();
+        _inputActions.UI.CloseSlotMenuUI.performed += OnClick;
     }
 
     private void OnDisable()
     {
-        _inputActions.UI.CloseSlotMenuUI.performed -= OnCloseSlotMenuUI;
+        _inputActions.UI.CloseSlotMenuUI.performed -= OnClick;
         _inputActions.UI.Disable();
     }
 
@@ -97,15 +99,42 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         _slotMenuUI.SetActive(true);
     }
 
-    private void OnCloseSlotMenuUI(InputAction.CallbackContext context)
+    private void OnClick(InputAction.CallbackContext context)
     {
-        _slotMenuUI.SetActive(false);
+        GameObject clickedUI = GetClickedUI();
+        if (clickedUI == null)
+        {
+            CloseSlotMenu();
+            return;
+        }
 
+        Button clickedButton = clickedUI.GetComponent<Button>();
+        if (clickedButton != null)
+            return;
+
+        ItemSlotUI slotUI = clickedUI.GetComponent<ItemSlotUI>();
+        if(slotUI == null)
+        {
+            CloseSlotMenu();
+            return;
+        }
     }
 
     public void CloseSlotMenu()
     {
         _slotMenuUI.SetActive(false);
+    }
+
+    private GameObject GetClickedUI()
+    {
+        PointerEventData eventData = new PointerEventData(EventSystem.current);
+        eventData.position = Mouse.current.position.ReadValue();
+
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventData, results);
+
+        if (results.Count > 0) return results[0].gameObject;
+        else return null;
     }
 
     private bool IsUpperHalf(Vector3 pos)

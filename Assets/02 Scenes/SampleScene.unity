@@ -13618,7 +13618,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Hunger
   _max: 100
-  _originReduceAmountPerTick: 0.1
+  _originReduceAmountPerTick: 1
   _reduceDelay: 1
 --- !u!114 &6032076664905499562
 MonoBehaviour:
@@ -13633,7 +13633,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Hydration
   _max: 100
-  _originReduceAmountPerTick: 0.1
+  _originReduceAmountPerTick: 1
   _reduceDelay: 1
 --- !u!114 &6032076664905499563
 MonoBehaviour:
