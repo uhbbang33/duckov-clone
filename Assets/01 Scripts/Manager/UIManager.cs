@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class UIManager : SingletonMonoBehaviour<UIManager>
@@ -39,6 +40,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     [SerializeField] private GameObject _buttonsObject;
 
     private ItemSlot _currentSlot;
+    private InputActions _inputActions;
     private Color _hydrationBackgroundOriginColor;
     private Color _hungerBackgroundOriginColor;
 
@@ -49,10 +51,23 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         base.Awake();
 
         _currentSlot = new ItemSlot();
+        _inputActions = new InputActions();
+        _inputActions.UI.Enable();
 
         _hungerBackgroundOriginColor = _mainUIHungerSliderBackground.color;
         _hydrationBackgroundOriginColor = _mainUIHydrationSliderBackground.color;
 
+    }
+
+    private void Start()
+    {
+        _inputActions.UI.CloseSlotMenuUI.performed += OnCloseSlotMenuUI;
+    }
+
+    private void OnDisable()
+    {
+        _inputActions.UI.CloseSlotMenuUI.performed -= OnCloseSlotMenuUI;
+        _inputActions.UI.Disable();
     }
 
     public void ChangeImageAlpha(Image image, bool showImage)
@@ -80,6 +95,12 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         ShowButtonsByItemtype();
 
         _slotMenuUI.SetActive(true);
+    }
+
+    private void OnCloseSlotMenuUI(InputAction.CallbackContext context)
+    {
+        _slotMenuUI.SetActive(false);
+
     }
 
     public void CloseSlotMenu()

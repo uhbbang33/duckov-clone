@@ -3374,7 +3374,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 100
+  m_SortingOrder: 1000
   m_TargetDisplay: 0
 --- !u!224 &568491475
 RectTransform:
@@ -13619,7 +13619,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Hunger
   _max: 100
   _originReduceAmountPerTick: 0.1
-  _reduceDelay: 0.1
+  _reduceDelay: 1
 --- !u!114 &6032076664905499562
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13634,7 +13634,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Hydration
   _max: 100
   _originReduceAmountPerTick: 0.1
-  _reduceDelay: 0.1
+  _reduceDelay: 1
 --- !u!114 &6032076664905499563
 MonoBehaviour:
   m_ObjectHideFlags: 0
