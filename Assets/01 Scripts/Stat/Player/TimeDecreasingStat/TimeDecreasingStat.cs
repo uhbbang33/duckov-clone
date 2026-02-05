@@ -34,6 +34,8 @@ public class TimeDecreasingStat : MonoBehaviour
 
         _playerInteract = GetComponent<PlayerInteract>();
         _playerInteract.OnEnableInteractEvent += RestoreReduceAmount;
+
+        RefreshUI();
     }
 
     private void OnDisable()
@@ -57,6 +59,9 @@ public class TimeDecreasingStat : MonoBehaviour
 
     public void Heal(float amount)
     {
+        if (amount == 0)
+            return;
+
         _current += amount;
 
         if (_isZeroStat)
@@ -85,11 +90,11 @@ public class TimeDecreasingStat : MonoBehaviour
     {
         while (_current > 0)
         {
-            _current -= _currentReduceAmountPerTick;
-
-            RefreshUI();
-
             yield return _waitForReduceDelay;
+
+            _current -= _currentReduceAmountPerTick;
+            
+            RefreshUI();
         }
 
         if (_current <= 0)
