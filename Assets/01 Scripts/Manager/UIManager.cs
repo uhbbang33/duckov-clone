@@ -35,6 +35,11 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     [SerializeField] private Image _mainUIHungerSliderBackground;
 
 
+    [Space(10)]
+    [Header("Sprite")]
+    [SerializeField] private Sprite _pistolIcon;
+
+
     [Space(20)]
     [SerializeField] private ItemSplitUI _splitUI;
     [SerializeField] private Transform _dragCanvasTransform;
@@ -47,6 +52,8 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     private Color _hungerBackgroundOriginColor;
 
     public Transform DragCanvasTransform { get { return _dragCanvasTransform; } }
+
+    public Sprite PistolIcon { get { return _pistolIcon; } }
 
     protected override void Awake()
     {

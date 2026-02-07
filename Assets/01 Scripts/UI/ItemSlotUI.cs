@@ -9,12 +9,12 @@ public class ItemSlotUI : MonoBehaviour,
     [SerializeField] private TextMeshProUGUI _nameText;
     [SerializeField] private TextMeshProUGUI _countText;
     [SerializeField] private ItemInfoUI _infoUI;
-    [SerializeField] private Image _iconImage;
+    [SerializeField] protected Image _iconImage;
     [SerializeField] private GameObject _durabilityUI;
     [SerializeField] private GameObject _countUI;
     [SerializeField] private Slider _durabilitySlider;
 
-    private UIManager _uiManager;
+    protected UIManager _uiManager;
     protected ItemSlot _itemSlot;
     private Inventory _inventory;
     private Transform _originParent;
@@ -246,7 +246,7 @@ public class ItemSlotUI : MonoBehaviour,
     #endregion Hover
 
 
-    public void RefreshUI()
+    public virtual void RefreshUI()
     {
         Item item = _itemSlot.CurrentItem;
 
