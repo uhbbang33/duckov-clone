@@ -178,6 +178,8 @@ public abstract class Box : MonoBehaviour
             _boxSlotLoad[i].LoadComplete();
 
             _loaded[i] = true;
+
+            _boxSlots[i].UI.ChangeImageAlpha(true);
         }
 
         _allRarityOpened = true;

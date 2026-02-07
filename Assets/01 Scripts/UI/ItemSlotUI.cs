@@ -41,11 +41,15 @@ public class ItemSlotUI : MonoBehaviour,
 
     protected virtual void Awake()
     {
-        _inventory = GameManager.Instance.Inventory;
         _originParent = transform.parent;
         _originAncghoredPos = ((RectTransform)transform).anchoredPosition;
+    }
+
+    protected virtual void Start()
+    {
+        _inventory = GameManager.Instance.Inventory;
         _uiManager = UIManager.Instance;
-        _uiManager.ChangeImageAlpha(_iconImage, false);
+        ChangeImageAlpha(false);
     }
 
     #region Drag And Drop
@@ -80,7 +84,8 @@ public class ItemSlotUI : MonoBehaviour,
 
         if (startUI == this)
         {
-            _infoUI.ShowUI();
+            if (_infoUI != null)
+                _infoUI.ShowUI();
             return;
         }
 
@@ -108,7 +113,7 @@ public class ItemSlotUI : MonoBehaviour,
         else if(startUI._itemSlot.CurrentItem != null)
             SwapItem(startUI);
 
-        if (_itemSlot.CurrentItem != null)
+        if (_itemSlot.CurrentItem != null && _infoUI != null)
             _infoUI.ShowUI();
     }
 
@@ -165,7 +170,8 @@ public class ItemSlotUI : MonoBehaviour,
             || GameManager.Instance.CurrentOpenBox == null)
             return;
 
-        _infoUI.HideUI();
+        if (_infoUI != null)
+            _infoUI.HideUI();
 
         if (_itemSlot.Type == SlotType.INVENTORY)
         {
@@ -234,13 +240,15 @@ public class ItemSlotUI : MonoBehaviour,
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (_itemSlot != null && _itemSlot.CurrentItem != null)
+        if (_itemSlot != null && _itemSlot.CurrentItem != null
+            && _infoUI != null)
             _infoUI.ShowUI();
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        _infoUI.HideUI();
+        if (_infoUI != null)
+            _infoUI.HideUI();
     }
 
     #endregion Hover
@@ -253,15 +261,17 @@ public class ItemSlotUI : MonoBehaviour,
         if (item != null)
         {
             _iconImage.sprite = ItemSpriteDictionary.Instance.GetItemSprite(item.ID);
-            _uiManager.ChangeImageAlpha(_iconImage, true);
+            ChangeImageAlpha(true);
         }
         else
         {
             _iconImage.sprite = null;
-            _uiManager.ChangeImageAlpha(_iconImage, false);
+            ChangeImageAlpha(false);
         }
 
-        _infoUI.SetInfoUI(item);
+        if (_infoUI != null)
+            _infoUI.SetInfoUI(item);
+
         ChangeTexts();
         SetDurabilityOrCountUI(item);
 
@@ -322,5 +332,10 @@ public class ItemSlotUI : MonoBehaviour,
     public void ChangeDurabilitySliderValue(int current, int max)
     {
         _durabilitySlider.value = (float)current / (float)max;
+    }
+
+    public void ChangeImageAlpha(bool showImage)
+    {
+        _uiManager.ChangeImageAlpha(_iconImage, showImage);
     }
 }
