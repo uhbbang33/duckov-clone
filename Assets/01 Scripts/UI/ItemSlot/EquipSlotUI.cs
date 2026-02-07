@@ -44,5 +44,4 @@ public class EquipSlotUI : ItemSlotUI
         _iconImage.sprite = _pistolIcon;
         _uiManager.ChangeImageAlpha(_iconImage, true);
     }
-
 }
