@@ -15,7 +15,7 @@ public class ItemSlotUI : MonoBehaviour,
     [SerializeField] private Slider _durabilitySlider;
 
     private UIManager _uiManager;
-    private ItemSlot _itemSlot;
+    protected ItemSlot _itemSlot;
     private Inventory _inventory;
     private Transform _originParent;
     private Vector2 _originAncghoredPos;
@@ -39,7 +39,7 @@ public class ItemSlotUI : MonoBehaviour,
         }
     }
 
-    private void Awake()
+    protected virtual void Awake()
     {
         _inventory = GameManager.Instance.Inventory;
         _originParent = transform.parent;
@@ -74,6 +74,10 @@ public class ItemSlotUI : MonoBehaviour,
 
         if (startUI == null)
             return;
+
+        if (_itemSlot.Type == SlotType.EQUIP && startUI._itemSlot.CurrentItem.Type != ItemType.Gun)
+            return;
+
         if (startUI == this)
         {
             _infoUI.ShowUI();
@@ -167,7 +171,7 @@ public class ItemSlotUI : MonoBehaviour,
         {
             TryMoveToBoxByDoubleClick();
         }
-        else
+        else if(_itemSlot.Type == SlotType.BOX)
         {
             TryMoveToInventoryByDoubleClick();
         }

@@ -17,6 +17,7 @@ public enum SlotType
 {
     INVENTORY,
     BOX,
+    EQUIP,
     STORAGE
 }
 

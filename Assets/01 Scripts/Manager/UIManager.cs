@@ -83,7 +83,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     {
         _buttonsObject.transform.position = pos;
 
-        if (slot.Type == SlotType.INVENTORY)
+        if (slot.Type == SlotType.INVENTORY || slot.Type == SlotType.EQUIP)
             _buttonsObject.transform.position += _inventorySlotMenuOffset;
         else
             _buttonsObject.transform.position += _boxSlotMenuOffset;
@@ -169,7 +169,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
             _splitButton.SetActive(true);
         }
 
-        if (_currentSlot.Type == SlotType.INVENTORY)
+        if (_currentSlot.Type == SlotType.INVENTORY || _currentSlot.Type == SlotType.EQUIP)
         {
             _discardButton.SetActive(true);
 
