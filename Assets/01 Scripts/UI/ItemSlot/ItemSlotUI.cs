@@ -55,7 +55,7 @@ public class ItemSlotUI : MonoBehaviour,
 
     #region Drag And Drop
 
-    public void OnBeginDrag(PointerEventData eventData)
+    public virtual void OnBeginDrag(PointerEventData eventData)
     {
         if (_itemSlot == null || _itemSlot.Quantity == 0)
             return;
@@ -70,7 +70,7 @@ public class ItemSlotUI : MonoBehaviour,
         transform.position = eventData.position;
     }
 
-    public void OnDrop(PointerEventData eventData)
+    public virtual void OnDrop(PointerEventData eventData)
     {
         if (eventData.pointerDrag == null)
             return;

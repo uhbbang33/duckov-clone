@@ -19,6 +19,7 @@ public enum SlotType
     BOX,
     EQUIP,
     QUICKSLOT,
+    MAINQUICKSLOT,
     STORAGE
 }
 
