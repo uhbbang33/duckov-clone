@@ -45,6 +45,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     [SerializeField] private Transform _dragCanvasTransform;
     [SerializeField] private GameObject _slotMenuUI;
     [SerializeField] private GameObject _buttonsObject;
+    [SerializeField] private GameObject _playerStatAndQuickSlotObject;
 
     private ItemSlot _currentSlot;
     private InputActions _inputActions;
@@ -251,6 +252,11 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         }
 
         _mainUIHydrationSliderBackground.color = targetColor;
+    }
+
+    public void PlayerStatAndQuickSlotShowToggle(bool show)
+    {
+        _playerStatAndQuickSlotObject.SetActive(show);
     }
 
     #region On Button Click

@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 using System;
 
 public class Inventory : MonoBehaviour
@@ -93,6 +92,8 @@ public class Inventory : MonoBehaviour
         _playerMove.RestartMove();
 
         _inventoryToggle = false;
+
+        _uiManager.PlayerStatAndQuickSlotShowToggle(true);
     }
 
     private void OpenInventory()
@@ -105,13 +106,20 @@ public class Inventory : MonoBehaviour
         _inventoryUI.SetActive(_inventoryToggle);
 
         if (_inventoryToggle)
+        {
             _playerMove.StopMove();
+            _uiManager.PlayerStatAndQuickSlotShowToggle(false);
+        }
         else
+        {
             _playerMove.RestartMove();
+            _uiManager.PlayerStatAndQuickSlotShowToggle(true);
+        }
 
         OnWeightChange?.Invoke(_carryWeight, _maxWeight);
 
         _uiManager.ChangeInventoryItemCountText(_itemCnt, _slotCnt);
+
     }
 
 
