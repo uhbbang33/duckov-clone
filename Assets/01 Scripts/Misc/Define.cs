@@ -18,6 +18,7 @@ public enum SlotType
     INVENTORY,
     BOX,
     EQUIP,
+    QUICKSLOT,
     STORAGE
 }
 

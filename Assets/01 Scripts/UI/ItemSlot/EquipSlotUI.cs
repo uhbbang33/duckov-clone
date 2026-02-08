@@ -8,18 +8,13 @@ public class EquipSlotUI : ItemSlotUI
 
     private Sprite _pistolIcon;
 
-    protected override void Awake()
+    protected override void Start()
     {
-        base.Awake();
+        base.Start();
 
         _itemSlot = new ItemSlot();
         _itemSlot.UI = this;
         _itemSlot.Type = SlotType.EQUIP;
-    }
-
-    protected override void Start()
-    {
-        base.Start();
 
         _pistolIcon = _uiManager.PistolIcon;
 
@@ -43,5 +38,13 @@ public class EquipSlotUI : ItemSlotUI
     {
         _iconImage.sprite = _pistolIcon;
         _uiManager.ChangeImageAlpha(_iconImage, true);
+    }
+
+    protected override bool CheckTypeBeforeDrop(ItemSlot startSlot)
+    {
+        if (startSlot.CurrentItem.Type != ItemType.Gun)
+            return false;
+
+        return true;
     }
 }

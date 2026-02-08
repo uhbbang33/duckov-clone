@@ -48,6 +48,7 @@ public class Inventory : MonoBehaviour
             _inventorySlots[i] = new ItemSlot();
             _inventorySlots[i].UI = slotUI;
             _inventorySlots[i].Type = SlotType.INVENTORY;
+            _inventorySlots[i].InventoryIndex = i;
         }
 
 
@@ -224,4 +225,9 @@ public class Inventory : MonoBehaviour
         _playerMove.ChangeSpeed(weightPercentage);
     }
 
+    // Quick slot
+    public void UseInventoryItem(int itemIndex)
+    {
+        _inventorySlots[itemIndex].UseItem();
+    }
 }

@@ -21,6 +21,7 @@ public class ItemSlotUI : MonoBehaviour,
     private Vector2 _originAncghoredPos;
     private RectTransform _rect;
 
+
     private float _lastClickTime;
 
     private const float _doubleClickThreshold = 0.25f;
@@ -39,7 +40,7 @@ public class ItemSlotUI : MonoBehaviour,
         }
     }
 
-    protected virtual void Awake()
+    private void Awake()
     {
         _originParent = transform.parent;
         _originAncghoredPos = ((RectTransform)transform).anchoredPosition;
@@ -79,8 +80,14 @@ public class ItemSlotUI : MonoBehaviour,
         if (startUI == null)
             return;
 
-        if (_itemSlot.Type == SlotType.EQUIP && startUI._itemSlot.CurrentItem.Type != ItemType.Gun)
+        if (!CheckTypeBeforeDrop(startUI._itemSlot))
             return;
+
+        if (_itemSlot.Type == SlotType.QUICKSLOT)
+        {
+            (_itemSlot as QuickItemSlot).ChangeQuickSlot(startUI._itemSlot);
+            return;
+        }
 
         if (startUI == this)
         {
@@ -136,6 +143,11 @@ public class ItemSlotUI : MonoBehaviour,
 
         target._itemSlot.SubtractItem(target._itemSlot.Quantity);
         target._itemSlot.AddItem(tempItem, tempQauntity);
+    }
+
+    protected virtual bool CheckTypeBeforeDrop(ItemSlot startSlot)
+    {
+        return true;
     }
 
     #endregion Drag And Drop

@@ -1,12 +1,13 @@
 
 public class ItemSlot 
 {
-    private Item _currentItem;
-    private ItemSlotUI _ui;
+    protected Item _currentItem;
+    protected ItemSlotUI _ui;
     private Inventory _inventory;
 
     private SlotType _slotType;
-    private int _quantity;
+    protected int _quantity;
+    private int _inventoryIndex = -1;
 
     public ItemSlot()
     {
@@ -41,6 +42,13 @@ public class ItemSlot
     {
         get { return _slotType; }
         set { _slotType = value; }
+    }
+
+
+    public int InventoryIndex
+    {
+        get { return _inventoryIndex; }
+        set { _inventoryIndex = value; }
     }
 
 
