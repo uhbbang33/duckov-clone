@@ -22,6 +22,8 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public int InventoryItemId { get { return (int)_linkedInventorySlotUI.Slot.CurrentItem.ID; } }
 
+    public ItemSlotUI LinkedInventorySlotUI { get { return _linkedInventorySlotUI; } }
+
     private void Start()
     {
         _inputActions = GameManager.Instance.PlayerObject.GetComponent<Player>().Actions;
@@ -30,6 +32,7 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
         _uiManager = UIManager.Instance;
         _uiManager.ChangeImageAlpha(_iconImage, false);
+        RefreshUI();
     }
 
     // 게임 종료까지 유지
@@ -101,6 +104,7 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         RefreshUI();
 
         QuickSlotManager.Instance.AddToQuickSlot(InventoryItemId, _quickSlotNum);
+
     }
 
     public void UnLinkInventorySlotUI()
@@ -109,7 +113,7 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         {
             QuickSlotManager.Instance.RemoveQuickSlot(_quickSlotNum);
 
-            _linkedInventorySlotUI.UnlinkQuickSlot(false);
+            _linkedInventorySlotUI.UnlinkQuickSlot();
             _linkedInventorySlotUI = null;
             RefreshUI();
         }
@@ -136,6 +140,9 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnDrop(PointerEventData eventData)
     {
+        if (eventData.pointerDrag == null)
+            return;
+
         ItemSlotUI startSlotUI = eventData.pointerDrag?.GetComponent<ItemSlotUI>();
 
         // 시작이 인벤토리일 경우

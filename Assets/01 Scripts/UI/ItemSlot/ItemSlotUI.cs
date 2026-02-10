@@ -103,45 +103,74 @@ public class ItemSlotUI : MonoBehaviour,
 
         ItemSlotUI startUI = eventData.pointerDrag.GetComponent<ItemSlotUI>();
 
-        if (startUI == null)
-            return;
-
-        if (!CheckTypeBeforeDrop(startUI._itemSlot))
-            return;
-
-        if (startUI == this)
+        if (startUI != null)
         {
-            if (_infoUI != null)
-                _infoUI.ShowUI();
-            return;
-        }
+            if (!CheckTypeBeforeDrop(startUI._itemSlot))
+                return;
 
-        Item startItem = startUI._itemSlot.CurrentItem;
-        Item endItem = _itemSlot.CurrentItem;
-
-        // 같은 ID 일 경우 개수 합치기
-        if (startItem != null
-            && endItem != null
-            && startItem.ID == endItem.ID)
-        {
-            int remainItemCount = _itemSlot.AddItem(startItem, startUI._itemSlot.Quantity);
-
-            // swap
-            if (remainItemCount == startUI._itemSlot.Quantity)
+            if (startUI == this)
             {
+                if (_infoUI != null)
+                    _infoUI.ShowUI();
+                return;
+            }
+
+            Item startItem = startUI._itemSlot.CurrentItem;
+            Item endItem = _itemSlot.CurrentItem;
+
+            // 같은 ID 일 경우 개수 합치기
+            if (startItem != null
+                && endItem != null
+                && startItem.ID == endItem.ID)
+            {
+                int remainItemCount = _itemSlot.AddItem(startItem, startUI._itemSlot.Quantity);
+
+                // swap
+                if (remainItemCount == startUI._itemSlot.Quantity)
+                {
+                    SwapItem(startUI);
+                }
+                else
+                {
+                    int subtractCount = startUI._itemSlot.Quantity - remainItemCount;
+                    startUI._itemSlot.SubtractItem(subtractCount);
+                }
+            }
+            else if (startUI._itemSlot.CurrentItem != null)
                 SwapItem(startUI);
-            }
-            else
+
+            if (_itemSlot.CurrentItem != null && _infoUI != null)
+                _infoUI.ShowUI();
+        }
+
+
+        QuickSlot startQuickSlot = eventData.pointerDrag?.GetComponent<QuickSlot>();
+
+        if (startQuickSlot != null)
+        {
+            if (startQuickSlot == _linkedQuickSlot
+                || _itemSlot.Type != SlotType.INVENTORY)
+                return;
+
+            // end에 아무것도 없을 경우
+            if (_itemSlot.CurrentItem == null)
             {
-                int subtractCount = startUI._itemSlot.Quantity - remainItemCount;
-                startUI._itemSlot.SubtractItem(subtractCount);
+                SwapItem(startQuickSlot.LinkedInventorySlotUI);
+                startQuickSlot.LinkToInventorySlotUI(this);
+            }
+            else // 있을 경우
+            {
+                QuickSlot currentQuickSlot = _linkedQuickSlot;
+                ItemSlotUI startInventorySlot = startQuickSlot.LinkedInventorySlotUI;
+
+                SwapItem(startQuickSlot.LinkedInventorySlotUI);
+
+                startQuickSlot.LinkToInventorySlotUI(this);
+
+                if (_linkedQuickSlot != null)
+                    currentQuickSlot.LinkToInventorySlotUI(startInventorySlot);
             }
         }
-        else if(startUI._itemSlot.CurrentItem != null)
-            SwapItem(startUI);
-
-        if (_itemSlot.CurrentItem != null && _infoUI != null)
-            _infoUI.ShowUI();
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -381,11 +410,8 @@ public class ItemSlotUI : MonoBehaviour,
         _linkedQuickSlot = quickSlot;
     }
 
-    public void UnlinkQuickSlot(bool useItem)
+    public void UnlinkQuickSlot()
     {
-        if (useItem)
-            _linkedQuickSlot.UnLinkInventorySlotUI();
-
         _linkedQuickSlot = null;
     }
 }
