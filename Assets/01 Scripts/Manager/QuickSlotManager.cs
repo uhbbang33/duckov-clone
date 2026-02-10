@@ -7,6 +7,8 @@ public class QuickSlotManager : SingletonMonoBehaviour<QuickSlotManager>
     private Dictionary<int, int> _quickSlotDictionary;
     [SerializeField] private QuickSlot[] _equipQuickSlots;
 
+    private const int _quickSlotStartNum = 3;
+
     protected override void Awake()
     {
         base.Awake();
@@ -22,7 +24,7 @@ public class QuickSlotManager : SingletonMonoBehaviour<QuickSlotManager>
         if (sameItemLocation != -1)
         {
             //해당 퀵슬롯 등록 해제
-            RemoveQuickSlot(sameItemLocation);
+            _equipQuickSlots[sameItemLocation].UnLinkInventorySlotUI();
             // Dictionary value 변경
             _quickSlotDictionary[id] = location;
         }
@@ -41,8 +43,9 @@ public class QuickSlotManager : SingletonMonoBehaviour<QuickSlotManager>
         return value;
     }
 
-    private void RemoveQuickSlot(int location)
+    public void RemoveQuickSlot(int location)
     {
-        _equipQuickSlots[location - 3].UnLinkInventorySlotUI();
+        int quickSlotNum = location - _quickSlotStartNum;
+        _quickSlotDictionary.Remove(_equipQuickSlots[quickSlotNum].InventoryItemId);
     }
 }

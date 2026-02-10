@@ -63,7 +63,7 @@ public class ItemSlot
             _inventory.ChangeWeight(false, _currentItem.Weight * amount);
 
             if (_quantity == 0)
-                _ui.RemoveQuickSlotLink();    
+                _ui.UnlinkQuickSlot(true);
         }
 
         if (_quantity <= 0)

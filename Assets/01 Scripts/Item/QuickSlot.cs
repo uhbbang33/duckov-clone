@@ -16,7 +16,11 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     private InputActions _inputActions;
     private ItemSlotUI _linkedInventorySlotUI;
+    private ItemSlotUI _beginSlotUI;
     private UIManager _uiManager;
+
+
+    public int InventoryItemId { get { return (int)_linkedInventorySlotUI.Slot.CurrentItem.ID; } }
 
     private void Start()
     {
@@ -88,33 +92,37 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     {
         if(_linkedInventorySlotUI != null)
         {
-            _linkedInventorySlotUI.RemoveQuickSlotLink();
+            UnLinkInventorySlotUI();
         }
 
         _linkedInventorySlotUI = inventorySlotUI;
+        _linkedInventorySlotUI.LinkQuickSlot(this);
+
         RefreshUI();
 
-        if (_linkedInventorySlotUI != null)
-        {
-            _linkedInventorySlotUI.AddQuickSlotLink(this);
-        }
+        QuickSlotManager.Instance.AddToQuickSlot(InventoryItemId, _quickSlotNum);
     }
 
     public void UnLinkInventorySlotUI()
     {
         if(_linkedInventorySlotUI != null)
         {
-            _linkedInventorySlotUI.RemoveQuickSlotLink();
+            QuickSlotManager.Instance.RemoveQuickSlot(_quickSlotNum);
+
+            _linkedInventorySlotUI.UnlinkQuickSlot(false);
             _linkedInventorySlotUI = null;
             RefreshUI();
         }
     }
+
+    #region Drag And Drop
 
     public void OnBeginDrag(PointerEventData eventData)
     {
         if (_linkedInventorySlotUI != null)
         {
             _linkedInventorySlotUI.OnBeginDrag(eventData);
+            _beginSlotUI = _linkedInventorySlotUI;
         }
     }
 
@@ -129,33 +137,80 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public void OnDrop(PointerEventData eventData)
     {
         ItemSlotUI startSlotUI = eventData.pointerDrag?.GetComponent<ItemSlotUI>();
-        if (startSlotUI == null)
-            return;
 
-        ItemSlot startSlot = startSlotUI.Slot;
-
-        if ((startSlot.CurrentItem.Type != ItemType.Medicine
-           && startSlot.CurrentItem.Type != ItemType.Food) 
-           || startSlot.Type != SlotType.INVENTORY)
-            return;
-
-        ItemSlotUI tempSlot = _linkedInventorySlotUI;
-        LinkToInventorySlotUI(startSlotUI);
-
-        QuickSlot otherQuickSlot = startSlotUI.LinkedQuickSlot;
-        if(otherQuickSlot != null && otherQuickSlot != this)
+        // 시작이 인벤토리일 경우
+        if (startSlotUI != null)
         {
-            otherQuickSlot.LinkToInventorySlotUI(tempSlot);
+            // Start가 QuickSlot과 연결되지 않았을 때
+            if (startSlotUI.LinkedQuickSlot == null)
+            {
+                ItemSlot startSlot = startSlotUI.Slot;
+
+                if ((startSlot.CurrentItem.Type != ItemType.Medicine
+                   && startSlot.CurrentItem.Type != ItemType.Food)
+                   || startSlot.Type != SlotType.INVENTORY)
+                    return;
+
+                // (만약 연결되어있으면 끊고)startSlotUI와 연결
+                LinkToInventorySlotUI(startSlotUI);
+            }
+
+            // Start가 QuickSlot와 연결되어있을 때
+            else if (startSlotUI.LinkedQuickSlot != null)
+            {
+                ItemSlotUI tempStartSlotUI = startSlotUI;
+
+                // 현(end) 퀵슬롯 내에 아이템이 있을 경우
+                if (_linkedInventorySlotUI != null)
+                {
+                    //swap
+                    startSlotUI.LinkedQuickSlot.LinkToInventorySlotUI(_linkedInventorySlotUI);
+                }
+                else // 없을 경우
+                {
+                    // start와 inventory 연결 끊고
+                    startSlotUI.LinkedQuickSlot.UnLinkInventorySlotUI();
+                }
+
+                LinkToInventorySlotUI(tempStartSlotUI);
+            }
+
+            return;
         }
 
-        QuickSlotManager.Instance.AddToQuickSlot((int)_linkedInventorySlotUI.Slot.CurrentItem.ID, _quickSlotNum);
+
+        QuickSlot startQuickSlot = eventData.pointerDrag?.GetComponent<QuickSlot>();
+
+        // 시작이 퀵슬롯일 경우
+        if (startQuickSlot != null)
+        {
+            // start가 inventory 연결 안되어 있으면 return
+            if (startQuickSlot._linkedInventorySlotUI == null)
+                return;
+
+            // 현(end) 퀵슬롯이 인벤토리와 연결 안되어 있을 경우
+            if(_linkedInventorySlotUI == null)
+            {
+                // start의 연결 슬롯과 연결
+                LinkToInventorySlotUI(startQuickSlot._linkedInventorySlotUI);
+                startQuickSlot.UnLinkInventorySlotUI();
+            }
+            else // 연결되어 있는 경우
+            {
+                ItemSlotUI tempSlot = _linkedInventorySlotUI;
+                LinkToInventorySlotUI(startQuickSlot._linkedInventorySlotUI);
+                startQuickSlot.LinkToInventorySlotUI(tempSlot);
+            }
+        }
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (_linkedInventorySlotUI != null)
+        if (_beginSlotUI != null)
         {
-            _linkedInventorySlotUI.OnEndDrag(eventData);
+            _beginSlotUI.OnEndDrag(eventData);
         }
     }
+
+    #endregion Drag And Drop
 }

@@ -376,13 +376,16 @@ public class ItemSlotUI : MonoBehaviour,
         _uiManager.ChangeImageAlpha(_iconImage, showImage);
     }
 
-    public void AddQuickSlotLink(QuickSlot quickSlot)
+    public void LinkQuickSlot(QuickSlot quickSlot)
     {
         _linkedQuickSlot = quickSlot;
     }
 
-    public void RemoveQuickSlotLink()
+    public void UnlinkQuickSlot(bool useItem)
     {
+        if (useItem)
+            _linkedQuickSlot.UnLinkInventorySlotUI();
+
         _linkedQuickSlot = null;
     }
 }
