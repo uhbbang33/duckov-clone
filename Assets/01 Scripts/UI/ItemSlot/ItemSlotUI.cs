@@ -383,7 +383,6 @@ public class ItemSlotUI : MonoBehaviour,
 
     public void RemoveQuickSlotLink()
     {
-        _linkedQuickSlot.UnLinkInventorySlotUI();
         _linkedQuickSlot = null;
     }
 }

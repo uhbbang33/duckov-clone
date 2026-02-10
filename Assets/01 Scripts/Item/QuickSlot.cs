@@ -104,6 +104,7 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     {
         if(_linkedInventorySlotUI != null)
         {
+            _linkedInventorySlotUI.RemoveQuickSlotLink();
             _linkedInventorySlotUI = null;
             RefreshUI();
         }
@@ -146,6 +147,8 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         {
             otherQuickSlot.LinkToInventorySlotUI(tempSlot);
         }
+
+        QuickSlotManager.Instance.AddToQuickSlot((int)_linkedInventorySlotUI.Slot.CurrentItem.ID, _quickSlotNum);
     }
 
     public void OnEndDrag(PointerEventData eventData)
