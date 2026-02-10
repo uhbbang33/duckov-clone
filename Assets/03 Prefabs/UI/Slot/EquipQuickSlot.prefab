@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 3330565119200557997}
   - component: {fileID: 2719510360861989524}
   m_Layer: 5
-  m_Name: QuickSlot
+  m_Name: EquipQuickSlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -300,15 +300,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 508364713572692040, guid: 52fd68a78c4482d4fbac2f8a1530fd9e, type: 3}
-      insertIndex: 2
-      addedObject: {fileID: 322415096747681373}
+      insertIndex: -1
+      addedObject: {fileID: 5881260698411372894}
   m_SourcePrefab: {fileID: 100100000, guid: 52fd68a78c4482d4fbac2f8a1530fd9e, type: 3}
 --- !u!1 &1991833757570630272 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 508364713572692040, guid: 52fd68a78c4482d4fbac2f8a1530fd9e, type: 3}
   m_PrefabInstance: {fileID: 2065596680584491720}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &322415096747681373
+--- !u!114 &5881260698411372894
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -317,12 +317,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1991833757570630272}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34d57675a3cfa044e99c3a27c30425d3, type: 3}
+  m_Script: {fileID: 11500000, guid: c81fa422bdc5e0d4dae57e31ad4c78b2, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::UsableQuickSlotUI
+  m_EditorClassIdentifier: Assembly-CSharp::QuickItemSlot
   _nameText: {fileID: 4012194563337353479}
   _countText: {fileID: 3580609614676661835}
-  _infoUI: {fileID: 0}
   _iconImage: {fileID: 7896054275894011047}
   _durabilityUI: {fileID: 5959814655826069601}
   _countUI: {fileID: 8955531237125828596}

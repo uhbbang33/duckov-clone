@@ -45,7 +45,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     [SerializeField] private Transform _dragCanvasTransform;
     [SerializeField] private GameObject _slotMenuUI;
     [SerializeField] private GameObject _buttonsObject;
-    [SerializeField] private GameObject _playerStatAndQuickSlotObject;
+    [SerializeField] private GameObject _defaultHUD;
 
     private ItemSlot _currentSlot;
     private InputActions _inputActions;
@@ -256,7 +256,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 
     public void PlayerStatAndQuickSlotShowToggle(bool show)
     {
-        _playerStatAndQuickSlotObject.SetActive(show);
+        _defaultHUD.SetActive(show);
     }
 
     #region On Button Click

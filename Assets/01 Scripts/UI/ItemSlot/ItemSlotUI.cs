@@ -20,6 +20,7 @@ public class ItemSlotUI : MonoBehaviour,
     private Transform _originParent;
     private Vector2 _originAncghoredPos;
     private RectTransform _rect;
+    private QuickSlot _linkedQuickSlot;
 
 
     private float _lastClickTime;
@@ -38,6 +39,31 @@ public class ItemSlotUI : MonoBehaviour,
 
             RefreshUI();
         }
+    }
+
+    public QuickSlot LinkedQuickSlot
+    {
+        get { return _linkedQuickSlot; }
+    }
+
+    public Sprite IconImageSprite
+    {
+        get { return _iconImage.sprite; }
+    }
+
+    public string NameText
+    {
+        get { return _nameText.text; }
+    }
+
+    public string CountText
+    {
+        get { return _countText.text; }
+    }
+
+    public float DurabilitySliderValue
+    {
+        get { return _durabilitySlider.value; }
     }
 
     private void Awake()
@@ -82,12 +108,6 @@ public class ItemSlotUI : MonoBehaviour,
 
         if (!CheckTypeBeforeDrop(startUI._itemSlot))
             return;
-
-        if (_itemSlot.Type == SlotType.QUICKSLOT)
-        {
-            (_itemSlot as QuickItemSlot).ChangeQuickSlot(startUI._itemSlot);
-            return;
-        }
 
         if (startUI == this)
         {
@@ -291,6 +311,11 @@ public class ItemSlotUI : MonoBehaviour,
             _rect = GetComponent<RectTransform>();
         // Vertical Layout Group ÀçÁ¤·Ä
         LayoutRebuilder.ForceRebuildLayoutImmediate(_rect);
+
+        if(_linkedQuickSlot != null)
+        {
+            _linkedQuickSlot.RefreshUI();
+        }
     }
 
     public void OpenSlotMenu()
@@ -349,5 +374,16 @@ public class ItemSlotUI : MonoBehaviour,
     public void ChangeImageAlpha(bool showImage)
     {
         _uiManager.ChangeImageAlpha(_iconImage, showImage);
+    }
+
+    public void AddQuickSlotLink(QuickSlot quickSlot)
+    {
+        _linkedQuickSlot = quickSlot;
+    }
+
+    public void RemoveQuickSlotLink()
+    {
+        _linkedQuickSlot.UnLinkInventorySlotUI();
+        _linkedQuickSlot = null;
     }
 }
