@@ -136,7 +136,8 @@ public class ItemSlotUI : MonoBehaviour,
                     int subtractCount = startUI._itemSlot.Quantity - remainItemCount;
                     startUI._itemSlot.SubtractItem(subtractCount);
 
-                    if(startUI._itemSlot.CurrentItem == null)
+                    if(startUI._itemSlot.CurrentItem == null
+                        && startUI._linkedQuickSlot != null)
                     {
                         startUI._linkedQuickSlot.UnlinkInventorySlotUI(startItem.ID);
                     }

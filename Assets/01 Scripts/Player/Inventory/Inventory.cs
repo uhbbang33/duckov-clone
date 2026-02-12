@@ -93,7 +93,7 @@ public class Inventory : MonoBehaviour
 
         _inventoryToggle = false;
 
-        _uiManager.PlayerStatAndQuickSlotShowToggle(true);
+        _uiManager.DefaultUHDShowToggle(true);
     }
 
     private void OpenInventory()
@@ -108,12 +108,12 @@ public class Inventory : MonoBehaviour
         if (_inventoryToggle)
         {
             _playerMove.StopMove();
-            _uiManager.PlayerStatAndQuickSlotShowToggle(false);
+            _uiManager.DefaultUHDShowToggle(false);
         }
         else
         {
             _playerMove.RestartMove();
-            _uiManager.PlayerStatAndQuickSlotShowToggle(true);
+            _uiManager.DefaultUHDShowToggle(true);
         }
 
         OnWeightChange?.Invoke(_carryWeight, _maxWeight);

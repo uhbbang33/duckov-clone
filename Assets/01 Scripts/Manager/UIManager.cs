@@ -254,7 +254,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         _mainUIHydrationSliderBackground.color = targetColor;
     }
 
-    public void PlayerStatAndQuickSlotShowToggle(bool show)
+    public void DefaultUHDShowToggle(bool show)
     {
         _defaultHUD.SetActive(show);
     }
