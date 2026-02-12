@@ -61,9 +61,6 @@ public class ItemSlot
         if (_slotType == SlotType.INVENTORY)
         {
             _inventory.ChangeWeight(false, _currentItem.Weight * amount);
-
-            if (_quantity == 0 && _ui.LinkedQuickSlot != null)
-                _ui.LinkedQuickSlot.UnLinkInventorySlotUI();
         }
 
         if (_quantity <= 0)
@@ -152,5 +149,10 @@ public class ItemSlot
         }
         
         SubtractItem();
+
+        if(_ui.LinkedQuickSlot != null && _quantity == 0)
+        {
+            _ui.LinkedQuickSlot.UnlinkInventorySlotUI(item.ID);
+        }
     }
 }

@@ -128,19 +128,30 @@ public class ItemSlotUI : MonoBehaviour,
                 // swap
                 if (remainItemCount == startUI._itemSlot.Quantity)
                 {
+                    SwapQuickSlot(startUI, _linkedQuickSlot);
                     SwapItem(startUI);
                 }
                 else
                 {
                     int subtractCount = startUI._itemSlot.Quantity - remainItemCount;
                     startUI._itemSlot.SubtractItem(subtractCount);
+
+                    if(startUI._itemSlot.CurrentItem == null)
+                    {
+                        startUI._linkedQuickSlot.UnlinkInventorySlotUI(startItem.ID);
+                    }
                 }
             }
-            else if (startUI._itemSlot.CurrentItem != null)
+            else if (startItem != null)
+            {
+                SwapQuickSlot(startUI, _linkedQuickSlot);
                 SwapItem(startUI);
+            }
 
             if (_itemSlot.CurrentItem != null && _infoUI != null)
                 _infoUI.ShowUI();
+
+            return;
         }
 
 
@@ -152,25 +163,19 @@ public class ItemSlotUI : MonoBehaviour,
                 || _itemSlot.Type != SlotType.INVENTORY)
                 return;
 
-            // end에 아무것도 없을 경우
-            if (_itemSlot.CurrentItem == null)
-            {
-                SwapItem(startQuickSlot.LinkedInventorySlotUI);
-                startQuickSlot.LinkToInventorySlotUI(this);
-            }
-            else // 있을 경우
-            {
-                QuickSlot currentQuickSlot = _linkedQuickSlot;
-                ItemSlotUI startInventorySlot = startQuickSlot.LinkedInventorySlotUI;
+            ItemSlotUI startInventorySlot = startQuickSlot.LinkedInventorySlotUI;
+            if (startInventorySlot == null)
+                return;
 
-                SwapItem(startQuickSlot.LinkedInventorySlotUI);
+            QuickSlot currentQuickSlot = _linkedQuickSlot;
 
-                startQuickSlot.LinkToInventorySlotUI(this);
+            SwapItem(startInventorySlot);
+            startQuickSlot.LinkToInventorySlotUI(this);
 
-                if (_linkedQuickSlot != null)
-                    currentQuickSlot.LinkToInventorySlotUI(startInventorySlot);
-            }
+            if (currentQuickSlot != null)
+                currentQuickSlot.LinkToInventorySlotUI(startInventorySlot);
         }
+
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -192,6 +197,25 @@ public class ItemSlotUI : MonoBehaviour,
 
         target._itemSlot.SubtractItem(target._itemSlot.Quantity);
         target._itemSlot.AddItem(tempItem, tempQauntity);
+    }
+
+    private void SwapQuickSlot(ItemSlotUI startUI, QuickSlot currentQuick)
+    {
+        if (_itemSlot.Type == SlotType.BOX)
+        {
+            if (startUI._linkedQuickSlot != null)
+            {
+                startUI._linkedQuickSlot.UnlinkInventorySlotUI(startUI.Slot.CurrentItem.ID);
+            }
+        }
+
+        QuickSlot startQuick = startUI._linkedQuickSlot;
+
+        if (startQuick != null)
+            startQuick.LinkToInventorySlotUI(this);
+
+        if (currentQuick != null)
+            currentQuick.LinkToInventorySlotUI(startUI);
     }
 
     protected virtual bool CheckTypeBeforeDrop(ItemSlot startSlot)
@@ -273,7 +297,12 @@ public class ItemSlotUI : MonoBehaviour,
                     _itemSlot.SubtractItem(_itemSlot.Quantity - remainAmount);
 
                     if (remainAmount == 0)
+                    {
+                        if (_linkedQuickSlot != null)
+                            _linkedQuickSlot.UnlinkInventorySlotUI(targetSlot.CurrentItem.ID);
+
                         return;
+                    }
                 }
             }
         }
@@ -288,6 +317,9 @@ public class ItemSlotUI : MonoBehaviour,
                 targetSlot.AddItem(_itemSlot.CurrentItem, _itemSlot.Quantity);
 
                 _itemSlot.SubtractItem(_itemSlot.Quantity);
+
+                if (_linkedQuickSlot != null)
+                    _linkedQuickSlot.UnlinkInventorySlotUI(targetSlot.CurrentItem.ID);
 
                 return;
             }

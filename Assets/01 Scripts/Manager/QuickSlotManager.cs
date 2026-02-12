@@ -16,23 +16,21 @@ public class QuickSlotManager : SingletonMonoBehaviour<QuickSlotManager>
         _quickSlotDictionary = new Dictionary<int, int>();
     }
 
-    public void AddToQuickSlot(int id, int location)
+    public void AddDict(int id, int location)
     {
         int sameItemLocation = FindSameItemLocation(id);
 
         // 같은 아이템이 다른 퀵슬롯에 있을경우 
         if (sameItemLocation != -1)
         {
+            if (sameItemLocation == location)
+                return;
+
             //해당 퀵슬롯 등록 해제
-            _equipQuickSlots[sameItemLocation].UnLinkInventorySlotUI();
-            // Dictionary value 변경
-            _quickSlotDictionary[id] = location;
+            _equipQuickSlots[sameItemLocation - _quickSlotStartNum].UnlinkInventorySlotUI((uint)id);
         }
-        else // 없을경우
-        {
-            // Dictionary에 id등록
-            _quickSlotDictionary.Add(id, location);
-        }
+
+        _quickSlotDictionary.Add(id, location);
     }
 
     private int FindSameItemLocation(int itemId)
@@ -43,9 +41,8 @@ public class QuickSlotManager : SingletonMonoBehaviour<QuickSlotManager>
         return value;
     }
 
-    public void RemoveQuickSlot(int location)
+    public void RemoveDict(int itemId)
     {
-        int quickSlotNum = location - _quickSlotStartNum;
-        _quickSlotDictionary.Remove(_equipQuickSlots[quickSlotNum].InventoryItemId);
+        _quickSlotDictionary.Remove(itemId);
     }
 }
