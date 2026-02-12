@@ -164,7 +164,10 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 
         if (itemType == ItemType.Gun)
         {
-            _equipButton.SetActive(true);
+            if (_currentSlot.Type != SlotType.EQUIP)
+            {
+                _equipButton.SetActive(true);
+            }
             _unloadButton.SetActive(true);
         }
         else if (itemType == ItemType.Medicine || itemType == ItemType.Food)
@@ -260,6 +263,11 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     }
 
     #region On Button Click
+    public void OnEquipButtonClick()
+    {
+        
+    }
+
     public void OnSplitButtonClick()
     {
         _splitUI.CurrentSlot = _currentSlot;

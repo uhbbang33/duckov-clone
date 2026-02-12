@@ -240,14 +240,16 @@ public class ItemSlotUI : MonoBehaviour,
         if (eventData.button == PointerEventData.InputButton.Right)
             OpenSlotMenu();
 
-
-        if (Time.unscaledTime - _lastClickTime <= _doubleClickThreshold)
+        if (eventData.button == PointerEventData.InputButton.Left)
         {
-            OnDoubleClick();
-            _lastClickTime = 0f;
+            if (Time.unscaledTime - _lastClickTime <= _doubleClickThreshold)
+            {
+                OnDoubleClick();
+                _lastClickTime = 0f;
+            }
+            else
+                _lastClickTime = Time.unscaledTime;
         }
-        else
-            _lastClickTime = Time.unscaledTime;
     }
 
     private void OnDoubleClick()
@@ -259,7 +261,8 @@ public class ItemSlotUI : MonoBehaviour,
         if (_infoUI != null)
             _infoUI.HideUI();
 
-        if (_itemSlot.Type == SlotType.INVENTORY)
+        if (_itemSlot.Type == SlotType.INVENTORY
+            || _itemSlot.Type == SlotType.EQUIP)
         {
             TryMoveToBoxByDoubleClick();
         }
@@ -283,27 +286,24 @@ public class ItemSlotUI : MonoBehaviour,
 
     private void TryMoveToBoxByDoubleClick()
     {
-        if (_itemSlot.CurrentItem.Type != ItemType.Gun)
+        // 같은 ID의 아이템이 있을 경우
+        for (int i = 0; i < GameManager.Instance.BoxSlotNum; ++i)
         {
-            // 같은 ID의 아이템이 있을 경우
-            for (int i = 0; i < GameManager.Instance.BoxSlotNum; ++i)
+            ItemSlot targetSlot = GameManager.Instance.BoxItemSlots[i].GetComponentInChildren<ItemSlotUI>()._itemSlot;
+
+            if (targetSlot.CurrentItem != null &&
+                targetSlot.CurrentItem.ID == _itemSlot.CurrentItem.ID)
             {
-                ItemSlot targetSlot = GameManager.Instance.BoxItemSlots[i].GetComponentInChildren<ItemSlotUI>()._itemSlot;
+                int remainAmount = targetSlot.AddItem(_itemSlot.CurrentItem, _itemSlot.Quantity);
 
-                if (targetSlot.CurrentItem != null &&
-                    targetSlot.CurrentItem.ID == _itemSlot.CurrentItem.ID)
+                _itemSlot.SubtractItem(_itemSlot.Quantity - remainAmount);
+
+                if (remainAmount == 0)
                 {
-                    int remainAmount = targetSlot.AddItem(_itemSlot.CurrentItem, _itemSlot.Quantity);
+                    if (_linkedQuickSlot != null)
+                        _linkedQuickSlot.UnlinkInventorySlotUI(targetSlot.CurrentItem.ID);
 
-                    _itemSlot.SubtractItem(_itemSlot.Quantity - remainAmount);
-
-                    if (remainAmount == 0)
-                    {
-                        if (_linkedQuickSlot != null)
-                            _linkedQuickSlot.UnlinkInventorySlotUI(targetSlot.CurrentItem.ID);
-
-                        return;
-                    }
+                    return;
                 }
             }
         }
