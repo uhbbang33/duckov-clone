@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EquipSlotUI : ItemSlotUI
 {
-    [SerializeField] private TextMeshProUGUI _equipNameText;
+    [SerializeField] private DefaultHUDSlotUI _defaultHUDSlotUI;
 
     private Sprite _pistolIcon;
 
@@ -28,10 +28,12 @@ public class EquipSlotUI : ItemSlotUI
         if (_itemSlot.CurrentItem == null)
         {
             SetPistolIcon();
-            _equipNameText.text = "ÃÑ±â";
+            _defaultHUDSlotUI.RefresuhDefaultUHD(false);
         }
         else
-            _equipNameText.text = _itemSlot.CurrentItem.Name;
+        {
+            _defaultHUDSlotUI.RefresuhDefaultUHD(true, _nameText.text, _countText.text, _iconImage.sprite);
+        }
     }
 
     private void SetPistolIcon()

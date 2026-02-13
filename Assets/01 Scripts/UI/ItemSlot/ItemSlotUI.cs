@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class ItemSlotUI : MonoBehaviour,
     IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] private TextMeshProUGUI _nameText;
-    [SerializeField] private TextMeshProUGUI _countText;
+    [SerializeField] protected TextMeshProUGUI _nameText;
+    [SerializeField] protected TextMeshProUGUI _countText;
     [SerializeField] private ItemInfoUI _infoUI;
     [SerializeField] protected Image _iconImage;
     [SerializeField] private GameObject _durabilityUI;
