@@ -18,6 +18,7 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     private ItemSlotUI _linkedInventorySlotUI;
     private ItemSlotUI _beginSlotUI;
     private UIManager _uiManager;
+    private RectTransform _rect;
 
     public ItemSlotUI LinkedInventorySlotUI { get { return _linkedInventorySlotUI; } }
 
@@ -78,14 +79,38 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         }
 
         _uiManager.ChangeImageAlpha(_iconImage, true);
-        ItemSlot linkedItemSlot = _linkedInventorySlotUI.Slot;
 
         _nameText.text = _linkedInventorySlotUI.NameText;
         _iconImage.sprite = _linkedInventorySlotUI.IconImageSprite;
 
-        // TODO : durability, count 활성화 비활성화
         _durabilitySlider.value = _linkedInventorySlotUI.DurabilitySliderValue;
         _countText.text = _linkedInventorySlotUI.CountText;
+
+        SetDurabilityOrCountUI(_linkedInventorySlotUI.Slot.CurrentItem);
+
+        if (_rect == null)
+            _rect = GetComponent<RectTransform>();
+        LayoutRebuilder.ForceRebuildLayoutImmediate(_rect);
+    }
+
+    private void SetDurabilityOrCountUI(Item item)
+    {
+        _durabilityUI.SetActive(false);
+        _countUI.SetActive(false);
+
+        if (item == null)
+            return;
+
+        if (item.Type == ItemType.Food || item.Type == ItemType.Medicine)
+        {
+            UsableItem usableItem = item as UsableItem;
+
+            if (usableItem.DurabilityCost != Durability.MaxDurability)
+                _durabilityUI.SetActive(true);
+        }
+
+        if (!_durabilityUI.activeSelf)
+            _countUI.SetActive(true);
     }
 
     public void LinkToInventorySlotUI(ItemSlotUI inventorySlotUI)
