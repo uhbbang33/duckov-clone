@@ -431,6 +431,7 @@ public class ItemSlotUI : MonoBehaviour,
     public void ChangeDurabilitySliderValue(int current, int max)
     {
         _durabilitySlider.value = (float)current / (float)max;
+        RefreshUI();
     }
 
     public void ChangeImageAlpha(bool showImage)

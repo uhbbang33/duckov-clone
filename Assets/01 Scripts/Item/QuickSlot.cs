@@ -83,10 +83,11 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         _nameText.text = _linkedInventorySlotUI.NameText;
         _iconImage.sprite = _linkedInventorySlotUI.IconImageSprite;
 
+        SetDurabilityOrCountUI(_linkedInventorySlotUI.Slot.CurrentItem);
+
         _durabilitySlider.value = _linkedInventorySlotUI.DurabilitySliderValue;
         _countText.text = _linkedInventorySlotUI.CountText;
 
-        SetDurabilityOrCountUI(_linkedInventorySlotUI.Slot.CurrentItem);
 
         if (_rect == null)
             _rect = GetComponent<RectTransform>();
