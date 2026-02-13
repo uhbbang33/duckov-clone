@@ -13,6 +13,7 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     [SerializeField] private GameObject _countUI;
     [SerializeField] private Slider _durabilitySlider;
     [SerializeField] private int _quickSlotNum;
+    [SerializeField] private DefaultHUDSlotUI _defaultHUDSlotUI;
 
     private InputActions _inputActions;
     private ItemSlotUI _linkedInventorySlotUI;
@@ -67,7 +68,7 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void RefreshUI()
     {
-        if(_linkedInventorySlotUI == null)
+        if (_linkedInventorySlotUI == null)
         {
             _nameText.text = "";
             _countText.text = "";
@@ -75,6 +76,7 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             _durabilityUI.SetActive(false);
             _countUI.SetActive(false);
             _uiManager.ChangeImageAlpha(_iconImage, false);
+            _defaultHUDSlotUI.RefresuhDefaultUHD(false);
             return;
         }
 
@@ -92,6 +94,8 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         if (_rect == null)
             _rect = GetComponent<RectTransform>();
         LayoutRebuilder.ForceRebuildLayoutImmediate(_rect);
+
+        _defaultHUDSlotUI.RefresuhDefaultUHD(true, _nameText.text, _countText.text, _iconImage.sprite, _durabilityUI.activeSelf, _countUI.activeSelf, _durabilitySlider.value);
     }
 
     private void SetDurabilityOrCountUI(Item item)

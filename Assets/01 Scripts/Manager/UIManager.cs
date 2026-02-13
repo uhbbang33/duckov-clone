@@ -46,6 +46,8 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     [SerializeField] private GameObject _slotMenuUI;
     [SerializeField] private GameObject _buttonsObject;
     [SerializeField] private GameObject _defaultHUD;
+    [SerializeField] private DefaultHUDSlotUI[] _defaultHUDSlotUI;
+
 
     private ItemSlot _currentSlot;
     private InputActions _inputActions;
@@ -260,6 +262,12 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     public void DefaultUHDShowToggle(bool show)
     {
         _defaultHUD.SetActive(show);
+
+        for(int i = 0; i < _defaultHUDSlotUI.Length; ++i)
+        {
+            _defaultHUDSlotUI[i].RebuildLayout();
+        }
+
     }
 
     #region On Button Click
