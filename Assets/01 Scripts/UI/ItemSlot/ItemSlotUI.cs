@@ -101,6 +101,8 @@ public class ItemSlotUI : MonoBehaviour,
         if (eventData.pointerDrag == null)
             return;
 
+        EquipSlotUI equipSlotUI = eventData.pointerDrag.GetComponent<EquipSlotUI>();
+
         ItemSlotUI startUI = eventData.pointerDrag.GetComponent<ItemSlotUI>();
 
         if (startUI != null)
@@ -190,6 +192,13 @@ public class ItemSlotUI : MonoBehaviour,
 
     protected void SwapItem(ItemSlotUI target)
     {
+        if(target._itemSlot.Type == SlotType.EQUIP
+            && _itemSlot.CurrentItem != null)
+        {
+            if (_itemSlot.CurrentItem.Type != ItemType.Gun)
+                return;
+        }
+
         Item tempItem = _itemSlot.CurrentItem;
         int tempQauntity = _itemSlot.Quantity;
 
