@@ -188,7 +188,7 @@ public class ItemSlotUI : MonoBehaviour,
         ((RectTransform)transform).anchoredPosition = _originAncghoredPos;
     }
 
-    private void SwapItem(ItemSlotUI target)
+    protected void SwapItem(ItemSlotUI target)
     {
         Item tempItem = _itemSlot.CurrentItem;
         int tempQauntity = _itemSlot.Quantity;

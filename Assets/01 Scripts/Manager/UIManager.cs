@@ -47,6 +47,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     [SerializeField] private GameObject _buttonsObject;
     [SerializeField] private GameObject _defaultHUD;
     [SerializeField] private DefaultHUDSlotUI[] _defaultHUDSlotUI;
+    [SerializeField] private EquipSlotUI _leftEquipSlotUI;
 
 
     private ItemSlot _currentSlot;
@@ -273,7 +274,8 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     #region On Button Click
     public void OnEquipButtonClick()
     {
-        
+        _leftEquipSlotUI.ChangeLeftGunSlotItem(_currentSlot);
+        CloseSlotMenu();
     }
 
     public void OnSplitButtonClick()

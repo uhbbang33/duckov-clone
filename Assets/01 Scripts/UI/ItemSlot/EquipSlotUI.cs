@@ -49,4 +49,20 @@ public class EquipSlotUI : ItemSlotUI
 
         return true;
     }
+
+    public void ChangeLeftGunSlotItem(ItemSlot fromSlot)
+    {
+        if (fromSlot.CurrentItem.Type != ItemType.Gun)
+            return;
+
+        if (_itemSlot.CurrentItem != null)
+        {
+            SwapItem(fromSlot.UI);
+        }
+        else
+        {
+            _itemSlot.AddItem(fromSlot.CurrentItem);
+            fromSlot.SubtractItem();
+        }
+    }
 }
