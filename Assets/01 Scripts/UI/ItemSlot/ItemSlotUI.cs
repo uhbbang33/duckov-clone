@@ -83,7 +83,8 @@ public class ItemSlotUI : MonoBehaviour,
 
     public virtual void OnBeginDrag(PointerEventData eventData)
     {
-        if (_itemSlot == null || _itemSlot.Quantity == 0)
+        if (_itemSlot == null 
+            || _itemSlot.CurrentItem == null)
             return;
 
         transform.SetParent(_uiManager.DragCanvasTransform);
@@ -91,8 +92,10 @@ public class ItemSlotUI : MonoBehaviour,
         _iconImage.raycastTarget = false;
     }
 
-    public void OnDrag(PointerEventData eventData)
+    public virtual void OnDrag(PointerEventData eventData)
     {
+        if (_itemSlot.CurrentItem == null)
+            return;
         transform.position = eventData.position;
     }
 
