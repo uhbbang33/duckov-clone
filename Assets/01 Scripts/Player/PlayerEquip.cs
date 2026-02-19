@@ -69,11 +69,13 @@ public class PlayerEquip : MonoBehaviour
     private void EquipLeftSlotGun(InputAction.CallbackContext context)
     {
         _isLeftSlotActivated = true;
+        EquipGun(true);
     }
 
     private void EquipRightSlotGun(InputAction.CallbackContext context)
     {
         _isLeftSlotActivated = false;
+        EquipGun(false);
     }
 
     private void EquipGun(bool isLeftSlot)
