@@ -82,8 +82,7 @@ public class PlayerEquip : MonoBehaviour
         {
             _anim.SetTrigger(_changeWeapon);
         }
-        else
-            _anim.SetBool(_raiseArm, true);
+        _anim.SetBool(_raiseArm, true);
     }
 
     private void UnequipGun()
@@ -100,10 +99,10 @@ public class PlayerEquip : MonoBehaviour
 
         if (gunId == GunId.Mp7Id)
             _gunObject = Instantiate(GameResources.Instance.Mp7Prefab, _rightHandTransform);
-        //else if (gunId == GunId.M700Id)
-        //    _gunObject = Instantiate(GameResources.Instance.M700Prefab, _rightHandTransform);
-        //else if (gunId == GunId.GlockId)
-        //    _gunObject = Instantiate(GameResources.Instance.GlockPrefab, _rightHandTransform);
+        else if (gunId == GunId.M700Id)
+            _gunObject = Instantiate(GameResources.Instance.M700Prefab, _rightHandTransform);
+        else if (gunId == GunId.GlockId)
+            _gunObject = Instantiate(GameResources.Instance.GlockPrefab, _rightHandTransform);
         else
             return;
     }
