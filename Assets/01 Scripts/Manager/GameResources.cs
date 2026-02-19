@@ -29,4 +29,12 @@ public class GameResources : MonoBehaviour
     [Header("ITEMS")]
     public Sprite[] ItemSprites;
     #endregion
+
+    #region GUNS
+    [Space(10)]
+    [Header("GUNS")]
+    public GameObject Mp7Prefab;
+    public GameObject M700Prefab;
+    public GameObject GlockPrefab;
+    #endregion
 }

@@ -5,7 +5,7 @@ public class ItemSlot
     protected ItemSlotUI _ui;
     private Inventory _inventory;
 
-    private SlotType _slotType;
+    protected SlotType _slotType;
     protected int _quantity;
     private int _inventoryIndex = -1;
 
@@ -52,7 +52,7 @@ public class ItemSlot
     }
 
 
-    public void SubtractItem(int amount = 1)
+    public virtual void SubtractItem(int amount = 1)
     {
         if (amount == 0) return;
 
@@ -70,6 +70,7 @@ public class ItemSlot
             else if (_slotType == SlotType.BOX)
                 GameManager.Instance.CurrentOpenBox.ChangeBoxItemCount(false);
 
+
             _currentItem = null;
             _quantity = 0;
             
@@ -78,7 +79,7 @@ public class ItemSlot
         _ui.RefreshUI();
     }
 
-    public int AddItem(Item item, int amount = 1)
+    public virtual int AddItem(Item item, int amount = 1)
     {
         if (amount == 0) return amount;
 
@@ -131,7 +132,7 @@ public class ItemSlot
         }
     }
 
-    public void UseItem()
+    public virtual void UseItem()
     {
         UsableItem item = _currentItem as UsableItem;
 

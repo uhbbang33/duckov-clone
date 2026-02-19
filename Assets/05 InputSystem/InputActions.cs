@@ -147,7 +147,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""PrimaryWeapon"",
+                    ""name"": ""LeftWeapon"",
                     ""type"": ""Button"",
                     ""id"": ""8f6eb74b-5a1d-4e72-8ba1-01d1a8ac59ba"",
                     ""expectedControlType"": """",
@@ -156,7 +156,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""SecondaryWeapon"",
+                    ""name"": ""RightWeapon"",
                     ""type"": ""Button"",
                     ""id"": ""5ece6fbc-c7fb-41d8-af76-62544fdc2f4f"",
                     ""expectedControlType"": """",
@@ -445,7 +445,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""PrimaryWeapon"",
+                    ""action"": ""LeftWeapon"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -456,7 +456,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""SecondaryWeapon"",
+                    ""action"": ""RightWeapon"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -732,8 +732,8 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
         m_Player_Aim = m_Player.FindAction("Aim", throwIfNotFound: true);
         m_Player_Reload = m_Player.FindAction("Reload", throwIfNotFound: true);
-        m_Player_PrimaryWeapon = m_Player.FindAction("PrimaryWeapon", throwIfNotFound: true);
-        m_Player_SecondaryWeapon = m_Player.FindAction("SecondaryWeapon", throwIfNotFound: true);
+        m_Player_LeftWeapon = m_Player.FindAction("LeftWeapon", throwIfNotFound: true);
+        m_Player_RightWeapon = m_Player.FindAction("RightWeapon", throwIfNotFound: true);
         m_Player_ToggleMelee = m_Player.FindAction("ToggleMelee", throwIfNotFound: true);
         m_Player_SwitchWeapon = m_Player.FindAction("SwitchWeapon", throwIfNotFound: true);
         m_Player_HideWeapon = m_Player.FindAction("HideWeapon", throwIfNotFound: true);
@@ -842,8 +842,8 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Fire;
     private readonly InputAction m_Player_Aim;
     private readonly InputAction m_Player_Reload;
-    private readonly InputAction m_Player_PrimaryWeapon;
-    private readonly InputAction m_Player_SecondaryWeapon;
+    private readonly InputAction m_Player_LeftWeapon;
+    private readonly InputAction m_Player_RightWeapon;
     private readonly InputAction m_Player_ToggleMelee;
     private readonly InputAction m_Player_SwitchWeapon;
     private readonly InputAction m_Player_HideWeapon;
@@ -898,13 +898,13 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @Reload => m_Wrapper.m_Player_Reload;
         /// <summary>
-        /// Provides access to the underlying input action "Player/PrimaryWeapon".
+        /// Provides access to the underlying input action "Player/LeftWeapon".
         /// </summary>
-        public InputAction @PrimaryWeapon => m_Wrapper.m_Player_PrimaryWeapon;
+        public InputAction @LeftWeapon => m_Wrapper.m_Player_LeftWeapon;
         /// <summary>
-        /// Provides access to the underlying input action "Player/SecondaryWeapon".
+        /// Provides access to the underlying input action "Player/RightWeapon".
         /// </summary>
-        public InputAction @SecondaryWeapon => m_Wrapper.m_Player_SecondaryWeapon;
+        public InputAction @RightWeapon => m_Wrapper.m_Player_RightWeapon;
         /// <summary>
         /// Provides access to the underlying input action "Player/ToggleMelee".
         /// </summary>
@@ -1021,12 +1021,12 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Reload.started += instance.OnReload;
             @Reload.performed += instance.OnReload;
             @Reload.canceled += instance.OnReload;
-            @PrimaryWeapon.started += instance.OnPrimaryWeapon;
-            @PrimaryWeapon.performed += instance.OnPrimaryWeapon;
-            @PrimaryWeapon.canceled += instance.OnPrimaryWeapon;
-            @SecondaryWeapon.started += instance.OnSecondaryWeapon;
-            @SecondaryWeapon.performed += instance.OnSecondaryWeapon;
-            @SecondaryWeapon.canceled += instance.OnSecondaryWeapon;
+            @LeftWeapon.started += instance.OnLeftWeapon;
+            @LeftWeapon.performed += instance.OnLeftWeapon;
+            @LeftWeapon.canceled += instance.OnLeftWeapon;
+            @RightWeapon.started += instance.OnRightWeapon;
+            @RightWeapon.performed += instance.OnRightWeapon;
+            @RightWeapon.canceled += instance.OnRightWeapon;
             @ToggleMelee.started += instance.OnToggleMelee;
             @ToggleMelee.performed += instance.OnToggleMelee;
             @ToggleMelee.canceled += instance.OnToggleMelee;
@@ -1110,12 +1110,12 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Reload.started -= instance.OnReload;
             @Reload.performed -= instance.OnReload;
             @Reload.canceled -= instance.OnReload;
-            @PrimaryWeapon.started -= instance.OnPrimaryWeapon;
-            @PrimaryWeapon.performed -= instance.OnPrimaryWeapon;
-            @PrimaryWeapon.canceled -= instance.OnPrimaryWeapon;
-            @SecondaryWeapon.started -= instance.OnSecondaryWeapon;
-            @SecondaryWeapon.performed -= instance.OnSecondaryWeapon;
-            @SecondaryWeapon.canceled -= instance.OnSecondaryWeapon;
+            @LeftWeapon.started -= instance.OnLeftWeapon;
+            @LeftWeapon.performed -= instance.OnLeftWeapon;
+            @LeftWeapon.canceled -= instance.OnLeftWeapon;
+            @RightWeapon.started -= instance.OnRightWeapon;
+            @RightWeapon.performed -= instance.OnRightWeapon;
+            @RightWeapon.canceled -= instance.OnRightWeapon;
             @ToggleMelee.started -= instance.OnToggleMelee;
             @ToggleMelee.performed -= instance.OnToggleMelee;
             @ToggleMelee.canceled -= instance.OnToggleMelee;
@@ -1349,19 +1349,19 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnReload(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "PrimaryWeapon" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "LeftWeapon" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnPrimaryWeapon(InputAction.CallbackContext context);
+        void OnLeftWeapon(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "SecondaryWeapon" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "RightWeapon" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnSecondaryWeapon(InputAction.CallbackContext context);
+        void OnRightWeapon(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "ToggleMelee" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

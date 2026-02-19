@@ -42,3 +42,10 @@ public struct Durability
 {
     public const int MaxDurability = 100;
 }
+
+public struct GunId
+{
+    public const int Mp7Id = 258;
+    public const int M700Id = 780;
+    public const int GlockId = 254;
+}

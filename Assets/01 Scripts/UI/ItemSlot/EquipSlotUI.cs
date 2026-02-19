@@ -1,19 +1,20 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class EquipSlotUI : ItemSlotUI
 {
     [SerializeField] private DefaultHUDSlotUI _defaultHUDSlotUI;
+    [SerializeField] private bool _isLeftSlot;
 
     private Sprite _pistolIcon;
+
+    public bool IsLeftSlot { get { return _isLeftSlot; } }
 
     protected override void Start()
     {
         base.Start();
 
-        _itemSlot = new ItemSlot();
+        _itemSlot = new EquipSlot();
         _itemSlot.UI = this;
-        _itemSlot.Type = SlotType.EQUIP;
 
         _pistolIcon = _uiManager.PistolIcon;
 
