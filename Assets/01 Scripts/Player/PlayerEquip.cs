@@ -10,7 +10,7 @@ public class PlayerEquip : MonoBehaviour
     private InputActions _inputActions;
     private EquipSlot _leftEquipSlot;
     private EquipSlot _rightEquipSlot;
-    private EquipSlot _currentEquipSlot;
+    private EquipSlot _currentSelectedSlot;
 
     private bool _isLeftSlotActivated = true;
     private int _leftSlotGunId;
@@ -61,21 +61,13 @@ public class PlayerEquip : MonoBehaviour
 
     public void SyncSlotState(bool isLeftSlot)
     {
-        if(_currentEquipSlot != null)
-        {
-            (_currentEquipSlot.UI as EquipSlotUI).DefaultHUDSlotUI.Deselected();
-        }
-
-        _currentEquipSlot = isLeftSlot ? _leftEquipSlot : _rightEquipSlot;
+        EquipSlot equipSlot = isLeftSlot ? _leftEquipSlot : _rightEquipSlot;
         bool isActivated = isLeftSlot ? _isLeftSlotActivated : !_isLeftSlotActivated;
 
-        if (_currentEquipSlot == null)
+        if (equipSlot == null)
             return;
 
-        if (_currentEquipSlot.CurrentItem != null)
-            (_currentEquipSlot.UI as EquipSlotUI).DefaultHUDSlotUI.Selected();
-
-        int gunId = _currentEquipSlot.CurrentItem == null ? 0 : (int)_currentEquipSlot.CurrentItem.ID;
+        int gunId = equipSlot.CurrentItem == null ? 0 : (int)equipSlot.CurrentItem.ID;
 
         if (isLeftSlot)
             _leftSlotGunId = gunId;
@@ -85,16 +77,16 @@ public class PlayerEquip : MonoBehaviour
         if (!isActivated)
             return;
 
-        ApplyEquipState(isLeftSlot, _currentEquipSlot);
+        ApplyEquipState(isLeftSlot, equipSlot);
     }
 
     private void ApplyEquipState(bool isLeftSlot, EquipSlot equipSlot)
     {
         bool hasItem = equipSlot.CurrentItem != null;
 
-        if (_gunObject != null && hasItem)
+        if (_gunObject != null && hasItem && _currentSelectedSlot != equipSlot)
         {
-            ChangeGun();
+            ChangeGun(equipSlot);
             return;
         }
 
@@ -104,22 +96,52 @@ public class PlayerEquip : MonoBehaviour
             return;
         }
 
+        _currentSelectedSlot = equipSlot;
         EquipGun();
     }
 
-    private void ChangeGun()
+    private void ChangeGun(EquipSlot equipSlot)
     {
+        RefreshHUDSelection(equipSlot);
+
         _anim.SetTrigger(_changeWeapon);
+        _anim.SetBool(_raiseArm, true);
     }
 
     private void EquipGun()
     {
+        RefreshHUDSelection(_currentSelectedSlot);
         _anim.SetBool(_raiseArm, true);
     }
 
     private void UnequipGun()
     {
+        DeselectDefaultHUD(_currentSelectedSlot);
         _anim.SetBool(_raiseArm, false);
+    }
+
+    private void SelectDefaultHUD(EquipSlot slot)
+    {
+        if (slot?.UI is EquipSlotUI ui)
+            ui.DefaultHUDSlotUI.Selected();
+    }
+
+    private void DeselectDefaultHUD(EquipSlot slot)
+    {
+        if (slot?.UI is EquipSlotUI ui)
+            ui.DefaultHUDSlotUI.Deselected();
+    }
+
+    // 여러번 총기 change시 InfoUI 호출 순서 겹치는 오류 방지
+    private void RefreshHUDSelection(EquipSlot slot)
+    {
+        DeselectDefaultHUD(_leftEquipSlot);
+        DeselectDefaultHUD(_rightEquipSlot);
+
+        if (slot != null)
+            SelectDefaultHUD(slot);
+
+        _currentSelectedSlot = slot;
     }
 
 
