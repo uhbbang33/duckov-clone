@@ -169,6 +169,8 @@ public class PlayerMove : MonoBehaviour
 
     public void StopMove()
     {
+        _isRun = false;
+        _anim.SetBool("IsRun", false);
         _anim.SetBool("IsWalk", false);
         _moveInput = Vector2.zero;
         _sp.IsReducing = false;
