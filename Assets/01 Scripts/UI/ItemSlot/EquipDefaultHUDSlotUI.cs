@@ -8,7 +8,7 @@ public class EquipDefaultHUDSlotUI : DefaultHUDSlotUI
     [SerializeField] private TextMeshProUGUI _ammoNameText;
     [SerializeField] private TextMeshProUGUI _ammoCountText;
     
-    public void Selected(GunItem gunItem)
+    public void Selected()
     {
         _outline.SetActive(true);
         _infoUI.SetActive(true);
@@ -21,6 +21,6 @@ public class EquipDefaultHUDSlotUI : DefaultHUDSlotUI
         _outline.SetActive(false);
         _infoUI.SetActive(false);
     }
-    
+
 
 }

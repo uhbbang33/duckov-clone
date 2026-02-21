@@ -10,6 +10,7 @@ public class PlayerEquip : MonoBehaviour
     private InputActions _inputActions;
     private EquipSlot _leftEquipSlot;
     private EquipSlot _rightEquipSlot;
+    private EquipSlot _currentEquipSlot;
 
     private bool _isLeftSlotActivated = true;
     private int _leftSlotGunId;
@@ -60,13 +61,21 @@ public class PlayerEquip : MonoBehaviour
 
     public void SyncSlotState(bool isLeftSlot)
     {
-        EquipSlot equipSlot = isLeftSlot ? _leftEquipSlot : _rightEquipSlot;
+        if(_currentEquipSlot != null)
+        {
+            (_currentEquipSlot.UI as EquipSlotUI).DefaultHUDSlotUI.Deselected();
+        }
+
+        _currentEquipSlot = isLeftSlot ? _leftEquipSlot : _rightEquipSlot;
         bool isActivated = isLeftSlot ? _isLeftSlotActivated : !_isLeftSlotActivated;
 
-        if (equipSlot == null)
+        if (_currentEquipSlot == null)
             return;
 
-        int gunId = equipSlot.CurrentItem == null ? 0 : (int)equipSlot.CurrentItem.ID;
+        if (_currentEquipSlot.CurrentItem != null)
+            (_currentEquipSlot.UI as EquipSlotUI).DefaultHUDSlotUI.Selected();
+
+        int gunId = _currentEquipSlot.CurrentItem == null ? 0 : (int)_currentEquipSlot.CurrentItem.ID;
 
         if (isLeftSlot)
             _leftSlotGunId = gunId;
@@ -76,7 +85,7 @@ public class PlayerEquip : MonoBehaviour
         if (!isActivated)
             return;
 
-        ApplyEquipState(isLeftSlot, equipSlot);
+        ApplyEquipState(isLeftSlot, _currentEquipSlot);
     }
 
     private void ApplyEquipState(bool isLeftSlot, EquipSlot equipSlot)
@@ -94,8 +103,6 @@ public class PlayerEquip : MonoBehaviour
             UnequipGun();
             return;
         }
-
-        Debug.Log("Equip");
 
         EquipGun();
     }

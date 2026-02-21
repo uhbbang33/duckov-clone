@@ -8,6 +8,10 @@ public class EquipSlotUI : ItemSlotUI
     private Sprite _pistolIcon;
 
     public bool IsLeftSlot { get { return _isLeftSlot; } }
+    public EquipDefaultHUDSlotUI DefaultHUDSlotUI
+    {
+        get { return _equipDefaultHUDSlotUI;}
+    }
 
     protected override void Awake()
     {
