@@ -19,9 +19,13 @@ public class EquipSlotUI : ItemSlotUI
 
         _itemSlot = new EquipSlot(_isLeftSlot);
         _itemSlot.UI = this;
+    }
+
+    protected override void Start()
+    {
+        base.Start();
 
         _pistolIcon = _uiManager.PistolIcon;
-
         SetPistolIcon();
     }
 
