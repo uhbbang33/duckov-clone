@@ -2,18 +2,18 @@ using UnityEngine;
 
 public class EquipSlotUI : ItemSlotUI
 {
-    [SerializeField] private DefaultHUDSlotUI _defaultHUDSlotUI;
+    [SerializeField] private EquipDefaultHUDSlotUI _equipDefaultHUDSlotUI;
     [SerializeField] private bool _isLeftSlot;
 
     private Sprite _pistolIcon;
 
     public bool IsLeftSlot { get { return _isLeftSlot; } }
 
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
 
-        _itemSlot = new EquipSlot();
+        _itemSlot = new EquipSlot(_isLeftSlot);
         _itemSlot.UI = this;
 
         _pistolIcon = _uiManager.PistolIcon;
@@ -28,11 +28,11 @@ public class EquipSlotUI : ItemSlotUI
         if (_itemSlot.CurrentItem == null)
         {
             SetPistolIcon();
-            _defaultHUDSlotUI.RefresuhDefaultUHD(false);
+            _equipDefaultHUDSlotUI.RefreshDefaultUHD(false);
         }
         else
         {
-            _defaultHUDSlotUI.RefresuhDefaultUHD(true, _nameText.text, _countText.text, _iconImage.sprite);
+            _equipDefaultHUDSlotUI.RefreshDefaultUHD(true, _nameText.text, _countText.text, _iconImage.sprite);
         }
     }
 
@@ -61,7 +61,8 @@ public class EquipSlotUI : ItemSlotUI
         }
         else
         {
-            _itemSlot.AddItem(fromSlot.CurrentItem);
+            int amount = 1;
+            _itemSlot.AddItem(fromSlot.CurrentItem, ref amount);
             fromSlot.SubtractItem();
         }
     }

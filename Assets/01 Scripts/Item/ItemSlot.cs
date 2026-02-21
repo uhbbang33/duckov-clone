@@ -79,9 +79,9 @@ public class ItemSlot
         _ui.RefreshUI();
     }
 
-    public virtual int AddItem(Item item, int amount = 1)
+    public virtual void AddItem(Item item, ref int amount)
     {
-        if (amount == 0) return amount;
+        if (amount == 0 || item == null) return;
 
         if (_currentItem == null)
         {
@@ -115,7 +115,7 @@ public class ItemSlot
 
         _ui.RefreshUI();
 
-        return amount - addAmount;
+        amount -= addAmount;
     }
 
     public void SplitItem(int amount)

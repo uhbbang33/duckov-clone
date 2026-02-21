@@ -145,7 +145,9 @@ public class Inventory : MonoBehaviour
 
                 if (_inventorySlots[i].CurrentItem.ID == item.ID)
                 {
-                    int remainAmount = _inventorySlots[i].AddItem(item, amount);
+                    int remainAmount = amount;
+
+                    _inventorySlots[i].AddItem(item, ref remainAmount);
 
                     if (remainAmount == 0)
                         return true;
@@ -169,7 +171,7 @@ public class Inventory : MonoBehaviour
         if (slotIndex == -1)
             return false;
 
-        _inventorySlots[slotIndex].AddItem(item, amount);
+        _inventorySlots[slotIndex].AddItem(item, ref amount);
         return true;
     }
 

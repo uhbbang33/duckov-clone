@@ -1,12 +1,18 @@
+using UnityEngine;
 
 public class EquipSlot : ItemSlot
 {
     private PlayerEquip _playerEquip;
 
-    public EquipSlot() : base()
+    public EquipSlot(bool isLeftSlot) : base()
     {
         _slotType = SlotType.EQUIP;
         _playerEquip = GameManager.Instance.PlayerObject.GetComponent<PlayerEquip>();
+
+        if (isLeftSlot)
+            _playerEquip.LeftEquipSlot = this;
+        else
+            _playerEquip.RightEquipSlot = this;
     }
 
     public override void SubtractItem(int amount = 1)
@@ -15,28 +21,24 @@ public class EquipSlot : ItemSlot
 
         EquipSlotUI equipUI = _ui as EquipSlotUI;
         if (equipUI.IsLeftSlot)
-            _playerEquip.LeftSlotGundId = 0;
+            _playerEquip.SyncSlotState(true);
         else
-            _playerEquip.RightSlotGundId = 0;
+            _playerEquip.SyncSlotState(false);
     }
 
-    public override int AddItem(Item item, int amount = 1)
+    public override void AddItem(Item item, ref int amount)
     {
-        if (amount == 0) return amount;
+        amount = 1;
+        base.AddItem(item, ref amount);
 
-        if (_currentItem == null)
+        if (_slotType == SlotType.EQUIP)
         {
-            if (_slotType == SlotType.EQUIP)
-            {
-                EquipSlotUI equipUI = _ui as EquipSlotUI;
-                if (equipUI.IsLeftSlot)
-                    _playerEquip.LeftSlotGundId = (int)item.ID;
-                else
-                    _playerEquip.RightSlotGundId = (int)item.ID;
-            }
+            EquipSlotUI equipUI = _ui as EquipSlotUI;
+            if (equipUI.IsLeftSlot)
+                _playerEquip.SyncSlotState(true);
+            else
+                _playerEquip.SyncSlotState(false);
         }
-
-        return base.AddItem(item, amount);
     }
 
 

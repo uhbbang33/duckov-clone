@@ -76,7 +76,7 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             _durabilityUI.SetActive(false);
             _countUI.SetActive(false);
             _uiManager.ChangeImageAlpha(_iconImage, false);
-            _defaultHUDSlotUI.RefresuhDefaultUHD(false);
+            _defaultHUDSlotUI.RefreshDefaultUHD(false);
             return;
         }
 
@@ -95,7 +95,7 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             _rect = GetComponent<RectTransform>();
         LayoutRebuilder.ForceRebuildLayoutImmediate(_rect);
 
-        _defaultHUDSlotUI.RefresuhDefaultUHD(true, _nameText.text, _countText.text, _iconImage.sprite, _durabilityUI.activeSelf, _countUI.activeSelf, _durabilitySlider.value);
+        _defaultHUDSlotUI.RefreshDefaultUHD(true, _nameText.text, _countText.text, _iconImage.sprite, _durabilityUI.activeSelf, _countUI.activeSelf, _durabilitySlider.value);
     }
 
     private void SetDurabilityOrCountUI(Item item)

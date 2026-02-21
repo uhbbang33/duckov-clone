@@ -66,7 +66,7 @@ public class ItemSlotUI : MonoBehaviour,
         get { return _durabilitySlider.value; }
     }
 
-    private void Awake()
+    protected virtual void Awake()
     {
         _originParent = transform.parent;
         _originAncghoredPos = ((RectTransform)transform).anchoredPosition;
@@ -128,7 +128,9 @@ public class ItemSlotUI : MonoBehaviour,
                 && endItem != null
                 && startItem.ID == endItem.ID)
             {
-                int remainItemCount = _itemSlot.AddItem(startItem, startUI._itemSlot.Quantity);
+                int remainItemCount = startUI._itemSlot.Quantity;
+
+                _itemSlot.AddItem(startItem, ref remainItemCount);
 
                 // swap
                 if (remainItemCount == startUI._itemSlot.Quantity)
@@ -204,12 +206,13 @@ public class ItemSlotUI : MonoBehaviour,
 
         Item tempItem = _itemSlot.CurrentItem;
         int tempQauntity = _itemSlot.Quantity;
+        int targetQuantity = target._itemSlot.Quantity;
 
         _itemSlot.SubtractItem(_itemSlot.Quantity);
-        _itemSlot.AddItem(target._itemSlot.CurrentItem, target._itemSlot.Quantity);
+        _itemSlot.AddItem(target._itemSlot.CurrentItem, ref targetQuantity);
 
         target._itemSlot.SubtractItem(target._itemSlot.Quantity);
-        target._itemSlot.AddItem(tempItem, tempQauntity);
+        target._itemSlot.AddItem(tempItem, ref tempQauntity);
     }
 
     private void SwapQuickSlot(ItemSlotUI startUI, QuickSlot currentQuick)
@@ -306,7 +309,8 @@ public class ItemSlotUI : MonoBehaviour,
             if (targetSlot.CurrentItem != null &&
                 targetSlot.CurrentItem.ID == _itemSlot.CurrentItem.ID)
             {
-                int remainAmount = targetSlot.AddItem(_itemSlot.CurrentItem, _itemSlot.Quantity);
+                int remainAmount = _itemSlot.Quantity;
+                targetSlot.AddItem(_itemSlot.CurrentItem, ref remainAmount);
 
                 _itemSlot.SubtractItem(_itemSlot.Quantity - remainAmount);
 
@@ -327,7 +331,8 @@ public class ItemSlotUI : MonoBehaviour,
 
             if (targetSlot.CurrentItem == null)
             {
-                targetSlot.AddItem(_itemSlot.CurrentItem, _itemSlot.Quantity);
+                int quantity = _itemSlot.Quantity;
+                targetSlot.AddItem(_itemSlot.CurrentItem, ref quantity);
 
                 _itemSlot.SubtractItem(_itemSlot.Quantity);
 

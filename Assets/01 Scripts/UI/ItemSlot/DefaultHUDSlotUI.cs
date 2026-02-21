@@ -20,7 +20,7 @@ public class DefaultHUDSlotUI : MonoBehaviour
         _uiManager.ChangeImageAlpha(_iconImage, false);
     }
 
-    public void RefresuhDefaultUHD(bool isShow, string nameText = null, string countText = null, Sprite iconImage = null, bool activateDurabilityUI = false, bool activateCountUI = false, float durabilityValue = 0f)
+    public void RefreshDefaultUHD(bool isShow, string nameText = null, string countText = null, Sprite iconImage = null, bool activateDurabilityUI = false, bool activateCountUI = false, float durabilityValue = 0f)
     {
         _nameText.text = nameText;
         _countText.text = countText;

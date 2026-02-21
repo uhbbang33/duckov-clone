@@ -96,7 +96,7 @@ public abstract class Box : MonoBehaviour
             if (item.Type == ItemType.Ammo)
                 itemQuantity = _ammoQuantity;
 
-            _boxSlots[i].AddItem(item, itemQuantity);
+            _boxSlots[i].AddItem(item, ref itemQuantity);
         }
 
         _itemCnt = itemCnt;
@@ -136,7 +136,7 @@ public abstract class Box : MonoBehaviour
         if (slotIndex == -1)
             return;
 
-        _boxSlots[slotIndex].AddItem(item, amount);
+        _boxSlots[slotIndex].AddItem(item, ref amount);
     }
 
     public int FindFirstEmptySlot()
