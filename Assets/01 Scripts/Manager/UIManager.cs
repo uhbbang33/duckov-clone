@@ -41,14 +41,18 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 
 
     [Space(20)]
-    [SerializeField] private ItemSplitUI _splitUI;
-    [SerializeField] private Transform _dragCanvasTransform;
+    [Header("GameObject")]
     [SerializeField] private GameObject _slotMenuUI;
     [SerializeField] private GameObject _buttonsObject;
     [SerializeField] private GameObject _defaultHUD;
+    [SerializeField] private GameObject _interactableBoxUI;
+
+
+    [Space(30)]
     [SerializeField] private DefaultHUDSlotUI[] _defaultHUDSlotUI;
     [SerializeField] private EquipSlotUI _leftEquipSlotUI;
-
+    [SerializeField] private ItemSplitUI _splitUI;
+    [SerializeField] private Transform _dragCanvasTransform;
 
     private ItemSlot _currentSlot;
     private InputActions _inputActions;
@@ -268,7 +272,14 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         {
             _defaultHUDSlotUI[i].RebuildLayout();
         }
+    }
 
+    public void InteractableBoxUIShowToggle(bool show)
+    {
+        _interactableBoxUI.SetActive(show);
+
+        if (!show)
+            GameManager.Instance.CurrentOpenBox = null;
     }
 
     #region On Button Click
