@@ -16,7 +16,9 @@ public class StaminaPoint : MonoBehaviour
     [SerializeField] private float _healDelayTime;
     [SerializeField] private float _healFirstDelayTime;
     [SerializeField] private Slider _SPSlider;
+    [SerializeField] private Image _SPSliderFillImage;
 
+    private Color _originSliderColor;
     private float _currentHealAmountPerTick;
 
     private WaitForSeconds _waitRunDelay;
@@ -26,6 +28,8 @@ public class StaminaPoint : MonoBehaviour
     private Coroutine _reduceRoutine = null;
     private Coroutine _healRoutine = null;
 
+    private const float _changeBackgroundColorAmount = 30f;
+
     public float CurrentSP { get { return _currentSP; } }
     public bool IsReducing { set { _isReducing = value; } }
 
@@ -34,6 +38,7 @@ public class StaminaPoint : MonoBehaviour
     private void Awake()
     {
         _currentSP = _maxSP;
+        _originSliderColor = _SPSliderFillImage.color;
         _currentHealAmountPerTick = _originHealAmountPerTick;
         _isReducing = false;
         _waitRunDelay = new WaitForSeconds(_runDelayTime);
@@ -73,7 +78,8 @@ public class StaminaPoint : MonoBehaviour
 
         _currentSP = MathF.Round(_currentSP, 2);
 
-        ChangeSPSliderValue();
+        ChangeSlider();
+
     }
 
     public void ReduceSPPerSecond(float amount)
@@ -101,7 +107,20 @@ public class StaminaPoint : MonoBehaviour
 
         _currentSP = MathF.Round(_currentSP, 2);
 
+        ChangeSlider();
+    }
+
+    private void ChangeSlider()
+    {
         ChangeSPSliderValue();
+
+        if (_currentSP <= _changeBackgroundColorAmount)
+        {
+            Color newColor = new Color32(255, 153, 153, 255);
+            _SPSliderFillImage.color = newColor;
+        }
+        else
+            _SPSliderFillImage.color = _originSliderColor;
     }
 
     private void ChangeSPSliderValue()
@@ -121,6 +140,7 @@ public class StaminaPoint : MonoBehaviour
     {
         _currentHealAmountPerTick = _originHealAmountPerTick;
     }
+
 
 
     #region Coroutine

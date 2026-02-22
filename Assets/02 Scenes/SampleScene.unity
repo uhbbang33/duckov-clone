@@ -12412,11 +12412,10 @@ MonoBehaviour:
   _mainUIHydrationSliderBackground: {fileID: 1967062002}
   _mainUIHungerSliderBackground: {fileID: 1277172059}
   _pistolIcon: {fileID: 21300000, guid: 7427cde5d22b2c849b459949cb26ce17, type: 3}
-  _splitUI: {fileID: 94495574}
-  _dragCanvasTransform: {fileID: 461288160}
   _slotMenuUI: {fileID: 301001545}
   _buttonsObject: {fileID: 1770942761}
   _defaultHUD: {fileID: 1998689108}
+  _interactableBoxUI: {fileID: 1165222469}
   _defaultHUDSlotUI:
   - {fileID: 1134181792}
   - {fileID: 754444258}
@@ -12425,6 +12424,8 @@ MonoBehaviour:
   - {fileID: 305116607}
   - {fileID: 1852304549}
   _leftEquipSlotUI: {fileID: 1363603944}
+  _splitUI: {fileID: 94495574}
+  _dragCanvasTransform: {fileID: 461288160}
 --- !u!4 &1453332739
 Transform:
   m_ObjectHideFlags: 0
@@ -18056,6 +18057,7 @@ MonoBehaviour:
   _healDelayTime: 0.1
   _healFirstDelayTime: 1.5
   _SPSlider: {fileID: 214549877}
+  _SPSliderFillImage: {fileID: 488652935}
 --- !u!114 &6032076664905499557
 MonoBehaviour:
   m_ObjectHideFlags: 0
