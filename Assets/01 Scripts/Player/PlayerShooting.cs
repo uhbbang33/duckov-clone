@@ -95,7 +95,7 @@ public class PlayerShooting : MonoBehaviour
         Vector2 mousePos = Mouse.current.position.ReadValue();
         Ray ray = Camera.main.ScreenPointToRay(mousePos);
 
-        Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
+        Plane groundPlane = new Plane(Vector3.up, _currentGunFireEffect.MuzzleTransform.position);
         float distance;
 
         if(groundPlane.Raycast(ray, out distance))
@@ -111,7 +111,6 @@ public class PlayerShooting : MonoBehaviour
         Vector3 target = GetMouseWorldPosition();
 
         Vector3 dir = (target - _currentGunFireEffect.MuzzleTransform.position);
-        dir.y = 0f;
 
         return dir.normalized;
     }
