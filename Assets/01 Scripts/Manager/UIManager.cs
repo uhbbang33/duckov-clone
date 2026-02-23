@@ -46,6 +46,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     [SerializeField] private GameObject _buttonsObject;
     [SerializeField] private GameObject _defaultHUD;
     [SerializeField] private GameObject _interactableBoxUI;
+    [SerializeField] private GameObject _crosshair;
 
 
     [Space(30)]
@@ -85,6 +86,12 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     {
         _inputActions.UI.CloseSlotMenuUI.performed -= OnClick;
         _inputActions.UI.Disable();
+    }
+
+    public void ShowCursor(bool showCursor)
+    {
+        Cursor.visible = showCursor;
+        _crosshair.SetActive(!showCursor);
     }
 
     public void ChangeImageAlpha(Image image, bool showImage)

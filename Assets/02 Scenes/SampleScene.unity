@@ -10164,7 +10164,7 @@ GameObject:
   - component: {fileID: 1222832705}
   - component: {fileID: 1222832706}
   m_Layer: 5
-  m_Name: Crosshair Image
+  m_Name: Crosshair
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10205,6 +10205,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f73208cf0001ed4598f250da12b42a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CrosshairUI
+  _upRect: {fileID: 0}
+  _leftRect: {fileID: 0}
+  _rightRect: {fileID: 0}
+  _downRect: {fileID: 0}
+  _originPosition: 0
+  _aimingPosition: 0
 --- !u!1 &1223976971
 GameObject:
   m_ObjectHideFlags: 0
@@ -12618,6 +12624,7 @@ MonoBehaviour:
   _buttonsObject: {fileID: 1770942761}
   _defaultHUD: {fileID: 1998689108}
   _interactableBoxUI: {fileID: 1165222469}
+  _crosshair: {fileID: 1222832704}
   _defaultHUDSlotUI:
   - {fileID: 1134181792}
   - {fileID: 754444258}
