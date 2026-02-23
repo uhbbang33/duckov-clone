@@ -11,6 +11,7 @@ public class PlayerEquip : MonoBehaviour
     private EquipSlot _leftEquipSlot;
     private EquipSlot _rightEquipSlot;
     private EquipSlot _currentSelectedSlot;
+    private PlayerShooting _playerShooting;
 
     private bool _isLeftSlotActivated = true;
     private int _leftSlotGunId;
@@ -35,6 +36,7 @@ public class PlayerEquip : MonoBehaviour
     private void Start()
     {
         _anim = GetComponent<Animator>();
+        _playerShooting = GetComponent<PlayerShooting>();
         _inputActions = GetComponent<Player>().Actions;
 
         _inputActions.Player.LeftWeapon.performed += EquipLeftSlotGun;
@@ -147,6 +149,7 @@ public class PlayerEquip : MonoBehaviour
 
     #region Animation Event
 
+    // TODO : 미리 생성 후 불러오는 방식으로
     public void CreateGunPrefab()
     {
         int gunId = _isLeftSlotActivated ? _leftSlotGunId : _rightSlotGunId;
@@ -159,12 +162,19 @@ public class PlayerEquip : MonoBehaviour
             _gunObject = Instantiate(GameResources.Instance.GlockPrefab, _rightHandTransform);
         else
             return;
+
+        _playerShooting.CurrentGunObject = _gunObject;
+        _playerShooting.CurrentGun = _currentSelectedSlot.CurrentItem as GunItem;
     }
 
     public void DestroyPefab()
     {
         if (_gunObject != null)
+        {
             Destroy(_gunObject);
+            _playerShooting.CurrentGunObject = null;
+            _playerShooting.CurrentGun = null;
+        }
     }
 
     #endregion

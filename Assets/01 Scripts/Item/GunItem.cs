@@ -1,13 +1,15 @@
 
 public class GunItem : Item
 {
-    private string _bulletType;
+    // TODO : bullet과 Ammo 명칭 구분
+    private string _bulletType; // ammoType으로 바꿔야함
     private float _damage;
     private float _rps;
     private uint _magazineCapacity;
     private float _range;
     private float _reloadTime;
     private float _adsTime;
+    private int _currentAmmoCount;
 
     public string GunItemType { get { return _itemType; } }
     public string GunBulletType { get { return _bulletType; } }
@@ -17,9 +19,15 @@ public class GunItem : Item
     public float Range { get { return _range; } }
     public float ReloadTime { get { return _reloadTime; } }
     public float AdsTime { get { return _adsTime; } }
+    public int CurrentAmmoCount
+    {
+        get { return _currentAmmoCount; }
+        set { _currentAmmoCount = value; }
+    }
 
     public GunItem(uint id, string rarity, string name, uint value, float weight, uint weightValue, string bulletType, float damage, float rps, uint magazineCapacity, float range, float reloadTime, float adsTime, uint maxStackSize) : base(id, rarity, name, value, weight, weightValue, maxStackSize)
     {
+        _currentAmmoCount = 10;
         _itemType = ItemType.Gun;
         _bulletType = bulletType;
         _damage = damage;
