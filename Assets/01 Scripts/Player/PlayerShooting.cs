@@ -56,6 +56,8 @@ public class PlayerShooting : MonoBehaviour
         Debug.Log(_currentGun.Name + " shooting!");
         //_currentGun.CurrentAmmoCount -= 1;
 
+        // Sound
+        SoundManager.Instance.PlayGunSFX(_currentGun.ID);
 
         Vector3 muzzlePosition = _currentGunFireEffect.MuzzleTransform.position;
 
