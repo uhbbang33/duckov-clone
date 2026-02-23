@@ -10,6 +10,7 @@ public class PlayerMove : MonoBehaviour
     private Animator _anim;
     private StaminaPoint _sp;
     private Hydration _hydration;
+    private Transform _lookBaseTransform;
 
     private Vector2 _moveInput;
     private Vector2 _mousePosition;
@@ -30,6 +31,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float _rollMaxCoolTime;
     [SerializeField] private float _mouseTurnSpeed;
     [SerializeField] private float _runTurnSpeed;
+    [SerializeField] private Transform _originLookBaseTransform;
 
     private WaitForSeconds _waitForRoll;
 
@@ -37,6 +39,19 @@ public class PlayerMove : MonoBehaviour
     public event Action OnRunCancel;
 
     public bool IsRun {  get { return _isRun; } }
+    public Transform LookBaseTransform
+    {
+        get { return _lookBaseTransform; }
+        set
+        {
+            _lookBaseTransform = value;
+
+            if (value == null)
+            {
+                _lookBaseTransform = _originLookBaseTransform;
+            }
+        }
+    }
 
     #region MonoBehaviour
 
@@ -53,6 +68,8 @@ public class PlayerMove : MonoBehaviour
         _sp.OnSPZero += StopRun;
         _hydration.OnEnterZeroHydration += EnableZeroHydration;
         _hydration.OnExitZeroHydration += DisableZeroHydration;
+
+        _lookBaseTransform = _originLookBaseTransform;
     }
 
     private void OnDisable()
@@ -125,8 +142,9 @@ public class PlayerMove : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit, 100f))
         {
-            Vector3 dir = hit.point - transform.position;
-            dir.y = 0f;
+            Vector3 dir = hit.point - _lookBaseTransform.position;
+
+            dir.y = 0;
 
             if (dir.sqrMagnitude > 0.01f && !_isRoll)
             {

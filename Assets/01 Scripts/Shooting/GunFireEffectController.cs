@@ -4,16 +4,9 @@ using UnityEngine;
 public class GunFireEffectController : MonoBehaviour
 {
     //[SerializeField] private LineRenderer _lineRenderer;
-    // TODO Gun script
-    [SerializeField] private Transform _muzzleTransform;
     //[SerializeField] private float _bulletTrailTime = 0.2f;
 
     //private WaitForSeconds _waitForbulletTrailTime;
-
-    public Transform MuzzleTransform
-    {
-        get { return _muzzleTransform; }
-    }
 
     //private void Awake()
     //{

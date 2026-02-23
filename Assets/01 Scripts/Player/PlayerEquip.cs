@@ -164,7 +164,7 @@ public class PlayerEquip : MonoBehaviour
             return;
 
         _playerShooting.CurrentGunObject = _gunObject;
-        _playerShooting.CurrentGun = _currentSelectedSlot.CurrentItem as GunItem;
+        _playerShooting.CurrentGunItem = _currentSelectedSlot.CurrentItem as GunItem;
     }
 
     public void DestroyPefab()
@@ -173,7 +173,7 @@ public class PlayerEquip : MonoBehaviour
         {
             Destroy(_gunObject);
             _playerShooting.CurrentGunObject = null;
-            _playerShooting.CurrentGun = null;
+            _playerShooting.CurrentGunItem = null;
         }
     }
 

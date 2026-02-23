@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 4475604980844950982}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.11, z: -1.557}
+  m_LocalPosition: {x: 0, y: 0.056, z: -0.768}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6923267878063270204}
-  - component: {fileID: -5430208685400855964}
+  - component: {fileID: 1590950784461443700}
   m_Layer: 0
   m_Name: M700
   m_TagString: Untagged
@@ -65,7 +65,7 @@ Transform:
   - {fileID: 6577449931424930476}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!114 &-5430208685400855964
+--- !u!114 &1590950784461443700
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -74,9 +74,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 9203890126400519520}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24863c5ced722f0459e08966b9136aab, type: 3}
+  m_Script: {fileID: 11500000, guid: 4a67ac99966c5614e9d2117288f528c1, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GunFireEffectController
+  m_EditorClassIdentifier: Assembly-CSharp::Gun
   _muzzleTransform: {fileID: 6434682619783362379}
 --- !u!1001 &1687592420763758448
 PrefabInstance:
@@ -89,6 +89,18 @@ PrefabInstance:
     - target: {fileID: 5145242917378699110, guid: 8d51fc40962fae449965c7966e9c0109, type: 3}
       propertyPath: m_Name
       value: TR-90
+      objectReference: {fileID: 0}
+    - target: {fileID: 5488836265841522140, guid: 8d51fc40962fae449965c7966e9c0109, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5488836265841522140, guid: 8d51fc40962fae449965c7966e9c0109, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5488836265841522140, guid: 8d51fc40962fae449965c7966e9c0109, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5488836265841522140, guid: 8d51fc40962fae449965c7966e9c0109, type: 3}
       propertyPath: m_LocalPosition.x
@@ -129,6 +141,10 @@ PrefabInstance:
     - target: {fileID: 5488836265841522140, guid: 8d51fc40962fae449965c7966e9c0109, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5488836265841522140, guid: 8d51fc40962fae449965c7966e9c0109, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

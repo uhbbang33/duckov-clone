@@ -1044,7 +1044,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7987627929422028658}
-  - component: {fileID: 6437098931459736550}
+  - component: {fileID: 8402507670481095155}
   m_Layer: 0
   m_Name: MP7
   m_TagString: Untagged
@@ -1069,7 +1069,7 @@ Transform:
   - {fileID: 2414046084418527439}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6437098931459736550
+--- !u!114 &8402507670481095155
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1078,9 +1078,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6669379501984884854}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24863c5ced722f0459e08966b9136aab, type: 3}
+  m_Script: {fileID: 11500000, guid: 4a67ac99966c5614e9d2117288f528c1, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GunFireEffectController
+  m_EditorClassIdentifier: Assembly-CSharp::Gun
   _muzzleTransform: {fileID: 2574878111462843552}
 --- !u!1 &6719320869522767839
 GameObject:
