@@ -10,6 +10,8 @@ public class PlayerShooting : MonoBehaviour
     private GunFireEffectController _currentGunFireEffect;
     private GunItem _currentGun;
     private InputActions _actions;
+    private PlayerMove _playerMove;
+    private Inventory _inventory;
 
     public GameObject CurrentGunObject
     {
@@ -34,6 +36,9 @@ public class PlayerShooting : MonoBehaviour
         _actions = GetComponent<Player>().Actions;
 
         _actions.Player.Fire.performed += Fire;
+
+        _playerMove = GetComponent<PlayerMove>();
+        _inventory = GetComponent<Inventory>();
     }
 
     private void OnDisable()
@@ -45,7 +50,8 @@ public class PlayerShooting : MonoBehaviour
     {
         if (_currentGun == null
             || _currentGunObject == null
-            || GetComponent<PlayerMove>().IsRun)
+            || _playerMove.IsRun
+            || _inventory.InventoryIsOpen)
             return;
 
         if (_currentGun.CurrentAmmoCount <= 0)

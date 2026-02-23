@@ -25,6 +25,8 @@ public class Inventory : MonoBehaviour
 
     public event Action<float, float> OnWeightChange;
 
+    public bool InventoryIsOpen { get { return _inventoryToggle; } }
+
     private void Awake()
     {
         _uiManager = UIManager.Instance;
