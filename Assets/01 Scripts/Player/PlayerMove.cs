@@ -36,6 +36,8 @@ public class PlayerMove : MonoBehaviour
     public event Action OnRun;
     public event Action OnRunCancel;
 
+    public bool IsRun {  get { return _isRun; } }
+
     #region MonoBehaviour
 
     private void Awake()

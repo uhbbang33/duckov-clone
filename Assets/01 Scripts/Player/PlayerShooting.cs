@@ -43,7 +43,9 @@ public class PlayerShooting : MonoBehaviour
 
     private void Fire(InputAction.CallbackContext context)
     {
-        if (_currentGun == null || _currentGunObject == null)
+        if (_currentGun == null
+            || _currentGunObject == null
+            || GetComponent<PlayerMove>().IsRun)
             return;
 
         if (_currentGun.CurrentAmmoCount <= 0)
