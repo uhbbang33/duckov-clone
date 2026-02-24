@@ -135,11 +135,12 @@ public class PlayerShooting : MonoBehaviour
 
         int maxReloadableAmmoCount = (int)_currentGunItem.MagazineCapacity - _currentGunItem.CurrentAmmoCount;
 
-        // 인벤토리에서 가져올 수 있는 수량 체크
-        int reloadableAmmoCount = _inventory.ReloadableAmmoCount(_currentGunItem.BulletId, maxReloadableAmmoCount);
+        // 인벤토리에서 가져올 수 있는 수량 체크 및 아이템 저장
+        (int, AmmoItem) reloadable = _inventory.ReloadableAmmoCount(_currentGunItem.BulletId, maxReloadableAmmoCount);
 
         // 장전 시간이 끝난 후 실제 ammoCount 변화
-        _currentGunItem.CurrentAmmoCount += reloadableAmmoCount;
+        _currentGunItem.CurrentAmmoCount += reloadable.Item1;
+        _currentGunItem.Ammo = reloadable.Item2;
 
         yield return null;
     }

@@ -156,4 +156,22 @@ public class ItemSlot
             _ui.LinkedQuickSlot.UnlinkInventorySlotUI(item.ID);
         }
     }
+
+    public void UnloadAmmo()
+    {
+        GunItem gunItem = _currentItem as GunItem;
+
+        if (gunItem.CurrentAmmoCount <= 0)
+            return;
+
+        AmmoItem ammoItem = gunItem.Ammo;
+
+        if(!_inventory.TryAddItem(ammoItem, gunItem.CurrentAmmoCount))
+        {
+            // ¹ö¸®±â
+            GameManager.Instance.CreateDropItemObject(ammoItem, gunItem.CurrentAmmoCount);
+        }
+
+        gunItem.CurrentAmmoCount = 0;
+    }
 }

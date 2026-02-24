@@ -323,5 +323,11 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         CloseSlotMenu();
     }
 
+    public void OnUnloadButtonClick()
+    {
+        _currentSlot.UnloadAmmo();
+        CloseSlotMenu();
+    }
+
     #endregion On Button Click
 }

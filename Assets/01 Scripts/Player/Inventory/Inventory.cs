@@ -191,9 +191,10 @@ public class Inventory : MonoBehaviour
         return -1;
     }
 
-    public int ReloadableAmmoCount(uint id, int max)
+    public (int, AmmoItem) ReloadableAmmoCount(uint id, int max)
     {
         int reloadableAmmoCount = 0;
+        AmmoItem ammoItem = null;
 
         for (int i = 0; i < _slotCnt; ++i)
         {
@@ -212,15 +213,19 @@ public class Inventory : MonoBehaviour
                 else
                     amount = _inventorySlots[i].Quantity;
 
-                _inventorySlots[i].SubtractItem(amount);
+                if (ammoItem == null)
+                    ammoItem = _inventorySlots[i].CurrentItem as AmmoItem;
+
                 reloadableAmmoCount += amount;
+
+                _inventorySlots[i].SubtractItem(amount);
             }
 
             if (reloadableAmmoCount == max)
                 break;
         }
 
-        return reloadableAmmoCount;
+        return (reloadableAmmoCount, ammoItem);
     }
 
     public bool HasItem(uint id)

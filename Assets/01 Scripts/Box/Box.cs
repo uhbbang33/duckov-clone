@@ -86,7 +86,7 @@ public abstract class Box : MonoBehaviour
 
     private void SetBoxItems()
     {
-        int itemCnt = Random.Range(1, _slotCnt + 1);
+        int itemCnt = Random.Range(5, _slotCnt + 1);
 
         for (int i = 0; i < itemCnt; ++i)
         {
