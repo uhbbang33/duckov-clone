@@ -14,9 +14,11 @@ public class PlayerShooting : MonoBehaviour
     private InputActions _actions;
     private PlayerMove _playerMove;
     private Inventory _inventory;
-    private Coroutine _coroutine;
-    private WaitForSeconds _waitforReloadDelay;
+    private bool _isWaitingForAdsTime;
 
+    private Coroutine _reloadCoroutine;
+    private Coroutine _waitAdsTimeCoroutine;
+    private WaitForSeconds _waitforReloadDelay;
     public GameObject CurrentGunObject
     {
         get { return _currentGunObject; }
@@ -68,7 +70,8 @@ public class PlayerShooting : MonoBehaviour
         if (_currentGunItem == null
             || _currentGunObject == null
             || _playerMove.IsRun
-            || _inventory.InventoryIsOpen)
+            || _inventory.InventoryIsOpen
+            || _isWaitingForAdsTime)
             return;
 
         if (_currentGunItem.CurrentAmmoCount <= 0)
@@ -90,6 +93,8 @@ public class PlayerShooting : MonoBehaviour
 
         // Sound
         SoundManager.Instance.PlayGunSFX(_currentGunItem.ID);
+
+        _waitAdsTimeCoroutine = StartCoroutine(WaitAdsTimeRoutine());
     }
 
     private void OnReload(InputAction.CallbackContext context)
@@ -110,10 +115,10 @@ public class PlayerShooting : MonoBehaviour
         if (!_inventory.HasItem(_currentGunItem.BulletId))
             return;
 
-        if (_coroutine != null)
-            StopCoroutine(_coroutine);
+        if (_reloadCoroutine != null)
+            StopCoroutine(_reloadCoroutine);
         
-        _coroutine = StartCoroutine(ReloadRoutine());
+        _reloadCoroutine = StartCoroutine(ReloadRoutine());
     }
 
     private IEnumerator ReloadRoutine()
@@ -141,6 +146,15 @@ public class PlayerShooting : MonoBehaviour
         // 장전 시간이 끝난 후 실제 ammoCount 변화
         _currentGunItem.CurrentAmmoCount += reloadable.Item1;
         _currentGunItem.Ammo = reloadable.Item2;
+
+        yield return null;
+    }
+
+    private IEnumerator WaitAdsTimeRoutine()
+    {
+        _isWaitingForAdsTime = true;
+        yield return new WaitForSeconds(_currentGunItem.AdsTime);
+        _isWaitingForAdsTime = false;
 
         yield return null;
     }
