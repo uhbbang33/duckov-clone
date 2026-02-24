@@ -14,6 +14,8 @@ public class PlayerShooting : MonoBehaviour
     private InputActions _actions;
     private PlayerMove _playerMove;
     private Inventory _inventory;
+    private PlayerEquip _playerEquip;
+
     private bool _isWaitingForAdsTime;
 
     private Coroutine _reloadCoroutine;
@@ -57,6 +59,7 @@ public class PlayerShooting : MonoBehaviour
 
         _playerMove = GetComponent<PlayerMove>();
         _inventory = GetComponent<Inventory>();
+        _playerEquip = GetComponent<PlayerEquip>();
     }
 
     private void OnDisable()
@@ -93,6 +96,8 @@ public class PlayerShooting : MonoBehaviour
 
         // Sound
         SoundManager.Instance.PlayGunSFX(_currentGunItem.ID);
+
+        _playerEquip.RefreshHUDAmmoCountText();
 
         _waitAdsTimeCoroutine = StartCoroutine(WaitAdsTimeRoutine());
     }
@@ -146,6 +151,9 @@ public class PlayerShooting : MonoBehaviour
         // 장전 시간이 끝난 후 실제 ammoCount 변화
         _currentGunItem.CurrentAmmoCount += reloadable.Item1;
         _currentGunItem.Ammo = reloadable.Item2;
+
+        // ammo count Text
+        _playerEquip.RefreshHUDAmmoCountText();
 
         yield return null;
     }

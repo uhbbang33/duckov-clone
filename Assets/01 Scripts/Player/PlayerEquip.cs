@@ -136,7 +136,7 @@ public class PlayerEquip : MonoBehaviour
     private void SelectDefaultHUD(EquipSlot slot)
     {
         if (slot?.UI is EquipSlotUI ui)
-            ui.DefaultHUDSlotUI.Selected();
+            ui.DefaultHUDSlotUI.Selected(slot.CurrentItem as GunItem);
     }
 
     private void DeselectDefaultHUD(EquipSlot slot)
@@ -157,6 +157,11 @@ public class PlayerEquip : MonoBehaviour
         _currentSelectedSlot = slot;
     }
 
+    // TODO
+    public void RefreshHUDAmmoCountText()
+    {
+        (_currentSelectedSlot.UI as EquipSlotUI).DefaultHUDSlotUI.RefreshAmmoCountText(_currentSelectedSlot.CurrentItem as GunItem);
+    }
 
     #region Animation Event
 

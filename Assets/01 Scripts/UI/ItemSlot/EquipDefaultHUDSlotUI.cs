@@ -8,12 +8,13 @@ public class EquipDefaultHUDSlotUI : DefaultHUDSlotUI
     [SerializeField] private TextMeshProUGUI _ammoNameText;
     [SerializeField] private TextMeshProUGUI _ammoCountText;
     
-    public void Selected()
+    public void Selected(GunItem gunItem)
     {
         _outline.SetActive(true);
         _infoUI.SetActive(true);
-        //_ammoNameText.text = gunItem.AmmoName;
-        // _ammoCountText.text = gunItem.AmmoCount;
+
+        _ammoNameText.text = gunItem.GunBulletType;
+        RefreshAmmoCountText(gunItem);
     }
 
     public void Deselected()
@@ -22,5 +23,8 @@ public class EquipDefaultHUDSlotUI : DefaultHUDSlotUI
         _infoUI.SetActive(false);
     }
 
-
+    public void RefreshAmmoCountText(GunItem gunItem)
+    {
+        _ammoCountText.text = gunItem.CurrentAmmoCount.ToString() + "/" + gunItem.MagazineCapacity;
+    }
 }
