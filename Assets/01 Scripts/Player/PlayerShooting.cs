@@ -113,14 +113,15 @@ public class PlayerShooting : MonoBehaviour
         if (_coroutine != null)
             StopCoroutine(_coroutine);
         
-        _coroutine = StartCoroutine(ShowReloadUIRoutine());
+        _coroutine = StartCoroutine(ReloadRoutine());
     }
 
-    private IEnumerator ShowReloadUIRoutine()
+    private IEnumerator ReloadRoutine()
     {
         // 장전하는동안 걷기이외의 행동을 할 경우 장전 중단
-
-        // 장전 효과음
+        
+        // sound
+        SoundManager.Instance.PlayReloadSFX();
 
         Debug.Log("장전 시작!");
         // TODO : 장전 시간 및 UI

@@ -11,6 +11,7 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
     [SerializeField] private AudioClip _glockSFX;
     [SerializeField] private AudioClip _mp7SFX;
     [SerializeField] private AudioClip _m700SFX;
+    [SerializeField] private AudioClip _reloadSFX;
     
     public void PlayGunSFX(uint gunId)
     {
@@ -26,6 +27,10 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
         {
             _sfxSource.PlayOneShot(_m700SFX);
         }
+    }
 
+    public void PlayReloadSFX()
+    {
+        _sfxSource.PlayOneShot(_reloadSFX);
     }
 }
