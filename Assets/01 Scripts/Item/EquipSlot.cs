@@ -31,14 +31,11 @@ public class EquipSlot : ItemSlot
         amount = 1;
         base.AddItem(item, ref amount);
 
-        if (_slotType == SlotType.EQUIP)
-        {
-            EquipSlotUI equipUI = _ui as EquipSlotUI;
-            if (equipUI.IsLeftSlot)
-                _playerEquip.SyncSlotState(true);
-            else
-                _playerEquip.SyncSlotState(false);
-        }
+        EquipSlotUI equipUI = _ui as EquipSlotUI;
+        if (equipUI.IsLeftSlot)
+            _playerEquip.SyncSlotState(true);
+        else
+            _playerEquip.SyncSlotState(false);
     }
 
 

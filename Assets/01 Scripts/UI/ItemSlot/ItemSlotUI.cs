@@ -104,8 +104,6 @@ public class ItemSlotUI : MonoBehaviour,
         if (eventData.pointerDrag == null)
             return;
 
-        EquipSlotUI equipSlotUI = eventData.pointerDrag.GetComponent<EquipSlotUI>();
-
         ItemSlotUI startUI = eventData.pointerDrag.GetComponent<ItemSlotUI>();
 
         if (startUI != null)
@@ -205,14 +203,14 @@ public class ItemSlotUI : MonoBehaviour,
         }
 
         Item tempItem = _itemSlot.CurrentItem;
-        int tempQauntity = _itemSlot.Quantity;
+        int tempQuantity = _itemSlot.Quantity;
         int targetQuantity = target._itemSlot.Quantity;
 
         _itemSlot.SubtractItem(_itemSlot.Quantity);
         _itemSlot.AddItem(target._itemSlot.CurrentItem, ref targetQuantity);
 
         target._itemSlot.SubtractItem(target._itemSlot.Quantity);
-        target._itemSlot.AddItem(tempItem, ref tempQauntity);
+        target._itemSlot.AddItem(tempItem, ref tempQuantity);
     }
 
     private void SwapQuickSlot(ItemSlotUI startUI, QuickSlot currentQuick)

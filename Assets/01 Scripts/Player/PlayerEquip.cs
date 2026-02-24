@@ -14,6 +14,7 @@ public class PlayerEquip : MonoBehaviour
     private PlayerShooting _playerShooting;
 
     private bool _isLeftSlotActivated = true;
+    private bool _isRightSlotActivated = false;
     private int _leftSlotGunId;
     private int _rightSlotGunId;
 
@@ -51,20 +52,28 @@ public class PlayerEquip : MonoBehaviour
 
     private void EquipLeftSlotGun(InputAction.CallbackContext context)
     {
+        if (_isLeftSlotActivated)
+            return;
+
         _isLeftSlotActivated = true;
+        _isRightSlotActivated = false;
         SyncSlotState(true);
     }
 
     private void EquipRightSlotGun(InputAction.CallbackContext context)
     {
+        if (_isRightSlotActivated)
+            return;
+
         _isLeftSlotActivated = false;
+        _isRightSlotActivated = true;
         SyncSlotState(false);
     }
 
     public void SyncSlotState(bool isLeftSlot)
     {
         EquipSlot equipSlot = isLeftSlot ? _leftEquipSlot : _rightEquipSlot;
-        bool isActivated = isLeftSlot ? _isLeftSlotActivated : !_isLeftSlotActivated;
+        bool isActivated = isLeftSlot ? _isLeftSlotActivated : _isRightSlotActivated;
 
         if (equipSlot == null)
             return;
@@ -79,14 +88,14 @@ public class PlayerEquip : MonoBehaviour
         if (!isActivated)
             return;
 
-        ApplyEquipState(isLeftSlot, equipSlot);
+        ApplyEquipState(equipSlot);
     }
 
-    private void ApplyEquipState(bool isLeftSlot, EquipSlot equipSlot)
+    private void ApplyEquipState(EquipSlot equipSlot)
     {
         bool hasItem = equipSlot.CurrentItem != null;
 
-        if (_gunObject != null && hasItem && _currentSelectedSlot != equipSlot)
+        if (_gunObject != null && hasItem)
         {
             ChangeGun(equipSlot);
             return;
@@ -108,6 +117,8 @@ public class PlayerEquip : MonoBehaviour
 
         _anim.SetTrigger(_changeWeapon);
         _anim.SetBool(_raiseArm, true);
+
+        _currentSelectedSlot = equipSlot;
     }
 
     private void EquipGun()
