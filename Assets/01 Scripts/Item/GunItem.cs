@@ -36,7 +36,7 @@ public class GunItem : Item
 
     public GunItem(uint id, string rarity, string name, uint value, float weight, uint weightValue, string bulletType, float damage, float rps, uint magazineCapacity, float range, float reloadTime, float adsTime, uint maxStackSize) : base(id, rarity, name, value, weight, weightValue, maxStackSize)
     {
-        _currentAmmoCount = 10;
+        _currentAmmoCount = 0;
         _itemType = ItemType.Gun;
         _bulletType = bulletType;
         _damage = damage;

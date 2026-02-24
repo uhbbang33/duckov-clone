@@ -16,10 +16,10 @@ public class PlayerShooting : MonoBehaviour
     private Inventory _inventory;
     private PlayerEquip _playerEquip;
 
-    private bool _isWaitingForAdsTime;
+    private bool _isWaitingForRpsTime;
 
     private Coroutine _reloadCoroutine;
-    private Coroutine _waitAdsTimeCoroutine;
+    private Coroutine _waitRpsTimeCoroutine;
     private WaitForSeconds _waitforReloadDelay;
     public GameObject CurrentGunObject
     {
@@ -74,7 +74,7 @@ public class PlayerShooting : MonoBehaviour
             || _currentGunObject == null
             || _playerMove.IsRun
             || _inventory.InventoryIsOpen
-            || _isWaitingForAdsTime)
+            || _isWaitingForRpsTime)
             return;
 
         if (_currentGunItem.CurrentAmmoCount <= 0)
@@ -99,7 +99,7 @@ public class PlayerShooting : MonoBehaviour
 
         _playerEquip.RefreshHUDAmmoCountText();
 
-        _waitAdsTimeCoroutine = StartCoroutine(WaitAdsTimeRoutine());
+        _waitRpsTimeCoroutine = StartCoroutine(WaitRpsTimeRoutine());
     }
 
     private void OnReload(InputAction.CallbackContext context)
@@ -130,6 +130,7 @@ public class PlayerShooting : MonoBehaviour
     {
         // 장전하는동안 걷기이외의 행동을 할 경우 장전 중단
         
+        
         // sound
         SoundManager.Instance.PlayReloadSFX();
 
@@ -158,11 +159,11 @@ public class PlayerShooting : MonoBehaviour
         yield return null;
     }
 
-    private IEnumerator WaitAdsTimeRoutine()
+    private IEnumerator WaitRpsTimeRoutine()
     {
-        _isWaitingForAdsTime = true;
-        yield return new WaitForSeconds(_currentGunItem.AdsTime);
-        _isWaitingForAdsTime = false;
+        _isWaitingForRpsTime = true;
+        yield return new WaitForSeconds(1.0f / _currentGunItem.Rps);
+        _isWaitingForRpsTime = false;
 
         yield return null;
     }
