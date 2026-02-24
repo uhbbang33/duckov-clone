@@ -43,4 +43,11 @@ public class EquipSlot : ItemSlot
     {
 
     }
+
+    public override void UnloadAmmo()
+    {
+        base.UnloadAmmo();
+
+        (_ui as EquipSlotUI).DefaultHUDSlotUI.RefreshAmmoCountText(_currentItem as GunItem);
+    }
 }

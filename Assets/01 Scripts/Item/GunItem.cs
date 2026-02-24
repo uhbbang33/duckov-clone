@@ -12,6 +12,7 @@ public class GunItem : Item
     private int _currentAmmoCount;
     private uint _bulletId;
     private AmmoItem _ammo;
+    private string _ammoName;
 
     public string GunItemType { get { return _itemType; } }
     public string GunBulletType { get { return _bulletType; } }
@@ -26,13 +27,13 @@ public class GunItem : Item
         get { return _currentAmmoCount; }
         set { _currentAmmoCount = value; }
     }
-    public uint BulletId {  get { return _bulletId; } }
+    public uint BulletId { get { return _bulletId; } }
     public AmmoItem Ammo
     {
         get { return _ammo; }
         set { _ammo = value; }
     }
-
+    public string AmmoName { get { return _ammoName; } }
 
     public GunItem(uint id, string rarity, string name, uint value, float weight, uint weightValue, string bulletType, float damage, float rps, uint magazineCapacity, float range, float reloadTime, float adsTime, uint maxStackSize) : base(id, rarity, name, value, weight, weightValue, maxStackSize)
     {
@@ -47,5 +48,6 @@ public class GunItem : Item
         _adsTime = adsTime;
 
         _bulletId = DataManager.Instance.GetBulletId(bulletType);
+        _ammoName = DataManager.Instance.GetAmmo((int)_bulletId).Name;
     }
 }

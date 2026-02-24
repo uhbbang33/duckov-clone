@@ -157,7 +157,7 @@ public class ItemSlot
         }
     }
 
-    public void UnloadAmmo()
+    public virtual void UnloadAmmo()
     {
         GunItem gunItem = _currentItem as GunItem;
 
