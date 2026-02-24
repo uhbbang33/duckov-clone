@@ -49,3 +49,9 @@ public struct GunId
     public const int M700Id = 780;
     public const int GlockId = 254;
 }
+
+public struct BulletId
+{
+    public const uint S = 595;
+    public const uint Sniping = 622;
+}

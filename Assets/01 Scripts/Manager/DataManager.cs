@@ -84,6 +84,15 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
 
     #endregion Get
 
+    public uint GetBulletId(string bulletType)
+    {
+        if (bulletType == BulletType.S)
+            return BulletId.S;
+        if (bulletType == BulletType.Sniping)
+            return BulletId.Sniping;
+
+        return 0;
+    }
 
     public Item GetRandomItem(string type)
     {

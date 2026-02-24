@@ -185,14 +185,50 @@ public class Inventory : MonoBehaviour
     public int FindFirstEmptySlot()
     {
         for (int i = 0; i < _slotCnt; ++i)
-        {
             if (_inventorySlots[i].CurrentItem == null)
-            {
                 return i;
-            }
-        }
 
         return -1;
+    }
+
+    public int ReloadableAmmoCount(uint id, int max)
+    {
+        int reloadableAmmoCount = 0;
+
+        for (int i = 0; i < _slotCnt; ++i)
+        {
+            if (!HasItem(id))
+                break;
+
+            if (_inventorySlots[i].CurrentItem == null)
+                continue;
+
+            if (_inventorySlots[i].CurrentItem.ID == id)
+            {
+                int amount = 0;
+
+                if (max <= reloadableAmmoCount + _inventorySlots[i].Quantity)
+                    amount = max - reloadableAmmoCount;
+                else
+                    amount = _inventorySlots[i].Quantity;
+
+                _inventorySlots[i].SubtractItem(amount);
+                reloadableAmmoCount += amount;
+            }
+
+            if (reloadableAmmoCount == max)
+                break;
+        }
+
+        return reloadableAmmoCount;
+    }
+
+    public bool HasItem(uint id)
+    {
+        if (_inventoryDict.ContainsKey(id))
+            return true;
+
+        return false;
     }
 
     public void AddToDictionaryByID(uint id)
