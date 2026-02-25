@@ -287,14 +287,10 @@ public class ItemSlotUI : MonoBehaviour,
 
     private void TryMoveToInventoryByDoubleClick()
     {
-        if (_inventory.TryAddItem(_itemSlot.CurrentItem, _itemSlot.Quantity))
-        {
-            _itemSlot.SubtractItem(_itemSlot.Quantity);
-        }
-        else // TODO : 빈공간이 없습니다 UI 표시
-        {
+        int remainQuantity = _itemSlot.Quantity;
 
-        }
+        _inventory.TryAddItem(_itemSlot.CurrentItem, ref remainQuantity);
+        _itemSlot.SubtractItem(_itemSlot.Quantity - remainQuantity);
     }
 
     private void TryMoveToBoxByDoubleClick()

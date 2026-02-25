@@ -140,7 +140,7 @@ public class Inventory : MonoBehaviour
         _inputActions.Player.Inventory.performed += OnInventory;
     }
 
-    public bool TryAddItem(Item item, int amount)
+    public bool TryAddItem(Item item, ref int amount)
     {
         // 인벤토리에 같은 아이템이 있을 경우
         if (_inventoryDict.ContainsKey(item.ID))
@@ -157,7 +157,10 @@ public class Inventory : MonoBehaviour
                     _inventorySlots[i].AddItem(item, ref remainAmount);
 
                     if (remainAmount == 0)
+                    {
+                        amount = 0;
                         return true;
+                    }
 
                     amount = remainAmount;
                 }
@@ -166,7 +169,10 @@ public class Inventory : MonoBehaviour
 
         // 같은 아이템이 없어서 빈 슬롯에 아이템을 넣는 경우
         if (TryAddItemToEmptySlot(item, amount))
+        {
+            amount = 0;
             return true;
+        }
 
         return false;
     }

@@ -1,3 +1,4 @@
+using UnityEngine;
 
 public class ItemSlot 
 {
@@ -166,10 +167,11 @@ public class ItemSlot
 
         AmmoItem ammoItem = gunItem.Ammo;
 
-        if(!_inventory.TryAddItem(ammoItem, gunItem.CurrentAmmoCount))
+        int ammoCount = gunItem.CurrentAmmoCount;
+        if(!_inventory.TryAddItem(ammoItem, ref ammoCount))
         {
             // ¹ö¸®±â
-            GameManager.Instance.CreateDropItemObject(ammoItem, gunItem.CurrentAmmoCount);
+            GameManager.Instance.CreateDropItemObject(ammoItem, ammoCount);
         }
 
         gunItem.CurrentAmmoCount = 0;

@@ -88,8 +88,7 @@ public class DroppedItem : MonoBehaviour
 
     public void OnInteract()
     {
-        GameManager.Instance.Inventory.TryAddItem(_item, _quantity);
-
-        Destroy(gameObject);
+        if (GameManager.Instance.Inventory.TryAddItem(_item, ref _quantity))
+            Destroy(gameObject);
     }
 }
