@@ -17,6 +17,7 @@ public class CrosshairUI : MonoBehaviour
     private void Awake()
     {
         _rect = GetComponent<RectTransform>();
+        ChangePosition(_originPosition);
     }
 
     private void OnEnable()
@@ -30,7 +31,6 @@ public class CrosshairUI : MonoBehaviour
         SubscribeInputActions();
 
         UIManager.Instance.ShowCursor(false);
-        _crosshairCenter.gameObject.SetActive(false);
     }
 
 
@@ -57,14 +57,13 @@ public class CrosshairUI : MonoBehaviour
     private void OnAimPerformed(InputAction.CallbackContext context)
     {
         ChangePosition(_aimingPosition);
-
-        _crosshairCenter.SetActive(true);
+        //_crosshairCenter.SetActive(true);
     }
 
     private void OnAimCanceled(InputAction.CallbackContext context)
     {
         ChangePosition(_originPosition);
-        _crosshairCenter.SetActive(false);
+        //_crosshairCenter.SetActive(false);
     }
 
     private void ChangePosition(float posOffest)
