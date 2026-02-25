@@ -10,6 +10,7 @@ public class ItemSlotUI : MonoBehaviour,
     [SerializeField] protected TextMeshProUGUI _countText;
     [SerializeField] private ItemInfoUI _infoUI;
     [SerializeField] protected Image _iconImage;
+    [SerializeField] private GameObject _nameUI;
     [SerializeField] private GameObject _durabilityUI;
     [SerializeField] private GameObject _countUI;
     [SerializeField] private Slider _durabilitySlider;
@@ -372,6 +373,7 @@ public class ItemSlotUI : MonoBehaviour,
         {
             _iconImage.sprite = null;
             ChangeImageAlpha(false);
+            _nameUI.SetActive(false);
         }
 
         if (_infoUI != null)
@@ -403,10 +405,15 @@ public class ItemSlotUI : MonoBehaviour,
     {
         if (_itemSlot.CurrentItem == null)
         {
-            _nameText.text = string.Empty;
-            _countText.text = string.Empty;
+            _nameUI.SetActive(false);
+            _countUI.SetActive(false);
+            _nameUI.SetActive(false);
+            //_nameText.text = string.Empty;
+            //_countText.text = string.Empty;
             return;
         }
+
+        _nameUI.SetActive(true);
 
         _nameText.text = _itemSlot.CurrentItem.Name;
         if (_itemSlot.Quantity > 1)
