@@ -145,6 +145,8 @@ public class Inventory : MonoBehaviour
         // 인벤토리에 같은 아이템이 있을 경우
         if (_inventoryDict.ContainsKey(item.ID))
         {
+            int itemInInventoryCount = _inventoryDict[item.ID];
+
             for (int i = 0; i < _slotCnt; ++i)
             {
                 if (_inventorySlots[i].CurrentItem == null)
@@ -152,17 +154,14 @@ public class Inventory : MonoBehaviour
 
                 if (_inventorySlots[i].CurrentItem.ID == item.ID)
                 {
-                    int remainAmount = amount;
+                    _inventorySlots[i].AddItem(item, ref amount);
 
-                    _inventorySlots[i].AddItem(item, ref remainAmount);
-
-                    if (remainAmount == 0)
-                    {
-                        amount = 0;
+                    if (amount == 0)
                         return true;
-                    }
 
-                    amount = remainAmount;
+                    itemInInventoryCount -= 1;
+                    if (itemInInventoryCount == 0)
+                        break;
                 }
             }
         }

@@ -10,6 +10,7 @@ public class DropItemUI : InteractableStateUI
     {
         _droppedItem = GetComponent<DroppedItem>();
         _droppedItem.FinshInitialize += InitText;
+        _droppedItem.UI = this;
     }
 
     private void InitText()

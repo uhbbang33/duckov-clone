@@ -6,6 +6,7 @@ public class DroppedItem : MonoBehaviour
 {
     private Item _item;
     private int _quantity;
+    private DropItemUI _ui;
     [SerializeField] private LayerMask _groundLayer;
     [SerializeField] private LayerMask _interactableLayer;
     [SerializeField] private Vector3 _dropPositionOffset = new Vector3(0f, 0.6f, 0f);
@@ -17,6 +18,11 @@ public class DroppedItem : MonoBehaviour
 
     public Item CurrentItem { get { return _item; } }
     public int Quantity { get { return _quantity; } }
+    public DropItemUI UI
+    {
+        get { return _ui; }
+        set { _ui = value; }
+    }
 
 
     public event Action FinshInitialize;
@@ -90,5 +96,10 @@ public class DroppedItem : MonoBehaviour
     {
         if (GameManager.Instance.Inventory.TryAddItem(_item, ref _quantity))
             Destroy(gameObject);
+        else
+        {
+            // UI 나와있어야 함
+            _ui.ShowCanvas();
+        }
     }
 }
