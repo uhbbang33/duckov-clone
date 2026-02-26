@@ -16,7 +16,6 @@ public class PlayerShooting : MonoBehaviour
     private Inventory _inventory;
     private PlayerEquip _playerEquip;
 
-    private bool _isWaitingForRpsTime;
     private bool _isReloading;
     private bool _isFirePressed;
 
@@ -50,6 +49,11 @@ public class PlayerShooting : MonoBehaviour
         set { _currentGunItem = value; }
     }
 
+    public bool IsReloading
+    {
+        get { return _isReloading; }
+    }
+
     private void Awake()
     {
         _waitforReloadDelay = new WaitForSeconds(_reloadDelay);
@@ -80,8 +84,7 @@ public class PlayerShooting : MonoBehaviour
         if (_currentGunItem == null
             || _currentGunObject == null
             || _playerMove.IsRun
-            || _inventory.InventoryIsOpen
-            || _isWaitingForRpsTime)
+            || _inventory.InventoryIsOpen)
             return;
 
         if (context.performed)
@@ -132,7 +135,8 @@ public class PlayerShooting : MonoBehaviour
 
     private void Reload()
     {
-        if (_currentGunItem.CurrentAmmoCount == _currentGunItem.MagazineCapacity)
+        if (_currentGunItem.CurrentAmmoCount == _currentGunItem.MagazineCapacity
+            || _isReloading)
             return;
 
         // 인벤토리에 탄환이 있는지 확인
@@ -145,13 +149,19 @@ public class PlayerShooting : MonoBehaviour
         _reloadCoroutine = StartCoroutine(ReloadRoutine());
     }
 
+    public void CutOffReload()
+    {
+        if (_reloadCoroutine != null)
+            StopCoroutine(_reloadCoroutine);
 
+        _isReloading = false;
+    }
 
     #region Coroutine
 
     private IEnumerator FireRoutine()
     {
-        while (!_isReloading)
+        while (true)
         {
             if (_currentGunItem.CurrentAmmoCount <= 0)
             {
@@ -171,11 +181,10 @@ public class PlayerShooting : MonoBehaviour
         if (_fireCoroutine != null)
             StopCoroutine(_fireCoroutine);
 
-        // 장전하는동안 걷기이외의 행동을 할 경우 장전 중단
-        _isReloading = true;
-
         // sound
         SoundManager.Instance.PlayReloadSFX();
+
+        _isReloading = true;
 
         Debug.Log("장전 시작!");
         // TODO : 장전 시간 및 UI
@@ -192,26 +201,16 @@ public class PlayerShooting : MonoBehaviour
         // 인벤토리에서 가져올 수 있는 수량 체크 및 아이템 저장
         (int, AmmoItem) reloadable = _inventory.ReloadableAmmoCount(_currentGunItem.BulletId, maxReloadableAmmoCount);
 
-        // 장전 시간이 끝난 후 실제 ammoCount 변화
         _currentGunItem.CurrentAmmoCount += reloadable.Item1;
         _currentGunItem.Ammo = reloadable.Item2;
 
         // ammo count Text
         _playerEquip.RefreshHUDAmmoCountText();
 
-        _isReloading = false;
-
         if (_isFirePressed)
             _fireCoroutine = StartCoroutine(FireRoutine());
 
-        yield return null;
-    }
-
-    private IEnumerator WaitRpsTimeRoutine()
-    {
-        _isWaitingForRpsTime = true;
-        yield return new WaitForSeconds(1.0f / _currentGunItem.Rps);
-        _isWaitingForRpsTime = false;
+        _isReloading = false;
 
         yield return null;
     }

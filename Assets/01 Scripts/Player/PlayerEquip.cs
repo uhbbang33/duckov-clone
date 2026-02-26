@@ -52,7 +52,7 @@ public class PlayerEquip : MonoBehaviour
 
     private void EquipLeftSlotGun(InputAction.CallbackContext context)
     {
-        if (_isLeftSlotActivated)
+        if (_isLeftSlotActivated || _playerShooting.IsReloading)
             return;
 
         _isLeftSlotActivated = true;
@@ -62,7 +62,7 @@ public class PlayerEquip : MonoBehaviour
 
     private void EquipRightSlotGun(InputAction.CallbackContext context)
     {
-        if (_isRightSlotActivated)
+        if (_isRightSlotActivated || _playerShooting.IsReloading)
             return;
 
         _isLeftSlotActivated = false;
