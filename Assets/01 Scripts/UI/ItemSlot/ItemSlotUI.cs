@@ -442,7 +442,7 @@ public class ItemSlotUI : MonoBehaviour,
                 _durabilityUI.SetActive(true);
         }
 
-        if (!_durabilityUI.activeSelf)
+        if (!_durabilityUI.activeSelf && _itemSlot.Quantity > 1)
             _countUI.SetActive(true);
     }
 
