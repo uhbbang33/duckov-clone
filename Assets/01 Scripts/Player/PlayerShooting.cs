@@ -17,14 +17,19 @@ public class PlayerShooting : MonoBehaviour
     private PlayerEquip _playerEquip;
 
     private bool _isWaitingForRpsTime;
+    private bool _isReloading;
+    private bool _isFirePressed;
 
+    private Coroutine _fireCoroutine;
     private Coroutine _reloadCoroutine;
     private Coroutine _waitRpsTimeCoroutine;
     private WaitForSeconds _waitforReloadDelay;
     public GameObject CurrentGunObject
     {
         get { return _currentGunObject; }
-        set { _currentGunObject = value;
+        set
+        {
+            _currentGunObject = value;
 
             if (_currentGunObject != null)
             {
@@ -55,6 +60,7 @@ public class PlayerShooting : MonoBehaviour
         _actions = GetComponent<Player>().Actions;
 
         _actions.Player.Fire.performed += OnFire;
+        _actions.Player.Fire.canceled += OnFire;
         _actions.Player.Reload.performed += OnReload;
 
         _playerMove = GetComponent<PlayerMove>();
@@ -65,6 +71,7 @@ public class PlayerShooting : MonoBehaviour
     private void OnDisable()
     {
         _actions.Player.Fire.performed -= OnFire;
+        _actions.Player.Fire.canceled -= OnFire;
         _actions.Player.Reload.performed -= OnReload;
     }
 
@@ -77,13 +84,36 @@ public class PlayerShooting : MonoBehaviour
             || _isWaitingForRpsTime)
             return;
 
-        if (_currentGunItem.CurrentAmmoCount <= 0)
+        if (context.performed)
         {
-            Reload();
-            return;
-        }
+            _fireCoroutine = StartCoroutine(FireRoutine());
+            Debug.Log("Fire Performed");
 
-        //Debug.Log(_currentGunItem.Name + " shooting!");
+            _isFirePressed = true;
+        }
+        else if (context.canceled)
+        {
+            Debug.Log("Fire Canceled");
+
+            if (_fireCoroutine != null)
+                StopCoroutine(_fireCoroutine);
+
+            _isFirePressed = false;
+        }
+    }
+
+    private void OnReload(InputAction.CallbackContext context)
+    {
+        if (_currentGunItem == null
+            || _currentGunObject == null
+            || _isReloading)
+            return;
+
+        Reload();
+    }
+
+    private void Fire()
+    {
         _currentGunItem.CurrentAmmoCount -= 1;
 
         Vector3 muzzlePosition = _currentGun.MuzzleTransform.position;
@@ -98,17 +128,6 @@ public class PlayerShooting : MonoBehaviour
         SoundManager.Instance.PlayGunSFX(_currentGunItem.ID);
 
         _playerEquip.RefreshHUDAmmoCountText();
-
-        _waitRpsTimeCoroutine = StartCoroutine(WaitRpsTimeRoutine());
-    }
-
-    private void OnReload(InputAction.CallbackContext context)
-    {
-        if (_currentGunItem == null
-            || _currentGunObject == null)
-            return;
-
-        Reload();
     }
 
     private void Reload()
@@ -122,15 +141,39 @@ public class PlayerShooting : MonoBehaviour
 
         if (_reloadCoroutine != null)
             StopCoroutine(_reloadCoroutine);
-        
+
         _reloadCoroutine = StartCoroutine(ReloadRoutine());
+    }
+
+
+
+    #region Coroutine
+
+    private IEnumerator FireRoutine()
+    {
+        while (!_isReloading)
+        {
+            if (_currentGunItem.CurrentAmmoCount <= 0)
+            {
+                Reload();
+                break;
+            }
+            else
+            {
+                Fire();
+                yield return new WaitForSeconds(1.0f / _currentGunItem.Rps);
+            }
+        }
     }
 
     private IEnumerator ReloadRoutine()
     {
+        if (_fireCoroutine != null)
+            StopCoroutine(_fireCoroutine);
+
         // 장전하는동안 걷기이외의 행동을 할 경우 장전 중단
-        
-        
+        _isReloading = true;
+
         // sound
         SoundManager.Instance.PlayReloadSFX();
 
@@ -156,6 +199,11 @@ public class PlayerShooting : MonoBehaviour
         // ammo count Text
         _playerEquip.RefreshHUDAmmoCountText();
 
+        _isReloading = false;
+
+        if (_isFirePressed)
+            _fireCoroutine = StartCoroutine(FireRoutine());
+
         yield return null;
     }
 
@@ -168,6 +216,11 @@ public class PlayerShooting : MonoBehaviour
         yield return null;
     }
 
+    #endregion Coroutine
+
+
+    #region Set Shoot Direction
+
     private Vector3 GetMouseWorldPosition()
     {
         Vector2 mousePos = Mouse.current.position.ReadValue();
@@ -176,7 +229,7 @@ public class PlayerShooting : MonoBehaviour
         Plane groundPlane = new Plane(Vector3.up, _currentGun.MuzzleTransform.position);
         float distance;
 
-        if(groundPlane.Raycast(ray, out distance))
+        if (groundPlane.Raycast(ray, out distance))
         {
             return ray.GetPoint(distance);
         }
@@ -193,4 +246,5 @@ public class PlayerShooting : MonoBehaviour
         return dir.normalized;
     }
 
+    #endregion Set Shoot Direction
 }
