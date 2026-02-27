@@ -182,7 +182,7 @@ public class PlayerShooting : MonoBehaviour
             StopCoroutine(_fireCoroutine);
 
         // sound
-        SoundManager.Instance.PlayReloadSFX();
+        SoundManager.Instance.PlayReloadSFX(_currentGunItem.ID, _currentGunItem.ReloadTime);
 
         _isReloading = true;
 
