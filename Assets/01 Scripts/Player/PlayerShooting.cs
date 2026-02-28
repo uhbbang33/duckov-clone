@@ -173,12 +173,11 @@ public class PlayerShooting : MonoBehaviour
         if (_fireCoroutine != null)
             StopCoroutine(_fireCoroutine);
 
-        // sound
-        SoundManager.Instance.PlayReloadSFX(_currentGunItem.ID, _currentGunItem.ReloadTime);
-
         _isReloading = true;
 
         Debug.Log("장전 시작!");
+        SoundManager.Instance.PlayReloadSFX(true);
+
         // TODO : 장전 시간 및 UI
         float currentReloadTime = 0f;
         while (currentReloadTime < _currentGunItem.ReloadTime)
@@ -186,7 +185,9 @@ public class PlayerShooting : MonoBehaviour
             yield return _waitforReloadDelay;
             currentReloadTime += _reloadDelay;
         }
+
         Debug.Log("장전 끝!");
+        SoundManager.Instance.PlayReloadSFX(false);
 
         int maxReloadableAmmoCount = (int)_currentGunItem.MagazineCapacity - _currentGunItem.CurrentAmmoCount;
 

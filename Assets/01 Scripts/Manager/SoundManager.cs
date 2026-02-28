@@ -11,12 +11,11 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
     [SerializeField] private AudioClip _glockSFX;
     [SerializeField] private AudioClip _mp7SFX;
     [SerializeField] private AudioClip _m700SFX;
-    [SerializeField] private AudioClip _reloadSFX;
+    [SerializeField] private AudioClip _reloadStartSFX;
+    [SerializeField] private AudioClip _reloadEndSFX;
 
     public void PlayGunSFX(uint gunId)
     {
-        _gunSfxSource.pitch = 1f;
-
         if (gunId == GunId.GlockId)
         {
             _gunSfxSource.PlayOneShot(_glockSFX);
@@ -31,10 +30,11 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
         }
     }
 
-    public void PlayReloadSFX(uint gunId, float reloadTime)
+    public void PlayReloadSFX(bool isStart)
     {
-        _gunSfxSource.pitch = _reloadSFX.length / reloadTime;
-        _gunSfxSource.PlayOneShot(_reloadSFX);
+        if (isStart)
+            _gunSfxSource.PlayOneShot(_reloadStartSFX);
+        else
+            _gunSfxSource.PlayOneShot(_reloadEndSFX);
     }
-
 }
