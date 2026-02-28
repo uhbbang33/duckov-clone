@@ -10,7 +10,6 @@ public class PlayerMove : MonoBehaviour
     private Animator _anim;
     private StaminaPoint _sp;
     private Hydration _hydration;
-    private PlayerShooting _playerShooting;
     private Transform _lookBaseTransform;
 
     private Vector2 _moveInput;
@@ -126,7 +125,6 @@ public class PlayerMove : MonoBehaviour
         _anim = GetComponent<Animator>();
         _sp = GetComponent<StaminaPoint>();
         _hydration = GetComponent<Hydration>();
-        _playerShooting = GetComponent<PlayerShooting>();
 
         _moveInput = Vector2.zero;
         _mousePosition = Vector2.zero;
@@ -261,8 +259,6 @@ public class PlayerMove : MonoBehaviour
         _isRun = true;
         _anim.SetBool("IsRun", true);
         OnRun?.Invoke();
-
-        _playerShooting.CutOffReload();
     }
 
     private void OnRunCanceled(InputAction.CallbackContext context)

@@ -149,14 +149,6 @@ public class PlayerShooting : MonoBehaviour
         _reloadCoroutine = StartCoroutine(ReloadRoutine());
     }
 
-    public void CutOffReload()
-    {
-        if (_reloadCoroutine != null)
-            StopCoroutine(_reloadCoroutine);
-
-        _isReloading = false;
-    }
-
     #region Coroutine
 
     private IEnumerator FireRoutine()
