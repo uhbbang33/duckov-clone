@@ -160,6 +160,9 @@ public class PlayerEquip : MonoBehaviour
     // TODO
     public void RefreshHUDAmmoCountText()
     {
+        if (_currentSelectedSlot == null)
+            return;
+
         (_currentSelectedSlot.UI as EquipSlotUI).DefaultHUDSlotUI.RefreshAmmoCountText(_currentSelectedSlot.CurrentItem as GunItem);
     }
 

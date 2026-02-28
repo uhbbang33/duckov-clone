@@ -13,6 +13,7 @@ public class Inventory : MonoBehaviour
     private InputActions _inputActions;
     private PlayerMove _playerMove;
     private PlayerInteract _playerInteract;
+    private PlayerEquip _playerEquip;
 
     private ItemSlot[] _inventorySlots;
     private int _itemCnt;
@@ -23,6 +24,9 @@ public class Inventory : MonoBehaviour
     // key - id, value - slot count
     private Dictionary<uint, int> _inventoryDict;
 
+    // key - id, value - ammo count
+    private Dictionary<uint, int> _ammoDict;
+
     public event Action<float, float> OnWeightChange;
 
     public bool InventoryIsOpen { get { return _inventoryToggle; } }
@@ -32,8 +36,10 @@ public class Inventory : MonoBehaviour
         _uiManager = UIManager.Instance;
         _playerMove = GetComponent<PlayerMove>();
         _playerInteract = GetComponent<PlayerInteract>();
+        _playerEquip = GetComponent<PlayerEquip>();
         _inventoryUI.SetActive(false);
         _inventoryDict = new Dictionary<uint, int>();
+        _ammoDict = new Dictionary<uint, int>();
 
         _slotCnt = _slotObject.Length;
 
@@ -241,7 +247,7 @@ public class Inventory : MonoBehaviour
         return false;
     }
 
-    public void AddToDictionaryByID(uint id)
+    public void AddToInventoryDictByID(uint id)
     {
         if (_inventoryDict.ContainsKey(id))
             _inventoryDict[id] += 1;
@@ -251,14 +257,48 @@ public class Inventory : MonoBehaviour
         ChangeItemCount(true);
     }
 
+    public void AddToAmmoDictByID(uint id, int ammoCount)
+    {
+        if (_ammoDict.ContainsKey(id))
+            _ammoDict[id] += ammoCount;
+        else
+            _ammoDict.Add(id, ammoCount);
+
+        _playerEquip.RefreshHUDAmmoCountText();
+    }
+
     public void RemoveItemSlot(uint id)
     {
+        if (!_inventoryDict.ContainsKey(id))
+            return;
+
         _inventoryDict[id] -= 1;
 
         if (_inventoryDict[id] == 0)
             _inventoryDict.Remove(id);
 
         ChangeItemCount(false);
+    }
+
+    public void ReduceAmmoCount(uint id, int count)
+    {
+        if (!_ammoDict.ContainsKey(id))
+            return;
+
+        _ammoDict[id] -= count;
+
+        if (_ammoDict[id] <= 0)
+            _ammoDict.Remove(id);
+
+        _playerEquip.RefreshHUDAmmoCountText();
+    }
+
+    public int GetAmmoCount(uint id)
+    {
+        if (_ammoDict.ContainsKey(id))
+            return _ammoDict[id];
+        else
+            return 0;
     }
 
     public void ChangeItemCount(bool isAdd)

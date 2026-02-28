@@ -14,7 +14,7 @@ public class DefaultHUDSlotUI : MonoBehaviour
     private UIManager _uiManager;
     private RectTransform _rect;
 
-    private void Start()
+    protected virtual void Start()
     {
         _uiManager = UIManager.Instance;
         _uiManager.ChangeImageAlpha(_iconImage, false);

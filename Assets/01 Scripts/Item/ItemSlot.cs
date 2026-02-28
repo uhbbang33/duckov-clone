@@ -62,15 +62,19 @@ public class ItemSlot
         if (_slotType == SlotType.INVENTORY)
         {
             _inventory.ChangeWeight(false, _currentItem.Weight * amount);
+
+            if (_currentItem.Type == ItemType.Ammo)
+                _inventory.ReduceAmmoCount(_currentItem.ID, amount);
         }
 
         if (_quantity <= 0)
         {
             if (_slotType == SlotType.INVENTORY)
+            {
                 _inventory.RemoveItemSlot(_currentItem.ID);
+            }
             else if (_slotType == SlotType.BOX)
                 GameManager.Instance.CurrentOpenBox.ChangeBoxItemCount(false);
-
 
             _currentItem = null;
             _quantity = 0;
@@ -87,7 +91,7 @@ public class ItemSlot
         if (_currentItem == null)
         {
             if (_slotType == SlotType.INVENTORY)
-                _inventory.AddToDictionaryByID(item.ID);
+                _inventory.AddToInventoryDictByID(item.ID);
 
             if (_slotType == SlotType.BOX)
                 GameManager.Instance.CurrentOpenBox.ChangeBoxItemCount(true);
@@ -112,6 +116,9 @@ public class ItemSlot
         if (_slotType == SlotType.INVENTORY)
         {
             _inventory.ChangeWeight(true, _currentItem.Weight * addAmount);
+
+            if (item.Type == ItemType.Ammo)
+                _inventory.AddToAmmoDictByID(item.ID, addAmount);
         }
 
         _ui.RefreshUI();
