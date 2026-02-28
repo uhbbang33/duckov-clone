@@ -17,6 +17,7 @@ public class PlayerEquip : MonoBehaviour
     private bool _isRightSlotActivated = false;
     private int _leftSlotGunId;
     private int _rightSlotGunId;
+    private uint _currentGunPoolId;
 
     private const string _raiseArm = "RaiseArm";
     private const string _changeWeapon = "ChangeWeapon";
@@ -173,14 +174,17 @@ public class PlayerEquip : MonoBehaviour
     {
         int gunId = _isLeftSlotActivated ? _leftSlotGunId : _rightSlotGunId;
 
+        PoolManager poolManager = PoolManager.Instance;
         if (gunId == GunId.Mp7Id)
-            _gunObject = Instantiate(GameResources.Instance.Mp7Prefab, _rightHandTransform);
+            _currentGunPoolId = PoolId.Mp7;
         else if (gunId == GunId.M700Id)
-            _gunObject = Instantiate(GameResources.Instance.M700Prefab, _rightHandTransform);
+            _currentGunPoolId = PoolId.M700;
         else if (gunId == GunId.GlockId)
-            _gunObject = Instantiate(GameResources.Instance.GlockPrefab, _rightHandTransform);
+            _currentGunPoolId = PoolId.Glock;
         else
             return;
+
+        _gunObject = poolManager.GetObject(_currentGunPoolId, _rightHandTransform, true);
 
         _playerShooting.CurrentGunObject = _gunObject;
         _playerShooting.CurrentGunItem = _currentSelectedSlot.CurrentItem as GunItem;
@@ -188,12 +192,13 @@ public class PlayerEquip : MonoBehaviour
 
     public void DestroyPefab()
     {
-        if (_gunObject != null)
-        {
-            Destroy(_gunObject);
-            _playerShooting.CurrentGunObject = null;
-            _playerShooting.CurrentGunItem = null;
-        }
+        if (_gunObject == null)
+            return;
+
+        PoolManager.Instance.ReturnObject(_currentGunPoolId, _gunObject);
+
+        _playerShooting.CurrentGunObject = null;
+        _playerShooting.CurrentGunItem = null;
     }
 
     #endregion

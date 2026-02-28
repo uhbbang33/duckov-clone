@@ -11792,6 +11792,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1203841014}
   m_CullTransparentMesh: 1
+--- !u!1 &1210167354
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1210167356}
+  - component: {fileID: 1210167355}
+  m_Layer: 0
+  m_Name: PoolManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1210167355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1210167354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ee3d9f55f05c2e4b8f0da6537832590, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PoolManager
+  _pools:
+  - Id: 1
+    PoolSize: 10
+    Prefab: {fileID: 6673845262605201894, guid: bf4a61b978ce5344b808da224093d8a3, type: 3}
+  - Id: 2
+    PoolSize: 2
+    Prefab: {fileID: 6669379501984884854, guid: 7d67cadabf52444439ad536abd565043, type: 3}
+  - Id: 3
+    PoolSize: 2
+    Prefab: {fileID: 9203890126400519520, guid: 93615696260ad3d4798e7a2f878e4e5a, type: 3}
+  - Id: 4
+    PoolSize: 2
+    Prefab: {fileID: 1964813639525027548, guid: 6681ef70b3b09084892f231dfdd35fe9, type: 3}
+--- !u!4 &1210167356
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1210167354}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1222832704
 GameObject:
   m_ObjectHideFlags: 0
@@ -20877,6 +20934,7 @@ SceneRoots:
   - {fileID: 1453332739}
   - {fileID: 1674736275}
   - {fileID: 441053170}
+  - {fileID: 1210167356}
   - {fileID: 647747812}
   - {fileID: 5522063729559741274}
   - {fileID: 2142310470}

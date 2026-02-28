@@ -90,14 +90,11 @@ public class PlayerShooting : MonoBehaviour
         if (context.performed)
         {
             _fireCoroutine = StartCoroutine(FireRoutine());
-            Debug.Log("Fire Performed");
 
             _isFirePressed = true;
         }
         else if (context.canceled)
         {
-            Debug.Log("Fire Canceled");
-
             if (_fireCoroutine != null)
                 StopCoroutine(_fireCoroutine);
 
@@ -119,14 +116,14 @@ public class PlayerShooting : MonoBehaviour
     {
         _currentGunItem.CurrentAmmoCount -= 1;
 
-        Vector3 muzzlePosition = _currentGun.MuzzleTransform.position;
-        Vector3 dir = GetFireDirection();
 
         // bullet
-        GameObject bullet = Instantiate(_bulletPrefab, muzzlePosition, Quaternion.identity);
+        GameObject bullet = PoolManager.Instance.GetObject(PoolId.Bullet, _currentGun.MuzzleTransform, false);
+
+        Vector3 dir = GetFireDirection();
+
         bullet.GetComponent<Bullet>().Fire(dir, _currentGunItem.Range);
-
-
+        
         // Sound
         SoundManager.Instance.PlayGunSFX(_currentGunItem.ID);
 
@@ -175,7 +172,6 @@ public class PlayerShooting : MonoBehaviour
 
         _isReloading = true;
 
-        Debug.Log("장전 시작!");
         SoundManager.Instance.PlayReloadSFX(true);
 
         // TODO : 장전 시간 및 UI
@@ -186,7 +182,6 @@ public class PlayerShooting : MonoBehaviour
             currentReloadTime += _reloadDelay;
         }
 
-        Debug.Log("장전 끝!");
         SoundManager.Instance.PlayReloadSFX(false);
 
         int maxReloadableAmmoCount = (int)_currentGunItem.MagazineCapacity - _currentGunItem.CurrentAmmoCount;

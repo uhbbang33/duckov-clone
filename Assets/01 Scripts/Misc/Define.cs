@@ -55,3 +55,11 @@ public struct BulletId
     public const uint S = 595;
     public const uint Sniping = 622;
 }
+
+public struct PoolId
+{
+    public const uint Bullet = 1;
+    public const uint Mp7 = 2;
+    public const uint M700 = 3;
+    public const uint Glock = 4;
+}

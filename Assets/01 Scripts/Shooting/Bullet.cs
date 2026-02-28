@@ -18,7 +18,7 @@ public class Bullet : MonoBehaviour
         float dist = Vector3.Distance(_startPos, transform.position);
         if(dist > _maxDistance)
         {
-            Destroy(gameObject);
+            ReturnToPool();
         }
     }
 
@@ -31,7 +31,12 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Destroy(gameObject);
+        ReturnToPool();
+    }
+
+    private void ReturnToPool()
+    {
+        PoolManager.Instance.ReturnObject(PoolId.Bullet, gameObject);
     }
 
 }
