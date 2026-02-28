@@ -79,8 +79,10 @@ public class PoolManager : SingletonMonoBehaviour<PoolManager>
             obj.transform.localScale = Vector3.one;
         }
         else
+        {
             obj.transform.position = parentTransform.position;
-
+            obj.transform.rotation = parentTransform.rotation;
+        }
 
         obj.SetActive(true);
 

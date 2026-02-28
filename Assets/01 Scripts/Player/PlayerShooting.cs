@@ -123,7 +123,12 @@ public class PlayerShooting : MonoBehaviour
         Vector3 dir = GetFireDirection();
 
         bullet.GetComponent<Bullet>().Fire(dir, _currentGunItem.Range);
+
+
+        // muzzle effect
+        GameObject muzzleFlash = PoolManager.Instance.GetObject(PoolId.MuzzleFlash, _currentGun.MuzzleTransform, false);
         
+
         // Sound
         SoundManager.Instance.PlayGunSFX(_currentGunItem.ID);
 

@@ -11834,6 +11834,12 @@ MonoBehaviour:
   - Id: 4
     PoolSize: 2
     Prefab: {fileID: 1964813639525027548, guid: 6681ef70b3b09084892f231dfdd35fe9, type: 3}
+  - Id: 5
+    PoolSize: 50
+    Prefab: {fileID: 6369798586217714994, guid: 6b1908417802b6a47bfe90f93f667ef7, type: 3}
+  - Id: 6
+    PoolSize: 50
+    Prefab: {fileID: 4452193835735270760, guid: 20bacbc54cdcc944b9f0691c3282fe09, type: 3}
 --- !u!4 &1210167356
 Transform:
   m_ObjectHideFlags: 0
