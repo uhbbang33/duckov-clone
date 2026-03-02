@@ -106,6 +106,7 @@ public class Inventory : MonoBehaviour
 
         _uiManager.DefaultUHDShowToggle(true);
         _uiManager.ShowCursor(false);
+        _uiManager.PlayerCanvasShowToggle(true);
     }
 
     private void OpenInventory()
@@ -135,6 +136,7 @@ public class Inventory : MonoBehaviour
         OnWeightChange?.Invoke(_carryWeight, _maxWeight);
 
         _uiManager.ChangeInventoryItemCountText(_itemCnt, _slotCnt);
+        _uiManager.PlayerCanvasShowToggle(false);
 
         _playerShooting.IsFirePressed = false;
     }

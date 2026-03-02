@@ -47,6 +47,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     [SerializeField] private GameObject _defaultHUD;
     [SerializeField] private GameObject _interactableBoxUI;
     [SerializeField] private GameObject _crosshair;
+    [SerializeField] private GameObject _playerCanvas;
 
 
     [Space(30)]
@@ -279,6 +280,11 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         {
             _defaultHUDSlotUI[i].RebuildLayout();
         }
+    }
+
+    public void PlayerCanvasShowToggle(bool show)
+    {
+        _playerCanvas.SetActive(show);
     }
 
     public void InteractableBoxUIShowToggle(bool show)
