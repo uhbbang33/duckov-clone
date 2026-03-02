@@ -17,25 +17,7 @@ public class GunData
     public float AdsTime;
     public uint WeightValue;
     public uint MaxStackSize;
-
-    //public GunData(GunData data)
-    //{
-    //    Id = data.Id;
-    //    Rarity = data.Rarity;
-    //    ItemType = data.ItemType;
-    //    Name = data.Name;
-    //    BulletType = data.BulletType;
-    //    Value = data.Value;
-    //    Weight = data.Weight;
-    //    Damage = data.Damage;
-    //    Rps = data.Rps;
-    //    MagazineCapacity = data.MagazineCapacity;
-    //    Range = data.Range;
-    //    ReloadTime = data.ReloadTime;
-    //    AdsTime = data.AdsTime;
-    //    WeightValue = data.WeightValue;
-    //    MaxStackSize = data.MaxStackSize;
-    //}
+    public float SoundRange;
 }
 
 [System.Serializable]

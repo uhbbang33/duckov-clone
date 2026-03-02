@@ -113,7 +113,7 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
     #region Create Item Based on Data
     private GunItem CreateItemBasedOnGunData(GunData data)
     {
-        GunItem item = new(data.Id, data.Rarity, data.Name, data.Value, data.Weight, data.WeightValue, data.BulletType, data.Damage, data.Rps, data.MagazineCapacity, data.Range, data.ReloadTime, data.AdsTime, data.MaxStackSize);
+        GunItem item = new(data.Id, data.Rarity, data.Name, data.Value, data.Weight, data.WeightValue, data.BulletType, data.Damage, data.Rps, data.MagazineCapacity, data.Range, data.ReloadTime, data.AdsTime, data.SoundRange, data.MaxStackSize);
 
         return item;
     }
