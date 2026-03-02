@@ -15,7 +15,7 @@ public class Enemy : MonoBehaviour
             {EnemyState.Chase, new ChaseState(this)},
             {EnemyState.Return, new ReturnState(this)},
             {EnemyState.Attack, new AttackState(this)},
-            {EnemyState.Dead, new DeadState(this)}
+            {EnemyState.Death, new DeathState(this)}
         };
     }
 

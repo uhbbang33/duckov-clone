@@ -1,7 +1,7 @@
 
-public class DeadState : EnemyStateBase
+public class DeathState : EnemyStateBase
 {
-    public DeadState(Enemy enemy) : base(enemy) { }
+    public DeathState(Enemy enemy) : base(enemy) { }
 
     public override void Enter()
     {
