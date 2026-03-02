@@ -136,6 +136,7 @@ public class ItemInfoUI : MonoBehaviour
     public void ShowUI()
     {
         gameObject.SetActive(true);
+        FollowMouse();
     }
 
     public void HideUI()
