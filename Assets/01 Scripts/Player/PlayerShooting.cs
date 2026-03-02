@@ -2,14 +2,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public enum ShootingState
-{
-    Idle,
-    Shooting,
-    Reloading,
-    ChangingGun
-}
-
 public class PlayerShooting : MonoBehaviour
 {
     [SerializeField] private LayerMask _targetLayer;
@@ -25,7 +17,7 @@ public class PlayerShooting : MonoBehaviour
     private PlayerEquip _playerEquip;
     private PoolManager _poolManager;
 
-    private ShootingState _state;
+    private PlayerShootingState _state;
     private bool _isFirePressed;
 
     private Coroutine _fireCoroutine;
@@ -57,7 +49,7 @@ public class PlayerShooting : MonoBehaviour
         set { _currentGunItem = value; }
     }
 
-    public ShootingState State
+    public PlayerShootingState State
     {
         get { return _state; }
         set { _state = value; }
@@ -71,7 +63,7 @@ public class PlayerShooting : MonoBehaviour
 
     private void Awake()
     {
-        _state = ShootingState.Idle;
+        _state = PlayerShootingState.Idle;
         _waitforReloadDelay = new WaitForSeconds(_reloadDelay);
     }
 
@@ -112,7 +104,7 @@ public class PlayerShooting : MonoBehaviour
         {
             _isFirePressed = true;
 
-            if (_state != ShootingState.Idle)
+            if (_state != PlayerShootingState.Idle)
                 return;
 
             _fireCoroutine = StartCoroutine(FireRoutine());
@@ -124,8 +116,8 @@ public class PlayerShooting : MonoBehaviour
             if (_fireCoroutine != null)
                 StopCoroutine(_fireCoroutine);
 
-            if (_state == ShootingState.Shooting)
-                _state = ShootingState.Idle;
+            if (_state == PlayerShootingState.Shooting)
+                _state = PlayerShootingState.Idle;
         }
     }
 
@@ -133,7 +125,7 @@ public class PlayerShooting : MonoBehaviour
     {
         if (_currentGunItem == null
             || _currentGunObject == null
-            || _state != ShootingState.Idle)
+            || _state != PlayerShootingState.Idle)
             return;
 
         Reload();
@@ -164,7 +156,7 @@ public class PlayerShooting : MonoBehaviour
     private void Reload()
     {
         if (_currentGunItem.CurrentAmmoCount == _currentGunItem.MagazineCapacity
-            || _state != ShootingState.Idle)
+            || _state != PlayerShootingState.Idle)
             return;
 
         // 인벤토리에 탄환이 있는지 확인
@@ -187,23 +179,23 @@ public class PlayerShooting : MonoBehaviour
         {
             if (_currentGunItem.CurrentAmmoCount <= 0)
             {
-                _state = ShootingState.Idle;
+                _state = PlayerShootingState.Idle;
                 Reload();
                 break;
             }
             else
             {
-                if (_state != ShootingState.Idle)
+                if (_state != PlayerShootingState.Idle)
                 {
-                    _state = ShootingState.Idle;
+                    _state = PlayerShootingState.Idle;
                     break;
                 }
 
-                _state = ShootingState.Shooting;
+                _state = PlayerShootingState.Shooting;
 
                 Fire();
                 yield return new WaitForSeconds(1.0f / _currentGunItem.Rps);
-                _state = ShootingState.Idle;
+                _state = PlayerShootingState.Idle;
             }
         }
     }
@@ -214,7 +206,7 @@ public class PlayerShooting : MonoBehaviour
             StopCoroutine(_fireCoroutine);
 
 
-        _state = ShootingState.Reloading;
+        _state = PlayerShootingState.Reloading;
 
         SoundManager.Instance.PlayReloadSFX(true);
 
@@ -239,7 +231,7 @@ public class PlayerShooting : MonoBehaviour
         // ammo count Text
         _playerEquip.RefreshHUDAmmoCountText();
 
-        _state = ShootingState.Idle;
+        _state = PlayerShootingState.Idle;
 
         if (_isFirePressed)
             _fireCoroutine = StartCoroutine(FireRoutine());
