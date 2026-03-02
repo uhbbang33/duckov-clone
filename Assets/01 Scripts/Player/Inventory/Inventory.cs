@@ -14,6 +14,7 @@ public class Inventory : MonoBehaviour
     private PlayerMove _playerMove;
     private PlayerInteract _playerInteract;
     private PlayerEquip _playerEquip;
+    private PlayerShooting _playerShooting;
 
     private ItemSlot[] _inventorySlots;
     private int _itemCnt;
@@ -37,6 +38,8 @@ public class Inventory : MonoBehaviour
         _playerMove = GetComponent<PlayerMove>();
         _playerInteract = GetComponent<PlayerInteract>();
         _playerEquip = GetComponent<PlayerEquip>();
+        _playerShooting = GetComponent<PlayerShooting>();
+
         _inventoryUI.SetActive(false);
         _inventoryDict = new Dictionary<uint, int>();
         _ammoDict = new Dictionary<uint, int>();
@@ -133,6 +136,7 @@ public class Inventory : MonoBehaviour
 
         _uiManager.ChangeInventoryItemCountText(_itemCnt, _slotCnt);
 
+        _playerShooting.IsFirePressed = false;
     }
 
 

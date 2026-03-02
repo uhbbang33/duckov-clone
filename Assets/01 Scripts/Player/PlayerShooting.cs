@@ -62,6 +62,12 @@ public class PlayerShooting : MonoBehaviour
         set { _state = value; }
     }
 
+    public bool IsFirePressed
+    {
+        get { return _isFirePressed; }
+        set { _isFirePressed = value; }
+    }
+
     private void Awake()
     {
         _state = ShootingState.Idle;
@@ -81,11 +87,6 @@ public class PlayerShooting : MonoBehaviour
         _playerEquip = GetComponent<PlayerEquip>();
     }
 
-    private void Update()
-    {
-        //Debug.Log(_state.ToString());
-    }
-
     private void OnDisable()
     {
         _actions.Player.Fire.performed -= OnFire;
@@ -99,14 +100,17 @@ public class PlayerShooting : MonoBehaviour
             || _currentGunObject == null
             || _playerMove.IsRun
             || _inventory.InventoryIsOpen)
+        {
+            _isFirePressed = false;
             return;
+        }
 
         if (context.performed)
         {
+            _isFirePressed = true;
+
             if (_state != ShootingState.Idle)
                 return;
-
-            _isFirePressed = true;
 
             _fireCoroutine = StartCoroutine(FireRoutine());
         }
@@ -176,7 +180,7 @@ public class PlayerShooting : MonoBehaviour
 
     private IEnumerator FireRoutine()
     {
-        while (true)
+        while (_isFirePressed)
         {
             if (_currentGunItem.CurrentAmmoCount <= 0)
             {
