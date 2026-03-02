@@ -35,9 +35,11 @@ public class Bullet : MonoBehaviour
             collision.gameObject.CompareTag("Player"))
             return;
 
+        Debug.Log(collision.gameObject.name);
+
         // hit effect
         // TODO - 적과 사물 layer다르게 해서 effect도 다르게
-        GameObject effectObject = PoolManager.Instance.GetObject(PoolId.Explosion, collision.gameObject.transform, false);
+        GameObject effectObject = PoolManager.Instance.GetObject(PoolId.Smoke, collision.gameObject.transform, false);
 
         ContactPoint contactPoint = collision.contacts[0];
 

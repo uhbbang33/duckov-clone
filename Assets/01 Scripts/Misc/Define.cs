@@ -63,5 +63,5 @@ public struct PoolId
     public const uint M700 = 3;
     public const uint Glock = 4;
     public const uint MuzzleFlash = 5;
-    public const uint Explosion = 6;
+    public const uint Smoke = 6;
 }

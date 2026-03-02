@@ -3,6 +3,14 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+public enum MoveState
+{
+    Idle,
+    Move,
+    Run,
+    Roll
+}
+
 public class PlayerMove : MonoBehaviour
 {
     private InputActions _inputActions;

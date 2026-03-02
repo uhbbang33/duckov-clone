@@ -4,6 +4,7 @@ using UnityEngine;
 public class AutoReturnParticle : MonoBehaviour
 {
     [SerializeField] private ParticleSystem _particle;
+    [SerializeField] private uint _poolId;
 
     private void OnEnable()
     {
@@ -21,6 +22,6 @@ public class AutoReturnParticle : MonoBehaviour
 
         yield return new WaitUntil(() => !_particle.IsAlive(true));
 
-        PoolManager.Instance.ReturnObject(PoolId.MuzzleFlash, gameObject);
+        PoolManager.Instance.ReturnObject(_poolId, gameObject);
     }
 }
