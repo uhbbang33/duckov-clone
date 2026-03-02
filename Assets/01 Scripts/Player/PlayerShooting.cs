@@ -23,6 +23,7 @@ public class PlayerShooting : MonoBehaviour
     private PlayerMove _playerMove;
     private Inventory _inventory;
     private PlayerEquip _playerEquip;
+    private PoolManager _poolManager;
 
     private ShootingState _state;
     private bool _isFirePressed;
@@ -85,6 +86,8 @@ public class PlayerShooting : MonoBehaviour
         _playerMove = GetComponent<PlayerMove>();
         _inventory = GetComponent<Inventory>();
         _playerEquip = GetComponent<PlayerEquip>();
+
+        _poolManager = PoolManager.Instance;
     }
 
     private void OnDisable()
@@ -141,7 +144,7 @@ public class PlayerShooting : MonoBehaviour
         _currentGunItem.CurrentAmmoCount -= 1;
 
         // bullet
-        GameObject bullet = PoolManager.Instance.GetObject(PoolId.Bullet, _currentGun.MuzzleTransform, false);
+        GameObject bullet = _poolManager.GetObject(PoolId.Bullet, _currentGun.MuzzleTransform, false);
 
         Vector3 dir = GetFireDirection();
 
@@ -149,7 +152,7 @@ public class PlayerShooting : MonoBehaviour
 
 
         // muzzle effect
-        GameObject muzzleFlash = PoolManager.Instance.GetObject(PoolId.MuzzleFlash, _currentGun.MuzzleTransform, false);
+        GameObject muzzleFlash = _poolManager.GetObject(PoolId.MuzzleFlash, _currentGun.MuzzleTransform, false);
         
 
         // Sound

@@ -7,16 +7,22 @@ public class Bullet : MonoBehaviour
     private Rigidbody _rb;
     private Vector3 _startPos;
     private float _maxDistance;
+    private PoolManager _poolManager;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
     }
 
+    private void Start()
+    {
+        _poolManager = PoolManager.Instance;
+    }
+
     private void Update()
     {
         float dist = Vector3.Distance(_startPos, transform.position);
-        if(dist > _maxDistance)
+        if (dist > _maxDistance)
         {
             ReturnToPool();
         }
@@ -37,7 +43,7 @@ public class Bullet : MonoBehaviour
 
         // hit effect
         // TODO - 적과 사물 layer다르게 해서 effect도 다르게
-        GameObject effectObject = PoolManager.Instance.GetObject(PoolId.Smoke, collision.gameObject.transform, false);
+        GameObject effectObject = _poolManager.GetObject(PoolId.Smoke, collision.gameObject.transform, false);
 
         ContactPoint contactPoint = collision.contacts[0];
 
@@ -49,7 +55,7 @@ public class Bullet : MonoBehaviour
 
     private void ReturnToPool()
     {
-        PoolManager.Instance.ReturnObject(PoolId.Bullet, gameObject);
+        _poolManager.ReturnObject(PoolId.Bullet, gameObject);
     }
 
 }

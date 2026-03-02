@@ -5,10 +5,16 @@ public class AutoReturnParticle : MonoBehaviour
 {
     [SerializeField] private ParticleSystem _particle;
     [SerializeField] private uint _poolId;
+    [SerializeField] private PoolManager _poolMananger;
 
     private void OnEnable()
     {
         StartCoroutine(ReturnPoolRoutine());
+    }
+
+    private void Start()
+    {
+        _poolMananger = PoolManager.Instance;
     }
 
     private void OnDisable()
@@ -22,6 +28,6 @@ public class AutoReturnParticle : MonoBehaviour
 
         yield return new WaitUntil(() => !_particle.IsAlive(true));
 
-        PoolManager.Instance.ReturnObject(_poolId, gameObject);
+        _poolMananger.ReturnObject(_poolId, gameObject);
     }
 }

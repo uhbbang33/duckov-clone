@@ -12,6 +12,7 @@ public class PlayerEquip : MonoBehaviour
     private EquipSlot _rightEquipSlot;
     private EquipSlot _currentSelectedSlot;
     private PlayerShooting _playerShooting;
+    private PoolManager _poolManager;
 
     private bool _isLeftSlotActivated = true;
     private bool _isRightSlotActivated = false;
@@ -50,6 +51,8 @@ public class PlayerEquip : MonoBehaviour
 
         _inputActions.Player.LeftWeapon.performed += EquipLeftSlotGun;
         _inputActions.Player.RightWeapon.performed += EquipRightSlotGun;
+
+        _poolManager = PoolManager.Instance;
     }
 
     private void OnDisable()
@@ -186,7 +189,6 @@ public class PlayerEquip : MonoBehaviour
     {
         int gunId = _isLeftSlotActivated ? _leftSlotGunId : _rightSlotGunId;
 
-        PoolManager poolManager = PoolManager.Instance;
         if (gunId == GunId.Mp7Id)
             _currentGunPoolId = PoolId.Mp7;
         else if (gunId == GunId.M700Id)
@@ -196,7 +198,7 @@ public class PlayerEquip : MonoBehaviour
         else
             return;
 
-        _gunObject = poolManager.GetObject(_currentGunPoolId, _rightHandTransform, true);
+        _gunObject = _poolManager.GetObject(_currentGunPoolId, _rightHandTransform, true);
 
         _playerShooting.CurrentGunObject = _gunObject;
         _playerShooting.CurrentGunItem = _currentSelectedSlot.CurrentItem as GunItem;
@@ -209,7 +211,7 @@ public class PlayerEquip : MonoBehaviour
         if (_gunObject == null)
             return;
 
-        PoolManager.Instance.ReturnObject(_currentGunPoolId, _gunObject);
+        _poolManager.ReturnObject(_currentGunPoolId, _gunObject);
 
         _playerShooting.CurrentGunObject = null;
         _playerShooting.CurrentGunItem = null;
