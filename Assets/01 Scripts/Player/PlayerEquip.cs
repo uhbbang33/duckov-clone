@@ -35,6 +35,13 @@ public class PlayerEquip : MonoBehaviour
         set { _rightEquipSlot = value; }
     }
 
+    private void Awake()
+    {
+        _leftEquipSlot = null;
+        _rightEquipSlot = null;
+        _currentSelectedSlot = null;
+    }
+
     private void Start()
     {
         _anim = GetComponent<Animator>();
@@ -53,7 +60,8 @@ public class PlayerEquip : MonoBehaviour
 
     private void EquipLeftSlotGun(InputAction.CallbackContext context)
     {
-        if (_isLeftSlotActivated || _playerShooting.IsReloading)
+        if (_isLeftSlotActivated
+            || _playerShooting.State != ShootingState.Idle)
             return;
 
         _isLeftSlotActivated = true;
@@ -63,7 +71,8 @@ public class PlayerEquip : MonoBehaviour
 
     private void EquipRightSlotGun(InputAction.CallbackContext context)
     {
-        if (_isRightSlotActivated || _playerShooting.IsReloading)
+        if (_isRightSlotActivated
+             || _playerShooting.State != ShootingState.Idle)
             return;
 
         _isLeftSlotActivated = false;
@@ -76,6 +85,9 @@ public class PlayerEquip : MonoBehaviour
         EquipSlot equipSlot = isLeftSlot ? _leftEquipSlot : _rightEquipSlot;
         bool isActivated = isLeftSlot ? _isLeftSlotActivated : _isRightSlotActivated;
 
+        if (!isActivated)
+            return;
+
         if (equipSlot == null)
             return;
 
@@ -86,14 +98,14 @@ public class PlayerEquip : MonoBehaviour
         else
             _rightSlotGunId = gunId;
 
-        if (!isActivated)
-            return;
 
         ApplyEquipState(equipSlot);
     }
 
     private void ApplyEquipState(EquipSlot equipSlot)
     {
+        _playerShooting.State = ShootingState.ChangingGun;
+
         bool hasItem = equipSlot.CurrentItem != null;
 
         if (_gunObject != null && hasItem)
@@ -188,6 +200,8 @@ public class PlayerEquip : MonoBehaviour
 
         _playerShooting.CurrentGunObject = _gunObject;
         _playerShooting.CurrentGunItem = _currentSelectedSlot.CurrentItem as GunItem;
+
+        _playerShooting.State = ShootingState.Idle;
     }
 
     public void DestroyPefab()
@@ -199,6 +213,8 @@ public class PlayerEquip : MonoBehaviour
 
         _playerShooting.CurrentGunObject = null;
         _playerShooting.CurrentGunItem = null;
+
+        _playerShooting.State = ShootingState.Idle;
     }
 
     #endregion

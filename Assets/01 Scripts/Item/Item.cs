@@ -1,6 +1,8 @@
 
 public class Item
 {
+    //private static int _nextInstanceId = 0;
+
     protected uint _id;
     protected string _rarity;
     protected string _name;
@@ -10,6 +12,7 @@ public class Item
     protected uint _maxStackSize;
     protected string _itemType;
 
+    //public int InstanceId { get; } = ++_nextInstanceId;
     public uint ID { get { return _id; } }
     public string Rarity { get { return _rarity; } }
     public string Name { get { return _name; } }

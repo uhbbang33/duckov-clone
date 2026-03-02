@@ -732,7 +732,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 70052411}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1212,7 +1212,7 @@ GameObject:
   - component: {fileID: 167016260}
   - component: {fileID: 167016262}
   - component: {fileID: 167016261}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1459,7 +1459,7 @@ GameObject:
   m_Component:
   - component: {fileID: 214549876}
   - component: {fileID: 214549877}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: SPBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4557,7 +4557,7 @@ GameObject:
   - component: {fileID: 488652934}
   - component: {fileID: 488652936}
   - component: {fileID: 488652935}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8181,7 +8181,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2968155292669949959, guid: eff8a46bc10e77b4c949ecc723fa5650, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2996588608622453453, guid: eff8a46bc10e77b4c949ecc723fa5650, type: 3}
       propertyPath: m_Pivot.x
@@ -8265,11 +8265,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4475753841255025699, guid: eff8a46bc10e77b4c949ecc723fa5650, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6706682626604341045, guid: eff8a46bc10e77b4c949ecc723fa5650, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7317048876261651493, guid: eff8a46bc10e77b4c949ecc723fa5650, type: 3}
       propertyPath: m_Name
@@ -8277,7 +8277,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7317048876261651493, guid: eff8a46bc10e77b4c949ecc723fa5650, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12164,7 +12164,7 @@ GameObject:
   - component: {fileID: 1272288419}
   - component: {fileID: 1272288418}
   - component: {fileID: 1272288421}
-  m_Layer: 8
+  m_Layer: 5
   m_Name: Player Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18840,7 +18840,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 3000
+  m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!224 &2033890354
 RectTransform:

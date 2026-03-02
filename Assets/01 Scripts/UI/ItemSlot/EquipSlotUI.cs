@@ -13,17 +13,12 @@ public class EquipSlotUI : ItemSlotUI
         get { return _equipDefaultHUDSlotUI;}
     }
 
-    protected override void Awake()
-    {
-        base.Awake();
-
-        _itemSlot = new EquipSlot(_isLeftSlot);
-        _itemSlot.UI = this;
-    }
-
     protected override void Start()
     {
         base.Start();
+
+        _itemSlot = new EquipSlot(_isLeftSlot);
+        _itemSlot.UI = this;
 
         _pistolIcon = _uiManager.PistolIcon;
         SetPistolIcon();
@@ -69,7 +64,7 @@ public class EquipSlotUI : ItemSlotUI
         }
         else
         {
-            int amount = 1;
+            int amount = fromSlot.Quantity;
             _itemSlot.AddItem(fromSlot.CurrentItem, ref amount);
             fromSlot.SubtractItem();
         }

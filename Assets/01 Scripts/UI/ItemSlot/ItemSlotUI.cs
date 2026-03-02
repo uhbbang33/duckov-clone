@@ -67,7 +67,7 @@ public class ItemSlotUI : MonoBehaviour,
         get { return _durabilitySlider.value; }
     }
 
-    protected virtual void Awake()
+    private void Awake()
     {
         _originParent = transform.parent;
         _originAncghoredPos = ((RectTransform)transform).anchoredPosition;

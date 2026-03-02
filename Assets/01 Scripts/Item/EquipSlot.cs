@@ -9,9 +9,9 @@ public class EquipSlot : ItemSlot
         _slotType = SlotType.EQUIP;
         _playerEquip = GameManager.Instance.PlayerObject.GetComponent<PlayerEquip>();
 
-        if (isLeftSlot)
+        if (isLeftSlot && _playerEquip.LeftEquipSlot == null)
             _playerEquip.LeftEquipSlot = this;
-        else
+        else if(_playerEquip.RightEquipSlot == null)
             _playerEquip.RightEquipSlot = this;
     }
 
@@ -20,22 +20,15 @@ public class EquipSlot : ItemSlot
         base.SubtractItem(amount);
 
         EquipSlotUI equipUI = _ui as EquipSlotUI;
-        if (equipUI.IsLeftSlot)
-            _playerEquip.SyncSlotState(true);
-        else
-            _playerEquip.SyncSlotState(false);
+        _playerEquip.SyncSlotState(equipUI.IsLeftSlot);
     }
 
     public override void AddItem(Item item, ref int amount)
     {
-        amount = 1;
         base.AddItem(item, ref amount);
 
         EquipSlotUI equipUI = _ui as EquipSlotUI;
-        if (equipUI.IsLeftSlot)
-            _playerEquip.SyncSlotState(true);
-        else
-            _playerEquip.SyncSlotState(false);
+        _playerEquip.SyncSlotState(equipUI.IsLeftSlot);
     }
 
 

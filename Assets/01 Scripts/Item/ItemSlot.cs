@@ -88,6 +88,12 @@ public class ItemSlot
     {
         if (amount == 0 || item == null) return;
 
+        int addableItemCount = (int)item.MaxStackSize - _quantity;
+        if (addableItemCount <= 0)
+            return;
+
+        int addAmount = 0;
+
         if (_currentItem == null)
         {
             if (_slotType == SlotType.INVENTORY)
@@ -98,9 +104,6 @@ public class ItemSlot
         }
 
         _currentItem = item;
-
-        int addableItemCount = (int)item.MaxStackSize - _quantity;
-        int addAmount = 0;
 
         if(addableItemCount >= amount)
         {
