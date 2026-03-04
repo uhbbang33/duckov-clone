@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    private HealthPoint _hp;
+
     private EnemyStateBase _currentState;
     private Dictionary<EnemyState, EnemyStateBase> _stateDictionary;
 
@@ -23,7 +25,7 @@ public class Enemy : MonoBehaviour
     {
         _currentState.Update();
     }
-   
+
     private void ChangeState(EnemyState newState)
     {
         _currentState?.Exit();

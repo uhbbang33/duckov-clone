@@ -15,6 +15,9 @@ public class JsonParsing : MonoBehaviour
 
         jsonText = LoadDataList("JsonData/EtcItemData");
         DataManager.Instance.EtcItemDatas = JsonUtility.FromJson<EtcItemDataList>(jsonText.text);
+
+        jsonText = LoadDataList("JsonData/EnemyData");
+        DataManager.Instance.EnemyDatas = JsonUtility.FromJson<EnemyDataList>(jsonText.text);
     }
 
     private TextAsset LoadDataList(string dataAddress)

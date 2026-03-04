@@ -7,6 +7,7 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
     private AmmoDataList _ammoDataList;
     private UsableItemDataList _usableItemDataList;
     private EtcItemDataList _etcItemDataList;
+    private EnemyDataList _enemyDataList;
 
     private List<UsableItemData> _foodDatas = new();
     private List<UsableItemData> _medicineDatas = new();
@@ -44,6 +45,12 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
     {
         get { return _etcItemDataList; }
         set { _etcItemDataList = value; }
+    }
+
+    public EnemyDataList EnemyDatas
+    {
+        get { return _enemyDataList; }
+        set { _enemyDataList = value; }
     }
 
     #endregion Property
@@ -109,6 +116,12 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
 
         return null;
     }
+
+    public EnemyData GetEnemyData()
+    {
+        return _enemyDataList.EnemyDatas[0];
+    }
+
 
     #region Create Item Based on Data
     private GunItem CreateItemBasedOnGunData(GunData data)
