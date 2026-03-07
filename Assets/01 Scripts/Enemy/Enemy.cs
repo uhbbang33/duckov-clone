@@ -13,10 +13,13 @@ public class Enemy : MonoBehaviour
     private EnemyStateBase _currentState;
     private Dictionary<EnemyState, EnemyStateBase> _stateDictionary;
 
+    private bool _isDetectPlayer;
 
     public NavMeshAgent Agent { get { return _agent; } }
     public Transform PlayerTransform { get { return _playerTransform; } }
     public Transform EnemyTransform { get { return transform; } }
+    public bool IsDetectPlayer {  get { return _isDetectPlayer; } }
+
 
     private void Awake()
     {
@@ -50,6 +53,8 @@ public class Enemy : MonoBehaviour
 
     public void ChangeState(EnemyState newState)
     {
+        Debug.Log(newState);
+
         _currentState?.Exit();
         _currentState = _stateDictionary[newState];
         _currentState.Enter();
@@ -60,8 +65,19 @@ public class Enemy : MonoBehaviour
         _anim.SetBool(param, value);
     }
 
-    public bool DetectPlayer()
+    public void DetectPlayer(float playerSoundLevel)
     {
-        return false;
+        float distToPlayer = Vector3.Distance(transform.position, _playerTransform.position);
+        float soundLevelByDist = playerSoundLevel / distToPlayer;
+
+        if (soundLevelByDist >= _enemyData.SoundDetectionLevel)
+            _isDetectPlayer = true;
+        else
+            _isDetectPlayer = false;
+    }
+
+    public void LostPlayer()
+    {
+        _isDetectPlayer = false;
     }
 }

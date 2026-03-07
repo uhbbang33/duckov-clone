@@ -31,7 +31,7 @@ public class ChaseState : EnemyStateBase
             return;
         }
 
-        if (!_enemy.DetectPlayer())
+        if (!_enemy.IsDetectPlayer)
         {
             _enemy.ChangeState(EnemyState.Return);
             return;

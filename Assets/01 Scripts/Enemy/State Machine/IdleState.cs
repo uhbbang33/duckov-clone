@@ -15,7 +15,7 @@ public class IdleState : EnemyStateBase
 
     public override void Update()
     {
-        if (_enemy.DetectPlayer())
+        if (_enemy.IsDetectPlayer)
         {
             _enemy.ChangeState(EnemyState.Chase);
         }

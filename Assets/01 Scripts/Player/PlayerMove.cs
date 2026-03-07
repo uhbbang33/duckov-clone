@@ -38,6 +38,8 @@ public class PlayerMove : MonoBehaviour
 
     public event Action OnRun;
     public event Action OnRunCancel;
+    public event Action OnWalk;
+    public event Action OnWalkCancel;
 
     public bool IsRun {  get { return _isRun; } }
     public Transform LookBaseTransform
@@ -191,11 +193,11 @@ public class PlayerMove : MonoBehaviour
 
     public void StopMove()
     {
-        _isRun = false;
-        _anim.SetBool("IsRun", false);
+        StopRun();
         _anim.SetBool("IsWalk", false);
         _moveInput = Vector2.zero;
-        _sp.IsReducing = false;
+
+        OnWalkCancel?.Invoke();
 
         UnsubscribeInputActions();
     }
@@ -238,8 +240,11 @@ public class PlayerMove : MonoBehaviour
         _moveInput = context.ReadValue<Vector2>().normalized;
         _anim.SetBool("IsWalk", true);
 
-        if(_isRun)
+        if (_isRun)
             _sp.ReduceSPPerSecond(_runTickSPCost);
+
+        if (!_isRun)
+            OnWalk?.Invoke();
     }
 
     private void OnMoveCanceled(InputAction.CallbackContext context)
@@ -248,6 +253,8 @@ public class PlayerMove : MonoBehaviour
         _anim.SetBool("IsWalk", false);
 
         _sp.IsReducing = false;
+
+        OnWalkCancel?.Invoke();
     }
 
     private void OnRunPerformed(InputAction.CallbackContext context)
@@ -256,12 +263,14 @@ public class PlayerMove : MonoBehaviour
             return;
 
         if (_rb.linearVelocity != Vector3.zero)
+        {
             _sp.ReduceSPPerSecond(_runTickSPCost);
-        
-        _isRun = true;
-        _anim.SetBool("IsRun", true);
-        _playerShooting.IsFirePressed = false;
-        OnRun?.Invoke();
+
+            _isRun = true;
+            _anim.SetBool("IsRun", true);
+            _playerShooting.IsFirePressed = false;
+            OnRun?.Invoke();
+        }
     }
 
     private void OnRunCanceled(InputAction.CallbackContext context)
@@ -310,10 +319,13 @@ public class PlayerMove : MonoBehaviour
 
     private void StopRun()
     {
-        OnRunCancel?.Invoke();
-        _sp.IsReducing = false;
-        _isRun = false;
-        _anim.SetBool("IsRun", false);
+        if (_isRun)
+        {
+            OnRunCancel?.Invoke();
+            _sp.IsReducing = false;
+            _isRun = false;
+            _anim.SetBool("IsRun", false);
+        }
     }
 
     private void EnableZeroHydration()
