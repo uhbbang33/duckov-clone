@@ -10,8 +10,6 @@ public class IdleState : EnemyStateBase
     public override void Enter()
     {
         _enemy.Agent.enabled = false;
-
-        _enemy.SetAnimation("IsWalk", false);
         _timer = 0;
     }
 

@@ -8,12 +8,15 @@ public class Enemy : MonoBehaviour
     private HealthPoint _hp;
     private EnemyData _enemyData;
     private NavMeshAgent _agent;
+    private Transform _playerTransform;
 
     private EnemyStateBase _currentState;
     private Dictionary<EnemyState, EnemyStateBase> _stateDictionary;
 
 
     public NavMeshAgent Agent { get { return _agent; } }
+    public Transform PlayerTransform { get { return _playerTransform; } }
+    public Transform EnemyTransform { get { return transform; } }
 
     private void Awake()
     {
@@ -25,12 +28,13 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         _enemyData = DataManager.Instance.GetEnemyData();
+        _playerTransform = GameManager.Instance.PlayerObject.transform;
 
         _stateDictionary = new Dictionary<EnemyState, EnemyStateBase>
         {
             {EnemyState.Idle, new IdleState(this)},
-            {EnemyState.Patrol, new PatrolState(this, transform.position, _enemyData.PatrolRange)},
-            {EnemyState.Chase, new ChaseState(this)},
+            {EnemyState.Patrol, new PatrolState(this, transform.position, _enemyData.PatrolRange, _enemyData.WalkSpeed)},
+            {EnemyState.Chase, new ChaseState(this, _enemyData.RunSpeed)},
             {EnemyState.Return, new ReturnState(this)},
             {EnemyState.Attack, new AttackState(this)},
             {EnemyState.Death, new DeathState(this)}

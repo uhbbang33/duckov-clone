@@ -65,3 +65,9 @@ public struct PoolId
     public const uint MuzzleFlash = 5;
     public const uint Smoke = 6;
 }
+
+public struct EnemyAnimParm
+{
+    public const string Walk = "IsWalk";
+    public const string Run = "IsRun";
+}

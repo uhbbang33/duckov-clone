@@ -5,18 +5,21 @@ public class PatrolState : EnemyStateBase
 {
     private Vector3 _spawnPosition;
     private float _patrolRange;
+    private float _walkSpeed;
     private const float _minDistance = 2f;
 
-    public PatrolState(Enemy enemy, Vector3 spawnPosition, float patrolRange) : base(enemy)
+    public PatrolState(Enemy enemy, Vector3 spawnPosition, float patrolRange, float walkSpeed) : base(enemy)
     {
         _spawnPosition = spawnPosition;
         _patrolRange = patrolRange;
+        _walkSpeed = walkSpeed;
     }
 
     public override void Enter()
     {
-        _enemy.SetAnimation("IsWalk", true);
-        Debug.Log("Patrol");
+        _enemy.Agent.speed = _walkSpeed;
+
+        _enemy.SetAnimation(EnemyAnimParm.Walk, true);
 
         // 순찰 반경 내에서 랜덤한 목적지 설정
         SetRandomDestination();
@@ -27,6 +30,7 @@ public class PatrolState : EnemyStateBase
         if (_enemy.DetectPlayer())
         {
             _enemy.ChangeState(EnemyState.Chase);
+            return;
         }
 
         // 목적지에 도착하면 Idle 상태로 전환
@@ -36,6 +40,7 @@ public class PatrolState : EnemyStateBase
 
     public override void Exit()
     {
+        _enemy.SetAnimation(EnemyAnimParm.Walk, false);
     }
 
     private void SetRandomDestination()
