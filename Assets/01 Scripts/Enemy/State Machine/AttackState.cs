@@ -1,20 +1,29 @@
 
+using UnityEngine;
+
 public class AttackState : EnemyStateBase
 {
-    public AttackState(Enemy enemy) : base(enemy) { }
+    private float _gunRange;
+
+    public AttackState(Enemy enemy, float gunRange) : base(enemy)
+    {
+        _gunRange = gunRange;
+    }
 
     public override void Enter()
     {
         _enemy.Agent.enabled = false;
         _enemy.SetAnimation(EnemyAnimParm.Attack, true);
+        // 살짝 기다렸다가 Attack  (Animation Event)
     }
 
     public override void Update()
     {
-        // 플레이어 쳐다보기
+        if (_gunRange < _enemy.GetDistanceToPlayer())
+            _enemy.ChangeState(EnemyState.Return);
 
-        // 플레이어가 사거리보다 멀리 가면 Return State
-
+        Vector3 lookDir = _enemy.GetDirectionToPlayer().normalized;
+        _enemy.transform.rotation = Quaternion.LookRotation(lookDir);
     }
 
     public override void Exit()

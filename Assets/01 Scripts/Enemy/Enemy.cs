@@ -60,7 +60,7 @@ public class Enemy : MonoBehaviour
             {EnemyState.Patrol, new PatrolState(this, spawnPosition, _enemyData.PatrolRange, _enemyData.WalkSpeed)},
             {EnemyState.Chase, new ChaseState(this, _enemyData.RunSpeed, _gunData.Range)},
             {EnemyState.Return, new ReturnState(this, spawnPosition, _enemyData.WalkSpeed)},
-            {EnemyState.Attack, new AttackState(this)},
+            {EnemyState.Attack, new AttackState(this, _gunData.Range)},
             {EnemyState.Death, new DeathState(this)}
         };
 
@@ -88,7 +88,7 @@ public class Enemy : MonoBehaviour
 
     public void DetectPlayerByView()
     {
-        Vector3 dirToPlayer = _playerTransform.position - transform.position;
+        Vector3 dirToPlayer = GetDirectionToPlayer();
         float distToPlayer = dirToPlayer.magnitude;
 
         // °Å¸®
@@ -112,7 +112,7 @@ public class Enemy : MonoBehaviour
 
     public void DetectPlayerBySound(float playerSoundLevel)
     {
-        float distToPlayer = Vector3.Distance(transform.position, _playerTransform.position);
+        float distToPlayer = GetDistanceToPlayer();
         float soundLevelByDist = playerSoundLevel / distToPlayer;
 
         if (soundLevelByDist >= _enemyData.SoundDetectionLevel)
@@ -127,6 +127,16 @@ public class Enemy : MonoBehaviour
     public void LostPlayer()
     {
         _isDetectPlayer = false;
+    }
+
+    public float GetDistanceToPlayer()
+    {
+        return Vector3.Distance(transform.position, _playerTransform.position);
+    }
+
+    public Vector3 GetDirectionToPlayer()
+    {
+        return _playerTransform.position - transform.position;
     }
 
     public void HealMaxHP()
