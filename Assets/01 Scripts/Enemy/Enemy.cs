@@ -1,14 +1,20 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
+    [SerializeField] private LayerMask _obstacleLayer;
+    [SerializeField] private float _detectPlayerDuration;
+
     private Animator _anim;
     private HealthPoint _hp;
     private EnemyData _enemyData;
     private NavMeshAgent _agent;
     private Transform _playerTransform;
+    private Coroutine _detectPlayerCoroutine;
+    private WaitForSeconds _waitForDetectPlayerDuration;
 
     private EnemyStateBase _currentState;
     private Dictionary<EnemyState, EnemyStateBase> _stateDictionary;
@@ -18,7 +24,7 @@ public class Enemy : MonoBehaviour
     public NavMeshAgent Agent { get { return _agent; } }
     public Transform PlayerTransform { get { return _playerTransform; } }
     public Transform EnemyTransform { get { return transform; } }
-    public bool IsDetectPlayer {  get { return _isDetectPlayer; } }
+    public bool IsDetectPlayer { get { return _isDetectPlayer; } }
 
 
     private void Awake()
@@ -26,6 +32,8 @@ public class Enemy : MonoBehaviour
         _anim = GetComponent<Animator>();
         _hp = GetComponent<HealthPoint>();
         _agent = GetComponent<NavMeshAgent>();
+
+        _waitForDetectPlayerDuration = new WaitForSeconds(_detectPlayerDuration);
     }
 
     private void Start()
@@ -65,19 +73,74 @@ public class Enemy : MonoBehaviour
         _anim.SetBool(param, value);
     }
 
-    public void DetectPlayer(float playerSoundLevel)
+    public void DetectPlayerByView()
+    {
+        Vector3 dirToPlayer = _playerTransform.position - transform.position;
+        float distToPlayer = dirToPlayer.magnitude;
+
+        // 거리
+        if (distToPlayer > _enemyData.ViewRange)
+            return;
+
+        // 각도
+        float angle = Vector3.Angle(transform.forward, dirToPlayer);
+        if (angle > _enemyData.ViewAngle / 2f)
+            return;
+
+        // 장애물
+        if (Physics.Raycast(transform.position, dirToPlayer.normalized, distToPlayer, _obstacleLayer))
+            return;
+
+        if (_detectPlayerCoroutine != null)
+            StopCoroutine(_detectPlayerCoroutine);
+
+        _detectPlayerCoroutine = StartCoroutine(DetectPlayerRoutine());
+    }
+
+    public void DetectPlayerBySound(float playerSoundLevel)
     {
         float distToPlayer = Vector3.Distance(transform.position, _playerTransform.position);
         float soundLevelByDist = playerSoundLevel / distToPlayer;
 
         if (soundLevelByDist >= _enemyData.SoundDetectionLevel)
-            _isDetectPlayer = true;
-        else
-            _isDetectPlayer = false;
+        {
+            if (_detectPlayerCoroutine != null)
+                StopCoroutine(_detectPlayerCoroutine);
+
+            StartCoroutine(DetectPlayerRoutine());
+        }
     }
 
     public void LostPlayer()
     {
         _isDetectPlayer = false;
+    }
+
+
+    #region Coroutine
+
+    private IEnumerator DetectPlayerRoutine()
+    {
+        _isDetectPlayer = true;
+
+        yield return _waitForDetectPlayerDuration;
+
+        _isDetectPlayer = false;
+    }
+
+    #endregion
+
+    private void OnDrawGizmos()
+    {
+        // 시야 거리 원
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, 20f);
+
+        // 시야각 좌우 경계선
+        Gizmos.color = Color.red;
+        Vector3 leftBoundary = Quaternion.Euler(0, -120f / 2f, 0) * transform.forward * 20f;
+        Vector3 rightBoundary = Quaternion.Euler(0, 120f / 2f, 0) * transform.forward * 20f;
+        Gizmos.DrawLine(transform.position, transform.position + leftBoundary);
+        Gizmos.DrawLine(transform.position, transform.position + rightBoundary);
     }
 }

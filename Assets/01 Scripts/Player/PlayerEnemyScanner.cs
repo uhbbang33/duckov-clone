@@ -41,6 +41,11 @@ public class PlayerEnemyScanner : MonoBehaviour
         StartScan();
     }
 
+    //private void Update()
+    //{
+    //    Debug.Log(_soundLevel);
+    //}
+
     private void OnDisable()
     {
         _playerMove.OnRun -= OnPlayerRun;
@@ -65,12 +70,12 @@ public class PlayerEnemyScanner : MonoBehaviour
             _current.Add(enemy);
         }
 
-        SendSoundLevelToEnemy();
+        DetectEnemy();
 
         (_previous, _current) = (_current, _previous);
     }
 
-    private void SendSoundLevelToEnemy()
+    private void DetectEnemy()
     {
         foreach (Enemy enemy in _previous)
         {
@@ -82,7 +87,8 @@ public class PlayerEnemyScanner : MonoBehaviour
 
         foreach (Enemy enemy in _current)
         {
-            enemy.DetectPlayer(_soundLevel);
+            enemy.DetectPlayerBySound(_soundLevel);
+            enemy.DetectPlayerByView();
         }
     }
 
