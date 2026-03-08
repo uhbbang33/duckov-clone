@@ -18,6 +18,12 @@ public class HealthPoint : MonoBehaviour
         get { return _currentHP; }
     }
 
+    public float MaxHP
+    {
+        get { return _maxHP; }
+        set { _maxHP = value; }
+    }
+
     protected virtual void Awake()
     {
         //_currentHP = _maxHP;

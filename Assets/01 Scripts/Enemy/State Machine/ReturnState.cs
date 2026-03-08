@@ -32,6 +32,7 @@ public class ReturnState : EnemyStateBase
 
     public override void Exit()
     {
+        _enemy.HP.Heal(_enemy.HP.MaxHP);
         _enemy.SetAnimation(EnemyAnimParm.Walk, false);
     }
 

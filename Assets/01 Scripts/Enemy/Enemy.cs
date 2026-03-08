@@ -25,6 +25,7 @@ public class Enemy : MonoBehaviour
     public Transform PlayerTransform { get { return _playerTransform; } }
     public Transform EnemyTransform { get { return transform; } }
     public bool IsDetectPlayer { get { return _isDetectPlayer; } }
+    public HealthPoint HP {  get { return _hp; } }
 
 
     private void Awake()
@@ -39,6 +40,9 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         _enemyData = DataManager.Instance.GetEnemyData();
+
+        _hp.MaxHP = _enemyData.MaxHP;
+
         _playerTransform = GameManager.Instance.PlayerObject.transform;
         Vector3 spawnPosition = transform.position;
 
