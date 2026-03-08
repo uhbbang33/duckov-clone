@@ -6,6 +6,7 @@ public class AttackState : EnemyStateBase
     public override void Enter()
     {
         _enemy.Agent.enabled = false;
+        _enemy.SetAnimation(EnemyAnimParm.Attack, true);
     }
 
     public override void Update()
@@ -18,6 +19,7 @@ public class AttackState : EnemyStateBase
 
     public override void Exit()
     {
+        _enemy.SetAnimation(EnemyAnimParm.Attack, false);
         _enemy.Agent.enabled = true;
     }
 

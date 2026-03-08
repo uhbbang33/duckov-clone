@@ -32,7 +32,6 @@ public class Enemy : MonoBehaviour
     public Transform EnemyTransform { get { return transform; } }
     public bool IsDetectPlayer { get { return _isDetectPlayer; } }
 
-
     private void Awake()
     {
         _anim = GetComponent<Animator>();
@@ -47,6 +46,7 @@ public class Enemy : MonoBehaviour
         _enemyData = DataManager.Instance.GetEnemyData();
         _gunData = DataManager.Instance.GetGun(_gunType);
         _gunObject = PoolManager.Instance.GetObject(_gunData.Id, _handTransform, true);
+        DeactivateGun();
 
         _hp.MaxHP = _enemyData.MaxHP;
         HealMaxHP();
@@ -143,6 +143,20 @@ public class Enemy : MonoBehaviour
         yield return _waitForDetectPlayerDuration;
 
         _isDetectPlayer = false;
+    }
+
+    #endregion
+
+    #region Animation Event
+
+    private void ActivateGun()
+    {
+        _gunObject.SetActive(true);
+    }
+
+    private void DeactivateGun()
+    {
+        _gunObject.SetActive(false);
     }
 
     #endregion

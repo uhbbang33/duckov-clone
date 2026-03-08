@@ -70,4 +70,5 @@ public struct EnemyAnimParm
 {
     public const string Walk = "IsWalk";
     public const string Run = "IsRun";
+    public const string Attack = "IsAttack";
 }
