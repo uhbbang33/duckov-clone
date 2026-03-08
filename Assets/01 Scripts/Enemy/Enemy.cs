@@ -40,13 +40,14 @@ public class Enemy : MonoBehaviour
     {
         _enemyData = DataManager.Instance.GetEnemyData();
         _playerTransform = GameManager.Instance.PlayerObject.transform;
+        Vector3 spawnPosition = transform.position;
 
         _stateDictionary = new Dictionary<EnemyState, EnemyStateBase>
         {
             {EnemyState.Idle, new IdleState(this)},
-            {EnemyState.Patrol, new PatrolState(this, transform.position, _enemyData.PatrolRange, _enemyData.WalkSpeed)},
+            {EnemyState.Patrol, new PatrolState(this, spawnPosition, _enemyData.PatrolRange, _enemyData.WalkSpeed)},
             {EnemyState.Chase, new ChaseState(this, _enemyData.RunSpeed)},
-            {EnemyState.Return, new ReturnState(this)},
+            {EnemyState.Return, new ReturnState(this, spawnPosition, _enemyData.WalkSpeed)},
             {EnemyState.Attack, new AttackState(this)},
             {EnemyState.Death, new DeathState(this)}
         };
