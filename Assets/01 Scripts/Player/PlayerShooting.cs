@@ -7,12 +7,14 @@ public class PlayerShooting : MonoBehaviour
     [SerializeField] private LayerMask _targetLayer;
     [SerializeField] private GameObject _bulletPrefab;
     [SerializeField] private float _reloadDelay = 0.1f;
+    [SerializeField] private float _soundLevelDuration = 0.1f;
 
     private GameObject _currentGunObject;
     private Gun _currentGun;
     private GunItem _currentGunItem;
     private InputActions _actions;
     private PlayerMove _playerMove;
+    private PlayerEnemyScanner _playerEnemyScanner;
     private Inventory _inventory;
     private PlayerEquip _playerEquip;
     private PoolManager _poolManager;
@@ -23,6 +25,8 @@ public class PlayerShooting : MonoBehaviour
     private Coroutine _fireCoroutine;
     private Coroutine _reloadCoroutine;
     private WaitForSeconds _waitforReloadDelay;
+    private WaitForSeconds _waitforSoundLevelDuration;
+
     public GameObject CurrentGunObject
     {
         get { return _currentGunObject; }
@@ -65,6 +69,7 @@ public class PlayerShooting : MonoBehaviour
     {
         _state = PlayerShootingState.Idle;
         _waitforReloadDelay = new WaitForSeconds(_reloadDelay);
+        _waitforSoundLevelDuration = new WaitForSeconds(_soundLevelDuration);
     }
 
     private void Start()
@@ -78,6 +83,7 @@ public class PlayerShooting : MonoBehaviour
         _playerMove = GetComponent<PlayerMove>();
         _inventory = GetComponent<Inventory>();
         _playerEquip = GetComponent<PlayerEquip>();
+        _playerEnemyScanner = GetComponent<PlayerEnemyScanner>();
 
         _poolManager = PoolManager.Instance;
     }
@@ -149,6 +155,10 @@ public class PlayerShooting : MonoBehaviour
 
         // Sound
         SoundManager.Instance.PlayGunSFX(_currentGunItem.ID);
+
+        
+        StartCoroutine(SoundLevelUpByFireRoutine());
+
 
         _playerEquip.RefreshHUDAmmoCountText();
     }
@@ -237,6 +247,17 @@ public class PlayerShooting : MonoBehaviour
             _fireCoroutine = StartCoroutine(FireRoutine());
 
         yield return null;
+    }
+
+    private IEnumerator SoundLevelUpByFireRoutine()
+    {
+        float soundRange = _currentGunItem.SoundRange;
+
+        _playerEnemyScanner.PlayerSoundLevel += soundRange;
+
+        yield return _waitforSoundLevelDuration;
+
+        _playerEnemyScanner.PlayerSoundLevel -= soundRange;
     }
 
     #endregion Coroutine
