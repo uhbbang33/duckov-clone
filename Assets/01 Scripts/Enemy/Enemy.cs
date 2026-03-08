@@ -31,7 +31,6 @@ public class Enemy : MonoBehaviour
     public Transform PlayerTransform { get { return _playerTransform; } }
     public Transform EnemyTransform { get { return transform; } }
     public bool IsDetectPlayer { get { return _isDetectPlayer; } }
-    public HealthPoint HP {  get { return _hp; } }
 
 
     private void Awake()
@@ -50,6 +49,7 @@ public class Enemy : MonoBehaviour
         _gunObject = PoolManager.Instance.GetObject(_gunData.Id, _handTransform, true);
 
         _hp.MaxHP = _enemyData.MaxHP;
+        HealMaxHP();
 
         _playerTransform = GameManager.Instance.PlayerObject.transform;
         Vector3 spawnPosition = transform.position;
@@ -129,6 +129,10 @@ public class Enemy : MonoBehaviour
         _isDetectPlayer = false;
     }
 
+    public void HealMaxHP()
+    {
+        _hp.Heal(_hp.MaxHP);
+    }
 
     #region Coroutine
 

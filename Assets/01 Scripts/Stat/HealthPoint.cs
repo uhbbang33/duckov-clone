@@ -7,11 +7,6 @@ public class HealthPoint : MonoBehaviour
     [SerializeField] protected float _maxHP;
     [SerializeField] private Slider _HPBarSlider;
 
-
-    [Space(10)]
-    [Header("FOR TEST")]
-    [SerializeField] private float _tempCurrentHP;
-
     protected float _currentHP;
     public float CurrentHP
     {
@@ -26,8 +21,7 @@ public class HealthPoint : MonoBehaviour
 
     protected virtual void Awake()
     {
-        //_currentHP = _maxHP;
-        _currentHP = _tempCurrentHP;
+        _currentHP = _maxHP;
     }
 
     protected virtual void Start()
