@@ -57,6 +57,20 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
 
 
     #region Get 
+
+    public GunData GetGun(GunType type)
+    {
+        int id = 0;
+        if (type == GunType.Glock)
+            id = GunId.GlockId;
+        else if (type == GunType.Mp7)
+            id = GunId.Mp7Id;
+        else if(type == GunType.M700)
+            id = GunId.M700Id;
+
+        return GetGun(id);
+    }
+
     public GunData GetGun(int id)
     {
         foreach (var gun in _gunDataList.GunItemDatas)

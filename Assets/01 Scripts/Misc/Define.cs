@@ -59,9 +59,9 @@ public struct BulletId
 public struct PoolId
 {
     public const uint Bullet = 1;
-    public const uint Mp7 = 2;
-    public const uint M700 = 3;
-    public const uint Glock = 4;
+    public const uint Mp7 = GunId.Mp7Id;
+    public const uint M700 = GunId.M700Id;
+    public const uint Glock = GunId.GlockId;
     public const uint MuzzleFlash = 5;
     public const uint Smoke = 6;
 }

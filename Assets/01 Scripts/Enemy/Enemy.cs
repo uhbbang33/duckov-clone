@@ -5,14 +5,20 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
+    [SerializeField] private GunType _gunType;
     [SerializeField] private LayerMask _obstacleLayer;
     [SerializeField] private float _detectPlayerDuration;
+    [SerializeField] private Transform _handTransform;
 
     private Animator _anim;
     private HealthPoint _hp;
-    private EnemyData _enemyData;
     private NavMeshAgent _agent;
     private Transform _playerTransform;
+
+    private EnemyData _enemyData;
+    private GunData _gunData;
+    private GameObject _gunObject;
+
     private Coroutine _detectPlayerCoroutine;
     private WaitForSeconds _waitForDetectPlayerDuration;
 
@@ -40,6 +46,8 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         _enemyData = DataManager.Instance.GetEnemyData();
+        _gunData = DataManager.Instance.GetGun(_gunType);
+        _gunObject = PoolManager.Instance.GetObject(_gunData.Id, _handTransform, true);
 
         _hp.MaxHP = _enemyData.MaxHP;
 
@@ -50,7 +58,7 @@ public class Enemy : MonoBehaviour
         {
             {EnemyState.Idle, new IdleState(this)},
             {EnemyState.Patrol, new PatrolState(this, spawnPosition, _enemyData.PatrolRange, _enemyData.WalkSpeed)},
-            {EnemyState.Chase, new ChaseState(this, _enemyData.RunSpeed)},
+            {EnemyState.Chase, new ChaseState(this, _enemyData.RunSpeed, _gunData.Range)},
             {EnemyState.Return, new ReturnState(this, spawnPosition, _enemyData.WalkSpeed)},
             {EnemyState.Attack, new AttackState(this)},
             {EnemyState.Death, new DeathState(this)}

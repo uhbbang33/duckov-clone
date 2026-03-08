@@ -18,6 +18,7 @@ public class IdleState : EnemyStateBase
         if (_enemy.IsDetectPlayer)
         {
             _enemy.ChangeState(EnemyState.Chase);
+            return;
         }
 
         _timer += Time.deltaTime;

@@ -10,9 +10,10 @@ public class ChaseState : EnemyStateBase
 
     private const float _updateInterval = 0.1f;
 
-    public ChaseState(Enemy enemy, float runSpeed) : base(enemy)
+    public ChaseState(Enemy enemy, float runSpeed, float gunRange) : base(enemy)
     {
         _runSpeed = runSpeed;
+        _gunRange = gunRange;
     }
 
     public override void Enter()
