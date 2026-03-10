@@ -31,6 +31,7 @@ public class Enemy : MonoBehaviour
 
     private bool _isDetectPlayer;
     private uint _ammoCnt;
+    private Vector3 _lootBoxOffset;
 
     public NavMeshAgent Agent { get { return _agent; } }
     public Transform PlayerTransform { get { return _playerTransform; } }
@@ -66,6 +67,9 @@ public class Enemy : MonoBehaviour
         _ammoCnt = _gunData.MagazineCapacity;
         _gunObject = _poolManager.GetObject(_gunData.Id, _handTransform, true);
         _muzzleTransform = _gunObject.GetComponent<Gun>().MuzzleTransform;
+        
+        //Temp
+        _lootBoxOffset = new Vector3(0, 0.5f, 0f);
 
         DeactivateGun();
 
@@ -90,6 +94,12 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
+        if (_hp.CurrentHP <= 0)
+        {
+            ChangeState(EnemyState.Death);
+            return;
+        }
+
         _currentState.Update();
     }
 
@@ -173,6 +183,22 @@ public class Enemy : MonoBehaviour
     public void PlayReloadSound(bool isStart)
     {
         _soundManager.PlayReloadSFX(isStart, _enemyAudioSource);
+    }
+
+    public void EnemyDeath()
+    {
+        MakeLootBox();
+        Destroy(gameObject);
+    }
+
+    private void MakeLootBox()
+    {
+        GameObject lootBox = Instantiate(GameResources.Instance.LootBoxPrefab, transform.position + _lootBoxOffset, transform.rotation);
+
+        if (lootBox.GetComponent<LootBox>() == null)
+            Debug.LogError("LootBox Has not EnemyGunData Property");
+        
+        lootBox.GetComponent<LootBox>().EnemyGunData = _gunData;
     }
 
     #region Coroutine

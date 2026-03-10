@@ -3,13 +3,13 @@ using UnityEngine;
 
 public abstract class Box : MonoBehaviour
 {
-    private ItemSlot[] _boxSlots;
+    protected ItemSlot[] _boxSlots;
     private BoxSlotLoad[] _boxSlotLoad;
     protected ItemTypeWeight[] _typeWeights;
     private InteractableBoxUI _boxInteractableUI;
 
-    private int _slotCnt;
-    private int _itemCnt;
+    protected int _slotCnt;
+    protected int _itemCnt;
     private int _loadCnt;
 
     private bool[] _loaded;
@@ -84,7 +84,7 @@ public abstract class Box : MonoBehaviour
         }
     }
 
-    private void SetBoxItems()
+    protected virtual void SetBoxItems()
     {
         int itemCnt = Random.Range(5, _slotCnt + 1);
 
@@ -102,7 +102,7 @@ public abstract class Box : MonoBehaviour
         _itemCnt = itemCnt;
     }
 
-    private Item GetRandomItemByType()
+    protected Item GetRandomItemByType()
     {
         string type = SetItemType();
 

@@ -79,6 +79,19 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
         return null;
     }
 
+
+    public AmmoData GetAmmo(string type)
+    {
+        uint id = 0;
+
+        if (type == BulletType.S)
+            id = BulletId.S;
+        else if (type == BulletType.Sniping)
+            id = BulletId.Sniping;
+
+        return GetAmmo((int)id);
+    }
+
     public AmmoData GetAmmo(int id)
     {
         foreach (var ammo in _ammoDataList.AmmoItemDatas)
@@ -138,14 +151,14 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
 
 
     #region Create Item Based on Data
-    private GunItem CreateItemBasedOnGunData(GunData data)
+    public GunItem CreateItemBasedOnGunData(GunData data)
     {
         GunItem item = new(data.Id, data.Rarity, data.Name, data.Value, data.Weight, data.WeightValue, data.BulletType, data.Damage, data.Rps, data.MagazineCapacity, data.Range, data.ReloadTime, data.AdsTime, data.SoundRange, data.MaxStackSize);
 
         return item;
     }
 
-    private AmmoItem CreateItemBasedOnAmmoData(AmmoData data)
+    public AmmoItem CreateItemBasedOnAmmoData(AmmoData data)
     {
         AmmoItem item = new(data.Id, data.Rarity, data.Name, data.Value, data.Weight, data.WeightValue, data.MaxStackSize, data.BulletType);
 

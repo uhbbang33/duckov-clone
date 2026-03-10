@@ -37,4 +37,10 @@ public class GameResources : MonoBehaviour
     public GameObject M700Prefab;
     public GameObject GlockPrefab;
     #endregion
+
+    #region BOXS
+    [Space(10)]
+    [Header("BOXS")]
+    public GameObject LootBoxPrefab;
+    #endregion
 }
