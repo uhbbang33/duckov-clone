@@ -8,6 +8,7 @@ public class PlayerShooting : MonoBehaviour
     [SerializeField] private GameObject _bulletPrefab;
     [SerializeField] private float _reloadDelay = 0.1f;
     [SerializeField] private float _soundLevelDuration = 0.1f;
+    [SerializeField] private AudioSource _playerShootingAudioSource;
 
     private GameObject _currentGunObject;
     private Gun _currentGun;
@@ -154,7 +155,7 @@ public class PlayerShooting : MonoBehaviour
         
 
         // Sound
-        SoundManager.Instance.PlayGunSFX(_currentGunItem.ID);
+        SoundManager.Instance.PlayGunSFX(_currentGunItem.ID, _playerShootingAudioSource);
 
         
         StartCoroutine(SoundLevelUpByFireRoutine());
@@ -218,7 +219,7 @@ public class PlayerShooting : MonoBehaviour
 
         _state = PlayerShootingState.Reloading;
 
-        SoundManager.Instance.PlayReloadSFX(true);
+        SoundManager.Instance.PlayReloadSFX(true, _playerShootingAudioSource);
 
         // TODO : 장전 시간 및 UI
         float currentReloadTime = 0f;
@@ -228,7 +229,7 @@ public class PlayerShooting : MonoBehaviour
             currentReloadTime += _reloadDelay;
         }
 
-        SoundManager.Instance.PlayReloadSFX(false);
+        SoundManager.Instance.PlayReloadSFX(false, _playerShootingAudioSource);
 
         int maxReloadableAmmoCount = (int)_currentGunItem.MagazineCapacity - _currentGunItem.CurrentAmmoCount;
 

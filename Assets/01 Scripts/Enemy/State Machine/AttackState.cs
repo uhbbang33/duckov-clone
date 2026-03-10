@@ -1,35 +1,103 @@
-
 using UnityEngine;
 
 public class AttackState : EnemyStateBase
 {
-    private float _gunRange;
+    private GunData _gunData;
+    private PoolManager _poolManager;
 
-    public AttackState(Enemy enemy, float gunRange) : base(enemy)
+    private bool _isReloading;
+    private float _reloadTimer;
+    private float _attackTimer;
+
+    public AttackState(Enemy enemy, GunData gunData) : base(enemy)
     {
-        _gunRange = gunRange;
+        _gunData = gunData;
+        _poolManager = PoolManager.Instance;
     }
-
+     
     public override void Enter()
     {
         _enemy.Agent.enabled = false;
         _enemy.SetAnimation(EnemyAnimParm.Attack, true);
-        // »ìÂ¦ ±â´Ù·È´Ù°¡ Attack  (Animation Event)
     }
 
     public override void Update()
     {
-        if (_gunRange < _enemy.GetDistanceToPlayer())
+        if (_gunData.Range < _enemy.GetDistanceToPlayer())
+        {
             _enemy.ChangeState(EnemyState.Return);
+            return;
+        }
 
         Vector3 lookDir = _enemy.GetDirectionToPlayer().normalized;
         _enemy.transform.rotation = Quaternion.LookRotation(lookDir);
+
+        if (!_enemy.GunObject.activeSelf)
+            return;
+
+
+        // Reload Gun
+        if (_isReloading)
+        {
+            _reloadTimer += Time.deltaTime;
+            if (_reloadTimer >= _gunData.ReloadTime)
+            {
+                _enemy.AmmoCnt = _gunData.MagazineCapacity;
+                _reloadTimer = 0f;
+                _isReloading = false;
+                _enemy.PlayReloadSound(false);
+                _enemy.SetAnimation(EnemyAnimParm.Reload, false);
+            }
+            return;
+        }
+
+        if (_enemy.AmmoCnt <= 0)
+        {
+            _isReloading = true;
+            _reloadTimer = 0f;
+            _enemy.PlayReloadSound(true);
+            _enemy.SetAnimation(EnemyAnimParm.Reload, true);
+            return;
+        }
+
+
+        // Fire Gun
+        _attackTimer += Time.deltaTime;
+        if(_attackTimer >= (1 /_gunData.Rps))
+        {
+            FireGun();
+            _attackTimer = 0f;
+        }
     }
 
     public override void Exit()
     {
         _enemy.SetAnimation(EnemyAnimParm.Attack, false);
         _enemy.Agent.enabled = true;
+    }
+
+    private void FireGun()
+    {
+        Transform muzzleTransform = _enemy.GunObject.GetComponent<Gun>().MuzzleTransform;
+
+        // Bullet
+        GameObject bullet = _poolManager.GetObject(PoolId.Bullet, muzzleTransform, false);
+
+        Vector3 dir = _enemy.GetDirectionToPlayer();
+
+        bullet.GetComponent<Bullet>().Fire(dir, _gunData.Range);
+
+
+        // muzzle effect
+        GameObject muzzleFlash = _poolManager.GetObject(PoolId.MuzzleFlash, muzzleTransform, false);
+
+
+        // Sound
+        
+        _enemy.PlayFireSound();
+
+
+        _enemy.AmmoCnt -= 1;
     }
 
 }

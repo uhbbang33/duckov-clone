@@ -3738,7 +3738,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cc563f110d05104aadc4a0eb7e3297b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SoundManager
-  _gunSfxSource: {fileID: 1473866032}
   _glockSFX: {fileID: 8300000, guid: 0a078f7065cc7284cadc197b16b24738, type: 3}
   _mp7SFX: {fileID: 8300000, guid: 0a078f7065cc7284cadc197b16b24738, type: 3}
   _m700SFX: {fileID: 8300000, guid: 1207931c8bd4f354dacb94066bd14042, type: 3}
@@ -15668,13 +15667,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1640645795}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.044, y: -0.045, z: -0.054}
+  m_LocalRotation: {x: -0.17842509, y: 0.0030304028, z: -0.43310517, w: 0.8835017}
+  m_LocalPosition: {x: -0.084, y: -0.044, z: -0.077}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4053926642729461076}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -18.219, y: 9.692, z: -53.787}
 --- !u!1 &1656861970 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5013057112956887040, guid: 14151a8b9ecacd94991223f640febe93, type: 3}
@@ -22120,6 +22119,7 @@ GameObject:
   - component: {fileID: 8091690751922394750}
   - component: {fileID: 8091690751922394753}
   - component: {fileID: 8091690751922394751}
+  - component: {fileID: 8091690751922394755}
   - component: {fileID: 8091690751922394754}
   - component: {fileID: 8091690751922394752}
   m_Layer: 9
@@ -23982,6 +23982,7 @@ MonoBehaviour:
   _bulletPrefab: {fileID: 6673845262605201894, guid: bf4a61b978ce5344b808da224093d8a3, type: 3}
   _reloadDelay: 0.1
   _soundLevelDuration: 0.1
+  _playerShootingAudioSource: {fileID: 0}
 --- !u!114 &6032076664905499566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -25200,6 +25201,7 @@ MonoBehaviour:
     m_Bits: 704
   _detectPlayerDuration: 3
   _handTransform: {fileID: 1640645796}
+  _enemyAudioSource: {fileID: 8091690751922394755}
 --- !u!136 &8091690751922394753
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -25237,6 +25239,103 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HealthPoint
   _maxHP: 0
   _HPBarSlider: {fileID: 1862649260}
+--- !u!82 &8091690751922394755
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2955869911198704174}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &8103867919149804691
 GameObject:
   m_ObjectHideFlags: 0

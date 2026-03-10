@@ -9,11 +9,13 @@ public class Enemy : MonoBehaviour
     [SerializeField] private LayerMask _obstacleLayer;
     [SerializeField] private float _detectPlayerDuration;
     [SerializeField] private Transform _handTransform;
-
+    [SerializeField] private AudioSource _enemyAudioSource;
+    
     private Animator _anim;
     private HealthPoint _hp;
     private NavMeshAgent _agent;
     private Transform _playerTransform;
+    private SoundManager _soundManager;
 
     private EnemyData _enemyData;
     private GunData _gunData;
@@ -26,11 +28,19 @@ public class Enemy : MonoBehaviour
     private Dictionary<EnemyState, EnemyStateBase> _stateDictionary;
 
     private bool _isDetectPlayer;
+    private uint _ammoCnt;
 
     public NavMeshAgent Agent { get { return _agent; } }
     public Transform PlayerTransform { get { return _playerTransform; } }
     public Transform EnemyTransform { get { return transform; } }
     public bool IsDetectPlayer { get { return _isDetectPlayer; } }
+    public GameObject GunObject { get { return _gunObject; } }
+    public uint AmmoCnt
+    {
+        get { return _ammoCnt; }
+        set { _ammoCnt = value; }
+    }
+
 
     private void Awake()
     {
@@ -43,8 +53,10 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
+        _soundManager = SoundManager.Instance;
         _enemyData = DataManager.Instance.GetEnemyData();
         _gunData = DataManager.Instance.GetGun(_gunType);
+        _ammoCnt = _gunData.MagazineCapacity;
         _gunObject = PoolManager.Instance.GetObject(_gunData.Id, _handTransform, true);
         DeactivateGun();
 
@@ -60,7 +72,7 @@ public class Enemy : MonoBehaviour
             {EnemyState.Patrol, new PatrolState(this, spawnPosition, _enemyData.PatrolRange, _enemyData.WalkSpeed)},
             {EnemyState.Chase, new ChaseState(this, _enemyData.RunSpeed, _gunData.Range)},
             {EnemyState.Return, new ReturnState(this, spawnPosition, _enemyData.WalkSpeed)},
-            {EnemyState.Attack, new AttackState(this, _gunData.Range)},
+            {EnemyState.Attack, new AttackState(this, _gunData)},
             {EnemyState.Death, new DeathState(this)}
         };
 
@@ -120,7 +132,7 @@ public class Enemy : MonoBehaviour
             if (_detectPlayerCoroutine != null)
                 StopCoroutine(_detectPlayerCoroutine);
 
-            StartCoroutine(DetectPlayerRoutine());
+            _detectPlayerCoroutine = StartCoroutine(DetectPlayerRoutine());
         }
     }
 
@@ -142,6 +154,16 @@ public class Enemy : MonoBehaviour
     public void HealMaxHP()
     {
         _hp.Heal(_hp.MaxHP);
+    }
+
+    public void PlayFireSound()
+    {
+        _soundManager.PlayGunSFX(_gunData.Id, _enemyAudioSource);
+    }
+
+    public void PlayReloadSound(bool isStart)
+    {
+        _soundManager.PlayReloadSFX(isStart, _enemyAudioSource);
     }
 
     #region Coroutine
