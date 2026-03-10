@@ -23,6 +23,9 @@ public class AttackState : EnemyStateBase
 
     public override void Update()
     {
+        if (_enemy.HP.CurrentHP <= 0)
+            _enemy.ChangeState(EnemyState.Death);
+
         float distToPlayer = _enemy.GetDistanceToPlayer();
         if (_gunData.Range < distToPlayer)
         {

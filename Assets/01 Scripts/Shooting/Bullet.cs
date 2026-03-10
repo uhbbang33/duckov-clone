@@ -44,7 +44,6 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-
         GameObject obj = collision.gameObject;
 
         if (obj.CompareTag("Bullet"))
@@ -57,14 +56,11 @@ public class Bullet : MonoBehaviour
             hitEffectObject = _poolManager.GetObject(PoolId.Smoke, obj.transform, false);
 
             obj.GetComponent<HealthPoint>().TakeDamage(_damage);
-            Debug.Log(obj.GetComponent<HealthPoint>().CurrentHP);
         }
         else
         {
             hitEffectObject = _poolManager.GetObject(PoolId.Smoke, obj.transform, false);
         }
-
-        Debug.Log(obj.name);
 
         ContactPoint contactPoint = collision.contacts[0];
 

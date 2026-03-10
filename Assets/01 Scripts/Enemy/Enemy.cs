@@ -43,6 +43,7 @@ public class Enemy : MonoBehaviour
         get { return _ammoCnt; }
         set { _ammoCnt = value; }
     }
+    public HealthPoint HP { get { return _hp; } }
 
 
     private void Awake()

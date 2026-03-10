@@ -5,7 +5,7 @@ public class AutoReturnParticle : MonoBehaviour
 {
     [SerializeField] private ParticleSystem _particle;
     [SerializeField] private uint _poolId;
-    [SerializeField] private PoolManager _poolMananger;
+    private PoolManager _poolMananger;
 
     private void OnEnable()
     {
