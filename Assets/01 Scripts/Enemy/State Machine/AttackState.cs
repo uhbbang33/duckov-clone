@@ -8,6 +8,8 @@ public class AttackState : EnemyStateBase
     private bool _isReloading;
     private float _reloadTimer;
     private float _attackTimer;
+
+    private const float _turnSpeed = 3f;
     private const float _attackRangeOffset = 5f;
 
     public AttackState(Enemy enemy, GunData gunData) : base(enemy)
@@ -116,9 +118,15 @@ public class AttackState : EnemyStateBase
 
     private void LookPlayer()
     {
-        Vector3 lookDir = _enemy.GetDirectionToPlayer().normalized;
+        float dist = _enemy.GetDistanceMuzzleToPlayer();
+        if (dist < 1f)
+            return;
+
+        Vector3 lookDir = _enemy.GetDirectionToPlayer();
         lookDir.y = 0f;
-        _enemy.transform.rotation = Quaternion.LookRotation(lookDir);
+
+        Quaternion targetRotation = Quaternion.LookRotation(lookDir);
+        _enemy.transform.rotation = Quaternion.Lerp(_enemy.transform.rotation, targetRotation, _turnSpeed * Time.deltaTime);
     }
 
 }

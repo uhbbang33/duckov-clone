@@ -70,6 +70,7 @@ public class Enemy : MonoBehaviour
 
         _enemyData = _dataManager.GetEnemyData();
         _gunData = _dataManager.GetRandomGunData();
+       // _gunData = _dataManager.GetGun(GunType.M700);
         _ammoCnt = _gunData.MagazineCapacity;
         _gunObject = _poolManager.GetObject(_gunData.Id, _handTransform, true);
         _muzzleTransform = _gunObject.GetComponent<Gun>().MuzzleTransform;
@@ -111,7 +112,7 @@ public class Enemy : MonoBehaviour
 
     public void ChangeState(EnemyState newState)
     {
-        Debug.Log(newState);
+        //Debug.Log(newState);
 
         _currentState?.Exit();
         _currentState = _stateDictionary[newState];
@@ -126,7 +127,7 @@ public class Enemy : MonoBehaviour
     public void DetectPlayerByView()
     {
         Vector3 dirToPlayer = GetDirectionToPlayer();
-        float distToPlayer = dirToPlayer.magnitude;
+        float distToPlayer = GetDistanceToPlayer();
 
         // °Å¸®
         if (distToPlayer > _enemyData.ViewRange)
@@ -151,6 +152,7 @@ public class Enemy : MonoBehaviour
     {
         float distToPlayer = GetDistanceToPlayer();
         float soundLevelByDist = playerSoundLevel / distToPlayer;
+        Debug.Log("Sound Level By Dist : " + soundLevelByDist);
 
         if (soundLevelByDist >= _enemyData.SoundDetectionLevel)
         {
@@ -169,6 +171,11 @@ public class Enemy : MonoBehaviour
     public float GetDistanceToPlayer()
     {
         return Vector3.Distance(transform.position, _playerTransform.position);
+    }
+
+    public float GetDistanceMuzzleToPlayer()
+    {
+        return Vector3.Distance(_muzzleTransform.position, _playerTransform.position);
     }
 
     public Vector3 GetDirectionToPlayer()
