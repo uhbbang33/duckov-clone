@@ -52,8 +52,7 @@ public class Bullet : MonoBehaviour
         GameObject hitEffectObject;
         if (obj.CompareTag("Player") || obj.CompareTag("Enemy"))
         {
-            // TODO smoke -> blood
-            hitEffectObject = _poolManager.GetObject(PoolId.Smoke, obj.transform, false);
+            hitEffectObject = _poolManager.GetObject(PoolId.BloodSmoke, obj.transform, false);
 
             obj.GetComponent<HealthPoint>().TakeDamage(_damage);
         }

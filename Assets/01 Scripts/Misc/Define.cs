@@ -64,6 +64,7 @@ public struct PoolId
     public const uint Glock = GunId.GlockId;
     public const uint MuzzleFlash = 5;
     public const uint Smoke = 6;
+    public const uint BloodSmoke = 7;
 }
 
 public struct EnemyAnimParm
