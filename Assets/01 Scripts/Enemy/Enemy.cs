@@ -5,7 +5,6 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private GunType _gunType;
     [SerializeField] private LayerMask _obstacleLayer;
     [SerializeField] private float _detectPlayerDuration;
     [SerializeField] private Transform _handTransform;
@@ -15,6 +14,8 @@ public class Enemy : MonoBehaviour
     private HealthPoint _hp;
     private NavMeshAgent _agent;
     private Transform _playerTransform;
+    private DataManager _dataManager;
+    private PoolManager _poolManager;
     private SoundManager _soundManager;
 
     private EnemyData _enemyData;
@@ -53,11 +54,15 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
+        _dataManager = DataManager.Instance;
+        _poolManager = PoolManager.Instance;
         _soundManager = SoundManager.Instance;
-        _enemyData = DataManager.Instance.GetEnemyData();
-        _gunData = DataManager.Instance.GetGun(_gunType);
+
+        _enemyData = _dataManager.GetEnemyData();
+        _gunData = _dataManager.GetRandomGunData();
         _ammoCnt = _gunData.MagazineCapacity;
-        _gunObject = PoolManager.Instance.GetObject(_gunData.Id, _handTransform, true);
+        _gunObject = _poolManager.GetObject(_gunData.Id, _handTransform, true);
+
         DeactivateGun();
 
         _hp.MaxHP = _enemyData.MaxHP;

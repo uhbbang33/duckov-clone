@@ -179,7 +179,7 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
     //TODO : 중복 코드, 다른 방법 고민해보기
     #region Get Random Data
 
-    private GunData GetRandomGunData()
+    public GunData GetRandomGunData()
     {
         float totalWeightValue = 0;
         foreach (var w in _gunDataList.GunItemDatas)
