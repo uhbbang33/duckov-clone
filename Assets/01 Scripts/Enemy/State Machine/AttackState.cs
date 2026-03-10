@@ -8,62 +8,44 @@ public class AttackState : EnemyStateBase
     private bool _isReloading;
     private float _reloadTimer;
     private float _attackTimer;
+    private const float _attackRangeOffset = 5f;
 
     public AttackState(Enemy enemy, GunData gunData) : base(enemy)
     {
         _gunData = gunData;
         _poolManager = PoolManager.Instance;
     }
-     
+
     public override void Enter()
     {
-        _enemy.Agent.enabled = false;
         _enemy.SetAnimation(EnemyAnimParm.Attack, true);
     }
 
     public override void Update()
     {
-        if (_gunData.Range < _enemy.GetDistanceToPlayer())
+        float distToPlayer = _enemy.GetDistanceToPlayer();
+        if (_gunData.Range < distToPlayer)
         {
             _enemy.ChangeState(EnemyState.Return);
             return;
         }
 
-        Vector3 lookDir = _enemy.GetDirectionToPlayer().normalized;
-        _enemy.transform.rotation = Quaternion.LookRotation(lookDir);
+        LookPlayer();
 
         if (!_enemy.GunObject.activeSelf)
-            return;
-
-
-        // Reload Gun
-        if (_isReloading)
         {
-            _reloadTimer += Time.deltaTime;
-            if (_reloadTimer >= _gunData.ReloadTime)
-            {
-                _enemy.AmmoCnt = _gunData.MagazineCapacity;
-                _reloadTimer = 0f;
-                _isReloading = false;
-                _enemy.PlayReloadSound(false);
-                _enemy.SetAnimation(EnemyAnimParm.Reload, false);
-            }
+            _enemy.Agent.isStopped = true;
             return;
         }
 
-        if (_enemy.AmmoCnt <= 0)
-        {
-            _isReloading = true;
-            _reloadTimer = 0f;
-            _enemy.PlayReloadSound(true);
-            _enemy.SetAnimation(EnemyAnimParm.Reload, true);
-            return;
-        }
+        WalkToPlayer(distToPlayer);
 
+        if (ReloadGun())
+            return;
 
         // Fire Gun
         _attackTimer += Time.deltaTime;
-        if(_attackTimer >= (1 /_gunData.Rps))
+        if (_attackTimer >= (1 / _gunData.Rps))
         {
             FireGun();
             _attackTimer = 0f;
@@ -72,8 +54,10 @@ public class AttackState : EnemyStateBase
 
     public override void Exit()
     {
+        _enemy.SetAnimation(EnemyAnimParm.Reload, false);
         _enemy.SetAnimation(EnemyAnimParm.Attack, false);
-        _enemy.Agent.enabled = true;
+        _enemy.SetAnimation(EnemyAnimParm.Walk, false);
+        _enemy.Agent.isStopped = false;
     }
 
     private void FireGun()
@@ -93,11 +77,60 @@ public class AttackState : EnemyStateBase
 
 
         // Sound
-        
         _enemy.PlayFireSound();
 
 
         _enemy.AmmoCnt -= 1;
+    }
+
+    private bool ReloadGun()
+    {
+        if (_isReloading)
+        {
+            _reloadTimer += Time.deltaTime;
+            if (_reloadTimer >= _gunData.ReloadTime)
+            {
+                _enemy.AmmoCnt = _gunData.MagazineCapacity;
+                _reloadTimer = 0f;
+                _isReloading = false;
+                _enemy.PlayReloadSound(false);
+                _enemy.SetAnimation(EnemyAnimParm.Reload, false);
+            }
+            return true;
+        }
+
+        if (_enemy.AmmoCnt <= 0)
+        {
+            _isReloading = true;
+            _reloadTimer = 0f;
+            _enemy.PlayReloadSound(true);
+            _enemy.SetAnimation(EnemyAnimParm.Reload, true);
+            return true;
+        }
+
+        return false;
+    }
+
+    private void WalkToPlayer(float distToPlayer)
+    {
+        if (distToPlayer > _gunData.Range - _attackRangeOffset)
+        {
+            _enemy.SetAnimation(EnemyAnimParm.Walk, true);
+            _enemy.Agent.isStopped = false;
+            _enemy.Agent.SetDestination(_enemy.PlayerTransform.position);
+        }
+        else
+        {
+            _enemy.SetAnimation(EnemyAnimParm.Walk, false);
+            _enemy.Agent.isStopped = true;
+        }
+    }
+
+    private void LookPlayer()
+    {
+        Vector3 lookDir = _enemy.GetDirectionToPlayer().normalized;
+        lookDir.y = 0f;
+        _enemy.transform.rotation = Quaternion.LookRotation(lookDir);
     }
 
 }
