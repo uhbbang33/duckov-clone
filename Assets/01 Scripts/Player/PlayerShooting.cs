@@ -143,11 +143,13 @@ public class PlayerShooting : MonoBehaviour
         _currentGunItem.CurrentAmmoCount -= 1;
 
         // bullet
-        GameObject bullet = _poolManager.GetObject(PoolId.Bullet, _currentGun.MuzzleTransform, false);
+        GameObject bulletObject = _poolManager.GetObject(PoolId.Bullet, _currentGun.MuzzleTransform, false);
 
         Vector3 dir = GetFireDirection();
 
-        bullet.GetComponent<Bullet>().Fire(dir, _currentGunItem.Range);
+        Bullet bullet = bulletObject.GetComponent<Bullet>();
+        bullet.BulletDamage = _currentGunItem.Damage;
+        bullet.Fire(dir, _currentGunItem.Range);
 
 
         // muzzle effect

@@ -14,6 +14,7 @@ public class Enemy : MonoBehaviour
     private HealthPoint _hp;
     private NavMeshAgent _agent;
     private Transform _playerTransform;
+    private Transform _muzzleTransform;
     private DataManager _dataManager;
     private PoolManager _poolManager;
     private SoundManager _soundManager;
@@ -34,6 +35,7 @@ public class Enemy : MonoBehaviour
     public NavMeshAgent Agent { get { return _agent; } }
     public Transform PlayerTransform { get { return _playerTransform; } }
     public Transform EnemyTransform { get { return transform; } }
+    public Transform MuzzleTransform { get { return _muzzleTransform; } }
     public bool IsDetectPlayer { get { return _isDetectPlayer; } }
     public GameObject GunObject { get { return _gunObject; } }
     public uint AmmoCnt
@@ -62,6 +64,7 @@ public class Enemy : MonoBehaviour
         _gunData = _dataManager.GetRandomGunData();
         _ammoCnt = _gunData.MagazineCapacity;
         _gunObject = _poolManager.GetObject(_gunData.Id, _handTransform, true);
+        _muzzleTransform = _gunObject.GetComponent<Gun>().MuzzleTransform;
 
         DeactivateGun();
 
@@ -153,7 +156,7 @@ public class Enemy : MonoBehaviour
 
     public Vector3 GetDirectionToPlayer()
     {
-        return _playerTransform.position - transform.position;
+        return (_playerTransform.position - _muzzleTransform.position).normalized;
     }
 
     public void HealMaxHP()

@@ -62,18 +62,20 @@ public class AttackState : EnemyStateBase
 
     private void FireGun()
     {
-        Transform muzzleTransform = _enemy.GunObject.GetComponent<Gun>().MuzzleTransform;
-
         // Bullet
-        GameObject bullet = _poolManager.GetObject(PoolId.Bullet, muzzleTransform, false);
-
         Vector3 dir = _enemy.GetDirectionToPlayer();
+        dir.y = 0f;
 
-        bullet.GetComponent<Bullet>().Fire(dir, _gunData.Range);
+        GameObject bulletObject = _poolManager.GetObject(PoolId.Bullet, _enemy.MuzzleTransform, false);
+
+
+        Bullet bullet = bulletObject.GetComponent<Bullet>();
+        bullet.BulletDamage = _gunData.Damage;
+        bullet.Fire(dir, _gunData.Range);
 
 
         // muzzle effect
-        GameObject muzzleFlash = _poolManager.GetObject(PoolId.MuzzleFlash, muzzleTransform, false);
+        GameObject muzzleFlash = _poolManager.GetObject(PoolId.MuzzleFlash, _enemy.MuzzleTransform, false);
 
 
         // Sound

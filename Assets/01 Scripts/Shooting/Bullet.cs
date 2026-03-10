@@ -8,6 +8,13 @@ public class Bullet : MonoBehaviour
     private Vector3 _startPos;
     private float _maxDistance;
     private PoolManager _poolManager;
+    private float _damage;
+
+    public float BulletDamage
+    {
+        get { return _damage; }
+        set { _damage = value; }
+    }
 
     private void Awake()
     {
@@ -37,18 +44,32 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Bullet") ||
-            collision.gameObject.CompareTag("Player"))
+
+        GameObject obj = collision.gameObject;
+
+        if (obj.CompareTag("Bullet"))
             return;
 
-        // hit effect
-        // TODO - 적과 사물 layer다르게 해서 effect도 다르게
-        GameObject effectObject = _poolManager.GetObject(PoolId.Smoke, collision.gameObject.transform, false);
+        GameObject hitEffectObject;
+        if (obj.CompareTag("Player") || obj.CompareTag("Enemy"))
+        {
+            // TODO smoke -> blood
+            hitEffectObject = _poolManager.GetObject(PoolId.Smoke, obj.transform, false);
+
+            obj.GetComponent<HealthPoint>().TakeDamage(_damage);
+            Debug.Log(obj.GetComponent<HealthPoint>().CurrentHP);
+        }
+        else
+        {
+            hitEffectObject = _poolManager.GetObject(PoolId.Smoke, obj.transform, false);
+        }
+
+        Debug.Log(obj.name);
 
         ContactPoint contactPoint = collision.contacts[0];
 
-        effectObject.transform.position = contactPoint.point;
-        effectObject.transform.rotation = Quaternion.LookRotation(contactPoint.normal);
+        hitEffectObject.transform.position = contactPoint.point;
+        hitEffectObject.transform.rotation = Quaternion.LookRotation(contactPoint.normal);
 
         ReturnToPool();
     }
