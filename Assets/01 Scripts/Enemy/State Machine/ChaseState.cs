@@ -18,6 +18,7 @@ public class ChaseState : EnemyStateBase
 
     public override void Enter()
     {
+        _timer = 0f;
         _enemy.Agent.speed = _runSpeed;
         _enemy.SetAnimation(EnemyAnimParm.Run, true);
         _playerTransform = _enemy.PlayerTransform;

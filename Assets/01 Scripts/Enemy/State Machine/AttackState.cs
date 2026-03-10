@@ -18,7 +18,10 @@ public class AttackState : EnemyStateBase
 
     public override void Enter()
     {
+        _reloadTimer = 0f;
+        _attackTimer = 0f;
         _enemy.SetAnimation(EnemyAnimParm.Attack, true);
+        _enemy.Agent.isStopped = true;
     }
 
     public override void Update()
@@ -36,19 +39,14 @@ public class AttackState : EnemyStateBase
         LookPlayer();
 
         if (!_enemy.GunObject.activeSelf)
-        {
-            _enemy.Agent.isStopped = true;
             return;
-        }
-
-        WalkToPlayer(distToPlayer);
 
         if (ReloadGun())
             return;
 
         // Fire Gun
         _attackTimer += Time.deltaTime;
-        if (_attackTimer >= (1 / _gunData.Rps))
+        if (_attackTimer >= (_enemy.DividendRTS / _gunData.Rps))
         {
             FireGun();
             _attackTimer = 0f;
@@ -114,21 +112,6 @@ public class AttackState : EnemyStateBase
         }
 
         return false;
-    }
-
-    private void WalkToPlayer(float distToPlayer)
-    {
-        if (distToPlayer > _gunData.Range - _attackRangeOffset)
-        {
-            _enemy.SetAnimation(EnemyAnimParm.Walk, true);
-            _enemy.Agent.isStopped = false;
-            _enemy.Agent.SetDestination(_enemy.PlayerTransform.position);
-        }
-        else
-        {
-            _enemy.SetAnimation(EnemyAnimParm.Walk, false);
-            _enemy.Agent.isStopped = true;
-        }
     }
 
     private void LookPlayer()

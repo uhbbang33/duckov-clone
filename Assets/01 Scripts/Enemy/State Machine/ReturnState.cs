@@ -27,12 +27,15 @@ public class ReturnState : EnemyStateBase
         }
 
         if (_enemy.Agent.remainingDistance <= _enemy.Agent.stoppingDistance)
+        {
+            _enemy.HealMaxHP();
             _enemy.ChangeState(EnemyState.Idle);
+            return;
+        }
     }
 
     public override void Exit()
     {
-        _enemy.HealMaxHP();
         _enemy.SetAnimation(EnemyAnimParm.Walk, false);
     }
 

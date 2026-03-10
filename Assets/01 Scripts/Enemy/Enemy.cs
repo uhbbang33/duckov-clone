@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float _detectPlayerDuration;
     [SerializeField] private Transform _handTransform;
     [SerializeField] private AudioSource _enemyAudioSource;
+    [SerializeField] private float _dividendRTS = 1f;
     
     private Animator _anim;
     private HealthPoint _hp;
@@ -45,6 +46,11 @@ public class Enemy : MonoBehaviour
         set { _ammoCnt = value; }
     }
     public HealthPoint HP { get { return _hp; } }
+    public float DividendRTS
+    {
+        get { return _dividendRTS; }
+        set { _dividendRTS = value; }
+    }
 
 
     private void Awake()
