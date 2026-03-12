@@ -52,7 +52,8 @@ public class GunItem : Item
         _adsTime = adsTime;
         _soundRange = soundRange;
 
-        _bulletId = DataManager.Instance.GetBulletId(bulletType);
-        _ammoName = DataManager.Instance.GetAmmo((int)_bulletId).Name;
+        DataManager dataManager = DataManager.Instance;
+        _bulletId = dataManager.GetBulletId(bulletType);
+        _ammoName = dataManager.GetAmmo((int)_bulletId).Name;
     }
 }

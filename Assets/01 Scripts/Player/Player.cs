@@ -10,6 +10,14 @@ public class Player : MonoBehaviour
     private Hunger _hunger;
     private Hydration _hydration;
 
+    private PlayerBaseData _playerBaseData;
+    private PlayerMoveData _playerMoveData;
+    private PlayerSoundData _playerSoundData;
+
+    public PlayerBaseData BaseData {  get { return _playerBaseData; } }
+    public PlayerMoveData MoveData {  get { return _playerMoveData; } }
+    public PlayerSoundData SoundData { get { return _playerSoundData; } }
+
     private void Awake()
     {
         _inputActions = new InputActions();
@@ -19,6 +27,15 @@ public class Player : MonoBehaviour
         _sp = GetComponent<StaminaPoint>();
         _hunger = GetComponent<Hunger>();
         _hydration = GetComponent<Hydration>();
+    }
+
+    private void Start()
+    {
+        DataManager dataManager = DataManager.Instance;
+
+        _playerBaseData = dataManager.PlayerBaseList.PlayerBaseDatas[0];
+        _playerMoveData = dataManager.PlayerMoveList.PlayerMoveDatas[0];
+        _playerSoundData = dataManager.PlayerSoundList.PlayerSoundDatas[0];
     }
 
     private void OnDestroy()

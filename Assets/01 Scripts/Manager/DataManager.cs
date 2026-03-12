@@ -8,6 +8,9 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
     private UsableItemDataList _usableItemDataList;
     private EtcItemDataList _etcItemDataList;
     private EnemyDataList _enemyDataList;
+    private PlayerBaseDataList _playerBaseDataList;
+    private PlayerMoveDataList _playerMoveDataList;
+    private PlayerSoundDataList _playerSoundDataList;
 
     private List<UsableItemData> _foodDatas = new();
     private List<UsableItemData> _medicineDatas = new();
@@ -51,6 +54,24 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
     {
         get { return _enemyDataList; }
         set { _enemyDataList = value; }
+    }
+
+    public PlayerBaseDataList PlayerBaseList
+    {
+        get { return _playerBaseDataList; }
+        set { _playerBaseDataList = value; }
+    }
+
+    public PlayerMoveDataList PlayerMoveList
+    {
+        get { return _playerMoveDataList; }
+        set { _playerMoveDataList = value; }
+    }
+
+    public PlayerSoundDataList PlayerSoundList
+    {
+        get { return _playerSoundDataList; }
+        set { _playerSoundDataList = value; }
     }
 
     #endregion Property

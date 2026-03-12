@@ -9083,9 +9083,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb493fdc5c3eb274baa36aa16f74aaaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ExcelToJson
-  _excelFileName: dt_player_sounds
-  _jsonFileName: PlayerSoundData
-  _dataName: PlayerSoundData
+  _excelFileName: dt_player_move_stats
+  _jsonFileName: PlayerMoveData
+  _dataName: PlayerMoveDatas
 --- !u!4 &931226760
 Transform:
   m_ObjectHideFlags: 0
