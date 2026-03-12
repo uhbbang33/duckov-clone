@@ -5,9 +5,10 @@ public class EnemyData
     public float WalkSpeed;
     public float RunSpeed;
     public float PatrolRange;
+    public float SightDistance;
+    public float SightAngle;
     public float SoundDetectionLevel;
-    public float ViewRange;
-    public float ViewAngle;
+    public float FireIntervalMultiplier;
 }
 
 [System.Serializable]

@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerMove : MonoBehaviour
 {
+    private Player _player;
     private InputActions _inputActions;
     private Rigidbody _rb;
     private Animator _anim;
@@ -23,13 +24,8 @@ public class PlayerMove : MonoBehaviour
     private float _speedDebuffRate;
     private bool _isZeroHydration;
 
-    [SerializeField] private float _rollTickSPCost;
-    [SerializeField] private float _runTickSPCost;
-    [SerializeField] private float _walkSpeed;
-    [SerializeField] private float _runSpeed;
-    [SerializeField] private float _rollSpeed;
-    [SerializeField] private float _rollTime;
-    [SerializeField] private float _rollMaxCoolTime;
+    private PlayerMoveData _playerMoveData;
+
     [SerializeField] private float _mouseTurnSpeed;
     [SerializeField] private float _runTurnSpeed;
     [SerializeField] private Transform _originLookBaseTransform;
@@ -65,6 +61,8 @@ public class PlayerMove : MonoBehaviour
 
     private void Start()
     {
+        _player.OnPlayerDataInitialized += MoveDataSetup;
+
         _inputActions = GetComponent<Player>().Actions;
         SubscribeInputActions();
 
@@ -92,12 +90,12 @@ public class PlayerMove : MonoBehaviour
         if (_isRoll)
         {
             dir = _rollDirection;
-            speed = _rollSpeed;
+            speed = _playerMoveData.RollMoveSpeed;
         }
         else
         {
             dir = SetDirection(_moveInput);
-            speed = _isRun ? _runSpeed : _walkSpeed;
+            speed = _isRun ? _playerMoveData.RunSpeed : _playerMoveData.WalkSpeed;
         }
 
         speed *= ((100f - _speedDebuffRate) / 100f);
@@ -124,6 +122,7 @@ public class PlayerMove : MonoBehaviour
 
     private void Initialize()
     {
+        _player = GetComponent<Player>();
         _rb = GetComponent<Rigidbody>();
         _anim = GetComponent<Animator>();
         _sp = GetComponent<StaminaPoint>();
@@ -137,7 +136,12 @@ public class PlayerMove : MonoBehaviour
         _isRun = false;
         _isRoll = false;
 
-        _waitForRoll = new WaitForSeconds(_rollTime);
+    }
+
+    private void MoveDataSetup()
+    {
+        _playerMoveData = _player.MoveData;
+        _waitForRoll = new WaitForSeconds(_playerMoveData.RollDuration);
     }
 
     private void LookAtMouse(Vector2 mousePos)
@@ -241,7 +245,7 @@ public class PlayerMove : MonoBehaviour
         _anim.SetBool("IsWalk", true);
 
         if (_isRun)
-            _sp.ReduceSPPerSecond(_runTickSPCost);
+            _sp.ReduceSPPerSecond(_playerMoveData.RunSPCost);
 
         if (!_isRun)
             OnWalk?.Invoke();
@@ -259,12 +263,12 @@ public class PlayerMove : MonoBehaviour
 
     private void OnRunPerformed(InputAction.CallbackContext context)
     {
-        if (_sp.CurrentSP < _runTickSPCost)
+        if (_sp.CurrentSP < _playerMoveData.RunSPCost)
             return;
 
         if (_rb.linearVelocity != Vector3.zero)
         {
-            _sp.ReduceSPPerSecond(_runTickSPCost);
+            _sp.ReduceSPPerSecond(_playerMoveData.RunSPCost);
 
             _isRun = true;
             _anim.SetBool("IsRun", true);
@@ -283,10 +287,10 @@ public class PlayerMove : MonoBehaviour
         if (_isRoll || _rollCoolTime > 0f)
             return;
 
-        if (_sp.CurrentSP < _rollTickSPCost) 
+        if (_sp.CurrentSP < _playerMoveData.RollSPCost) 
             return;
 
-        _sp.ReduceSPImmediately(_rollTickSPCost);
+        _sp.ReduceSPImmediately(_playerMoveData.RollSPCost);
 
         _isRoll = true;
 
@@ -357,7 +361,7 @@ public class PlayerMove : MonoBehaviour
     {
         yield return _waitForRoll;
 
-        _rollCoolTime = _rollMaxCoolTime;
+        _rollCoolTime = _playerMoveData.RollCooldown;
 
         _isRoll = false;
     }

@@ -88,12 +88,12 @@ public class Enemy : MonoBehaviour
 
         _stateDictionary = new Dictionary<EnemyState, EnemyStateBase>
         {
-            {EnemyState.Idle, new IdleState(this)},
-            {EnemyState.Patrol, new PatrolState(this, spawnPosition, _enemyData.PatrolRange, _enemyData.WalkSpeed)},
-            {EnemyState.Chase, new ChaseState(this, _enemyData.RunSpeed, _gunData.Range)},
-            {EnemyState.Return, new ReturnState(this, spawnPosition, _enemyData.WalkSpeed)},
-            {EnemyState.Attack, new AttackState(this, _gunData)},
-            {EnemyState.Death, new DeathState(this)}
+            {EnemyState.Idle, new IdleState(this, _enemyData)},
+            {EnemyState.Patrol, new PatrolState(this, _enemyData, spawnPosition, _enemyData.PatrolRange, _enemyData.WalkSpeed)},
+            {EnemyState.Chase, new ChaseState(this, _enemyData, _enemyData.RunSpeed, _gunData.Range)},
+            {EnemyState.Return, new ReturnState(this, _enemyData, spawnPosition, _enemyData.WalkSpeed)},
+            {EnemyState.Attack, new AttackState(this, _enemyData, _gunData)},
+            {EnemyState.Death, new DeathState(this, _enemyData)}
         };
 
         ChangeState(EnemyState.Idle);
@@ -124,18 +124,18 @@ public class Enemy : MonoBehaviour
         _anim.SetBool(param, value);
     }
 
-    public void DetectPlayerByView()
+    public void DetectPlayerBySight()
     {
         Vector3 dirToPlayer = GetDirectionToPlayer();
         float distToPlayer = GetDistanceToPlayer();
 
         // 거리
-        if (distToPlayer > _enemyData.ViewRange)
+        if (distToPlayer > _enemyData.SightDistance)
             return;
 
         // 각도
         float angle = Vector3.Angle(transform.forward, dirToPlayer);
-        if (angle > _enemyData.ViewAngle / 2f)
+        if (angle > _enemyData.SightAngle / 2f)
             return;
 
         // 장애물
@@ -152,7 +152,7 @@ public class Enemy : MonoBehaviour
     {
         float distToPlayer = GetDistanceToPlayer();
         float soundLevelByDist = playerSoundLevel / distToPlayer;
-        Debug.Log("Sound Level By Dist : " + soundLevelByDist);
+        //Debug.Log("Sound Level By Dist : " + soundLevelByDist);
 
         if (soundLevelByDist >= _enemyData.SoundDetectionLevel)
         {

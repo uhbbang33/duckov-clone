@@ -5,7 +5,7 @@ public class IdleState : EnemyStateBase
     private float _timer;
     private const float _idleTime = 3f;
 
-    public IdleState(Enemy enemy) : base(enemy) { }
+    public IdleState(Enemy enemy, EnemyData enemyData) : base(enemy, enemyData) { }
 
     public override void Enter()
     {

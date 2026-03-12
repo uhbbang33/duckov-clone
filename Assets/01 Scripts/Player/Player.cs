@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -5,7 +6,7 @@ public class Player : MonoBehaviour
     private InputActions _inputActions;
     public InputActions Actions { get { return _inputActions; } }
 
-    private HealthPoint _hp;
+    private PlayerHealthPoint _hp;
     private StaminaPoint _sp;
     private Hunger _hunger;
     private Hydration _hydration;
@@ -18,12 +19,14 @@ public class Player : MonoBehaviour
     public PlayerMoveData MoveData {  get { return _playerMoveData; } }
     public PlayerSoundData SoundData { get { return _playerSoundData; } }
 
+    public event Action OnPlayerDataInitialized;
+
     private void Awake()
     {
         _inputActions = new InputActions();
         _inputActions.Player.Enable();
 
-        _hp = GetComponent<HealthPoint>();
+        _hp = GetComponent<PlayerHealthPoint>();
         _sp = GetComponent<StaminaPoint>();
         _hunger = GetComponent<Hunger>();
         _hydration = GetComponent<Hydration>();
@@ -36,6 +39,8 @@ public class Player : MonoBehaviour
         _playerBaseData = dataManager.PlayerBaseList.PlayerBaseDatas[0];
         _playerMoveData = dataManager.PlayerMoveList.PlayerMoveDatas[0];
         _playerSoundData = dataManager.PlayerSoundList.PlayerSoundDatas[0];
+
+        OnPlayerDataInitialized?.Invoke();
     }
 
     private void OnDestroy()

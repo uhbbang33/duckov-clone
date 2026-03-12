@@ -9083,9 +9083,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb493fdc5c3eb274baa36aa16f74aaaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ExcelToJson
-  _excelFileName: dt_player_move_stats
-  _jsonFileName: PlayerMoveData
-  _dataName: PlayerMoveDatas
+  _excelFileName: dt_enemy_base_stats
+  _jsonFileName: EnemyData
+  _dataName: EnemyDatas
 --- !u!4 &931226760
 Transform:
   m_ObjectHideFlags: 0
@@ -23768,13 +23768,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ea0b58667a880a4f86272eb6cdbfa07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMove
-  _rollTickSPCost: 10
-  _runTickSPCost: 0.1
-  _walkSpeed: 4
-  _runSpeed: 7.8
-  _rollSpeed: 10
-  _rollTime: 0.5
-  _rollMaxCoolTime: 1
   _mouseTurnSpeed: 10
   _runTurnSpeed: 3
   _originLookBaseTransform: {fileID: 1473866031}

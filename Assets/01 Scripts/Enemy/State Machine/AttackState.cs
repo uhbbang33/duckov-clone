@@ -12,7 +12,7 @@ public class AttackState : EnemyStateBase
     private const float _turnSpeed = 3f;
     private const float _attackRangeOffset = 5f;
 
-    public AttackState(Enemy enemy, GunData gunData) : base(enemy)
+    public AttackState(Enemy enemy, EnemyData enemyData, GunData gunData) : base(enemy, enemyData)
     {
         _gunData = gunData;
         _poolManager = PoolManager.Instance;
@@ -48,7 +48,7 @@ public class AttackState : EnemyStateBase
 
         // Fire Gun
         _attackTimer += Time.deltaTime;
-        if (_attackTimer >= (_enemy.DividendRTS / _gunData.Rps))
+        if (_attackTimer >= (1 / _gunData.Rps) * _enemyData.FireIntervalMultiplier)
         {
             FireGun();
             _attackTimer = 0f;
