@@ -17,6 +17,7 @@ public class PatrolState : EnemyStateBase
 
     public override void Enter()
     {
+        _enemy.Agent.isStopped = false;
         _enemy.Agent.speed = _walkSpeed;
 
         _enemy.SetAnimation(EnemyAnimParm.Walk, true);
@@ -34,8 +35,11 @@ public class PatrolState : EnemyStateBase
         }
 
         // 목적지에 도착하면 Idle 상태로 전환
-        if(_enemy.Agent.remainingDistance <= _enemy.Agent.stoppingDistance)
+        if (_enemy.Agent.remainingDistance <= _enemy.Agent.stoppingDistance)
+        {
             _enemy.ChangeState(EnemyState.Idle);
+            return;
+        }
     }
 
     public override void Exit()
@@ -56,6 +60,8 @@ public class PatrolState : EnemyStateBase
         for (int i = 0; i < tryNum; ++i)
         {
             Vector3 randomPoint = _spawnPosition + Random.insideUnitSphere * _patrolRange;
+            if (Vector3.Distance(randomPoint, _enemy.transform.position) < 3f)
+                continue;
 
             if (NavMesh.SamplePosition(randomPoint, out NavMeshHit hit, 1f, NavMesh.AllAreas))
             {

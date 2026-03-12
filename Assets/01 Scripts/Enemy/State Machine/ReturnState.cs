@@ -13,6 +13,7 @@ public class ReturnState : EnemyStateBase
 
     public override void Enter()
     {
+        _enemy.Agent.isStopped = false;
         _enemy.Agent.speed = _walkSpeed;
         _enemy.SetAnimation(EnemyAnimParm.Walk, true);
         _enemy.Agent.SetDestination(_spawnPosition);

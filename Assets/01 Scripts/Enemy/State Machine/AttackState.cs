@@ -20,10 +20,10 @@ public class AttackState : EnemyStateBase
 
     public override void Enter()
     {
+        _enemy.Agent.isStopped = true;
         _reloadTimer = 0f;
         _attackTimer = 0f;
         _enemy.SetAnimation(EnemyAnimParm.Attack, true);
-        _enemy.Agent.isStopped = true;
     }
 
     public override void Update()

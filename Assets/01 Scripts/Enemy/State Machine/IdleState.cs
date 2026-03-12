@@ -9,7 +9,7 @@ public class IdleState : EnemyStateBase
 
     public override void Enter()
     {
-        _enemy.Agent.enabled = false;
+        _enemy.Agent.isStopped = true;
         _timer = 0;
     }
 
@@ -25,12 +25,13 @@ public class IdleState : EnemyStateBase
         if (_timer > _idleTime)
         {
             _enemy.ChangeState(EnemyState.Patrol);
+            return;
         }
     }
 
     public override void Exit()
     {
-        _enemy.Agent.enabled = true;
+        _enemy.Agent.isStopped = false;
     }
 
 }
