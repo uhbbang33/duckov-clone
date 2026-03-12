@@ -14,7 +14,7 @@ public class PlayerBaseData
 
 public class PlayerBaseDataList
 {
-    public PlayerBaseData[] PlayerBaseDatas;
+    public PlayerBaseData[] PlayerBaseStatsDatas;
 }
 
 
@@ -36,7 +36,7 @@ public class PlayerMoveData
 
 public class PlayerMoveDataList
 {
-    public PlayerMoveData[] PlayerMoveDatas;
+    public PlayerMoveData[] PlayerMoveStatsDatas;
 }
 
 

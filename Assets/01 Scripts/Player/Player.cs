@@ -36,8 +36,8 @@ public class Player : MonoBehaviour
     {
         DataManager dataManager = DataManager.Instance;
 
-        _playerBaseData = dataManager.PlayerBaseList.PlayerBaseDatas[0];
-        _playerMoveData = dataManager.PlayerMoveList.PlayerMoveDatas[0];
+        _playerBaseData = dataManager.PlayerBaseList.PlayerBaseStatsDatas[0];
+        _playerMoveData = dataManager.PlayerMoveList.PlayerMoveStatsDatas[0];
         _playerSoundData = dataManager.PlayerSoundList.PlayerSoundDatas[0];
 
         OnPlayerDataInitialized?.Invoke();

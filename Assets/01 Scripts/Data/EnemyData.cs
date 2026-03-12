@@ -14,5 +14,5 @@ public class EnemyData
 [System.Serializable]
 public class EnemyDataList
 {
-    public EnemyData[] EnemyDatas;
+    public EnemyData[] EnemyBaseStatsDatas;
 }

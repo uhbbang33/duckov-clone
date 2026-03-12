@@ -167,7 +167,7 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
 
     public EnemyData GetEnemyData()
     {
-        return _enemyDataList.EnemyDatas[0];
+        return _enemyDataList.EnemyBaseStatsDatas[0];
     }
 
 

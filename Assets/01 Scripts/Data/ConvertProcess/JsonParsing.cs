@@ -19,13 +19,13 @@ public class JsonParsing : MonoBehaviour
         jsonText = LoadDataList("JsonData/EtcItemData");
         dataManager.EtcItemDatas = JsonUtility.FromJson<EtcItemDataList>(jsonText.text);
 
-        jsonText = LoadDataList("JsonData/EnemyData");
+        jsonText = LoadDataList("JsonData/EnemyBaseStatsData");
         dataManager.EnemyDatas = JsonUtility.FromJson<EnemyDataList>(jsonText.text);
 
-        jsonText = LoadDataList("JsonData/PlayerBaseData");
+        jsonText = LoadDataList("JsonData/PlayerBaseStatsData");
         dataManager.PlayerBaseList = JsonUtility.FromJson<PlayerBaseDataList>(jsonText.text);
 
-        jsonText = LoadDataList("JsonData/PlayerMoveData");
+        jsonText = LoadDataList("JsonData/PlayerMoveStatsData");
         dataManager.PlayerMoveList = JsonUtility.FromJson<PlayerMoveDataList>(jsonText.text);
 
         jsonText = LoadDataList("JsonData/PlayerSoundData");

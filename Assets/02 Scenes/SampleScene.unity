@@ -6062,7 +6062,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4654872282747445529, guid: a789bd47786a22542ba8458729b48154, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 15.42
+      value: 19.62
       objectReference: {fileID: 0}
     - target: {fileID: 4654872282747445529, guid: a789bd47786a22542ba8458729b48154, type: 3}
       propertyPath: m_LocalPosition.y
@@ -6070,7 +6070,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4654872282747445529, guid: a789bd47786a22542ba8458729b48154, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 11.309999
+      value: -0.52
       objectReference: {fileID: 0}
     - target: {fileID: 4654872282747445529, guid: a789bd47786a22542ba8458729b48154, type: 3}
       propertyPath: m_LocalRotation.w
@@ -9083,9 +9083,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb493fdc5c3eb274baa36aa16f74aaaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ExcelToJson
-  _excelFileName: dt_enemy_base_stats
-  _jsonFileName: EnemyData
-  _dataName: EnemyDatas
+  _excelFileName: dt_player_move_stats
+  _jsonFileName: PlayerMoveStatsData
+  _dataName: PlayerMoveStatsDatas
 --- !u!4 &931226760
 Transform:
   m_ObjectHideFlags: 0
