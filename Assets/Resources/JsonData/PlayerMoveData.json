@@ -1,0 +1,17 @@
+{
+  "PlayerMoveData": [
+    {
+      "WalkSpeed": 4.0,
+      "RunSpeed": 7.8,
+      "RunSPCostInterval": 0.02,
+      "RunSPCost": 0.1,
+      "RunHydrationLossRate": 1.5,
+      "RunHungerLossRate": 1.5,
+      "RollMoveSpeed": 5.0,
+      "RollDuration": 0.5,
+      "RollDistance": 2.5,
+      "RollSPCost": 10.0,
+      "RollCooldown": 1.0
+    }
+  ]
+}
