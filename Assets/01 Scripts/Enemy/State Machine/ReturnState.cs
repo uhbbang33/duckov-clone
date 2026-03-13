@@ -5,10 +5,10 @@ public class ReturnState : EnemyStateBase
     private Vector3 _spawnPosition;
     private float _walkSpeed;
 
-    public ReturnState(Enemy enemy, EnemyData enemyData, Vector3 spawnPosition, float walkSpeed) : base(enemy, enemyData)
+    public ReturnState(Enemy enemy, EnemyData enemyData, Vector3 spawnPosition) : base(enemy, enemyData)
     {
         _spawnPosition = spawnPosition;
-        _walkSpeed = walkSpeed;
+        _walkSpeed = enemyData.WalkSpeed;
     }
 
     public override void Enter()

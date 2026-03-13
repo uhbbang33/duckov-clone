@@ -8,11 +8,11 @@ public class PatrolState : EnemyStateBase
     private float _walkSpeed;
     private const float _minDistance = 2f;
 
-    public PatrolState(Enemy enemy, EnemyData enemyData, Vector3 spawnPosition, float patrolRange, float walkSpeed) : base(enemy, enemyData)
+    public PatrolState(Enemy enemy, EnemyData enemyData, Vector3 spawnPosition) : base(enemy, enemyData)
     {
         _spawnPosition = spawnPosition;
-        _patrolRange = patrolRange;
-        _walkSpeed = walkSpeed;
+        _patrolRange = enemyData.PatrolRange;
+        _walkSpeed = enemyData.WalkSpeed;
     }
 
     public override void Enter()

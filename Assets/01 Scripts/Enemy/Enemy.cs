@@ -89,9 +89,9 @@ public class Enemy : MonoBehaviour
         _stateDictionary = new Dictionary<EnemyState, EnemyStateBase>
         {
             {EnemyState.Idle, new IdleState(this, _enemyData)},
-            {EnemyState.Patrol, new PatrolState(this, _enemyData, spawnPosition, _enemyData.PatrolRange, _enemyData.WalkSpeed)},
-            {EnemyState.Chase, new ChaseState(this, _enemyData, _enemyData.RunSpeed, _gunData.Range)},
-            {EnemyState.Return, new ReturnState(this, _enemyData, spawnPosition, _enemyData.WalkSpeed)},
+            {EnemyState.Patrol, new PatrolState(this, _enemyData, spawnPosition)},
+            {EnemyState.Chase, new ChaseState(this, _enemyData, _gunData.Range)},
+            {EnemyState.Return, new ReturnState(this, _enemyData, spawnPosition)},
             {EnemyState.Attack, new AttackState(this, _enemyData, _gunData)},
             {EnemyState.Death, new DeathState(this, _enemyData)}
         };

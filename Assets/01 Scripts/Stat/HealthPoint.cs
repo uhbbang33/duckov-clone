@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,16 +16,6 @@ public class HealthPoint : MonoBehaviour
     {
         get { return _maxHP; }
         set { _maxHP = value; }
-    }
-
-    protected virtual void Awake()
-    {
-        _currentHP = _maxHP;
-    }
-
-    protected virtual void Start()
-    {
-        ChangeHPSliderValue();
     }
 
     public bool Heal(float amount)

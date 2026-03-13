@@ -10,9 +10,9 @@ public class ChaseState : EnemyStateBase
 
     private const float _updateInterval = 0.1f;
 
-    public ChaseState(Enemy enemy, EnemyData enemyData, float runSpeed, float gunRange) : base(enemy, enemyData)
+    public ChaseState(Enemy enemy, EnemyData enemyData, float gunRange) : base(enemy, enemyData)
     {
-        _runSpeed = runSpeed;
+        _runSpeed = enemyData.RunSpeed;
         _gunRange = gunRange;
     }
 

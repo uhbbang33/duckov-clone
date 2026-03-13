@@ -14,18 +14,14 @@ public class PlayerHealthPoint : HealthPoint
     private PlayerBaseData _playerBaseData;
 
 
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
-
         _waitForReduceDelay = new WaitForSeconds(_reduceDelay);
         _player = GetComponent<Player>();
     }
 
-    protected override void Start()
+    private void Start()
     {
-        base.Start();
-
         _player.OnPlayerDataInitialized += PlayerBaseDataSetup;
 
         _hunger = GetComponent<Hunger>();
@@ -42,7 +38,11 @@ public class PlayerHealthPoint : HealthPoint
     private void PlayerBaseDataSetup()
     {
         _playerBaseData = _player.BaseData;
-        //_maxHP = _playerBaseData.MaxHP;
+
+        _maxHP = _playerBaseData.MaxHP;
+        _currentHP = _maxHP;
+        
+        ChangeHPSliderValue();
     }
 
     private void StartReduceHP()

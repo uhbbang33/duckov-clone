@@ -23810,10 +23810,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44796b3dbf6aec34eb190027b9bcc491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StaminaPoint
-  _maxSP: 100
-  _originHealAmountPerTick: 0.1
   _runDelayTime: 0.02
-  _healDelayTime: 0.1
   _healFirstDelayTime: 1.5
   _SPSlider: {fileID: 214549877}
   _SPSliderFillImage: {fileID: 488652935}
@@ -23913,8 +23910,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41dbcdb407ad5a7459e90fbdaaa71703, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Hunger
-  _max: 100
-  _originReduceAmountPerTick: 0.1
   _reduceDelay: 1
 --- !u!114 &6032076664905499562
 MonoBehaviour:
@@ -23928,8 +23923,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04534f615eb89e1489c8956514e9312e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Hydration
-  _max: 100
-  _originReduceAmountPerTick: 0.1
   _reduceDelay: 1
 --- !u!114 &6032076664905499563
 MonoBehaviour:

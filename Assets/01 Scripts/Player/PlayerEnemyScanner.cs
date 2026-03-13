@@ -12,10 +12,9 @@ public class PlayerEnemyScanner : MonoBehaviour
     private HashSet<Enemy> _current = new();
     private HashSet<Enemy> _previous = new();
 
+    private PlayerSoundData _soundData;
+
     private const float _scanRange = 30f;
-    private const float _idleSoundLevel = 2f;
-    private const float _walkSoundLevel = 6f;
-    private const float _runSoundLevel = 11f;
 
     public float PlayerSoundLevel
     {
@@ -26,13 +25,16 @@ public class PlayerEnemyScanner : MonoBehaviour
 
     private void Awake()
     {
+        _playerMove = GetComponent<PlayerMove>();
+
         _scanResults = new Collider[100];
-        _soundLevel = _idleSoundLevel;
     }
 
     private void Start()
     {
-        _playerMove = GetComponent<PlayerMove>();
+        _soundData = GetComponent<Player>().SoundData;
+        _soundLevel = _soundData.DefaultSoundLevel;
+
         _playerMove.OnRun += OnPlayerRun;
         _playerMove.OnRunCancel += OnPlayerWalk;
         _playerMove.OnWalk += OnPlayerWalk;
@@ -99,16 +101,16 @@ public class PlayerEnemyScanner : MonoBehaviour
 
     private void OnPlayerRun()
     {
-        _soundLevel = _runSoundLevel;
+        _soundLevel = _soundData.RunSoundLevel;
     }
 
     private void OnPlayerWalk()
     {
-        _soundLevel = _walkSoundLevel;
+        _soundLevel = _soundData.WalkSoundLevel;
     }
     
     private void OnPlayerIdle()
     {
-        _soundLevel = _idleSoundLevel;
+        _soundLevel = _soundData.DefaultSoundLevel;
     }
 }

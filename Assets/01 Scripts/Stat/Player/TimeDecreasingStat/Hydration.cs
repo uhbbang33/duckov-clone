@@ -5,6 +5,16 @@ public class Hydration : TimeDecreasingStat
     public event Action OnEnterZeroHydration;
     public event Action OnExitZeroHydration;
 
+    protected override void PlayerBaseDataSetup()
+    {
+        base.PlayerBaseDataSetup();
+
+        _max = _playerBaseData.MaxHydration;
+        _current = _max;
+
+        _originReduceAmountPerTick = _playerBaseData.HydrationLossPerSec;
+        _currentReduceAmountPerTick = _originReduceAmountPerTick;
+    }
 
     protected override void RefreshUI()
     {

@@ -5,18 +5,18 @@ using UnityEngine.UI;
 
 public class StaminaPoint : MonoBehaviour
 {
+    private float _maxSP;
     private float _currentSP;
     private bool _isReducing;
     Hydration _hydration;
 
-    // TODO: Json Data
-    [SerializeField] private float _maxSP;
-    [SerializeField] private float _originHealAmountPerTick;
     [SerializeField] private float _runDelayTime;
-    [SerializeField] private float _healDelayTime;
     [SerializeField] private float _healFirstDelayTime;
     [SerializeField] private Slider _SPSlider;
     [SerializeField] private Image _SPSliderFillImage;
+
+    private Player _player;
+    private PlayerBaseData _playerBaseData;
 
     private Color _originSliderColor;
     private float _currentHealAmountPerTick;
@@ -37,18 +37,19 @@ public class StaminaPoint : MonoBehaviour
 
     private void Awake()
     {
-        _currentSP = _maxSP;
+        _player = GetComponent<Player>();
+        _hydration = GetComponent<Hydration>();
+
         _originSliderColor = _SPSliderFillImage.color;
-        _currentHealAmountPerTick = _originHealAmountPerTick;
         _isReducing = false;
         _waitRunDelay = new WaitForSeconds(_runDelayTime);
-        _waitHealDelay = new WaitForSeconds(_healDelayTime);
         _waitHealFirstDelay = new WaitForSeconds(_healFirstDelayTime);
     }
 
     private void Start()
     {
-        _hydration = GetComponent<Hydration>();
+        _player.OnPlayerDataInitialized += PlayerBaseDataSetup;
+
         _hydration.OnEnterZeroHydration += HalveHealAmountPerTick;
         _hydration.OnExitZeroHydration += RestoreHealAmountPerTick;
     }
@@ -57,6 +58,20 @@ public class StaminaPoint : MonoBehaviour
     {
         _hydration.OnEnterZeroHydration -= HalveHealAmountPerTick;
         _hydration.OnExitZeroHydration -= RestoreHealAmountPerTick;
+    }
+
+    private void PlayerBaseDataSetup()
+    {
+        _playerBaseData = _player.BaseData;
+
+        _maxSP = _playerBaseData.MaxSP;
+        _currentSP = _maxSP;
+
+        _currentHealAmountPerTick = _playerBaseData.SPRegenAmount;
+
+        _waitHealDelay = new WaitForSeconds(_playerBaseData.SPRegenInterval);
+
+        ChangeSlider();
     }
 
     public void ReduceSPImmediately(float amount)
@@ -133,12 +148,12 @@ public class StaminaPoint : MonoBehaviour
 
     private void HalveHealAmountPerTick()
     {
-        _currentHealAmountPerTick = _originHealAmountPerTick / 2;
+        _currentHealAmountPerTick = _playerBaseData.SPRegenAmount / 2;
     }
 
     private void RestoreHealAmountPerTick()
     {
-        _currentHealAmountPerTick = _originHealAmountPerTick;
+        _currentHealAmountPerTick = _playerBaseData.SPRegenAmount;
     }
 
 

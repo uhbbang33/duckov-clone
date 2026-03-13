@@ -3,27 +3,32 @@ using UnityEngine;
 
 public class TimeDecreasingStat : MonoBehaviour
 {
-    [SerializeField] protected float _max;
-    [SerializeField] private float _originReduceAmountPerTick;
     [SerializeField] private float _reduceDelay;
 
+    private Player _player;
+    protected PlayerBaseData _playerBaseData;
     private PlayerMove _playerMove;
     private PlayerInteract _playerInteract;
-    protected float _current;
-    private WaitForSeconds _waitForReduceDelay;
-    protected bool _isZeroStat;
-    private float _currentReduceAmountPerTick;
     protected UIManager _uiManager;
+
+    protected float _max;
+    protected float _current;
+    protected bool _isZeroStat;
+    protected float _currentReduceAmountPerTick;
+    protected float _originReduceAmountPerTick;
+
+    private WaitForSeconds _waitForReduceDelay;
 
     private void Awake()
     {
+        _player = GetComponent<Player>();
         _waitForReduceDelay = new WaitForSeconds(_reduceDelay);
-        _current = _max;
-        _currentReduceAmountPerTick = _originReduceAmountPerTick;
     }
 
     protected virtual void Start()
     {
+        _player.OnPlayerDataInitialized += PlayerBaseDataSetup;
+
         _uiManager = UIManager.Instance;
         
         StartCoroutine(ReducePerTickRoutine());
@@ -43,6 +48,11 @@ public class TimeDecreasingStat : MonoBehaviour
         _playerMove.OnRun -= DoubleReduceAmount;
         _playerMove.OnRunCancel -= RestoreReduceAmount;
         _playerInteract.OnEnableInteractEvent -= RestoreReduceAmount;
+    }
+
+    protected virtual void PlayerBaseDataSetup()
+    {
+        _playerBaseData = _player.BaseData;
     }
 
     protected virtual void RefreshUI() { }
