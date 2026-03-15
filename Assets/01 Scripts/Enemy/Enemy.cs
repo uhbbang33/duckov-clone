@@ -140,13 +140,15 @@ public class Enemy : MonoBehaviour
 
         // 장애물
         if (Physics.Raycast(transform.position, dirToPlayer.normalized, distToPlayer, _obstacleLayer))
+        {
+            // 옆으로 돌아가기
+
+
             return;
+        }
 
         if (_detectPlayerCoroutine != null)
-        {
             StopCoroutine(_detectPlayerCoroutine);
-            _isDetectPlayer = false;
-        }
 
         _detectPlayerCoroutine = StartCoroutine(DetectPlayerRoutine());
     }
@@ -160,10 +162,7 @@ public class Enemy : MonoBehaviour
         if (soundLevelByDist >= _enemyData.SoundDetectionLevel)
         {
             if (_detectPlayerCoroutine != null)
-            {
                 StopCoroutine(_detectPlayerCoroutine);
-                _isDetectPlayer = false;
-            }
 
             _detectPlayerCoroutine = StartCoroutine(DetectPlayerRoutine());
         }
