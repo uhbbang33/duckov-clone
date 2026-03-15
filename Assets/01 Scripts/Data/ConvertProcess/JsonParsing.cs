@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[DefaultExecutionOrder(-10)]
+[DefaultExecutionOrder(-100)]
 public class JsonParsing : MonoBehaviour
 {
     private void Start()

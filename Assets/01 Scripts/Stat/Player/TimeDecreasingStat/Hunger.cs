@@ -6,12 +6,12 @@ public class Hunger : TimeDecreasingStat
     public event Action OnExitZeroHunger;
 
 
-    protected override void PlayerBaseDataSetup()
+    protected override void PlayerSetup()
     {
-        base.PlayerBaseDataSetup();
+        base.PlayerSetup();
 
         _max = _playerBaseData.MaxHunger;
-        _current = _max;
+        Heal(_max);
 
         _originReduceAmountPerTick = _playerBaseData.HungerLossPerSec;
         _currentReduceAmountPerTick = _originReduceAmountPerTick;

@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerEnemyScanner : MonoBehaviour
 {
     [SerializeField] private LayerMask _enemyLayer;
 
+    private Player _player;
     private PlayerMove _playerMove;
     private Collider[] _scanResults;
     private int _resultCnt;
@@ -25,6 +27,9 @@ public class PlayerEnemyScanner : MonoBehaviour
 
     private void Awake()
     {
+        _player = GetComponent<Player>();
+        _player.OnPlayerDataInitialized += SoundDataSetup;
+
         _playerMove = GetComponent<PlayerMove>();
 
         _scanResults = new Collider[100];
@@ -32,9 +37,6 @@ public class PlayerEnemyScanner : MonoBehaviour
 
     private void Start()
     {
-        _soundData = GetComponent<Player>().SoundData;
-        _soundLevel = _soundData.DefaultSoundLevel;
-
         _playerMove.OnRun += OnPlayerRun;
         _playerMove.OnRunCancel += OnPlayerWalk;
         _playerMove.OnWalk += OnPlayerWalk;
@@ -43,17 +45,18 @@ public class PlayerEnemyScanner : MonoBehaviour
         StartScan();
     }
 
-    //private void Update()
-    //{
-    //    Debug.Log(_soundLevel);
-    //}
-
     private void OnDisable()
     {
         _playerMove.OnRun -= OnPlayerRun;
         _playerMove.OnRunCancel -= OnPlayerWalk;
         _playerMove.OnWalk -= OnPlayerWalk;
         _playerMove.OnWalkCancel -= OnPlayerIdle;
+    }
+
+    private void SoundDataSetup()
+    {
+        _soundData = _player.SoundData;
+        _soundLevel = _soundData.DefaultSoundLevel;
     }
 
     private void ScanEnemy()

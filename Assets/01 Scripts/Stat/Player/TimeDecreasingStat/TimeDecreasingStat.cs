@@ -22,15 +22,24 @@ public class TimeDecreasingStat : MonoBehaviour
     private void Awake()
     {
         _player = GetComponent<Player>();
+        _player.OnPlayerDataInitialized += PlayerSetup;
+
         _waitForReduceDelay = new WaitForSeconds(_reduceDelay);
     }
 
-    protected virtual void Start()
+    private void OnDisable()
     {
-        _player.OnPlayerDataInitialized += PlayerBaseDataSetup;
+        _playerMove.OnRun -= DoubleReduceAmount;
+        _playerMove.OnRunCancel -= RestoreReduceAmount;
+        _playerInteract.OnEnableInteractEvent -= RestoreReduceAmount;
+    }
+
+    protected virtual void PlayerSetup()
+    {
+        _playerBaseData = _player.BaseData;
 
         _uiManager = UIManager.Instance;
-        
+
         StartCoroutine(ReducePerTickRoutine());
 
         _playerMove = GetComponent<PlayerMove>();
@@ -41,18 +50,6 @@ public class TimeDecreasingStat : MonoBehaviour
         _playerInteract.OnEnableInteractEvent += RestoreReduceAmount;
 
         RefreshUI();
-    }
-
-    private void OnDisable()
-    {
-        _playerMove.OnRun -= DoubleReduceAmount;
-        _playerMove.OnRunCancel -= RestoreReduceAmount;
-        _playerInteract.OnEnableInteractEvent -= RestoreReduceAmount;
-    }
-
-    protected virtual void PlayerBaseDataSetup()
-    {
-        _playerBaseData = _player.BaseData;
     }
 
     protected virtual void RefreshUI() { }

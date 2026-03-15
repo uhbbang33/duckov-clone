@@ -5,15 +5,17 @@ public class Hydration : TimeDecreasingStat
     public event Action OnEnterZeroHydration;
     public event Action OnExitZeroHydration;
 
-    protected override void PlayerBaseDataSetup()
+    protected override void PlayerSetup()
     {
-        base.PlayerBaseDataSetup();
+        base.PlayerSetup();
 
         _max = _playerBaseData.MaxHydration;
-        _current = _max;
+        Heal(_max);
 
         _originReduceAmountPerTick = _playerBaseData.HydrationLossPerSec;
         _currentReduceAmountPerTick = _originReduceAmountPerTick;
+
+        OnExitZeroStat();
     }
 
     protected override void RefreshUI()

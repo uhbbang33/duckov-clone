@@ -38,6 +38,8 @@ public class StaminaPoint : MonoBehaviour
     private void Awake()
     {
         _player = GetComponent<Player>();
+        _player.OnPlayerDataInitialized += PlayerBaseDataSetup;
+
         _hydration = GetComponent<Hydration>();
 
         _originSliderColor = _SPSliderFillImage.color;
@@ -48,8 +50,6 @@ public class StaminaPoint : MonoBehaviour
 
     private void Start()
     {
-        _player.OnPlayerDataInitialized += PlayerBaseDataSetup;
-
         _hydration.OnEnterZeroHydration += HalveHealAmountPerTick;
         _hydration.OnExitZeroHydration += RestoreHealAmountPerTick;
     }

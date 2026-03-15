@@ -18,12 +18,11 @@ public class PlayerHealthPoint : HealthPoint
     {
         _waitForReduceDelay = new WaitForSeconds(_reduceDelay);
         _player = GetComponent<Player>();
+        _player.OnPlayerDataInitialized += PlayerBaseDataSetup;
     }
 
     private void Start()
     {
-        _player.OnPlayerDataInitialized += PlayerBaseDataSetup;
-
         _hunger = GetComponent<Hunger>();
         _hunger.OnEnterZeroHunger += StartReduceHP;
         _hunger.OnExitZeroHunger += StopReduceHP;

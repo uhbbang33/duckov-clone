@@ -56,21 +56,34 @@ public class PlayerMove : MonoBehaviour
 
     private void Awake()
     {
-        Initialize();
+        _player = GetComponent<Player>();
+        _player.OnPlayerDataInitialized += MoveDataSetup;
+
+        _rb = GetComponent<Rigidbody>();
+        _anim = GetComponent<Animator>();
+        _sp = GetComponent<StaminaPoint>();
+        _sp.OnSPZero += StopRun;
+
+        _hydration = GetComponent<Hydration>();
+        _hydration.OnEnterZeroHydration += EnableZeroHydration;
+        _hydration.OnExitZeroHydration += DisableZeroHydration;
+
+        _playerShooting = GetComponent<PlayerShooting>();
+
+        _moveInput = Vector2.zero;
+        _mousePosition = Vector2.zero;
+        _lookDirection = Vector3.zero;
+        _rollDirection = Vector3.zero;
+        _isRun = false;
+        _isRoll = false;
+
+        _lookBaseTransform = _originLookBaseTransform;
     }
 
     private void Start()
     {
-        _player.OnPlayerDataInitialized += MoveDataSetup;
-
         _inputActions = GetComponent<Player>().Actions;
         SubscribeInputActions();
-
-        _sp.OnSPZero += StopRun;
-        _hydration.OnEnterZeroHydration += EnableZeroHydration;
-        _hydration.OnExitZeroHydration += DisableZeroHydration;
-
-        _lookBaseTransform = _originLookBaseTransform;
     }
 
     private void OnDisable()
@@ -119,24 +132,6 @@ public class PlayerMove : MonoBehaviour
 
     #endregion MonoBehaviour
 
-
-    private void Initialize()
-    {
-        _player = GetComponent<Player>();
-        _rb = GetComponent<Rigidbody>();
-        _anim = GetComponent<Animator>();
-        _sp = GetComponent<StaminaPoint>();
-        _hydration = GetComponent<Hydration>();
-        _playerShooting = GetComponent<PlayerShooting>();
-
-        _moveInput = Vector2.zero;
-        _mousePosition = Vector2.zero;
-        _lookDirection = Vector3.zero;
-        _rollDirection = Vector3.zero;
-        _isRun = false;
-        _isRoll = false;
-
-    }
 
     private void MoveDataSetup()
     {
