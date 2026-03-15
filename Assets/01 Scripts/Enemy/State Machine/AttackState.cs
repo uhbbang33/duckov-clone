@@ -32,7 +32,8 @@ public class AttackState : EnemyStateBase
             _enemy.ChangeState(EnemyState.Death);
 
         float distToPlayer = _enemy.GetDistanceToPlayer();
-        if (_gunData.Range < distToPlayer)
+        if (_gunData.Range < distToPlayer
+            || !_enemy.IsDetectPlayer)
         {
             _enemy.ChangeState(EnemyState.Return);
             return;

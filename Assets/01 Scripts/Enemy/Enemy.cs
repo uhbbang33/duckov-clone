@@ -143,7 +143,10 @@ public class Enemy : MonoBehaviour
             return;
 
         if (_detectPlayerCoroutine != null)
+        {
             StopCoroutine(_detectPlayerCoroutine);
+            _isDetectPlayer = false;
+        }
 
         _detectPlayerCoroutine = StartCoroutine(DetectPlayerRoutine());
     }
@@ -157,7 +160,10 @@ public class Enemy : MonoBehaviour
         if (soundLevelByDist >= _enemyData.SoundDetectionLevel)
         {
             if (_detectPlayerCoroutine != null)
+            {
                 StopCoroutine(_detectPlayerCoroutine);
+                _isDetectPlayer = false;
+            }
 
             _detectPlayerCoroutine = StartCoroutine(DetectPlayerRoutine());
         }
