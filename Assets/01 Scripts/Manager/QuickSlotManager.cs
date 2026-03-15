@@ -20,13 +20,13 @@ public class QuickSlotManager : SingletonMonoBehaviour<QuickSlotManager>
     {
         int sameItemLocation = FindSameItemLocation(id);
 
-        // °°Àº ¾ÆÀÌÅÛÀÌ ´Ù¸¥ Äü½½·Ô¿¡ ÀÖÀ»°æ¿ì 
+        // ê°™ì€ ì•„ì´í…œì´ ë‹¤ë¥¸ í€µìŠ¬ë¡¯ì— ìˆì„ê²½ìš° 
         if (sameItemLocation != -1)
         {
             if (sameItemLocation == location)
                 return;
 
-            //ÇØ´ç Äü½½·Ô µî·Ï ÇØÁ¦
+            //í•´ë‹¹ í€µìŠ¬ë¡¯ ë“±ë¡ í•´ì œ
             _equipQuickSlots[sameItemLocation - _quickSlotStartNum].UnlinkInventorySlotUI((uint)id);
         }
 

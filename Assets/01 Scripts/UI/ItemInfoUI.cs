@@ -102,17 +102,17 @@ public class ItemInfoUI : MonoBehaviour
         _medicineFoodEffectText.text = "- ";
 
         if (item.HealHP != 0)
-            _medicineFoodEffectText.text += "È¸º¹·®: " + item.HealHP.ToString() + "  ";
+            _medicineFoodEffectText.text += "íšŒë³µëŸ‰: " + item.HealHP.ToString() + "  ";
         
         if (item.Hunger != 0)
-            _medicineFoodEffectText.text += "Æ÷¸¸°¨: " + item.Hunger.ToString() + "  ";
+            _medicineFoodEffectText.text += "í¬ë§Œê°: " + item.Hunger.ToString() + "  ";
         if (item.Hydration != 0)
-            _medicineFoodEffectText.text += "¼öºĞ: " + item.Hydration.ToString();
+            _medicineFoodEffectText.text += "ìˆ˜ë¶„: " + item.Hydration.ToString();
 
         if (item.DurabilityCost != 0 && item.DurabilityCost != 100)
         {
             _medicineFoodEffectText.text += "\n- ";
-            _medicineFoodEffectText.text += "³»±¸µµ ¼Ò¸ğ: " + item.DurabilityCost.ToString();
+            _medicineFoodEffectText.text += "ë‚´êµ¬ë„ ì†Œëª¨: " + item.DurabilityCost.ToString();
         }
     }
 

@@ -180,7 +180,7 @@ public class ItemSlot
         int ammoCount = gunItem.CurrentAmmoCount;
         if(!_inventory.TryAddItem(ammoItem, ref ammoCount))
         {
-            // ¹ö¸®±â
+            // ë²„ë¦¬ê¸°
             GameManager.Instance.CreateDropItemObject(ammoItem, ammoCount);
         }
 

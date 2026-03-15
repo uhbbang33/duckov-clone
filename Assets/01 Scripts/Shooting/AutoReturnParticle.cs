@@ -24,7 +24,7 @@ public class AutoReturnParticle : MonoBehaviour
 
     IEnumerator ReturnPoolRoutine()
     {
-        yield return null; // ÆÄÆ¼Å¬ÀÌ ½ÃÀÛÇÒ¶§±îÁö ÃÖ¼Ò 1ÇÁ·¹ÀÓ ´ë±â
+        yield return null; // íŒŒí‹°í´ì´ ì‹œìž‘í• ë•Œê¹Œì§€ ìµœì†Œ 1í”„ë ˆìž„ ëŒ€ê¸°
 
         yield return new WaitUntil(() => !_particle.IsAlive(true));
 

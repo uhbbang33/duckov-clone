@@ -65,7 +65,7 @@ public class Inventory : MonoBehaviour
         _inputActions = GetComponent<Player>().Actions;
         _inputActions.Player.Inventory.performed += OnInventory;
         _inputActions.Player.Cancel.performed += OnInventoryClose;
-        // TODO : Inventory¿¡ player°¡ °¡Áö°í ÀÖ´Â ¹°Ç° ³Ö±â (ÀúÀå)
+        // TODO : Inventoryì— playerê°€ ê°€ì§€ê³  ìˆëŠ” ë¬¼í’ˆ ë„£ê¸° (ì €ì¥)
 
         _playerInteract.OnEnableInteractEvent += OnInventoryCloseBlocked;
         _playerInteract.OnDisableInteractEvent += OnInventoryCloseAllowed;
@@ -111,8 +111,8 @@ public class Inventory : MonoBehaviour
 
     private void OpenInventory()
     {
-        // TODO : »óÈ£ÀÛ¿ë UIµµ ¾ø¾îÁ®¾ßÇÔ
-        // TODO : UIManager¿¡¼­ 
+        // TODO : ìƒí˜¸ì‘ìš© UIë„ ì—†ì–´ì ¸ì•¼í•¨
+        // TODO : UIManagerì—ì„œ 
         // TODO : Player HP, SP Bar hide
         _inventoryToggle = !_inventoryToggle;
 
@@ -154,7 +154,7 @@ public class Inventory : MonoBehaviour
 
     public bool TryAddItem(Item item, ref int amount)
     {
-        // ÀÎº¥Åä¸®¿¡ °°Àº ¾ÆÀÌÅÛÀÌ ÀÖÀ» °æ¿ì
+        // ì¸ë²¤í† ë¦¬ì— ê°™ì€ ì•„ì´í…œì´ ìˆì„ ê²½ìš°
         if (_inventoryDict.ContainsKey(item.ID))
         {
             int itemInInventoryCount = _inventoryDict[item.ID];
@@ -178,7 +178,7 @@ public class Inventory : MonoBehaviour
             }
         }
 
-        // °°Àº ¾ÆÀÌÅÛÀÌ ¾ø¾î¼­ ºó ½½·Ô¿¡ ¾ÆÀÌÅÛÀ» ³Ö´Â °æ¿ì
+        // ê°™ì€ ì•„ì´í…œì´ ì—†ì–´ì„œ ë¹ˆ ìŠ¬ë¡¯ì— ì•„ì´í…œì„ ë„£ëŠ” ê²½ìš°
         if (TryAddItemToEmptySlot(item, amount))
         {
             amount = 0;

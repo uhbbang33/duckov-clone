@@ -2,7 +2,7 @@ public class WeaponBox : Box
 {
     protected override void SetWeightValue()
     {
-        // TODO : ÇÏµåÄÚµù
+        // TODO : í•˜ë“œì½”ë”©
         _typeWeights[0].WeightValue = 5;
         _typeWeights[1].WeightValue = 10;
         _typeWeights[2].WeightValue = 1;

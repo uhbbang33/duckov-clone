@@ -1,8 +1,8 @@
 
 public class GunItem : Item
 {
-    // TODO : bullet°ú Ammo ¸íÄª ±¸ºÐ
-    private string _bulletType; // ammoTypeÀ¸·Î ¹Ù²ã¾ßÇÔ
+    // TODO : bulletê³¼ Ammo ëª…ì¹­ êµ¬ë¶„
+    private string _bulletType; // ammoTypeìœ¼ë¡œ ë°”ê¿”ì•¼í•¨
     private float _damage;
     private float _rps;
     private uint _magazineCapacity;

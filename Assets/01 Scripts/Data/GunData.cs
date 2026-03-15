@@ -23,6 +23,6 @@ public class GunData
 [System.Serializable]
 public class GunDataList
 {
-    // ÁÖÀÇ - ¹«Á¶°Ç json ÆÄÀÏ ÃÖ»ó´ÜÀÇ ÀÌ¸§°ú °°¾Æ¾ß ÇÔ
+    // ì£¼ì˜ - ë¬´ì¡°ê±´ json íŒŒì¼ ìµœìƒë‹¨ì˜ ì´ë¦„ê³¼ ê°™ì•„ì•¼ í•¨
     public GunData[] GunItemDatas;
 }

@@ -55,6 +55,14 @@ public class PlayerHealthPoint : HealthPoint
         _isReducingByHungerZero = false;
     }
 
+    protected override void Death()
+    {
+        base.Death();
+
+        // 게임 오버
+
+    }
+
     protected override void ChangeHPSliderValue()
     {
         base.ChangeHPSliderValue();

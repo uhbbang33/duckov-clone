@@ -161,7 +161,7 @@ public class PlayerEquip : MonoBehaviour
             ui.DefaultHUDSlotUI.Deselected();
     }
 
-    // ¿©·¯¹ø ÃÑ±â change½Ã InfoUI È£Ãâ ¼ø¼­ °ãÄ¡´Â ¿À·ù ¹æÁö
+    // ì—¬ëŸ¬ë²ˆ ì´ê¸° changeì‹œ InfoUI í˜¸ì¶œ ìˆœì„œ ê²¹ì¹˜ëŠ” ì˜¤ë¥˜ ë°©ì§€
     private void RefreshHUDSelection(EquipSlot slot)
     {
         DeselectDefaultHUD(_leftEquipSlot);
@@ -184,7 +184,7 @@ public class PlayerEquip : MonoBehaviour
 
     #region Animation Event
 
-    // TODO : ¹Ì¸® »ı¼º ÈÄ ºÒ·¯¿À´Â ¹æ½ÄÀ¸·Î
+    // TODO : ë¯¸ë¦¬ ìƒì„± í›„ ë¶ˆëŸ¬ì˜¤ëŠ” ë°©ì‹ìœ¼ë¡œ
     public void CreateGunPrefab()
     {
         int gunId = _isLeftSlotActivated ? _leftSlotGunId : _rightSlotGunId;

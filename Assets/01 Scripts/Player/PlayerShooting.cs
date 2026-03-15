@@ -172,7 +172,7 @@ public class PlayerShooting : MonoBehaviour
             || _state != PlayerShootingState.Idle)
             return;
 
-        // ÀÎº¥Åä¸®¿¡ ÅºÈ¯ÀÌ ÀÖ´ÂÁö È®ÀÎ
+        // ì¸ë²¤í† ë¦¬ì— íƒ„í™˜ì´ ìˆëŠ”ì§€ í™•ì¸
         if (!_inventory.HasItem(_currentGunItem.BulletId))
             return;
 
@@ -223,7 +223,7 @@ public class PlayerShooting : MonoBehaviour
 
         SoundManager.Instance.PlayReloadSFX(true, _playerShootingAudioSource);
 
-        // TODO : ÀåÀü ½Ã°£ ¹× UI
+        // TODO : ì¥ì „ ì‹œê°„ ë° UI
         float currentReloadTime = 0f;
         while (currentReloadTime < _currentGunItem.ReloadTime)
         {
@@ -235,7 +235,7 @@ public class PlayerShooting : MonoBehaviour
 
         int maxReloadableAmmoCount = (int)_currentGunItem.MagazineCapacity - _currentGunItem.CurrentAmmoCount;
 
-        // ÀÎº¥Åä¸®¿¡¼­ °¡Á®¿Ã ¼ö ÀÖ´Â ¼ö·® Ã¼Å© ¹× ¾ÆÀÌÅÛ ÀúÀå
+        // ì¸ë²¤í† ë¦¬ì—ì„œ ê°€ì ¸ì˜¬ ìˆ˜ ìˆëŠ” ìˆ˜ëŸ‰ ì²´í¬ ë° ì•„ì´í…œ ì €ì¥
         (int, AmmoItem) reloadable = _inventory.ReloadableAmmoCount(_currentGunItem.BulletId, maxReloadableAmmoCount);
 
         _currentGunItem.CurrentAmmoCount += reloadable.Item1;

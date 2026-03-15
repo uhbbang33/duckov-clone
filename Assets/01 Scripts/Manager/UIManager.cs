@@ -213,13 +213,13 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 
     public void ChangeBoxItemCountText(int itemCnt, int maxCnt)
     {
-        _boxItemCountText.text = "»óÀÚ (" + itemCnt + " / " + maxCnt + ")";
+        _boxItemCountText.text = "ìƒì (" + itemCnt + " / " + maxCnt + ")";
     }
 
     public void ChangeInventoryItemCountText(int itemCnt, int maxCnt)
     {
         _inventoryItemCountText.text
-            = "°¡¹æ (" + itemCnt + " / " + maxCnt + ")";
+            = "ê°€ë°© (" + itemCnt + " / " + maxCnt + ")";
     }
 
     public void ChangeMainUIHPBar(float currentHp, float maxHp)
@@ -315,9 +315,9 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         {
             _currentSlot.SubtractItem(_currentSlot.Quantity);
         }
-        else // TODO: ¹ö¸± ¼ö ¾ø½À´Ï´Ù UI
+        else // TODO: ë²„ë¦´ ìˆ˜ ì—†ìŠµë‹ˆë‹¤ UI
         {
-            Debug.Log("¹ö¸± ¼ö ¾ø½À´Ï´Ù.");
+            Debug.Log("ë²„ë¦´ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.");
         }
 
         CloseSlotMenu();

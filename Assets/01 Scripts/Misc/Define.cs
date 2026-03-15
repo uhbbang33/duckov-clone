@@ -10,7 +10,7 @@ public struct ItemType
 public struct BulletType
 {
     public const string S = "S";
-    public const string Sniping = "Àú°Ý";
+    public const string Sniping = "ì €ê²©";
 }
 
 public enum SlotType

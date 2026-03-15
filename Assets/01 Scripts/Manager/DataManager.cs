@@ -210,7 +210,7 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
     #endregion
 
 
-    //TODO : Áßº¹ ÄÚµå, ´Ù¸¥ ¹æ¹ý °í¹ÎÇØº¸±â
+    //TODO : ì¤‘ë³µ ì½”ë“œ, ë‹¤ë¥¸ ë°©ë²• ê³ ë¯¼í•´ë³´ê¸°
     #region Get Random Data
 
     public GunData GetRandomGunData()

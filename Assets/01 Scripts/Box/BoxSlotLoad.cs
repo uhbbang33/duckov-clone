@@ -68,13 +68,13 @@ public class BoxSlotLoad : MonoBehaviour
 
     public float SetLoadingTime(string rarity)
     {
-        if (rarity == "¿œπ›")
+        if (rarity == "ÏùºÎ∞ò")
             return RarityLoadingTime.Common;
-        else if (rarity == "∞Ì±ﬁ")
+        else if (rarity == "Í≥†Í∏â")
             return RarityLoadingTime.Uncommon;
-        else if (rarity == "»Ò±Õ")
+        else if (rarity == "Ìù¨Í∑Ä")
             return RarityLoadingTime.Rare;
-        else if (rarity == "¿¸º≥")
+        else if (rarity == "Ï†ÑÏÑ§")
             return RarityLoadingTime.Legendary;
         
         return 0;

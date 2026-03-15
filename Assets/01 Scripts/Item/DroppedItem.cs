@@ -68,7 +68,7 @@ public class DroppedItem : MonoBehaviour
                 continue;
 
             gameObject.transform.position = groundPos;
-            //Debug.Log("½ÃµµÈ½¼ö: " + i);
+            //Debug.Log("ì‹œë„íšŸìˆ˜: " + i);
 
             return true;
         }
@@ -98,7 +98,7 @@ public class DroppedItem : MonoBehaviour
             Destroy(gameObject);
         else
         {
-            // UI ³ª¿ÍÀÖ¾î¾ß ÇÔ
+            // UI ë‚˜ì™€ìˆì–´ì•¼ í•¨
             _ui.ShowCanvas();
         }
     }

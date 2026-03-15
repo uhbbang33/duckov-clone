@@ -39,11 +39,16 @@ public class HealthPoint : MonoBehaviour
         if (_currentHP <= 0)
         {
             _currentHP = 0;
-
-            // TODO die
+            
+            Death();
         }
 
         ChangeHPSliderValue();
+    }
+
+    protected virtual void Death()
+    {
+
     }
 
     protected virtual void ChangeHPSliderValue()

@@ -122,7 +122,7 @@ public class ItemSlotUI : MonoBehaviour,
             Item startItem = startUI._itemSlot.CurrentItem;
             Item endItem = _itemSlot.CurrentItem;
 
-            // °°Àº ID ÀÏ °æ¿ì °³¼ö ÇÕÄ¡±â
+            // ê°™ì€ ID ì¼ ê²½ìš° ê°œìˆ˜ í•©ì¹˜ê¸°
             if (startItem != null
                 && endItem != null
                 && startItem.ID == endItem.ID)
@@ -296,7 +296,7 @@ public class ItemSlotUI : MonoBehaviour,
 
     private void TryMoveToBoxByDoubleClick()
     {
-        // °°Àº IDÀÇ ¾ÆÀÌÅÛÀÌ ÀÖÀ» °æ¿ì
+        // ê°™ì€ IDì˜ ì•„ì´í…œì´ ìˆì„ ê²½ìš°
         for (int i = 0; i < GameManager.Instance.BoxSlotNum; ++i)
         {
             ItemSlot targetSlot = GameManager.Instance.BoxItemSlots[i].GetComponentInChildren<ItemSlotUI>()._itemSlot;
@@ -319,7 +319,7 @@ public class ItemSlotUI : MonoBehaviour,
             }
         }
 
-        // ±×·¸Áö ¾ÊÀ» °æ¿ì
+        // ê·¸ë ‡ì§€ ì•Šì„ ê²½ìš°
         for (int i = 0; i < GameManager.Instance.BoxSlotNum; ++i)
         {
             ItemSlot targetSlot = GameManager.Instance.BoxItemSlots[i].GetComponentInChildren<ItemSlotUI>()._itemSlot;
@@ -384,7 +384,7 @@ public class ItemSlotUI : MonoBehaviour,
 
         if(_rect == null)
             _rect = GetComponent<RectTransform>();
-        // Vertical Layout Group ÀçÁ¤·Ä
+        // Vertical Layout Group ì¬ì •ë ¬
         LayoutRebuilder.ForceRebuildLayoutImmediate(_rect);
 
         if(_linkedQuickSlot != null)

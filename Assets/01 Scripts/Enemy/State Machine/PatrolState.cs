@@ -22,7 +22,7 @@ public class PatrolState : EnemyStateBase
 
         _enemy.SetAnimation(EnemyAnimParm.Walk, true);
 
-        // ¼øÂû ¹İ°æ ³»¿¡¼­ ·£´ıÇÑ ¸ñÀûÁö ¼³Á¤
+        // ìˆœì°° ë°˜ê²½ ë‚´ì—ì„œ ëœë¤í•œ ëª©ì ì§€ ì„¤ì •
         SetRandomDestination();
     }
 
@@ -34,7 +34,7 @@ public class PatrolState : EnemyStateBase
             return;
         }
 
-        // ¸ñÀûÁö¿¡ µµÂøÇÏ¸é Idle »óÅÂ·Î ÀüÈ¯
+        // ëª©ì ì§€ì— ë„ì°©í•˜ë©´ Idle ìƒíƒœë¡œ ì „í™˜
         if (_enemy.Agent.remainingDistance <= _enemy.Agent.stoppingDistance)
         {
             _enemy.ChangeState(EnemyState.Idle);

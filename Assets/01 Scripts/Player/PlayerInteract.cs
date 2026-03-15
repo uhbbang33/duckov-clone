@@ -47,7 +47,7 @@ public class PlayerInteract : MonoBehaviour
 
         _ui.HideCanvas();
 
-        // TODO : OnInteract¾ÈÀ¸·Î
+        // TODO : OnInteractì•ˆìœ¼ë¡œ
         if (_ui.Type == InteractableType.BOX)
         {
             _boxUI.SetActive(true);

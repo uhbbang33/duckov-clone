@@ -129,19 +129,19 @@ public class Enemy : MonoBehaviour
         Vector3 dirToPlayer = GetDirectionToPlayer();
         float distToPlayer = GetDistanceToPlayer();
 
-        // °Å¸®
+        // ê±°ë¦¬
         if (distToPlayer > _enemyData.SightDistance)
             return;
 
-        // °¢µµ
+        // ê°ë„
         float angle = Vector3.Angle(transform.forward, dirToPlayer);
         if (angle > _enemyData.SightAngle / 2f)
             return;
 
-        // Àå¾Ö¹°
+        // ì¥ì• ë¬¼
         if (Physics.Raycast(transform.position, dirToPlayer.normalized, distToPlayer, _obstacleLayer))
         {
-            // ¿·À¸·Î µ¹¾Æ°¡±â
+            // ì˜†ìœ¼ë¡œ ëŒì•„ê°€ê¸°
 
 
             return;
@@ -248,11 +248,11 @@ public class Enemy : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        // ½Ã¾ß °Å¸® ¿ø
+        // ì‹œì•¼ ê±°ë¦¬ ì›
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, 20f);
 
-        // ½Ã¾ß°¢ ÁÂ¿ì °æ°è¼±
+        // ì‹œì•¼ê° ì¢Œìš° ê²½ê³„ì„ 
         Gizmos.color = Color.red;
         Vector3 leftBoundary = Quaternion.Euler(0, -120f / 2f, 0) * transform.forward * 20f;
         Vector3 rightBoundary = Quaternion.Euler(0, 120f / 2f, 0) * transform.forward * 20f;

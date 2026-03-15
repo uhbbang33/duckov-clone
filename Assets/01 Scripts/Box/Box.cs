@@ -17,7 +17,7 @@ public abstract class Box : MonoBehaviour
 
     private Coroutine _currentCoroutine;
 
-    //TODO DefineÀ¸·Î
+    //TODO Defineìœ¼ë¡œ
     private const int _ammoQuantity = 30;
 
     private void Awake()
@@ -45,7 +45,7 @@ public abstract class Box : MonoBehaviour
 
         SetWeightValue();
 
-        // TODO : ÇÏµåÄÚµù
+        // TODO : í•˜ë“œì½”ë”©
         _typeWeights[0].Type = ItemType.Gun;
         _typeWeights[1].Type = ItemType.Ammo;
         _typeWeights[2].Type = ItemType.Medicine;

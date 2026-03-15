@@ -34,7 +34,7 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         RefreshUI();
     }
 
-    // °ÔÀÓ Á¾·á±îÁö À¯Áö
+    // ê²Œì„ ì¢…ë£Œê¹Œì§€ ìœ ì§€
     private void SubscribeInputEvent(int num)
     {
         switch (num)
@@ -127,7 +127,7 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         if (inventorySlotUI.LinkedQuickSlot == this)
             return;
 
-        // ÀÎº¥Åä¸® ½½·Ô ¿¬°á ²÷±â
+        // ì¸ë²¤í† ë¦¬ ìŠ¬ë¡¯ ì—°ê²° ëŠê¸°
         if (inventorySlotUI.LinkedQuickSlot != null)
         {
             Item itemToUnlink = inventorySlotUI.Slot.CurrentItem;
@@ -136,7 +136,7 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             inventorySlotUI.LinkedQuickSlot.UnlinkInventorySlotUI(unlinkItemId);
         }
 
-        // ÇöÀç Äü½½·Ô ¿¬°á ²÷±â
+        // í˜„ì¬ í€µìŠ¬ë¡¯ ì—°ê²° ëŠê¸°
         if (_linkedInventorySlotUI != null)
         {
             Item currentItem = _linkedInventorySlotUI.Slot.CurrentItem;
@@ -145,11 +145,11 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             UnlinkInventorySlotUI(currentItemId);
         }
 
-        // »õ·Î¿î ¿¬°á
+        // ìƒˆë¡œìš´ ì—°ê²°
         _linkedInventorySlotUI = inventorySlotUI;
         inventorySlotUI.LinkQuickSlot(this);
 
-        // Dictionary ¾÷µ¥ÀÌÆ®
+        // Dictionary ì—…ë°ì´íŠ¸
         Item inventoryItem = inventorySlotUI.Slot.CurrentItem;
         if (inventoryItem != null)
         {
@@ -199,7 +199,7 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
         ItemSlotUI startSlotUI = eventData.pointerDrag?.GetComponent<ItemSlotUI>();
 
-        // ½ÃÀÛÀÌ ÀÎº¥Åä¸®ÀÏ °æ¿ì
+        // ì‹œì‘ì´ ì¸ë²¤í† ë¦¬ì¼ ê²½ìš°
         if (startSlotUI != null)
         {
             ItemSlot startSlot = startSlotUI.Slot;
@@ -220,20 +220,20 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
         QuickSlot startQuickSlot = eventData.pointerDrag?.GetComponent<QuickSlot>();
 
-        // ½ÃÀÛÀÌ Äü½½·ÔÀÏ °æ¿ì
+        // ì‹œì‘ì´ í€µìŠ¬ë¡¯ì¼ ê²½ìš°
         if (startQuickSlot != null)
         {
-            // start°¡ inventory¿¡ ¿¬°á ¾ÈµÇ¾î ÀÖÀ¸¸é return
+            // startê°€ inventoryì— ì—°ê²° ì•ˆë˜ì–´ ìˆìœ¼ë©´ return
             if (startQuickSlot._linkedInventorySlotUI == null)
                 return;
 
-            // Çö(end) Äü½½·ÔÀÌ ÀÎº¥Åä¸®¿Í ¿¬°á ¾ÈµÇ¾î ÀÖÀ» °æ¿ì
+            // í˜„(end) í€µìŠ¬ë¡¯ì´ ì¸ë²¤í† ë¦¬ì™€ ì—°ê²° ì•ˆë˜ì–´ ìˆì„ ê²½ìš°
             if(_linkedInventorySlotUI == null)
             {
-                // startÀÇ ¿¬°á ½½·Ô°ú ¿¬°á
+                // startì˜ ì—°ê²° ìŠ¬ë¡¯ê³¼ ì—°ê²°
                 LinkToInventorySlotUI(startQuickSlot._linkedInventorySlotUI);
             }
-            else // ¿¬°áµÇ¾î ÀÖ´Â °æ¿ì
+            else // ì—°ê²°ë˜ì–´ ìˆëŠ” ê²½ìš°
             {
                 ItemSlotUI tempSlot = _linkedInventorySlotUI;
 
