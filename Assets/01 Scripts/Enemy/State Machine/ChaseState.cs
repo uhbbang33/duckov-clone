@@ -8,7 +8,7 @@ public class ChaseState : EnemyStateBase
     private float _gunRange;
     private float _timer;
 
-    private const float _updateInterval = 0.1f;
+    private const float _updateInterval = 1f;
 
     public ChaseState(Enemy enemy, EnemyData enemyData, float gunRange) : base(enemy, enemyData)
     {
@@ -18,18 +18,20 @@ public class ChaseState : EnemyStateBase
 
     public override void Enter()
     {
-        _enemy.Agent.isStopped = false;
         _timer = 0f;
-        _enemy.Agent.speed = _runSpeed;
-        _enemy.SetAnimation(EnemyAnimParm.Run, true);
         _playerTransform = _enemy.PlayerTransform;
+
+        _enemy.Agent.isStopped = false;
+        _enemy.Agent.speed = _runSpeed;
+        _enemy.Agent.SetDestination(_playerTransform.position);
+        _enemy.SetAnimation(EnemyAnimParm.Run, true);
     }
 
     public override void Update()
     {
         float distanceToPlayer = Vector3.Distance(_playerTransform.position, _enemy.EnemyTransform.position);
 
-        if (distanceToPlayer < _gunRange) {
+        if (distanceToPlayer < _gunRange * 0.5f) {
             _enemy.ChangeState(EnemyState.Attack);
             return;
         }

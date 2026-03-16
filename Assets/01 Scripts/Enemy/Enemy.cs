@@ -70,7 +70,7 @@ public class Enemy : MonoBehaviour
 
         _enemyData = _dataManager.GetEnemyData();
         _gunData = _dataManager.GetRandomGunData();
-       // _gunData = _dataManager.GetGun(GunType.M700);
+        //_gunData = _dataManager.GetGun(GunType.Glock);
         _ammoCnt = _gunData.MagazineCapacity;
         _gunObject = _poolManager.GetObject(_gunData.Id, _handTransform, true);
         _muzzleTransform = _gunObject.GetComponent<Gun>().MuzzleTransform;

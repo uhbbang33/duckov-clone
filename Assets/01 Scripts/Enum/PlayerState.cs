@@ -1,10 +1,10 @@
 
-public enum PlayerShootingState
+public enum PlayerFireState
 {
     Idle,
-    Shooting,
-    Reloading,
-    ChangingGun
+    Fire,
+    Reload,
+    ChangeGun
 }
 
 
