@@ -25,10 +25,14 @@ public class ChaseState : EnemyStateBase
         _enemy.Agent.speed = _runSpeed;
         _enemy.Agent.SetDestination(_playerTransform.position);
         _enemy.SetAnimation(EnemyAnimParm.Run, true);
+
+        _enemy.ShowTargetingIcon(true);
     }
 
     public override void Update()
     {
+
+
         float distanceToPlayer = Vector3.Distance(_playerTransform.position, _enemy.EnemyTransform.position);
 
         if (distanceToPlayer < _gunRange * 0.5f) {
@@ -53,6 +57,7 @@ public class ChaseState : EnemyStateBase
     public override void Exit()
     {
         _enemy.SetAnimation(EnemyAnimParm.Run, false);
+        _enemy.ShowTargetingIcon(false);
     }
 
 }

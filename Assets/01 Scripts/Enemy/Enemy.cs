@@ -10,6 +10,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Transform _handTransform;
     [SerializeField] private AudioSource _enemyAudioSource;
     [SerializeField] private float _dividendRTS = 1f;
+    [SerializeField] private GameObject _targetingIcon;
+    [SerializeField] private GameObject _warningIcon;
     
     private Animator _anim;
     private HealthPoint _hp;
@@ -218,6 +220,17 @@ public class Enemy : MonoBehaviour
         
         lootBox.GetComponent<LootBox>().EnemyGunData = _gunData;
     }
+
+    public void ShowTargetingIcon(bool show)
+    {
+        _targetingIcon.SetActive(show);
+    }
+
+    public void ShowWarningIcon(bool show)
+    {
+        _warningIcon.SetActive(show);
+    }
+
 
     #region Coroutine
 
