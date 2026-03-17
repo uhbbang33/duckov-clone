@@ -130,8 +130,7 @@ public class PlayerShooting : MonoBehaviour
     private void OnReload(InputAction.CallbackContext context)
     {
         if (_currentGunItem == null
-            || _currentGunObject == null
-            || _state != PlayerFireState.Idle)
+            || _currentGunObject == null)
             return;
 
         Reload();
@@ -167,18 +166,17 @@ public class PlayerShooting : MonoBehaviour
 
     private void Reload()
     {
-        if (_currentGunItem.CurrentAmmoCount == _currentGunItem.MagazineCapacity
-            || _state != PlayerFireState.Idle)
+        if (_currentGunItem.CurrentAmmoCount == _currentGunItem.MagazineCapacity)
             return;
 
         // 인벤토리에 탄환이 있는지 확인
         if (!_inventory.HasItem(_currentGunItem.BulletId))
             return;
 
+        if (_fireCoroutine != null)
+            StopCoroutine(_fireCoroutine);
         if (_reloadCoroutine != null)
-        {
             StopCoroutine(_reloadCoroutine);
-        }
 
         _reloadCoroutine = StartCoroutine(ReloadRoutine());
     }
@@ -214,10 +212,6 @@ public class PlayerShooting : MonoBehaviour
 
     private IEnumerator ReloadRoutine()
     {
-        if (_fireCoroutine != null)
-            StopCoroutine(_fireCoroutine);
-
-
         _state = PlayerFireState.Reloading;
 
         SoundManager.Instance.PlayReloadSFX(true, _playerShootingAudioSource);

@@ -59,7 +59,7 @@ public class Player : MonoBehaviour
         if(_state == newState)
             return;
 
-        Debug.Log(newState.ToString());
+        //Debug.Log(newState.ToString());
 
         _state = newState;
 
