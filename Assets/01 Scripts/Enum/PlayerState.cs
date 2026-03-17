@@ -2,8 +2,8 @@
 public enum PlayerFireState
 {
     Idle,
-    Fire,
-    Reload,
+    Firing,
+    Reloading,
     ChangeGun
 }
 

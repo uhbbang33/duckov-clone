@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerShooting : MonoBehaviour
 {
@@ -79,8 +78,8 @@ public class PlayerShooting : MonoBehaviour
     {
         _actions = GetComponent<Player>().Actions;
 
-        _actions.Player.Fire.performed += OnFire;
-        _actions.Player.Fire.canceled += OnFire;
+        _actions.Player.Fire.performed += OnFirePerformed;
+        _actions.Player.Fire.canceled += OnFireCanceled;
         _actions.Player.Reload.performed += OnReload;
 
         _player = GetComponent<Player>();
@@ -94,42 +93,38 @@ public class PlayerShooting : MonoBehaviour
 
     private void OnDisable()
     {
-        _actions.Player.Fire.performed -= OnFire;
-        _actions.Player.Fire.canceled -= OnFire;
+        _actions.Player.Fire.performed -= OnFirePerformed;
+        _actions.Player.Fire.canceled -= OnFireCanceled;
         _actions.Player.Reload.performed -= OnReload;
     }
 
-    private void OnFire(InputAction.CallbackContext context)
+    private void OnFirePerformed(InputAction.CallbackContext context)
     {
+        _isFirePressed = true;
+
         if (_currentGunItem == null
             || _currentGunObject == null
             || _player.State == PlayerState.Running
-            //|| _playerMove.IsRun
+            || _player.State == PlayerState.Rolling
+            || _state == PlayerFireState.Reloading
             || _inventory.InventoryIsOpen)
-        {
-            _isFirePressed = false;
             return;
-        }
 
-        if (context.performed)
-        {
-            _isFirePressed = true;
+        if (_state != PlayerFireState.Idle)
+            return;
 
-            if (_state != PlayerFireState.Idle)
-                return;
+        _fireCoroutine = StartCoroutine(FireRoutine());
+    }
 
-            _fireCoroutine = StartCoroutine(FireRoutine());
-        }
-        else if (context.canceled)
-        {
-            _isFirePressed = false;
+    private void OnFireCanceled(InputAction.CallbackContext context)
+    {
+        _isFirePressed = false;
 
-            if (_fireCoroutine != null)
-                StopCoroutine(_fireCoroutine);
+        if (_fireCoroutine != null)
+            StopCoroutine(_fireCoroutine);
 
-            if (_state == PlayerFireState.Fire)
-                _state = PlayerFireState.Idle;
-        }
+        if (_state == PlayerFireState.Firing)
+            _state = PlayerFireState.Idle;
     }
 
     private void OnReload(InputAction.CallbackContext context)
@@ -208,7 +203,7 @@ public class PlayerShooting : MonoBehaviour
                     break;
                 }
 
-                _state = PlayerFireState.Fire;
+                _state = PlayerFireState.Firing;
 
                 Fire();
                 yield return new WaitForSeconds(1.0f / _currentGunItem.Rps);
@@ -223,7 +218,7 @@ public class PlayerShooting : MonoBehaviour
             StopCoroutine(_fireCoroutine);
 
 
-        _state = PlayerFireState.Reload;
+        _state = PlayerFireState.Reloading;
 
         SoundManager.Instance.PlayReloadSFX(true, _playerShootingAudioSource);
 
