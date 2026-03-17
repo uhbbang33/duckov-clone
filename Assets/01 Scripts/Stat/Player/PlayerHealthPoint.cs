@@ -59,8 +59,7 @@ public class PlayerHealthPoint : HealthPoint
     {
         base.Death();
 
-        // 게임 오버
-
+        _player.ChangePlayerState(PlayerState.Die);
     }
 
     protected override void ChangeHPSliderValue()

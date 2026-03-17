@@ -8,10 +8,11 @@ public enum PlayerFireState
 }
 
 
-public enum PlayerMoveState
+public enum PlayerState
 {
     Idle,
-    Move,
-    Run,
-    Roll
+    Walking,
+    Running,
+    Rolling,
+    Die
 }

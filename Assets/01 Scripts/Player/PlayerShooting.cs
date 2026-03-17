@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class PlayerShooting : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class PlayerShooting : MonoBehaviour
     private Gun _currentGun;
     private GunItem _currentGunItem;
     private InputActions _actions;
+    private Player _player;
     private PlayerMove _playerMove;
     private PlayerEnemyScanner _playerEnemyScanner;
     private Inventory _inventory;
@@ -54,7 +56,7 @@ public class PlayerShooting : MonoBehaviour
         set { _currentGunItem = value; }
     }
 
-    public PlayerFireState State
+    public PlayerFireState FireState
     {
         get { return _state; }
         set { _state = value; }
@@ -81,6 +83,7 @@ public class PlayerShooting : MonoBehaviour
         _actions.Player.Fire.canceled += OnFire;
         _actions.Player.Reload.performed += OnReload;
 
+        _player = GetComponent<Player>();
         _playerMove = GetComponent<PlayerMove>();
         _inventory = GetComponent<Inventory>();
         _playerEquip = GetComponent<PlayerEquip>();
@@ -100,7 +103,8 @@ public class PlayerShooting : MonoBehaviour
     {
         if (_currentGunItem == null
             || _currentGunObject == null
-            || _playerMove.IsRun
+            || _player.State == PlayerState.Running
+            //|| _playerMove.IsRun
             || _inventory.InventoryIsOpen)
         {
             _isFirePressed = false;

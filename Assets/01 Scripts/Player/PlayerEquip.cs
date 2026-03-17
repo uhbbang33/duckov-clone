@@ -64,7 +64,7 @@ public class PlayerEquip : MonoBehaviour
     private void EquipLeftSlotGun(InputAction.CallbackContext context)
     {
         if (_isLeftSlotActivated
-            || _playerShooting.State != PlayerFireState.Idle)
+            || _playerShooting.FireState != PlayerFireState.Idle)
             return;
 
         _isLeftSlotActivated = true;
@@ -75,7 +75,7 @@ public class PlayerEquip : MonoBehaviour
     private void EquipRightSlotGun(InputAction.CallbackContext context)
     {
         if (_isRightSlotActivated
-             || _playerShooting.State != PlayerFireState.Idle)
+             || _playerShooting.FireState != PlayerFireState.Idle)
             return;
 
         _isLeftSlotActivated = false;
@@ -107,7 +107,7 @@ public class PlayerEquip : MonoBehaviour
 
     private void ApplyEquipState(EquipSlot equipSlot)
     {
-        _playerShooting.State = PlayerFireState.ChangeGun;
+        _playerShooting.FireState = PlayerFireState.ChangeGun;
 
         bool hasItem = equipSlot.CurrentItem != null;
 
@@ -203,7 +203,7 @@ public class PlayerEquip : MonoBehaviour
         _playerShooting.CurrentGunObject = _gunObject;
         _playerShooting.CurrentGunItem = _currentSelectedSlot.CurrentItem as GunItem;
 
-        _playerShooting.State = PlayerFireState.Idle;
+        _playerShooting.FireState = PlayerFireState.Idle;
     }
 
     public void DestroyPefab()
@@ -216,7 +216,7 @@ public class PlayerEquip : MonoBehaviour
         _playerShooting.CurrentGunObject = null;
         _playerShooting.CurrentGunItem = null;
 
-        _playerShooting.State = PlayerFireState.Idle;
+        _playerShooting.FireState = PlayerFireState.Idle;
     }
 
     #endregion

@@ -15,9 +15,13 @@ public class Player : MonoBehaviour
     private PlayerMoveData _playerMoveData;
     private PlayerSoundData _playerSoundData;
 
+    private PlayerState _state;
+
     public PlayerBaseData BaseData {  get { return _playerBaseData; } }
     public PlayerMoveData MoveData {  get { return _playerMoveData; } }
     public PlayerSoundData SoundData { get { return _playerSoundData; } }
+
+    public PlayerState State {  get { return _state; } }
 
     public event Action OnPlayerDataInitialized;
 
@@ -30,6 +34,8 @@ public class Player : MonoBehaviour
         _sp = GetComponent<StaminaPoint>();
         _hunger = GetComponent<Hunger>();
         _hydration = GetComponent<Hydration>();
+
+        _state = PlayerState.Idle;
     }
 
     private void Start()
@@ -46,6 +52,21 @@ public class Player : MonoBehaviour
     private void OnDestroy()
     {
         _inputActions.Player.Disable();
+    }
+
+    public void ChangePlayerState(PlayerState newState)
+    {
+        if(_state == newState)
+            return;
+
+        Debug.Log(newState.ToString());
+
+        _state = newState;
+
+        if(newState == PlayerState.Die)
+        {
+            // GameOver - GameManager
+        }
     }
 
     public bool UseItem(UsableItem item)

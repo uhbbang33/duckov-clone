@@ -19,8 +19,7 @@ public class PlayerMove : MonoBehaviour
     private Vector3 _lookDirection;
     private Vector3 _rollDirection;
     private float _rollCoolTime;
-    private bool _isRun;
-    private bool _isRoll;
+    private bool _isRunButtonPressed;
     private float _speedDebuffRate;
     private bool _isZeroHydration;
 
@@ -37,7 +36,6 @@ public class PlayerMove : MonoBehaviour
     public event Action OnWalk;
     public event Action OnWalkCancel;
 
-    public bool IsRun {  get { return _isRun; } }
     public Transform LookBaseTransform
     {
         get { return _lookBaseTransform; }
@@ -74,9 +72,7 @@ public class PlayerMove : MonoBehaviour
         _mousePosition = Vector2.zero;
         _lookDirection = Vector3.zero;
         _rollDirection = Vector3.zero;
-        _isRun = false;
-        _isRoll = false;
-
+        
         _lookBaseTransform = _originLookBaseTransform;
     }
 
@@ -100,7 +96,7 @@ public class PlayerMove : MonoBehaviour
         Vector3 dir = new();
         float speed = 0f;
 
-        if (_isRoll)
+        if (_player.State == PlayerState.Rolling)
         {
             dir = _rollDirection;
             speed = _playerMoveData.RollMoveSpeed;
@@ -108,7 +104,7 @@ public class PlayerMove : MonoBehaviour
         else
         {
             dir = SetDirection(_moveInput);
-            speed = _isRun ? _playerMoveData.RunSpeed : _playerMoveData.WalkSpeed;
+            speed = (_player.State == PlayerState.Running) ? _playerMoveData.RunSpeed : _playerMoveData.WalkSpeed;
         }
 
         speed *= ((100f - _speedDebuffRate) / 100f);
@@ -149,28 +145,26 @@ public class PlayerMove : MonoBehaviour
 
             dir.y = 0;
 
-            if (dir.sqrMagnitude > 0.01f && !_isRoll)
+            if (dir.sqrMagnitude > 0.01f
+                && _player.State != PlayerState.Rolling)
             {
                 Vector3 lookDir = dir.normalized;
                 _lookDirection = lookDir;
 
-                if (!_isRoll)
+                Quaternion targetRotation;
+                if (_player.State == PlayerState.Running)
                 {
-                    Quaternion targetRotation;
-                    if (_isRun)
+                    Vector3 runDir = SetDirection(_moveInput);
+                    if (runDir.sqrMagnitude > 0.01f)
                     {
-                        Vector3 runDir = SetDirection(_moveInput);
-                        if (runDir.sqrMagnitude > 0.01f)
-                        {
-                            targetRotation = Quaternion.LookRotation(runDir);
-                            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, _runTurnSpeed * Time.deltaTime);
-                        }
+                        targetRotation = Quaternion.LookRotation(runDir);
+                        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, _runTurnSpeed * Time.deltaTime);
                     }
-                    else
-                    {
-                        targetRotation = Quaternion.LookRotation(lookDir);
-                        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, _mouseTurnSpeed * Time.deltaTime);
-                    }
+                }
+                else
+                {
+                    targetRotation = Quaternion.LookRotation(lookDir);
+                    transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, _mouseTurnSpeed * Time.deltaTime);
                 }
             }
         }
@@ -239,11 +233,15 @@ public class PlayerMove : MonoBehaviour
         _moveInput = context.ReadValue<Vector2>().normalized;
         _anim.SetBool("IsWalk", true);
 
-        if (_isRun)
-            _sp.ReduceSPPerSecond(_playerMoveData.RunSPCost);
-
-        if (!_isRun)
+        if (_isRunButtonPressed)
+        {
+            StartRun();
+        }
+        else
+        {
             OnWalk?.Invoke();
+            _player.ChangePlayerState(PlayerState.Walking);
+        }
     }
 
     private void OnMoveCanceled(InputAction.CallbackContext context)
@@ -253,33 +251,27 @@ public class PlayerMove : MonoBehaviour
 
         _sp.IsReducing = false;
 
+        if (_player.State != PlayerState.Rolling)
+            _player.ChangePlayerState(PlayerState.Idle);
+
         OnWalkCancel?.Invoke();
     }
 
     private void OnRunPerformed(InputAction.CallbackContext context)
     {
-        if (_sp.CurrentSP < _playerMoveData.RunSPCost)
-            return;
-
-        if (_rb.linearVelocity != Vector3.zero)
-        {
-            _sp.ReduceSPPerSecond(_playerMoveData.RunSPCost);
-
-            _isRun = true;
-            _anim.SetBool("IsRun", true);
-            _playerShooting.IsFirePressed = false;
-            OnRun?.Invoke();
-        }
+        _isRunButtonPressed = true;
+        StartRun();
     }
 
     private void OnRunCanceled(InputAction.CallbackContext context)
     {
+        _isRunButtonPressed = false;
         StopRun();
     }
 
     private void OnRollPerformed(InputAction.CallbackContext context)
     {
-        if (_isRoll || _rollCoolTime > 0f)
+        if (_player.State == PlayerState.Rolling || _rollCoolTime > 0f)
             return;
 
         if (_sp.CurrentSP < _playerMoveData.RollSPCost) 
@@ -287,7 +279,7 @@ public class PlayerMove : MonoBehaviour
 
         _sp.ReduceSPImmediately(_playerMoveData.RollSPCost);
 
-        _isRoll = true;
+        _player.ChangePlayerState(PlayerState.Rolling);
 
         // dir - move
         if (_moveInput != Vector2.zero)
@@ -316,15 +308,35 @@ public class PlayerMove : MonoBehaviour
 
     #endregion Input System
 
+    private void StartRun()
+    {
+        if (_sp.CurrentSP < _playerMoveData.RunSPCost)
+            return;
+
+        if (_rb.linearVelocity == Vector3.zero)
+            return;
+
+        _sp.ReduceSPPerSecond(_playerMoveData.RunSPCost);
+
+        _player.ChangePlayerState(PlayerState.Running);
+        _anim.SetBool("IsRun", true);
+        _playerShooting.IsFirePressed = false;
+        OnRun?.Invoke();
+    }
+
     private void StopRun()
     {
-        if (_isRun)
-        {
-            OnRunCancel?.Invoke();
-            _sp.IsReducing = false;
-            _isRun = false;
-            _anim.SetBool("IsRun", false);
-        }
+        if (_player.State != PlayerState.Running)
+            return;
+
+        if (_moveInput != Vector2.zero)
+            _player.ChangePlayerState(PlayerState.Walking);
+        else
+            _player.ChangePlayerState(PlayerState.Idle);
+
+        _anim.SetBool("IsRun", false);
+        _sp.IsReducing = false;
+        OnRunCancel?.Invoke();
     }
 
     private void EnableZeroHydration()
@@ -358,6 +370,14 @@ public class PlayerMove : MonoBehaviour
 
         _rollCoolTime = _playerMoveData.RollCooldown;
 
-        _isRoll = false;
+        if (_moveInput != Vector2.zero)
+        {
+            if (_isRunButtonPressed)
+                _player.ChangePlayerState(PlayerState.Running);
+            else
+                _player.ChangePlayerState(PlayerState.Walking);
+        }
+        else
+            _player.ChangePlayerState(PlayerState.Idle);
     }
 }
