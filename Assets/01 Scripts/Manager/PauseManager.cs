@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
 public class PauseManager : SingletonMonoBehaviour<PauseManager>
 {
@@ -41,6 +42,8 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager>
         Time.timeScale = 0f;
 
         _pauseUI.SetActive(true);
+
+        EventSystem.current.SetSelectedGameObject(null);
 
         // TODO : Sound Pause
     }
