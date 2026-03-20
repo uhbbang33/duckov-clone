@@ -76,7 +76,11 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager>
 
     public void OnClickQuit()
     {
-
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 
     #endregion On Button Clcik
