@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameManager : SingletonMonoBehaviour<GameManager>
 {
@@ -8,6 +9,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     [SerializeField] private GameObject _dropItemPrefab;
 
+    private InputActions _inputActions;
     private Box _currentBox;
     private Box _currentOpenBox;
     private Inventory _inventory;
@@ -17,6 +19,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     public GameObject PlayerObject { get { return _playerObject; } }
     public GameObject[] BoxItemSlots { get { return _boxItemSlots; } }
     public Inventory Inventory { get { return _inventory; } }
+    public InputActions Actions { get { return _inputActions; } }
 
     public Box CurrentBox
     {
@@ -35,6 +38,14 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         base.Awake();
 
         _inventory = _playerObject.GetComponent<Inventory>();
+        _inputActions = new InputActions();
+        _inputActions.Player.Enable();
+
+    }
+
+    private void OnDestroy()
+    {
+        _inputActions.Player.Disable();
     }
 
     // TODO : PoolManager?
