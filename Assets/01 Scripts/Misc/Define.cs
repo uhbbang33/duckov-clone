@@ -1,3 +1,10 @@
+
+public struct SceneName
+{
+    public const string TitleScene = "TitleScene";
+    public const string FieldScene = "FieldScene";
+}
+
 public struct ItemType
 {
     public const string Gun = "Gun";
