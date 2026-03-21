@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 
 public class PauseManager : SingletonMonoBehaviour<PauseManager>
@@ -69,7 +68,7 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager>
         _isPaused = false;
         Resume();
 
-        SceneManager.LoadSceneAsync(SceneName.TitleScene);
+        SceneLoader.Instance.LoadScene(SceneName.TitleScene);
     }
 
     public void OnClickSettings()

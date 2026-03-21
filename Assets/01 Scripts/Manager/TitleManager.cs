@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class TitleManager : MonoBehaviour
 {
@@ -11,13 +10,13 @@ public class TitleManager : MonoBehaviour
     public void OnClickNewGame()
     {
         Cursor.visible = false;
-        SceneManager.LoadSceneAsync(SceneName.FieldScene);
+        SceneLoader.Instance.LoadScene(SceneName.FieldScene);
     }
 
     public void OnClickLoadGame()
     {
         Cursor.visible = false;
-        SceneManager.LoadSceneAsync(SceneName.FieldScene);
+        SceneLoader.Instance.LoadScene(SceneName.FieldScene);
     }
 
     public void OnClickSettings()
