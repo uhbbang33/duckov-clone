@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class LoadingUI : SingletonMonoBehaviour<LoadingUI>
 {
-    [SerializeField] private float _fadeDuration;
+    [SerializeField] private float _fadeInDuration = 2.0f;
+    [SerializeField] private float _fadeOutDuration = 2.0f;
 
     private CanvasGroup _canvasGroup;
 
@@ -23,25 +24,24 @@ public class LoadingUI : SingletonMonoBehaviour<LoadingUI>
 
         float startAlpha = _canvasGroup.alpha;
         float timer = 0f;
-        while(timer < _fadeDuration)
+        while(timer < _fadeInDuration)
         {
             timer += Time.unscaledDeltaTime; 
-            _canvasGroup.alpha = Mathf.Lerp(startAlpha, 1f, timer / _fadeDuration);
+            _canvasGroup.alpha = Mathf.Lerp(startAlpha, 1f, timer / _fadeInDuration);
             yield return null;
         }
 
         _canvasGroup.alpha = 1f;
     }
 
-
     public IEnumerator FadeOut()
     {
         float startAlpha = _canvasGroup.alpha;
         float timer = 0f;
-        while (timer < _fadeDuration)
+        while (timer < _fadeOutDuration)
         {
             timer += Time.unscaledDeltaTime;
-            _canvasGroup.alpha = Mathf.Lerp(startAlpha, 0f, timer / _fadeDuration);
+            _canvasGroup.alpha = Mathf.Lerp(startAlpha, 0f, timer / _fadeOutDuration);
             yield return null;
         }
 

@@ -4,8 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : SingletonMonoBehaviour<SceneLoader>
 {
-    private const float _loadDuration = 1.0f;
-
+    [SerializeField] private float _loadDuration = 1.0f;
 
     protected override void Awake()
     {
@@ -38,6 +37,6 @@ public class SceneLoader : SingletonMonoBehaviour<SceneLoader>
             yield return null;
 
 
-        yield return LoadingUI.Instance.FadeOut();
+        StartCoroutine(LoadingUI.Instance.FadeOut());
     }
 }
