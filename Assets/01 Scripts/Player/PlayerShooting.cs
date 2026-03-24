@@ -113,18 +113,14 @@ public class PlayerShooting : MonoBehaviour
         if (_state != PlayerFireState.Idle)
             return;
 
+        if (_fireCoroutine != null)
+            return;
         _fireCoroutine = StartCoroutine(FireRoutine());
     }
 
     private void OnFireCanceled(InputAction.CallbackContext context)
     {
         _isFirePressed = false;
-
-        if (_fireCoroutine != null)
-            StopCoroutine(_fireCoroutine);
-
-        if (_state == PlayerFireState.Firing)
-            _state = PlayerFireState.Idle;
     }
 
     private void OnReload(InputAction.CallbackContext context)
@@ -174,10 +170,13 @@ public class PlayerShooting : MonoBehaviour
             return;
 
         if (_fireCoroutine != null)
+        {
             StopCoroutine(_fireCoroutine);
+            _fireCoroutine = null;
+        }
+        
         if (_reloadCoroutine != null)
             StopCoroutine(_reloadCoroutine);
-
         _reloadCoroutine = StartCoroutine(ReloadRoutine());
     }
 
@@ -189,25 +188,23 @@ public class PlayerShooting : MonoBehaviour
         {
             if (_currentGunItem.CurrentAmmoCount <= 0)
             {
-                _state = PlayerFireState.Idle;
                 Reload();
                 break;
             }
-            else
+            else if (_state == PlayerFireState.Idle)
             {
-                if (_state != PlayerFireState.Idle)
-                {
-                    _state = PlayerFireState.Idle;
-                    break;
-                }
-
                 _state = PlayerFireState.Firing;
 
                 Fire();
                 yield return new WaitForSeconds(1.0f / _currentGunItem.Rps);
+
                 _state = PlayerFireState.Idle;
             }
+            else
+                break;
         }
+
+        _fireCoroutine = null;
     }
 
     private IEnumerator ReloadRoutine()
