@@ -21,6 +21,7 @@ public class PatrolState : EnemyStateBase
         _enemy.Agent.speed = _walkSpeed;
 
         _enemy.SetAnimation(EnemyAnimParm.Walk, true);
+        _enemy.SetAnimation(EnemyAnimParm.ArmRaised, false);
 
         // 순찰 반경 내에서 랜덤한 목적지 설정
         SetRandomDestination();

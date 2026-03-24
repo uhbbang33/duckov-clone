@@ -25,6 +25,7 @@ public class ChaseState : EnemyStateBase
         _enemy.Agent.speed = _runSpeed;
         _enemy.Agent.SetDestination(_playerTransform.position);
         _enemy.SetAnimation(EnemyAnimParm.Run, true);
+        _enemy.SetAnimation(EnemyAnimParm.ArmRaised, true);
 
         _enemy.ShowTargetingIcon(true);
     }

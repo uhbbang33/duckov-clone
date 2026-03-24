@@ -10,6 +10,7 @@ public class IdleState : EnemyStateBase
     public override void Enter()
     {
         _enemy.Agent.isStopped = true;
+        _enemy.SetAnimation(EnemyAnimParm.ArmRaised, false);
         _timer = 0;
     }
 
