@@ -83,7 +83,7 @@ public class Enemy : MonoBehaviour
         DeactivateGun();
 
         _hp.MaxHP = _enemyData.MaxHP;
-        HealMaxHP();
+        HealHP(_hp.MaxHP);
 
         _playerTransform = GameManager.Instance.PlayerObject.transform;
         Vector3 spawnPosition = transform.position;
@@ -190,9 +190,9 @@ public class Enemy : MonoBehaviour
         return (_playerTransform.position - _muzzleTransform.position).normalized;
     }
 
-    public void HealMaxHP()
+    public void HealHP(float healAmount)
     {
-        _hp.Heal(_hp.MaxHP);
+        _hp.Heal(healAmount);
     }
 
     public void PlayFireSound()

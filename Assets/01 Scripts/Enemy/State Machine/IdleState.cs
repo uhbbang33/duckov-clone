@@ -3,7 +3,9 @@ using UnityEngine;
 public class IdleState : EnemyStateBase
 {
     private float _timer;
+    private float _healTimer;
     private const float _idleTime = 3f;
+    private const float _healPerTickAmount = 1f;
 
     public IdleState(Enemy enemy, EnemyData enemyData) : base(enemy, enemyData) { }
 
@@ -12,6 +14,7 @@ public class IdleState : EnemyStateBase
         _enemy.Agent.isStopped = true;
         _enemy.SetAnimation(EnemyAnimParm.ArmRaised, false);
         _timer = 0;
+        _healTimer = 0;
     }
 
     public override void Update()
@@ -22,8 +25,19 @@ public class IdleState : EnemyStateBase
             return;
         }
 
+        if (_enemy.HP.CurrentHP < _enemy.HP.MaxHP)
+        {
+            _healTimer += Time.deltaTime;
+            if (_healTimer >= 0.05f)
+            {
+                _enemy.HealHP(_healPerTickAmount);
+                _healTimer = 0f;
+            }
+            return;
+        }
+
         _timer += Time.deltaTime;
-        if (_timer > _idleTime)
+        if (_timer >= _idleTime)
         {
             _enemy.ChangeState(EnemyState.Patrol);
             return;

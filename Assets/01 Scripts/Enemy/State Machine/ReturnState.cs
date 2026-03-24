@@ -29,7 +29,7 @@ public class ReturnState : EnemyStateBase
 
         if (_enemy.Agent.remainingDistance <= _enemy.Agent.stoppingDistance)
         {
-            _enemy.HealMaxHP();
+            _enemy.HealHP(_enemy.HP.MaxHP);
             _enemy.ChangeState(EnemyState.Idle);
             return;
         }
