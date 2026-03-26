@@ -25,16 +25,13 @@ public class Enemy : MonoBehaviour
     private EnemyData _enemyData;
     private GunData _gunData;
     private GameObject _gunObject;
-
-    private Coroutine _detectPlayerCoroutine;
-    private WaitForSeconds _waitForDetectPlayerDuration;
-
     private EnemyStateBase _currentState;
     private Dictionary<EnemyState, EnemyStateBase> _stateDictionary;
 
     private bool _isDetectPlayer;
     private uint _ammoCnt;
     private Vector3 _lootBoxOffset;
+    private Vector3 _lastSeenPlayerPosition;
 
     public NavMeshAgent Agent { get { return _agent; } }
     public Transform PlayerTransform { get { return _playerTransform; } }
@@ -53,15 +50,13 @@ public class Enemy : MonoBehaviour
         get { return _dividendRTS; }
         set { _dividendRTS = value; }
     }
-
+    public Vector3 LastSeenPlayerPosition { get { return _lastSeenPlayerPosition; } }
 
     private void Awake()
     {
         _anim = GetComponent<Animator>();
         _hp = GetComponent<HealthPoint>();
         _agent = GetComponent<NavMeshAgent>();
-
-        _waitForDetectPlayerDuration = new WaitForSeconds(_detectPlayerDuration);
     }
 
     private void Start()
@@ -114,7 +109,7 @@ public class Enemy : MonoBehaviour
 
     public void ChangeState(EnemyState newState)
     {
-        //Debug.Log(newState);
+        Debug.Log(newState);
 
         _currentState?.Exit();
         _currentState = _stateDictionary[newState];
@@ -126,48 +121,48 @@ public class Enemy : MonoBehaviour
         _anim.SetBool(param, value);
     }
 
-    public void DetectPlayerBySight()
+    public void DetectPlayer(float playerSoundLevel)
+    {
+        if (DetectPlayerBySight() || DetectPlayerBySound(playerSoundLevel))
+            _isDetectPlayer = true;
+        else 
+            _isDetectPlayer = false;
+    }
+
+    private bool DetectPlayerBySight()
     {
         Vector3 dirToPlayer = GetDirectionToPlayer();
         float distToPlayer = GetDistanceToPlayer();
 
         // 거리
         if (distToPlayer > _enemyData.SightDistance)
-            return;
+            return false;
 
         // 각도
         float angle = Vector3.Angle(transform.forward, dirToPlayer);
         if (angle > _enemyData.SightAngle / 2f)
-            return;
+            return false;
 
         // 장애물
         if (Physics.Raycast(transform.position, dirToPlayer.normalized, distToPlayer, _obstacleLayer))
-        {
-            // 옆으로 돌아가기
+            return false;
 
-
-            return;
-        }
-
-        if (_detectPlayerCoroutine != null)
-            StopCoroutine(_detectPlayerCoroutine);
-
-        _detectPlayerCoroutine = StartCoroutine(DetectPlayerRoutine());
+        _lastSeenPlayerPosition = _playerTransform.position;
+        return true;
     }
 
-    public void DetectPlayerBySound(float playerSoundLevel)
+    private bool DetectPlayerBySound(float playerSoundLevel)
     {
         float distToPlayer = GetDistanceToPlayer();
         float soundLevelByDist = playerSoundLevel / distToPlayer;
-        //Debug.Log("Sound Level By Dist : " + soundLevelByDist);
 
         if (soundLevelByDist >= _enemyData.SoundDetectionLevel)
         {
-            if (_detectPlayerCoroutine != null)
-                StopCoroutine(_detectPlayerCoroutine);
-
-            _detectPlayerCoroutine = StartCoroutine(DetectPlayerRoutine());
+            _lastSeenPlayerPosition = _playerTransform.position;
+            return true;
         }
+        else
+            return false;
     }
 
     public void LostPlayer()
@@ -234,14 +229,6 @@ public class Enemy : MonoBehaviour
 
     #region Coroutine
 
-    private IEnumerator DetectPlayerRoutine()
-    {
-        _isDetectPlayer = true;
-
-        yield return _waitForDetectPlayerDuration;
-
-        _isDetectPlayer = false;
-    }
 
     #endregion
 

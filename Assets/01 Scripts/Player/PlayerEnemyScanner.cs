@@ -91,8 +91,7 @@ public class PlayerEnemyScanner : MonoBehaviour
 
         foreach (Enemy enemy in _current)
         {
-            enemy.DetectPlayerBySound(_soundLevel);
-            enemy.DetectPlayerBySight();
+            enemy.DetectPlayer(_soundLevel);
         }
     }
 
