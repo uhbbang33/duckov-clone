@@ -28,31 +28,27 @@ public class AttackState : EnemyStateBase
 
     public override void Update()
     {
-        if (_enemy.HP.CurrentHP <= 0)
-            _enemy.ChangeState(EnemyState.Death);
-
-        float distToPlayer = _enemy.GetDistanceToPlayer();
-        if (_gunData.Range < distToPlayer
-            || !_enemy.IsDetectPlayer)
-        {
-            _enemy.ChangeState(EnemyState.Return);
-            return;
-        }
-
-        LookPlayer();
-
         if (!_enemy.GunObject.activeSelf)
             return;
 
         if (ReloadGun())
             return;
 
-        // Fire Gun
+        LookPlayer();
+
         _attackTimer += Time.deltaTime;
+
+        // 공격 쿨타임
         if (_attackTimer >= (1 / _gunData.Rps) * _enemyData.FireIntervalMultiplier)
         {
-            FireGun();
-            _attackTimer = 0f;
+            // 사거리
+            if (_enemy.IsPlayerInAttackRange())
+            {
+                FireGun();
+                _attackTimer = 0f;
+            }
+            else if (!_enemy.IsPlayerInAttackRange())
+                _enemy.ChangeState(EnemyState.Chase);
         }
     }
 
@@ -68,7 +64,7 @@ public class AttackState : EnemyStateBase
     private void FireGun()
     {
         // Bullet
-        Vector3 dir = _enemy.GetDirectionToPlayer();
+        Vector3 dir = _enemy.GetMuzzleDirectionToPlayer();
         dir.y = 0f;
 
         GameObject bulletObject = _poolManager.GetObject(PoolId.Bullet, _enemy.MuzzleTransform, false);
@@ -124,7 +120,7 @@ public class AttackState : EnemyStateBase
         if (dist < 1f)
             return;
 
-        Vector3 lookDir = _enemy.GetDirectionToPlayer();
+        Vector3 lookDir = _enemy.GetMuzzleDirectionToPlayer();
         lookDir.y = 0f;
 
         Quaternion targetRotation = Quaternion.LookRotation(lookDir);

@@ -2,29 +2,24 @@ using UnityEngine;
 
 public class ChaseState : EnemyStateBase
 {
-    private Transform _playerTransform;
-
     private float _runSpeed;
-    private float _gunRange;
     private float _setDestinationTimer;
     private float _findTimer;
     private bool _isFindingPlayer;
 
     private const float _findDuration = 3f;
     private const float _updateDestinationInterval = 1f;
-    private const float _attackRangeMultiplier = 0.8f;
 
-    public ChaseState(Enemy enemy, EnemyData enemyData, float gunRange) : base(enemy, enemyData)
+    public ChaseState(Enemy enemy, EnemyData enemyData) : base(enemy, enemyData)
     {
         _runSpeed = enemyData.RunSpeed;
-        _gunRange = gunRange;
     }
 
     public override void Enter()
     {
         _findTimer = 0f;
         _setDestinationTimer = 0f;
-        _playerTransform = _enemy.PlayerTransform;
+        _isFindingPlayer = false;
 
         _enemy.Agent.isStopped = false;
         _enemy.Agent.speed = _runSpeed;
@@ -38,10 +33,8 @@ public class ChaseState : EnemyStateBase
 
     public override void Update()
     {
-        //float distanceToPlayer = Vector3.Distance(_playerTransform.position, _enemy.EnemyTransform.position);
-
         // (총 사거리 * 0.8) 안에 플레이어가 있다면 attack상태로 전환
-        if (_enemy.GetDistanceToPlayer() <= _gunRange * _attackRangeMultiplier)
+        if (_enemy.IsPlayerInAttackRange(-2f))
         {
             _enemy.ChangeState(EnemyState.Attack);
             return;
@@ -55,19 +48,25 @@ public class ChaseState : EnemyStateBase
             return;
         }
 
-        // 플레이어가 find Duration 동안 시야에 안보일 경우, Return상태로 전환
+        // 플레이어가 시야에 안보이다가 다시 보일 경우
+        if (_enemy.IsDetectPlayer && _isFindingPlayer)
+        {
+            _findTimer = 0f;
+            FindPlayer(false);
+        }
+
         if (_isFindingPlayer)
         {
+            // 플레이어가 find Duration 동안 시야에 안보일 경우, Return상태로 전환
             _findTimer += Time.deltaTime;
             if (_findTimer > _findDuration)
                 _enemy.ChangeState(EnemyState.Return);
 
+            if (_enemy.Agent.remainingDistance <= _enemy.Agent.stoppingDistance)
+                _enemy.SetAnimation(EnemyAnimParm.Walk, false);
+
             return;
         }
-
-        // 플레이어가 시야에 안보이다가 다시 보일 경우
-        if(_enemy.IsDetectPlayer && _isFindingPlayer)
-            FindPlayer(false);
 
         // interval 마다 플레이어가 있는 자리로 목적지 재설정
         _setDestinationTimer += Time.deltaTime;

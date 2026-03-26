@@ -32,6 +32,7 @@ public class Enemy : MonoBehaviour
     private uint _ammoCnt;
     private Vector3 _lootBoxOffset;
     private Vector3 _lastSeenPlayerPosition;
+    private const float _attackRangeMultiplier = 0.8f;
 
     public NavMeshAgent Agent { get { return _agent; } }
     public Transform PlayerTransform { get { return _playerTransform; } }
@@ -87,7 +88,7 @@ public class Enemy : MonoBehaviour
         {
             {EnemyState.Idle, new IdleState(this, _enemyData)},
             {EnemyState.Patrol, new PatrolState(this, _enemyData, spawnPosition)},
-            {EnemyState.Chase, new ChaseState(this, _enemyData, _gunData.Range)},
+            {EnemyState.Chase, new ChaseState(this, _enemyData)},
             {EnemyState.Return, new ReturnState(this, _enemyData, spawnPosition)},
             {EnemyState.Attack, new AttackState(this, _enemyData, _gunData)},
             {EnemyState.Death, new DeathState(this, _enemyData)}
@@ -144,7 +145,9 @@ public class Enemy : MonoBehaviour
             return false;
 
         // 장애물
-        if (Physics.Raycast(transform.position, dirToPlayer.normalized, distToPlayer, _obstacleLayer))
+        Vector3 eyePosition = transform.position + Vector3.up * 0.5f;
+
+        if (Physics.Raycast(eyePosition, dirToPlayer.normalized, distToPlayer, _obstacleLayer))
             return false;
 
         _lastSeenPlayerPosition = _playerTransform.position;
@@ -170,19 +173,24 @@ public class Enemy : MonoBehaviour
         _isDetectPlayer = false;
     }
 
+    public Vector3 GetDirectionToPlayer()
+    {
+        return (_playerTransform.position - transform.position).normalized;
+    }
+
     public float GetDistanceToPlayer()
     {
         return Vector3.Distance(transform.position, _playerTransform.position);
     }
 
+    public Vector3 GetMuzzleDirectionToPlayer()
+    {
+        return (_playerTransform.position - _muzzleTransform.position).normalized;
+    }
+
     public float GetDistanceMuzzleToPlayer()
     {
         return Vector3.Distance(_muzzleTransform.position, _playerTransform.position);
-    }
-
-    public Vector3 GetDirectionToPlayer()
-    {
-        return (_playerTransform.position - _muzzleTransform.position).normalized;
     }
 
     public void HealHP(float healAmount)
@@ -204,6 +212,14 @@ public class Enemy : MonoBehaviour
     {
         MakeLootBox();
         Destroy(gameObject);
+    }
+
+    public bool IsPlayerInAttackRange(float offset = 0f)
+    {
+        if (GetDistanceToPlayer() <= _gunData.Range * _attackRangeMultiplier + offset)
+            return true;
+
+        return false;
     }
 
     private void MakeLootBox()
