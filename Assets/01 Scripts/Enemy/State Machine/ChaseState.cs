@@ -7,7 +7,7 @@ public class ChaseState : EnemyStateBase
     private float _findTimer;
     private bool _isFindingPlayer;
 
-    private const float _findDuration = 3f;
+    private const float _findDuration = 5f;
     private const float _updateDestinationInterval = 1f;
 
     public ChaseState(Enemy enemy, EnemyData enemyData) : base(enemy, enemyData)

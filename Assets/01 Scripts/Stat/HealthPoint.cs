@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,9 @@ public class HealthPoint : MonoBehaviour
     [SerializeField] private Slider _HPBarSlider;
 
     protected float _currentHP;
+
+    public event Action OnHpChanged;
+
     public float CurrentHP
     {
         get { return _currentHP; }
@@ -29,6 +33,8 @@ public class HealthPoint : MonoBehaviour
             _currentHP = _maxHP;
 
         ChangeHPSliderValue();
+        OnHpChanged?.Invoke();
+
         return true;
     }
 
@@ -44,6 +50,7 @@ public class HealthPoint : MonoBehaviour
         }
 
         ChangeHPSliderValue();
+        OnHpChanged?.Invoke();
     }
 
     protected virtual void Death()

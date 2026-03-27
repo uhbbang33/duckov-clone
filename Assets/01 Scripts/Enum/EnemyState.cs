@@ -6,5 +6,6 @@ public enum EnemyState
     Chase,
     Return,
     Attack,
+    Flee,
     Death
 }

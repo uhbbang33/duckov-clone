@@ -9,7 +9,6 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float _detectPlayerDuration;
     [SerializeField] private Transform _handTransform;
     [SerializeField] private AudioSource _enemyAudioSource;
-    [SerializeField] private float _dividendRTS = 1f;
     [SerializeField] private GameObject _targetingIcon;
     [SerializeField] private GameObject _warningIcon;
     
@@ -35,8 +34,6 @@ public class Enemy : MonoBehaviour
     private const float _attackRangeMultiplier = 0.8f;
 
     public NavMeshAgent Agent { get { return _agent; } }
-    public Transform PlayerTransform { get { return _playerTransform; } }
-    public Transform EnemyTransform { get { return transform; } }
     public Transform MuzzleTransform { get { return _muzzleTransform; } }
     public bool IsDetectPlayer { get { return _isDetectPlayer; } }
     public GameObject GunObject { get { return _gunObject; } }
@@ -46,11 +43,6 @@ public class Enemy : MonoBehaviour
         set { _ammoCnt = value; }
     }
     public HealthPoint HP { get { return _hp; } }
-    public float DividendRTS
-    {
-        get { return _dividendRTS; }
-        set { _dividendRTS = value; }
-    }
     public Vector3 LastSeenPlayerPosition { get { return _lastSeenPlayerPosition; } }
 
     private void Awake()
@@ -79,6 +71,7 @@ public class Enemy : MonoBehaviour
         DeactivateGun();
 
         _hp.MaxHP = _enemyData.MaxHP;
+        _hp.OnHpChanged += HandleHpChanged;
         HealHP(_hp.MaxHP);
 
         _playerTransform = GameManager.Instance.PlayerObject.transform;
@@ -91,6 +84,7 @@ public class Enemy : MonoBehaviour
             {EnemyState.Chase, new ChaseState(this, _enemyData)},
             {EnemyState.Return, new ReturnState(this, _enemyData, spawnPosition)},
             {EnemyState.Attack, new AttackState(this, _enemyData, _gunData)},
+            {EnemyState.Flee, new FleeState(this, _enemyData, spawnPosition)},
             {EnemyState.Death, new DeathState(this, _enemyData)}
         };
 
@@ -99,13 +93,22 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
+        _currentState.Update();
+    }
+
+    private void HandleHpChanged()
+    {
         if (_hp.CurrentHP <= 0)
         {
             ChangeState(EnemyState.Death);
             return;
         }
 
-        _currentState.Update();
+        if (_hp.CurrentHP / _hp.MaxHP < 0.3f)
+        {
+            ChangeState(EnemyState.Flee);
+            return;
+        }
     }
 
     public void ChangeState(EnemyState newState)

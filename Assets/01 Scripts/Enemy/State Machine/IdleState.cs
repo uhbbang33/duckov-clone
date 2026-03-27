@@ -12,6 +12,8 @@ public class IdleState : EnemyStateBase
     public override void Enter()
     {
         _enemy.Agent.isStopped = true;
+        _enemy.SetAnimation(EnemyAnimParm.Run, false);
+        _enemy.SetAnimation(EnemyAnimParm.Walk, false);
         _enemy.SetAnimation(EnemyAnimParm.ArmRaised, false);
         _timer = 0;
         _healTimer = 0;
