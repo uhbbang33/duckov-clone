@@ -6,11 +6,13 @@ using UnityEngine.AI;
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private LayerMask _obstacleLayer;
+    [SerializeField] private LayerMask _groundLayer;
     [SerializeField] private float _detectPlayerDuration;
     [SerializeField] private Transform _handTransform;
     [SerializeField] private AudioSource _enemyAudioSource;
     [SerializeField] private GameObject _targetingIcon;
     [SerializeField] private GameObject _warningIcon;
+    [SerializeField] private List<Transform> _destinationTransformList;
     
     private Animator _anim;
     private HealthPoint _hp;
@@ -26,6 +28,7 @@ public class Enemy : MonoBehaviour
     private GameObject _gunObject;
     private EnemyStateBase _currentState;
     private Dictionary<EnemyState, EnemyStateBase> _stateDictionary;
+    private List<Vector3> _patrolDestinationList;
 
     private bool _isDetectPlayer;
     private uint _ammoCnt;
@@ -70,6 +73,9 @@ public class Enemy : MonoBehaviour
 
         DeactivateGun();
 
+        _patrolDestinationList = new List<Vector3>();
+        SetPatrolDestination();
+
         _hp.MaxHP = _enemyData.MaxHP;
         _hp.OnHpChanged += HandleHpChanged;
         HealHP(_hp.MaxHP);
@@ -80,7 +86,7 @@ public class Enemy : MonoBehaviour
         _stateDictionary = new Dictionary<EnemyState, EnemyStateBase>
         {
             {EnemyState.Idle, new IdleState(this, _enemyData)},
-            {EnemyState.Patrol, new PatrolState(this, _enemyData, spawnPosition)},
+            {EnemyState.Patrol, new PatrolState(this, _enemyData, _patrolDestinationList)},
             {EnemyState.Chase, new ChaseState(this, _enemyData)},
             {EnemyState.Return, new ReturnState(this, _enemyData, spawnPosition)},
             {EnemyState.Attack, new AttackState(this, _enemyData, _gunData)},
@@ -104,7 +110,7 @@ public class Enemy : MonoBehaviour
             return;
         }
 
-        if (_hp.CurrentHP / _hp.MaxHP < 0.3f)
+        if (_hp.CurrentHP / _hp.MaxHP < 0.1f)
         {
             ChangeState(EnemyState.Flee);
             return;
@@ -243,6 +249,26 @@ public class Enemy : MonoBehaviour
     public void ShowWarningIcon(bool show)
     {
         _warningIcon.SetActive(show);
+    }
+
+    private void SetPatrolDestination()
+    {
+        TryAddDestination(transform);
+
+        foreach (Transform point in _destinationTransformList)
+            TryAddDestination(point);
+    }
+
+    private void TryAddDestination(Transform point)
+    {
+        float raycastHeight = 10f;
+        float range = 2f;
+
+        Vector3 rayOrigin = new Vector3(point.position.x, point.position.y + raycastHeight, point.position.z);
+
+        if (Physics.Raycast(rayOrigin, Vector3.down, out RaycastHit hit, raycastHeight * 2f, _groundLayer))
+            if (NavMesh.SamplePosition(hit.point, out NavMeshHit navHit, range, NavMesh.AllAreas))
+                _patrolDestinationList.Add(navHit.position);
     }
 
 

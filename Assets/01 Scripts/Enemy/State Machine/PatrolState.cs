@@ -1,18 +1,18 @@
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class PatrolState : EnemyStateBase
 {
-    private Vector3 _spawnPosition;
-    private float _patrolRange;
     private float _walkSpeed;
-    private const float _minDistance = 2f;
+    private int _destinationCount;
+    private List<Vector3> _destinationList;
 
-    public PatrolState(Enemy enemy, EnemyData enemyData, Vector3 spawnPosition) : base(enemy, enemyData)
+    public PatrolState(Enemy enemy, EnemyData enemyData, List<Vector3> destinationList) : base(enemy, enemyData)
     {
-        _spawnPosition = spawnPosition;
-        _patrolRange = enemyData.PatrolRange;
         _walkSpeed = enemyData.WalkSpeed;
+        _destinationList = new List<Vector3>();
+        _destinationList = destinationList;
+        _destinationCount = 1;
     }
 
     public override void Enter()
@@ -23,8 +23,11 @@ public class PatrolState : EnemyStateBase
         _enemy.SetAnimation(EnemyAnimParm.Walk, true);
         _enemy.SetAnimation(EnemyAnimParm.ArmRaised, false);
 
-        // 순찰 반경 내에서 랜덤한 목적지 설정
-        SetRandomDestination();
+        SetDestination();
+
+        ++_destinationCount;
+        if (_destinationCount >= _destinationList.Count)
+            _destinationCount = 0;
     }
 
     public override void Update()
@@ -48,31 +51,8 @@ public class PatrolState : EnemyStateBase
         _enemy.SetAnimation(EnemyAnimParm.Walk, false);
     }
 
-    private void SetRandomDestination()
+    private void SetDestination()
     {
-        Vector3 randomDestination = GetRandomPointOnNavMesh();
-        _enemy.Agent.SetDestination(randomDestination);
-    }
-
-    private Vector3 GetRandomPointOnNavMesh()
-    {
-        int tryNum = 10;
-
-        for (int i = 0; i < tryNum; ++i)
-        {
-            Vector3 randomPoint = _spawnPosition + Random.insideUnitSphere * _patrolRange;
-            if (Vector3.Distance(randomPoint, _enemy.transform.position) < 3f)
-                continue;
-
-            if (NavMesh.SamplePosition(randomPoint, out NavMeshHit hit, 1f, NavMesh.AllAreas))
-            {
-                if (Vector3.Distance(_enemy.Agent.transform.position, hit.position) >= _minDistance)
-                {
-                    return hit.position;
-                }
-            }
-        }
-
-        return _spawnPosition;
+        _enemy.Agent.SetDestination(_destinationList[_destinationCount]);
     }
 }
