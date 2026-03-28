@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -12,6 +13,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject _targetingIcon;
     [SerializeField] private GameObject _warningIcon;
     [SerializeField] private List<Transform> _destinationTransformList;
+    [SerializeField] private float _eyeOffset;
     
     private Animator _anim;
     private HealthPoint _hp;
@@ -38,7 +40,11 @@ public class Enemy : MonoBehaviour
     private Vector3 _lastSeenPlayerPosition;
     private Vector3 _spawnPosition;
 
+    private Coroutine _changeStateCoroutine;
+    private WaitForSeconds _waitForStateChange;
+
     private const float _attackRangeMultiplier = 0.8f;
+    private const float _stateChangeDuration = 1f;
 
     public HealthPoint HP { get { return _hp; } }
     public NavMeshAgent Agent { get { return _agent; } }
@@ -92,6 +98,7 @@ public class Enemy : MonoBehaviour
 
         _playerTransform = GameManager.Instance.PlayerObject.transform;
         _spawnPosition = transform.position;
+        _waitForStateChange = new WaitForSeconds(_stateChangeDuration);
 
         _stateDictionary = new Dictionary<EnemyState, EnemyStateBase>
         {
@@ -113,11 +120,16 @@ public class Enemy : MonoBehaviour
 
     public void ChangeState(EnemyState newState)
     {
+        if (_changeStateCoroutine != null)
+            return;
+
         Debug.Log(newState);
 
         _currentState?.Exit();
         _currentState = _stateDictionary[newState];
         _currentState.Enter();
+
+        _changeStateCoroutine = StartCoroutine(ChangeStateRoutine());
     }
 
     public void SetAnimation(string param, bool value)
@@ -174,7 +186,7 @@ public class Enemy : MonoBehaviour
             return false;
 
         // 장애물
-        Vector3 eyePosition = transform.position + Vector3.up * 0.5f;
+        Vector3 eyePosition = transform.position + Vector3.up * _eyeOffset;
 
         if (Physics.Raycast(eyePosition, dirToPlayer.normalized, distToPlayer, _obstacleLayer))
             return false;
@@ -322,6 +334,16 @@ public class Enemy : MonoBehaviour
     }
 
     #endregion
+
+    #region Coroutine
+
+    private IEnumerator ChangeStateRoutine()
+    {
+        yield return _waitForStateChange;
+        _changeStateCoroutine = null;
+    }
+
+    #endregion Coroutine
 
     private void OnDrawGizmos()
     {

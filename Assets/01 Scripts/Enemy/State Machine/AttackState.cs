@@ -10,6 +10,7 @@ public class AttackState : EnemyStateBase
     private float _attackTimer;
 
     private const float _turnSpeed = 3f;
+    private const float _attackOffest = -5f;
 
     public AttackState(Enemy enemy, GunData gunData) : base(enemy)
     {
@@ -33,6 +34,9 @@ public class AttackState : EnemyStateBase
         if (ReloadGun())
             return;
 
+        if(!_enemy.IsDetectPlayer)
+            _enemy.ChangeState(EnemyState.Chase);
+
         LookPlayer();
 
         _attackTimer += Time.deltaTime;
@@ -41,12 +45,12 @@ public class AttackState : EnemyStateBase
         if (_attackTimer >= (1 / _gunData.Rps) * _enemy.Data.FireIntervalMultiplier)
         {
             // 사거리
-            if (_enemy.IsPlayerInAttackRange())
+            if (_enemy.IsPlayerInAttackRange(_attackOffest))
             {
                 FireGun();
                 _attackTimer = 0f;
             }
-            else if (!_enemy.IsPlayerInAttackRange())
+            else if (!_enemy.IsPlayerInAttackRange(_attackOffest))
                 _enemy.ChangeState(EnemyState.Chase);
         }
     }

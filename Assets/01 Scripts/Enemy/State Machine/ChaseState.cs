@@ -9,7 +9,7 @@ public class ChaseState : EnemyStateBase
 
     private const float _findDuration = 5f;
     private const float _updateDestinationInterval = 1f;
-    private const float _attackOffest = -7f;
+    private const float _attackTransitionOffset = -7f;
 
     public ChaseState(Enemy enemy) : base(enemy)
     {
@@ -35,7 +35,7 @@ public class ChaseState : EnemyStateBase
     public override void Update()
     {
         // (총 사거리 * 0.8) - 7f 안에 플레이어가 있다면 attack상태로 전환
-        if (_enemy.IsPlayerInAttackRange(_attackOffest))
+        if (_enemy.IsPlayerInAttackRange(_attackTransitionOffset))
         {
             _enemy.ChangeState(EnemyState.Attack);
             return;
