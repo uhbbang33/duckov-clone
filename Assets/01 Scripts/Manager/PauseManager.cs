@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 public class PauseManager : SingletonMonoBehaviour<PauseManager>
 {
     [SerializeField] private GameObject _pauseUI;
+    [SerializeField] private GameObject _pauseReturnToTitleUI;
 
     private GameManager _gameManager;
 
@@ -53,6 +54,7 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager>
         Time.timeScale = 1f;
 
         _pauseUI.SetActive(false);
+        _pauseReturnToTitleUI.SetActive(false);
     }
 
     #region On Button Clcik
@@ -63,7 +65,15 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager>
         Resume();
     }
 
-    public void OnClickTitle()
+    public void OnClickReturnToTile()
+    {
+        _pauseUI.SetActive(false);
+        _pauseReturnToTitleUI.SetActive(true);
+
+        EventSystem.current.SetSelectedGameObject(null);
+    }
+
+    public void OnClickConfirmReturnToTitle()
     {
         _isPaused = false;
         Resume();

@@ -49,7 +49,6 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     [SerializeField] private GameObject _crosshair;
     [SerializeField] private GameObject _playerCanvas;
 
-
     [Space(30)]
     [SerializeField] private DefaultHUDSlotUI[] _defaultHUDSlotUI;
     [SerializeField] private EquipSlotUI _leftEquipSlotUI;
