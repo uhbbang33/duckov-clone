@@ -30,6 +30,10 @@ public class PatrolState : EnemyStateBase
 
     public override void Update()
     {
+        float distanceToSpawn = Vector3.Distance(_enemy.SpawnPosition, _enemy.gameObject.transform.position);
+        if (distanceToSpawn > _enemy.Data.ChaseRange)
+            return;
+
         if (_enemy.IsDetectPlayer)
         {
             _enemy.ChangeState(EnemyState.Chase);
