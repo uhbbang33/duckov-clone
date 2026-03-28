@@ -10,7 +10,8 @@ public class AttackState : EnemyStateBase
     private float _attackTimer;
 
     private const float _turnSpeed = 3f;
-    private const float _attackOffest = -5f;
+    private const float _attackOffest = -1f;
+    private const float _reloadWalkSpeed = 1f;
 
     public AttackState(Enemy enemy, GunData gunData) : base(enemy)
     {
@@ -30,13 +31,14 @@ public class AttackState : EnemyStateBase
         if (!_enemy.GunObject.activeSelf)
             return;
 
+        LookPlayer();
+
         if (ReloadGun())
             return;
 
         if(!_enemy.IsDetectPlayer)
             _enemy.ChangeState(EnemyState.Chase);
 
-        LookPlayer();
 
         _attackTimer += Time.deltaTime;
 
@@ -98,7 +100,17 @@ public class AttackState : EnemyStateBase
                 _isReloading = false;
                 _enemy.PlayReloadSound(false);
                 _enemy.SetAnimation(EnemyAnimParm.Reload, false);
+
+                _enemy.Agent.isStopped = true;
+                _enemy.SetAnimation(EnemyAnimParm.Walk, false);
             }
+
+            if (_enemy.Agent.remainingDistance <= _enemy.Agent.stoppingDistance)
+            {
+                _enemy.Agent.isStopped = true;
+                _enemy.SetAnimation(EnemyAnimParm.Walk, false);
+            }
+
             return true;
         }
 
@@ -108,6 +120,11 @@ public class AttackState : EnemyStateBase
             _reloadTimer = 0f;
             _enemy.PlayReloadSound(true);
             _enemy.SetAnimation(EnemyAnimParm.Reload, true);
+
+            _enemy.Agent.isStopped = false;
+            _enemy.SetAnimation(EnemyAnimParm.Walk, true);
+            _enemy.Agent.SetDestination(_enemy.LastSeenPlayerPosition);
+            _enemy.Agent.speed = _reloadWalkSpeed;
             return true;
         }
 

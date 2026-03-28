@@ -9,7 +9,7 @@ public class ChaseState : EnemyStateBase
 
     private const float _findDuration = 5f;
     private const float _updateDestinationInterval = 1f;
-    private const float _attackTransitionOffset = -7f;
+    private const float _attackTransitionOffset = -3f;
 
     public ChaseState(Enemy enemy) : base(enemy)
     {
@@ -34,12 +34,8 @@ public class ChaseState : EnemyStateBase
 
     public override void Update()
     {
-        // (총 사거리 * 0.8) - 7f 안에 플레이어가 있다면 attack상태로 전환
-        if (_enemy.IsPlayerInAttackRange(_attackTransitionOffset))
-        {
-            _enemy.ChangeState(EnemyState.Attack);
+        if (TryChangeToAttack())
             return;
-        }
 
         // 플레이어가 시야에 안보일 경우, 플레이어가 마지막 있던 자리로 목적지 설정
         if (!_enemy.IsDetectPlayer && !_isFindingPlayer)
@@ -96,6 +92,17 @@ public class ChaseState : EnemyStateBase
         _enemy.SetAnimation(EnemyAnimParm.Walk, false);
         _enemy.SetAnimation(EnemyAnimParm.Run, false);
         _enemy.ShowTargetingIcon(false);
+    }
+
+    private bool TryChangeToAttack()
+    {
+        if (_enemy.IsDetectPlayer
+            && _enemy.IsPlayerInAttackRange(_attackTransitionOffset))
+        {
+            _enemy.ChangeState(EnemyState.Attack);
+            return true;
+        }
+        return false;
     }
 
     private void MoveToLastSeenPlayerPosition()
