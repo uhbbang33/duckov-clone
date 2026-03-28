@@ -10,9 +10,8 @@ public class AttackState : EnemyStateBase
     private float _attackTimer;
 
     private const float _turnSpeed = 3f;
-    private const float _attackRangeOffset = 5f;
 
-    public AttackState(Enemy enemy, EnemyData enemyData, GunData gunData) : base(enemy, enemyData)
+    public AttackState(Enemy enemy, GunData gunData) : base(enemy)
     {
         _gunData = gunData;
         _poolManager = PoolManager.Instance;
@@ -39,7 +38,7 @@ public class AttackState : EnemyStateBase
         _attackTimer += Time.deltaTime;
 
         // 공격 쿨타임
-        if (_attackTimer >= (1 / _gunData.Rps) * _enemyData.FireIntervalMultiplier)
+        if (_attackTimer >= (1 / _gunData.Rps) * _enemy.Data.FireIntervalMultiplier)
         {
             // 사거리
             if (_enemy.IsPlayerInAttackRange())

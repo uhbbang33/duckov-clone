@@ -6,9 +6,9 @@ public class PatrolState : EnemyStateBase
     private float _walkSpeed;
     private List<Vector3> _destinationList;
 
-    public PatrolState(Enemy enemy, EnemyData enemyData, List<Vector3> destinationList) : base(enemy, enemyData)
+    public PatrolState(Enemy enemy, List<Vector3> destinationList) : base(enemy)
     {
-        _walkSpeed = enemyData.WalkSpeed;
+        _walkSpeed = _enemy.Data.WalkSpeed;
         _destinationList = new List<Vector3>();
         _destinationList = destinationList;
     }

@@ -10,9 +10,9 @@ public class ChaseState : EnemyStateBase
     private const float _findDuration = 5f;
     private const float _updateDestinationInterval = 1f;
 
-    public ChaseState(Enemy enemy, EnemyData enemyData) : base(enemy, enemyData)
+    public ChaseState(Enemy enemy) : base(enemy)
     {
-        _runSpeed = enemyData.RunSpeed;
+        _runSpeed = _enemy.Data.RunSpeed;
     }
 
     public override void Enter()

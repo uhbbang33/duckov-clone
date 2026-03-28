@@ -7,7 +7,7 @@ public class IdleState : EnemyStateBase
     private const float _idleTime = 3f;
     private const float _healPerTickAmount = 1f;
 
-    public IdleState(Enemy enemy, EnemyData enemyData) : base(enemy, enemyData) { }
+    public IdleState(Enemy enemy) : base(enemy) { }
 
     public override void Enter()
     {

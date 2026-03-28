@@ -36,12 +36,15 @@ public class Enemy : MonoBehaviour
 
     private Vector3 _lootBoxOffset;
     private Vector3 _lastSeenPlayerPosition;
+    private Vector3 _spawnPosition;
+
     private const float _attackRangeMultiplier = 0.8f;
 
     public HealthPoint HP { get { return _hp; } }
     public NavMeshAgent Agent { get { return _agent; } }
     public Transform MuzzleTransform { get { return _muzzleTransform; } }
     public GameObject GunObject { get { return _gunObject; } }
+    public EnemyData Data {  get { return _enemyData; } }
     public bool IsDetectPlayer { get { return _isDetectPlayer; } }
     public uint AmmoCnt
     {
@@ -54,6 +57,8 @@ public class Enemy : MonoBehaviour
         set { _currentDestinationCount = value; }
     }
     public Vector3 LastSeenPlayerPosition { get { return _lastSeenPlayerPosition; } }
+    public Vector3 SpawnPosition { get { return _spawnPosition; } }
+
 
     private void Awake()
     {
@@ -86,17 +91,16 @@ public class Enemy : MonoBehaviour
         HealHP(_hp.MaxHP);
 
         _playerTransform = GameManager.Instance.PlayerObject.transform;
-        Vector3 spawnPosition = transform.position;
+        _spawnPosition = transform.position;
 
         _stateDictionary = new Dictionary<EnemyState, EnemyStateBase>
         {
-            {EnemyState.Idle, new IdleState(this, _enemyData)},
-            {EnemyState.Patrol, new PatrolState(this, _enemyData, _patrolDestinationList)},
-            {EnemyState.Chase, new ChaseState(this, _enemyData)},
-            {EnemyState.Return, new ReturnState(this, _enemyData, spawnPosition)},
-            {EnemyState.Attack, new AttackState(this, _enemyData, _gunData)},
-            {EnemyState.Flee, new FleeState(this, _enemyData, spawnPosition)},
-            {EnemyState.Death, new DeathState(this, _enemyData)}
+            {EnemyState.Idle, new IdleState(this)},
+            {EnemyState.Patrol, new PatrolState(this, _patrolDestinationList)},
+            {EnemyState.Chase, new ChaseState(this)},
+            {EnemyState.Attack, new AttackState(this, _gunData)},
+            {EnemyState.Flee, new FleeState(this)},
+            {EnemyState.Death, new DeathState(this)}
         };
 
         ChangeState(EnemyState.Idle);

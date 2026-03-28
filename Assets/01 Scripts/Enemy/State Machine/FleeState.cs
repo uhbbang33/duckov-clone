@@ -2,20 +2,18 @@ using UnityEngine;
 
 public class FleeState : EnemyStateBase
 {
-    private Vector3 _spawnPosition;
     private float _runSpeed;
 
-    public FleeState(Enemy enemy, EnemyData enemyData, Vector3 spawnPosition ) : base(enemy, enemyData)
+    public FleeState(Enemy enemy) : base(enemy)
     {
-        _spawnPosition = spawnPosition;
-        _runSpeed = enemyData.RunSpeed;
+        _runSpeed = _enemy.Data.RunSpeed;
     }
 
     public override void Enter()
     {
         _enemy.Agent.isStopped = false;
         _enemy.Agent.speed = _runSpeed;
-        _enemy.Agent.SetDestination(_spawnPosition);
+        _enemy.Agent.SetDestination(_enemy.SpawnPosition);
 
         _enemy.SetAnimation(EnemyAnimParm.ArmRaised, false);
         _enemy.SetAnimation(EnemyAnimParm.Run, true);

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class DeathState : EnemyStateBase
 {
-    public DeathState(Enemy enemy, EnemyData enemyData) : base(enemy, enemyData) { }
+    public DeathState(Enemy enemy) : base(enemy) { }
 
     public override void Enter()
     {
