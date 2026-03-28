@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
+    [SerializeField] private LayerMask _playerLayer;
     [SerializeField] private LayerMask _obstacleLayer;
     [SerializeField] private LayerMask _groundLayer;
     [SerializeField] private float _detectPlayerDuration;
@@ -40,13 +42,9 @@ public class Enemy : MonoBehaviour
     private Vector3 _lastSeenPlayerPosition;
     private Vector3 _spawnPosition;
 
-    private Coroutine _changeStateCoroutine;
-    private Coroutine _showWarningIconCoroutine;
-    private WaitForSeconds _waitForStateChange;
     private WaitForSeconds _waitForShowWarningIcon;
 
     private const float _attackRangeMultiplier = 0.8f;
-    private const float _stateChangeDuration = 1f;
     private const float _showWarningIconDuration = 1f;
 
     public HealthPoint HP { get { return _hp; } }
@@ -101,7 +99,6 @@ public class Enemy : MonoBehaviour
 
         _playerTransform = GameManager.Instance.PlayerObject.transform;
         _spawnPosition = transform.position;
-        _waitForStateChange = new WaitForSeconds(_stateChangeDuration);
         _waitForShowWarningIcon = new WaitForSeconds(_showWarningIconDuration);
 
         _stateDictionary = new Dictionary<EnemyState, EnemyStateBase>
@@ -124,16 +121,11 @@ public class Enemy : MonoBehaviour
 
     public void ChangeState(EnemyState newState)
     {
-        if (_changeStateCoroutine != null)
-            return;
-
         Debug.Log(newState);
 
         _currentState?.Exit();
         _currentState = _stateDictionary[newState];
         _currentState.Enter();
-
-        _changeStateCoroutine = StartCoroutine(ChangeStateRoutine());
     }
 
     public void SetAnimation(string param, bool value)
@@ -170,14 +162,9 @@ public class Enemy : MonoBehaviour
     public void DetectPlayer(float playerSoundLevel)
     {
         if (DetectPlayerBySight() || DetectPlayerBySound(playerSoundLevel))
-        {
             _isDetectPlayer = true;
-            //ShowWarningIcon(true);
-        }
         else
-        {
             _isDetectPlayer = false;
-        }
     }
 
     private bool DetectPlayerBySight()
@@ -209,7 +196,7 @@ public class Enemy : MonoBehaviour
         //float distToPlayer = GetDistanceToPlayer();
         //float soundLevelByDist = playerSoundLevel / distToPlayer;
 
-        //if (soundLevelByDist >= _enemyData.SoundDetectionLevel)
+        //if (soundLevelByDist >= _enemyData)
         //{
         //    _lastSeenPlayerPosition = _playerTransform.position;
         //    return true;
@@ -355,12 +342,6 @@ public class Enemy : MonoBehaviour
 
     #region Coroutine
 
-    private IEnumerator ChangeStateRoutine()
-    {
-        yield return _waitForStateChange;
-        _changeStateCoroutine = null;
-    }
-
     private IEnumerator ShowWarningIconCoroutine()
     {
         ShowWarningIcon(true);
@@ -372,15 +353,75 @@ public class Enemy : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        Vector3 eyePosition = transform.position + new Vector3(0f, _eyeOffset, 0f);
+
         // 시야 거리 원
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, 20f);
+        Gizmos.DrawWireSphere(eyePosition, 20f);
 
         // 시야각 좌우 경계선
-        Gizmos.color = Color.red;
+        Gizmos.color = Color.white;
         Vector3 leftBoundary = Quaternion.Euler(0, -120f / 2f, 0) * transform.forward * 20f;
         Vector3 rightBoundary = Quaternion.Euler(0, 120f / 2f, 0) * transform.forward * 20f;
-        Gizmos.DrawLine(transform.position, transform.position + leftBoundary);
-        Gizmos.DrawLine(transform.position, transform.position + rightBoundary);
+        Gizmos.DrawLine(eyePosition, eyePosition + leftBoundary);
+        Gizmos.DrawLine(eyePosition, eyePosition + rightBoundary);
+
+        // FOV 메시
+        int rayCount = 50;
+        float viewAngle = 120f;
+        float stepAngle = viewAngle / rayCount;
+
+        Vector3[] hitPoints = new Vector3[rayCount + 1];
+
+        for (int i = 0; i <= rayCount; i++)
+        {
+            float angle = -viewAngle / 2f + stepAngle * i;
+            Vector3 dir = Quaternion.Euler(0, angle, 0) * transform.forward;
+
+            if (Physics.Raycast(eyePosition, dir, out RaycastHit hit, 20f, _obstacleLayer))
+                hitPoints[i] = hit.point;
+            else
+                hitPoints[i] = eyePosition + dir * 20f;
+        }
+
+        // 삼각형 단위로 면 채우기
+        for (int i = 0; i < rayCount; i++)
+        {
+            // 빈 공간 초록 반투명
+            Handles.color = new Color(0.2f, 0.9f, 0.4f, 0.15f);
+            Handles.DrawAAConvexPolygon(eyePosition, hitPoints[i], hitPoints[i + 1]);
+
+            // 삼각형 경계선
+            Gizmos.color = new Color(0.2f, 0.9f, 0.4f, 0.4f);
+            Gizmos.DrawLine(hitPoints[i], hitPoints[i + 1]);
+        }
+
+        // Player 탐지
+        if (_playerTransform == null) return;
+
+        Vector3 dirToPlayer = (_playerTransform.position - eyePosition).normalized;
+        float distToPlayer = Vector3.Distance(eyePosition, _playerTransform.position);
+        float angleToPlayer = Vector3.Angle(transform.forward, dirToPlayer);
+
+        if (angleToPlayer > viewAngle / 2f) return;
+
+        if (Physics.Raycast(eyePosition, dirToPlayer, out RaycastHit playerHit,
+                            distToPlayer, _obstacleLayer))
+        {
+            // 장애물에 막힘
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(eyePosition, playerHit.point);
+            Gizmos.DrawWireSphere(playerHit.point, 0.1f);
+
+            Gizmos.color = Color.gray;
+            Gizmos.DrawLine(playerHit.point, _playerTransform.position);
+        }
+        else
+        {
+            // 플레이어 보임
+            Gizmos.color = Color.green;
+            Gizmos.DrawLine(eyePosition, _playerTransform.position);
+            Gizmos.DrawWireSphere(_playerTransform.position, 0.3f);
+        }
     }
 }
