@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -17,35 +16,43 @@ public class Enemy : MonoBehaviour
     private Animator _anim;
     private HealthPoint _hp;
     private NavMeshAgent _agent;
-    private Transform _playerTransform;
-    private Transform _muzzleTransform;
     private DataManager _dataManager;
     private PoolManager _poolManager;
     private SoundManager _soundManager;
 
+    private Transform _playerTransform;
+    private Transform _muzzleTransform;
+    private GameObject _gunObject;
+    private List<Vector3> _patrolDestinationList;
+
     private EnemyData _enemyData;
     private GunData _gunData;
-    private GameObject _gunObject;
     private EnemyStateBase _currentState;
     private Dictionary<EnemyState, EnemyStateBase> _stateDictionary;
-    private List<Vector3> _patrolDestinationList;
 
     private bool _isDetectPlayer;
     private uint _ammoCnt;
+    private int _currentDestinationCount;
+
     private Vector3 _lootBoxOffset;
     private Vector3 _lastSeenPlayerPosition;
     private const float _attackRangeMultiplier = 0.8f;
 
+    public HealthPoint HP { get { return _hp; } }
     public NavMeshAgent Agent { get { return _agent; } }
     public Transform MuzzleTransform { get { return _muzzleTransform; } }
-    public bool IsDetectPlayer { get { return _isDetectPlayer; } }
     public GameObject GunObject { get { return _gunObject; } }
+    public bool IsDetectPlayer { get { return _isDetectPlayer; } }
     public uint AmmoCnt
     {
         get { return _ammoCnt; }
         set { _ammoCnt = value; }
     }
-    public HealthPoint HP { get { return _hp; } }
+    public int CurrentDestinationCount
+    {
+        get { return _currentDestinationCount; }
+        set { _currentDestinationCount = value; }
+    }
     public Vector3 LastSeenPlayerPosition { get { return _lastSeenPlayerPosition; } }
 
     private void Awake()
@@ -72,8 +79,6 @@ public class Enemy : MonoBehaviour
         _lootBoxOffset = new Vector3(0, 0.5f, 0f);
 
         DeactivateGun();
-
-        _patrolDestinationList = new List<Vector3>();
         SetPatrolDestination();
 
         _hp.MaxHP = _enemyData.MaxHP;
@@ -102,21 +107,6 @@ public class Enemy : MonoBehaviour
         _currentState.Update();
     }
 
-    private void HandleHpChanged()
-    {
-        if (_hp.CurrentHP <= 0)
-        {
-            ChangeState(EnemyState.Death);
-            return;
-        }
-
-        if (_hp.CurrentHP / _hp.MaxHP < 0.1f)
-        {
-            ChangeState(EnemyState.Flee);
-            return;
-        }
-    }
-
     public void ChangeState(EnemyState newState)
     {
         Debug.Log(newState);
@@ -130,6 +120,32 @@ public class Enemy : MonoBehaviour
     {
         _anim.SetBool(param, value);
     }
+
+    #region Health And Death
+    public void HealHP(float healAmount)
+    {
+        _hp.Heal(healAmount);
+    }
+
+    public void EnemyDeath()
+    {
+        MakeLootBox();
+        Destroy(gameObject);
+    }
+
+    private void MakeLootBox()
+    {
+        GameObject lootBox = Instantiate(GameResources.Instance.LootBoxPrefab, transform.position + _lootBoxOffset, transform.rotation);
+
+        if (lootBox.GetComponent<LootBox>() == null)
+            Debug.LogError("LootBox Has not EnemyGunData Property");
+
+        lootBox.GetComponent<LootBox>().EnemyGunData = _gunData;
+    }
+
+    #endregion Health And Death
+
+    #region Detect Player
 
     public void DetectPlayer(float playerSoundLevel)
     {
@@ -177,17 +193,28 @@ public class Enemy : MonoBehaviour
             return false;
     }
 
+    public bool IsPlayerInAttackRange(float offset = 0f)
+    {
+        if (GetDistanceToPlayer() <= _gunData.Range * _attackRangeMultiplier + offset)
+            return true;
+
+        return false;
+    }
+
     public void LostPlayer()
     {
         _isDetectPlayer = false;
     }
 
-    public Vector3 GetDirectionToPlayer()
+    #endregion Detect Player
+
+    #region Direction And Distance
+    private Vector3 GetDirectionToPlayer()
     {
         return (_playerTransform.position - transform.position).normalized;
     }
 
-    public float GetDistanceToPlayer()
+    private float GetDistanceToPlayer()
     {
         return Vector3.Distance(transform.position, _playerTransform.position);
     }
@@ -202,10 +229,9 @@ public class Enemy : MonoBehaviour
         return Vector3.Distance(_muzzleTransform.position, _playerTransform.position);
     }
 
-    public void HealHP(float healAmount)
-    {
-        _hp.Heal(healAmount);
-    }
+    #endregion Direction And Distance
+
+    #region Sound
 
     public void PlayFireSound()
     {
@@ -217,46 +243,19 @@ public class Enemy : MonoBehaviour
         _soundManager.PlayReloadSFX(isStart, _enemyAudioSource);
     }
 
-    public void EnemyDeath()
-    {
-        MakeLootBox();
-        Destroy(gameObject);
-    }
+    #endregion Sound
 
-    public bool IsPlayerInAttackRange(float offset = 0f)
-    {
-        if (GetDistanceToPlayer() <= _gunData.Range * _attackRangeMultiplier + offset)
-            return true;
-
-        return false;
-    }
-
-    private void MakeLootBox()
-    {
-        GameObject lootBox = Instantiate(GameResources.Instance.LootBoxPrefab, transform.position + _lootBoxOffset, transform.rotation);
-
-        if (lootBox.GetComponent<LootBox>() == null)
-            Debug.LogError("LootBox Has not EnemyGunData Property");
-        
-        lootBox.GetComponent<LootBox>().EnemyGunData = _gunData;
-    }
-
-    public void ShowTargetingIcon(bool show)
-    {
-        _targetingIcon.SetActive(show);
-    }
-
-    public void ShowWarningIcon(bool show)
-    {
-        _warningIcon.SetActive(show);
-    }
-
+    #region Agent Destination
     private void SetPatrolDestination()
     {
+        _patrolDestinationList = new List<Vector3>();
+
         TryAddDestination(transform);
 
         foreach (Transform point in _destinationTransformList)
             TryAddDestination(point);
+
+        _currentDestinationCount = 1;
     }
 
     private void TryAddDestination(Transform point)
@@ -271,11 +270,40 @@ public class Enemy : MonoBehaviour
                 _patrolDestinationList.Add(navHit.position);
     }
 
+    #endregion Agent Destination
 
-    #region Coroutine
+    #region Show Icon
 
+    public void ShowTargetingIcon(bool show)
+    {
+        _targetingIcon.SetActive(show);
+    }
 
-    #endregion
+    public void ShowWarningIcon(bool show)
+    {
+        _warningIcon.SetActive(show);
+    }
+
+    #endregion Show Icon
+
+    #region Event Handler
+
+    private void HandleHpChanged()
+    {
+        if (_hp.CurrentHP <= 0)
+        {
+            ChangeState(EnemyState.Death);
+            return;
+        }
+
+        if (_hp.CurrentHP / _hp.MaxHP < 0.1f)
+        {
+            ChangeState(EnemyState.Flee);
+            return;
+        }
+    }
+
+    #endregion Event Handler
 
     #region Animation Event
 

@@ -4,7 +4,6 @@ using UnityEngine;
 public class PatrolState : EnemyStateBase
 {
     private float _walkSpeed;
-    private int _destinationCount;
     private List<Vector3> _destinationList;
 
     public PatrolState(Enemy enemy, EnemyData enemyData, List<Vector3> destinationList) : base(enemy, enemyData)
@@ -12,7 +11,6 @@ public class PatrolState : EnemyStateBase
         _walkSpeed = enemyData.WalkSpeed;
         _destinationList = new List<Vector3>();
         _destinationList = destinationList;
-        _destinationCount = 1;
     }
 
     public override void Enter()
@@ -25,9 +23,9 @@ public class PatrolState : EnemyStateBase
 
         SetDestination();
 
-        ++_destinationCount;
-        if (_destinationCount >= _destinationList.Count)
-            _destinationCount = 0;
+        ++_enemy.CurrentDestinationCount;
+        if (_enemy.CurrentDestinationCount >= _destinationList.Count)
+            _enemy.CurrentDestinationCount = 0;
     }
 
     public override void Update()
@@ -53,6 +51,6 @@ public class PatrolState : EnemyStateBase
 
     private void SetDestination()
     {
-        _enemy.Agent.SetDestination(_destinationList[_destinationCount]);
+        _enemy.Agent.SetDestination(_destinationList[_enemy.CurrentDestinationCount]);
     }
 }
