@@ -165,15 +165,15 @@ public class Enemy : MonoBehaviour
 
     private bool DetectPlayerBySound(float playerSoundLevel)
     {
-        float distToPlayer = GetDistanceToPlayer();
-        float soundLevelByDist = playerSoundLevel / distToPlayer;
+        //float distToPlayer = GetDistanceToPlayer();
+        //float soundLevelByDist = playerSoundLevel / distToPlayer;
 
-        if (soundLevelByDist >= _enemyData.SoundDetectionLevel)
-        {
-            _lastSeenPlayerPosition = _playerTransform.position;
-            return true;
-        }
-        else
+        //if (soundLevelByDist >= _enemyData.SoundDetectionLevel)
+        //{
+        //    _lastSeenPlayerPosition = _playerTransform.position;
+        //    return true;
+        //}
+        //else
             return false;
     }
 
