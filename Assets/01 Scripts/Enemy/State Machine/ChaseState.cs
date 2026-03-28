@@ -57,10 +57,13 @@ public class ChaseState : EnemyStateBase
 
         if (_isFindingPlayer)
         {
-            // 플레이어가 find Duration 동안 시야에 안보일 경우, Return상태로 전환
+            // 플레이어가 find Duration 동안 시야에 안보일 경우 spawn position으로
             _findTimer += Time.deltaTime;
             if (_findTimer > _findDuration)
-                _enemy.ChangeState(EnemyState.Return);
+            {
+                _enemy.CurrentDestinationCount = 0;
+                _enemy.ChangeState(EnemyState.Patrol);
+            }
 
             if (_enemy.Agent.remainingDistance <= _enemy.Agent.stoppingDistance)
                 _enemy.SetAnimation(EnemyAnimParm.Walk, false);
