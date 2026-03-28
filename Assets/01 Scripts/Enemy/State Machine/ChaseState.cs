@@ -29,7 +29,7 @@ public class ChaseState : EnemyStateBase
         _enemy.SetAnimation(EnemyAnimParm.Run, true);
         _enemy.SetAnimation(EnemyAnimParm.ArmRaised, true);
 
-        _enemy.ShowTargetingIcon(true);
+        _enemy.StartShowWarningIconRoutine();
     }
 
     public override void Update()
@@ -108,6 +108,8 @@ public class ChaseState : EnemyStateBase
         _isFindingPlayer = isFinding;
         _enemy.SetAnimation(EnemyAnimParm.Walk, isFinding);
         _enemy.SetAnimation(EnemyAnimParm.Run, !isFinding);
+
+        _enemy.ShowTargetingIcon(isFinding);
     }
 
     private void ReturnSpawnPoint()

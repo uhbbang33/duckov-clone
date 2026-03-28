@@ -23,7 +23,6 @@ public class AttackState : EnemyStateBase
         _enemy.Agent.isStopped = true;
         _reloadTimer = 0f;
         _attackTimer = 0f;
-        _enemy.ShowTargetingIcon(true);
     }
 
     public override void Update()
@@ -60,8 +59,6 @@ public class AttackState : EnemyStateBase
         _enemy.SetAnimation(EnemyAnimParm.Reload, false);
         _enemy.SetAnimation(EnemyAnimParm.Walk, false);
         _enemy.Agent.isStopped = false;
-
-        _enemy.ShowTargetingIcon(false);
     }
 
     private void FireGun()

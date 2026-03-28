@@ -41,10 +41,13 @@ public class Enemy : MonoBehaviour
     private Vector3 _spawnPosition;
 
     private Coroutine _changeStateCoroutine;
+    private Coroutine _showWarningIconCoroutine;
     private WaitForSeconds _waitForStateChange;
+    private WaitForSeconds _waitForShowWarningIcon;
 
     private const float _attackRangeMultiplier = 0.8f;
     private const float _stateChangeDuration = 1f;
+    private const float _showWarningIconDuration = 1f;
 
     public HealthPoint HP { get { return _hp; } }
     public NavMeshAgent Agent { get { return _agent; } }
@@ -99,6 +102,7 @@ public class Enemy : MonoBehaviour
         _playerTransform = GameManager.Instance.PlayerObject.transform;
         _spawnPosition = transform.position;
         _waitForStateChange = new WaitForSeconds(_stateChangeDuration);
+        _waitForShowWarningIcon = new WaitForSeconds(_showWarningIconDuration);
 
         _stateDictionary = new Dictionary<EnemyState, EnemyStateBase>
         {
@@ -166,9 +170,14 @@ public class Enemy : MonoBehaviour
     public void DetectPlayer(float playerSoundLevel)
     {
         if (DetectPlayerBySight() || DetectPlayerBySound(playerSoundLevel))
+        {
             _isDetectPlayer = true;
-        else 
+            //ShowWarningIcon(true);
+        }
+        else
+        {
             _isDetectPlayer = false;
+        }
     }
 
     private bool DetectPlayerBySight()
@@ -220,6 +229,12 @@ public class Enemy : MonoBehaviour
     public void LostPlayer()
     {
         _isDetectPlayer = false;
+        ShowWarningIcon(false);
+    }
+
+    public void StartShowWarningIconRoutine()
+    {
+        StartCoroutine(ShowWarningIconCoroutine());
     }
 
     #endregion Detect Player
@@ -293,9 +308,12 @@ public class Enemy : MonoBehaviour
     public void ShowTargetingIcon(bool show)
     {
         _targetingIcon.SetActive(show);
+
+        if (_warningIcon.activeSelf && show)
+            ShowWarningIcon(false);
     }
 
-    public void ShowWarningIcon(bool show)
+    private void ShowWarningIcon(bool show)
     {
         _warningIcon.SetActive(show);
     }
@@ -341,6 +359,13 @@ public class Enemy : MonoBehaviour
     {
         yield return _waitForStateChange;
         _changeStateCoroutine = null;
+    }
+
+    private IEnumerator ShowWarningIconCoroutine()
+    {
+        ShowWarningIcon(true);
+        yield return _waitForShowWarningIcon;
+        ShowWarningIcon(false);
     }
 
     #endregion Coroutine
