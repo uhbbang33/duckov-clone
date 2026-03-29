@@ -8,10 +8,14 @@ public class AttackState : EnemyStateBase
     private bool _isReloading;
     private float _reloadTimer;
     private float _attackTimer;
+    private float _burstCooldownTimer;
+    private int _fireCount;
 
     private const float _turnSpeed = 3f;
-    private const float _attackOffest = -1f;
+    private const float _attackOffset = -1f;
     private const float _reloadWalkSpeed = 1f;
+    private const float _burstCooldownDuration = 1f;
+    
 
     public AttackState(Enemy enemy, GunData gunData) : base(enemy)
     {
@@ -22,8 +26,10 @@ public class AttackState : EnemyStateBase
     public override void Enter()
     {
         _enemy.Agent.isStopped = true;
+        _fireCount = 0;
         _reloadTimer = 0f;
         _attackTimer = 0f;
+        _burstCooldownTimer = 0f;
     }
 
     public override void Update()
@@ -36,24 +42,37 @@ public class AttackState : EnemyStateBase
         if (ReloadGun())
             return;
 
-        if(!_enemy.IsDetectPlayer)
+        if (!_enemy.IsDetectPlayer)
+        {
             _enemy.ChangeState(EnemyState.Chase);
+            return;
+        }
 
-
-        _attackTimer += Time.deltaTime;
+        // 적 연발 수
+        if (_fireCount >= _gunData.EnemyFireCount)
+        {
+            _burstCooldownTimer += Time.deltaTime;
+            if (_burstCooldownTimer >= _burstCooldownDuration)
+            {
+                _burstCooldownTimer = 0f;
+                _fireCount = 0;
+            }
+            return;
+        }
 
         // 공격 쿨타임
-        if (_attackTimer >= (1 / _gunData.Rps) * _enemy.Data.FireIntervalMultiplier)
+        _attackTimer += Time.deltaTime;
+        if (_attackTimer < (1 / _gunData.Rps) * _enemy.Data.FireIntervalMultiplier)
+            return;
+
+        // 사거리
+        if (_enemy.IsPlayerInAttackRange(_attackOffset))
         {
-            // 사거리
-            if (_enemy.IsPlayerInAttackRange(_attackOffest))
-            {
-                FireGun();
-                _attackTimer = 0f;
-            }
-            else if (!_enemy.IsPlayerInAttackRange(_attackOffest))
-                _enemy.ChangeState(EnemyState.Chase);
+            FireGun();
+            _attackTimer = 0f;
         }
+        else
+            _enemy.ChangeState(EnemyState.Chase);
     }
 
     public override void Exit()
@@ -71,14 +90,13 @@ public class AttackState : EnemyStateBase
 
         GameObject bulletObject = _poolManager.GetObject(PoolId.Bullet, _enemy.MuzzleTransform, false);
 
-
         Bullet bullet = bulletObject.GetComponent<Bullet>();
         bullet.BulletDamage = _gunData.Damage;
         bullet.Fire(dir, _gunData.Range);
 
 
         // muzzle effect
-        GameObject muzzleFlash = _poolManager.GetObject(PoolId.MuzzleFlash, _enemy.MuzzleTransform, false);
+        _poolManager.GetObject(PoolId.MuzzleFlash, _enemy.MuzzleTransform, false);
 
 
         // Sound
@@ -86,6 +104,7 @@ public class AttackState : EnemyStateBase
 
 
         _enemy.AmmoCnt -= 1;
+        _fireCount += 1;
     }
 
     private bool ReloadGun()

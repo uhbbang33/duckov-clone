@@ -18,6 +18,7 @@ public class GunData
     public uint WeightValue;
     public uint MaxStackSize;
     public float SoundRange;
+    public int EnemyFireCount;
 }
 
 [System.Serializable]
