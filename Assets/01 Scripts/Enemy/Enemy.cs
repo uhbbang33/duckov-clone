@@ -106,6 +106,7 @@ public class Enemy : MonoBehaviour
             {EnemyState.Idle, new IdleState(this)},
             {EnemyState.Patrol, new PatrolState(this, _patrolDestinationList)},
             {EnemyState.Chase, new ChaseState(this)},
+            {EnemyState.Return, new ReturnState(this)},
             {EnemyState.Attack, new AttackState(this, _gunData)},
             {EnemyState.Flee, new FleeState(this)},
             {EnemyState.Death, new DeathState(this)}

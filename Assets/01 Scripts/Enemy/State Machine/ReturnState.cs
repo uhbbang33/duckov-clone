@@ -1,21 +1,18 @@
 
-public class FleeState : EnemyStateBase
+public class ReturnState : EnemyStateBase
 {
-    private float _runSpeed;
-
-    public FleeState(Enemy enemy) : base(enemy)
-    {
-        _runSpeed = _enemy.Data.RunSpeed;
-    }
+    public ReturnState(Enemy enemy) : base(enemy) { }
 
     public override void Enter()
     {
+        _enemy.CurrentDestinationCount = 0;
+
         _enemy.Agent.isStopped = false;
-        _enemy.Agent.speed = _runSpeed;
+        _enemy.Agent.speed = _enemy.Data.WalkSpeed;
         _enemy.Agent.SetDestination(_enemy.SpawnPosition);
 
         _enemy.SetAnimation(EnemyAnimParm.ArmRaised, false);
-        _enemy.SetAnimation(EnemyAnimParm.Run, true);
+        _enemy.SetAnimation(EnemyAnimParm.Walk, true);
     }
 
     public override void Update()
@@ -26,7 +23,6 @@ public class FleeState : EnemyStateBase
 
     public override void Exit()
     {
-        _enemy.SetAnimation(EnemyAnimParm.Run, false);
+        _enemy.SetAnimation(EnemyAnimParm.Walk, false);
     }
-
 }

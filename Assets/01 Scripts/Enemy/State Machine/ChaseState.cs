@@ -72,7 +72,6 @@ public class ChaseState : EnemyStateBase
         float distanceToSpawn = Vector3.Distance(_enemy.SpawnPosition, _enemy.gameObject.transform.position);
         if (distanceToSpawn > _enemy.Data.ChaseRange)
         {
-            Debug.Log("GO SPAWN");
             ReturnSpawnPoint();
             return;
         }
@@ -121,7 +120,6 @@ public class ChaseState : EnemyStateBase
 
     private void ReturnSpawnPoint()
     {
-        _enemy.CurrentDestinationCount = 0;
-        _enemy.ChangeState(EnemyState.Patrol);
+        _enemy.ChangeState(EnemyState.Return);
     }
 }
