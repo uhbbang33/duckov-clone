@@ -32,7 +32,7 @@ public class ReturnState : EnemyStateBase
         if (_stateLockTimer <= _stateLockDuration)
             return;
 
-        if (_enemy.IsDetectPlayer)
+        if (_enemy.IsPlayerInSight || _enemy.IsNoiseHeard)
         {
             _enemy.ChangeState(EnemyState.Chase);
         }

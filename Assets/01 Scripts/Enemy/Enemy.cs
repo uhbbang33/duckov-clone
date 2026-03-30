@@ -34,7 +34,8 @@ public class Enemy : MonoBehaviour
     private EnemyStateBase _currentState;
     private Dictionary<EnemyState, EnemyStateBase> _stateDictionary;
 
-    private bool _isDetectPlayer;
+    private bool _isPlayerInSight;
+    private bool _isNoiseHeard;
     private bool _hasSeenPlayer;
     private uint _ammoCnt;
     private int _currentDestinationCount;
@@ -53,7 +54,8 @@ public class Enemy : MonoBehaviour
     public Transform MuzzleTransform { get { return _muzzleTransform; } }
     public GameObject GunObject { get { return _gunObject; } }
     public EnemyData Data {  get { return _enemyData; } }
-    public bool IsDetectPlayer { get { return _isDetectPlayer; } }
+    public bool IsPlayerInSight { get { return _isPlayerInSight; } }
+    public bool IsNoiseHeard { get { return _isNoiseHeard; } }
     public uint AmmoCnt
     {
         get { return _ammoCnt; }
@@ -160,13 +162,16 @@ public class Enemy : MonoBehaviour
     #endregion Health And Death
 
     #region Detect Player
-
-    public void DetectPlayer(float playerSoundLevel)
+    public void SoundDetectPlayer(bool isDetect)
     {
-        if (DetectPlayerBySight() || DetectPlayerBySound(playerSoundLevel))
-            _isDetectPlayer = true;
-        else
-            _isDetectPlayer = false;
+        _isNoiseHeard = isDetect;
+        if (isDetect)
+            UpdateLastSeenPlayerPosition();
+    }
+
+    public void DetectPlayer()
+    {
+        _isPlayerInSight = DetectPlayerBySight();
     }
 
     private bool DetectPlayerBySight()
@@ -189,45 +194,33 @@ public class Enemy : MonoBehaviour
         if (Physics.Raycast(eyePosition, dirToPlayer.normalized, distToPlayer, _obstacleLayer))
             return false;
 
-        _lastSeenPlayerPosition = _playerTransform.position;
+        UpdateLastSeenPlayerPosition();
         return true;
-    }
-
-    private bool DetectPlayerBySound(float playerSoundLevel)
-    {
-        //float distToPlayer = GetDistanceToPlayer();
-        //float soundLevelByDist = playerSoundLevel / distToPlayer;
-
-        //if (soundLevelByDist >= _enemyData)
-        //{
-        //    _lastSeenPlayerPosition = _playerTransform.position;
-        //    return true;
-        //}
-        //else
-            return false;
     }
 
     public bool IsPlayerInAttackRange(float offset = 0f)
     {
-        if (GetDistanceToPlayer() <= _gunData.Range * _attackRangeMultiplier + offset)
-            return true;
-
-        return false;
+        return GetDistanceToPlayer() <= _gunData.Range * _attackRangeMultiplier + offset;
     }
 
     public void LostPlayer()
     {
-        _isDetectPlayer = false;
+        _isPlayerInSight = false;
         ShowWarningIcon(false);
     }
 
     public void StartShowWarningIconRoutine()
     {
-        if (!_hasSeenPlayer)
-        {
-            StartCoroutine(ShowWarningIconCoroutine());
-            _hasSeenPlayer = true;
-        }
+        if (_hasSeenPlayer) return;
+
+        StartCoroutine(ShowWarningIconCoroutine());
+        _hasSeenPlayer = true;
+    }
+
+    private void UpdateLastSeenPlayerPosition()
+    {
+        _lastSeenPlayerPosition = _playerTransform.position;
+
     }
 
     #endregion Detect Player

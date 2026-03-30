@@ -38,7 +38,7 @@ public class ChaseState : EnemyStateBase
             return;
 
         // 플레이어가 시야에 안보일 경우, 플레이어가 마지막 있던 자리로 목적지 설정
-        if (!_enemy.IsDetectPlayer && !_isFindingPlayer)
+        if (!_enemy.IsPlayerInSight && !_isFindingPlayer)
         {
             FindPlayer(true);
             MoveToLastSeenPlayerPosition();
@@ -46,7 +46,7 @@ public class ChaseState : EnemyStateBase
         }
 
         // 플레이어가 시야에 안보이다가 다시 보일 경우
-        if (_enemy.IsDetectPlayer && _isFindingPlayer)
+        if (_enemy.IsPlayerInSight && _isFindingPlayer)
         {
             _findTimer = 0f;
             FindPlayer(false);
@@ -95,7 +95,7 @@ public class ChaseState : EnemyStateBase
 
     private bool TryChangeToAttack()
     {
-        if (_enemy.IsDetectPlayer
+        if (_enemy.IsPlayerInSight
             && _enemy.IsPlayerInAttackRange(_attackTransitionOffset))
         {
             _enemy.ChangeState(EnemyState.Attack);

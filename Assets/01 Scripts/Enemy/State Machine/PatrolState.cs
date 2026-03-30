@@ -34,7 +34,7 @@ public class PatrolState : EnemyStateBase
         if (distanceToSpawn > _enemy.Data.ChaseRange)
             return;
 
-        if (_enemy.IsDetectPlayer)
+        if (_enemy.IsPlayerInSight || _enemy.IsNoiseHeard)
         {
             _enemy.ChangeState(EnemyState.Chase);
             return;

@@ -7,15 +7,20 @@ public class PlayerEnemyScanner : MonoBehaviour
 
     private Player _player;
     private PlayerMove _playerMove;
+
     private Collider[] _scanResults;
-    private int _resultCnt;
-    private float _soundLevel;
-    private HashSet<Enemy> _current = new();
-    private HashSet<Enemy> _previous = new();
+    private Collider[] _soundScanResults;
+
+    private HashSet<Enemy> _currentVisible = new();
+    private HashSet<Enemy> _previousVisible = new();
+    private HashSet<Enemy> _currentAudible = new();
+    private HashSet<Enemy> _previousAudible = new();
 
     private PlayerSoundData _soundData;
+    private float _soundLevel;
 
     private const float _scanRange = 30f;
+    private const float _scanInterval = 0.1f;
 
     public float PlayerSoundLevel
     {
@@ -27,11 +32,12 @@ public class PlayerEnemyScanner : MonoBehaviour
     private void Awake()
     {
         _player = GetComponent<Player>();
-        _player.OnPlayerDataInitialized += SoundDataSetup;
+        _player.OnPlayerDataInitialized += OnPlayerSoundDataInitialized;
 
         _playerMove = GetComponent<PlayerMove>();
 
         _scanResults = new Collider[100];
+        _soundScanResults = new Collider[100];
     }
 
     private void Start()
@@ -41,7 +47,7 @@ public class PlayerEnemyScanner : MonoBehaviour
         _playerMove.OnWalk += OnPlayerWalk;
         _playerMove.OnWalkCancel += OnPlayerIdle;
 
-        StartScan();
+        InvokeRepeating(nameof(Scan), 0f, _scanInterval);
     }
 
     private void OnDisable()
@@ -52,52 +58,65 @@ public class PlayerEnemyScanner : MonoBehaviour
         _playerMove.OnWalkCancel -= OnPlayerIdle;
     }
 
-    private void SoundDataSetup()
+    private void OnPlayerSoundDataInitialized()
     {
         _soundData = _player.SoundData;
         _soundLevel = _soundData.DefaultSoundLevel;
     }
 
-    private void ScanEnemy()
+    private void Scan()
     {
-        _current.Clear();
-
-        _resultCnt = Physics.OverlapSphereNonAlloc(
-            transform.position,
-            _scanRange,
-            _scanResults,
-            _enemyLayer);
-
-        for(int i =0; i < _resultCnt; ++i)
-        {
-            Enemy enemy = _scanResults[i].gameObject.GetComponent<Enemy>();
-            _current.Add(enemy);
-        }
-
-        DetectEnemy();
-
-        (_previous, _current) = (_current, _previous);
+        ScanBySight();
+        ScanBySound();
     }
 
-    private void DetectEnemy()
+    private void ScanBySight()
     {
-        foreach (Enemy enemy in _previous)
+        OverlapToHashSet(_scanRange, _scanResults, _currentVisible);
+        UpdateEnemyDetection(_currentVisible, _previousVisible, false);
+        (_previousVisible, _currentVisible) = (_currentVisible, _previousVisible);
+    }
+
+    private void ScanBySound()
+    {
+        OverlapToHashSet(_soundLevel, _soundScanResults, _currentAudible);
+        UpdateEnemyDetection(_currentAudible, _previousAudible, true);
+        (_previousAudible, _currentAudible) = (_currentAudible, _previousAudible);
+    }
+
+    private void OverlapToHashSet(float radius, Collider[] overlapResults, HashSet<Enemy> result)
+    {
+        result.Clear();
+
+        int count = Physics.OverlapSphereNonAlloc(transform.position, radius, overlapResults, _enemyLayer);
+
+        for (int i = 0; i < count; ++i)
         {
-            if (enemy != null && !_current.Contains(enemy))
+            if (overlapResults[i].TryGetComponent(out Enemy enemy))
+                result.Add(enemy);
+        }
+    }
+
+    private void UpdateEnemyDetection(HashSet<Enemy> current, HashSet<Enemy> previous, bool isSound)
+    {
+        foreach (Enemy enemy in previous)
+        {
+            if (enemy != null && !current.Contains(enemy))
             {
-                enemy.LostPlayer();
+                if (isSound)
+                    enemy.SoundDetectPlayer(false);
+                else
+                    enemy.LostPlayer();
             }
         }
 
-        foreach (Enemy enemy in _current)
+        foreach (Enemy enemy in current)
         {
-            enemy.DetectPlayer(_soundLevel);
+            if (isSound)
+                enemy.SoundDetectPlayer(true);
+            else
+                enemy.DetectPlayer();
         }
-    }
-
-    public void StartScan()
-    {
-        InvokeRepeating(nameof(ScanEnemy), 0f, 0.1f);
     }
 
     private void OnPlayerRun()

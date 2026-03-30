@@ -42,7 +42,7 @@ public class AttackState : EnemyStateBase
         if (ReloadGun())
             return;
 
-        if (!_enemy.IsDetectPlayer)
+        if (!_enemy.IsPlayerInSight)
         {
             _enemy.ChangeState(EnemyState.Chase);
             return;
