@@ -35,6 +35,7 @@ public class Enemy : MonoBehaviour
     private Dictionary<EnemyState, EnemyStateBase> _stateDictionary;
 
     private bool _isDetectPlayer;
+    private bool _hasSeenPlayer;
     private uint _ammoCnt;
     private int _currentDestinationCount;
 
@@ -222,7 +223,11 @@ public class Enemy : MonoBehaviour
 
     public void StartShowWarningIconRoutine()
     {
-        StartCoroutine(ShowWarningIconCoroutine());
+        if (!_hasSeenPlayer)
+        {
+            StartCoroutine(ShowWarningIconCoroutine());
+            _hasSeenPlayer = true;
+        }
     }
 
     #endregion Detect Player
