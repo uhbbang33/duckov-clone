@@ -85,7 +85,7 @@ public class Inventory : MonoBehaviour
         OpenInventory();
     }
 
-    public void OnInventoryOpenWithBox()
+    public void OnInventoryOpenWithInteractable()
     {
         if (_playerInteract.UI == null || _inventoryToggle)
             return;
