@@ -7,6 +7,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     [SerializeField] private GameObject _playerObject;
     [SerializeField] private GameObject[] _boxItemSlots;
     [SerializeField] private GameObject[] _storageItemSlots;
+    [SerializeField] private Storage _storage;
 
     [SerializeField] private GameObject _dropItemPrefab;
 
@@ -36,6 +37,8 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         get { return _currentOpenBox; }
         set { _currentOpenBox = value; }
     }
+
+    public Storage storage { get { return _storage; } }
 
     public bool IsStorageOpened
     {

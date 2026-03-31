@@ -53,6 +53,6 @@ public class LootBox : Box
             _boxSlots[i].AddItem(item, ref itemQuantity);
         }
 
-        _itemCnt = itemCnt;
+        _filledSlotCnt = itemCnt;
     }
 }

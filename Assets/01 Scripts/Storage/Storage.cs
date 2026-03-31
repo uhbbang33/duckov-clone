@@ -8,6 +8,7 @@ public class Storage : MonoBehaviour
     private GameManager _gameManager;
 
     private int _slotCnt;
+    private int _filledSlotCnt;
 
     private void Awake()
     {
@@ -28,5 +29,34 @@ public class Storage : MonoBehaviour
         }
     }
 
-    
+    public void ChangeStorageItemCount(bool isAdd)
+    {
+        _filledSlotCnt += isAdd ? 1 : -1;
+        UIManager.Instance.ChangeStorageItemCountText(_filledSlotCnt, _slotCnt);
+    }
+
+
+    public void AddItemToEmptySlot(Item item, int amount)
+    {
+        int slotIndex = FindFirstEmptySlot();
+
+        if (slotIndex == -1)
+            return;
+
+        _slots[slotIndex].AddItem(item, ref amount);
+    }
+
+    public int FindFirstEmptySlot()
+    {
+        for (int i = 0; i < _slotCnt; ++i)
+        {
+            if (_slots[i].CurrentItem == null)
+            {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
 }

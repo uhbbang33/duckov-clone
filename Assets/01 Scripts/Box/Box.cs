@@ -9,7 +9,7 @@ public abstract class Box : MonoBehaviour
     private InteractableBoxUI _boxInteractableUI;
 
     protected int _slotCnt;
-    protected int _itemCnt;
+    protected int _filledSlotCnt;
     private int _loadCnt;
 
     private bool[] _loaded;
@@ -75,10 +75,10 @@ public abstract class Box : MonoBehaviour
         {
             SetBoxItems();
             _boxInteractableUI.HasBeenOpened = true;
-            _loadCnt = _itemCnt;
+            _loadCnt = _filledSlotCnt;
         }
         else
-            UIManager.Instance.ChangeBoxItemCountText(_itemCnt, _slotCnt);
+            UIManager.Instance.ChangeBoxItemCountText(_filledSlotCnt, _slotCnt);
 
         if (!_allRarityOpened)
         {
@@ -101,7 +101,7 @@ public abstract class Box : MonoBehaviour
             _boxSlots[i].AddItem(item, ref itemQuantity);
         }
 
-        _itemCnt = itemCnt;
+        _filledSlotCnt = itemCnt;
     }
 
     protected Item GetRandomItemByType()
@@ -156,8 +156,8 @@ public abstract class Box : MonoBehaviour
 
     public void ChangeBoxItemCount(bool isAdd)
     {
-        _itemCnt += isAdd ? 1 : -1;
-        UIManager.Instance.ChangeBoxItemCountText(_itemCnt, _slotCnt);
+        _filledSlotCnt += isAdd ? 1 : -1;
+        UIManager.Instance.ChangeBoxItemCountText(_filledSlotCnt, _slotCnt);
     }
 
     private IEnumerator SlotLoadRoutine(int curItemCnt)

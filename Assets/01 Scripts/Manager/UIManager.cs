@@ -24,6 +24,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     [Header("Text")]
     [SerializeField] private TextMeshProUGUI _boxItemCountText;
     [SerializeField] private TextMeshProUGUI _inventoryItemCountText;
+    [SerializeField] private TextMeshProUGUI _storageItemCountText;
     [SerializeField] private TextMeshProUGUI _mainUIHPBarText;
 
     [Space(10)]
@@ -221,6 +222,11 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     {
         _inventoryItemCountText.text
             = "가방 (" + itemCnt + " / " + maxCnt + ")";
+    }
+
+    public void ChangeStorageItemCountText(int itemCnt, int maxCnt)
+    {
+        _storageItemCountText.text = "창고 (" + itemCnt + " / " + maxCnt + ")";
     }
 
     public void ChangeMainUIHPBar(float currentHp, float maxHp)
