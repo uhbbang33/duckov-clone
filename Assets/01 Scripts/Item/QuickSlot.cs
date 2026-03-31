@@ -21,7 +21,11 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     private UIManager _uiManager;
     private RectTransform _rect;
 
-    public ItemSlotUI LinkedInventorySlotUI { get { return _linkedInventorySlotUI; } }
+    public ItemSlotUI LinkedInventorySlotUI
+    {
+        get { return _linkedInventorySlotUI; }
+        set { _linkedInventorySlotUI = value; }
+    }
 
     private void Start()
     {
@@ -147,7 +151,7 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
         // 새로운 연결
         _linkedInventorySlotUI = inventorySlotUI;
-        inventorySlotUI.LinkQuickSlot(this);
+        inventorySlotUI.LinkedQuickSlot = this;
 
         // Dictionary 업데이트
         Item inventoryItem = inventorySlotUI.Slot.CurrentItem;
@@ -166,7 +170,7 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             if (itemId != 0)
                 QuickSlotManager.Instance.RemoveDict((int)itemId);
 
-            _linkedInventorySlotUI.UnlinkQuickSlot();
+            _linkedInventorySlotUI.LinkedQuickSlot = null;
             _linkedInventorySlotUI = null;
 
             RefreshUI();

@@ -49,6 +49,18 @@ public class ItemSlotUI : MonoBehaviour,
     public QuickSlot LinkedQuickSlot
     {
         get { return _linkedQuickSlot; }
+        set
+        {
+            if(_linkedQuickSlot != null)
+                _linkedQuickSlot.LinkedInventorySlotUI = null;
+
+            _linkedQuickSlot = value;
+
+            if (value == null || _itemSlot.Type != SlotType.INVENTORY)
+                return;
+
+            value.LinkedInventorySlotUI = this;
+        }
     }
 
     public Sprite IconImageSprite
@@ -468,15 +480,5 @@ public class ItemSlotUI : MonoBehaviour,
     public void ChangeImageAlpha(bool showImage)
     {
         _uiManager.ChangeImageAlpha(_iconImage, showImage);
-    }
-
-    public void LinkQuickSlot(QuickSlot quickSlot)
-    {
-        _linkedQuickSlot = quickSlot;
-    }
-
-    public void UnlinkQuickSlot()
-    {
-        _linkedQuickSlot = null;
     }
 }

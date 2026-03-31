@@ -2,11 +2,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System;
+using UnityEngine.UI;
+using System.Linq;
 
-public class Inventory : MonoBehaviour
+public class Inventory : MonoBehaviour, ISortableContainer
 {
     [SerializeField] private GameObject _inventoryUI;
     [SerializeField] private GameObject[] _slotObject;
+    [SerializeField] private Button _sortButton;
     [SerializeField] private float _maxWeight;
 
     private UIManager _uiManager;
@@ -69,6 +72,8 @@ public class Inventory : MonoBehaviour
 
         _playerInteract.OnEnableInteractEvent += OnInventoryCloseBlocked;
         _playerInteract.OnDisableInteractEvent += OnInventoryCloseAllowed;
+
+        _sortButton.onClick.AddListener(() => SortUtility.Sort(this));
     }
 
     private void OnDisable()
@@ -78,6 +83,21 @@ public class Inventory : MonoBehaviour
 
         _playerInteract.OnEnableInteractEvent -= OnInventoryCloseBlocked;
         _playerInteract.OnDisableInteractEvent -= OnInventoryCloseAllowed;
+    }
+
+    public List<ItemSlot> GetSortableSlots()
+    {
+        return _inventorySlots.ToList();
+    }
+
+    public void OnSortCompleted()
+    {
+        RefreshQuickSlots();
+    }
+
+    private void RefreshQuickSlots()
+    {
+
     }
 
     private void OnInventory(InputAction.CallbackContext context)
@@ -339,4 +359,6 @@ public class Inventory : MonoBehaviour
     {
         _inventorySlots[itemIndex].UseItem();
     }
+
+    
 }
