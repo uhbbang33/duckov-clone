@@ -56,6 +56,11 @@ public class Enemy : MonoBehaviour
     public EnemyData Data {  get { return _enemyData; } }
     public bool IsPlayerInSight { get { return _isPlayerInSight; } }
     public bool IsNoiseHeard { get { return _isNoiseHeard; } }
+    public bool HasSeenPlayer
+    {
+        get { return _hasSeenPlayer; }
+        set { _hasSeenPlayer = value; }
+    }
     public uint AmmoCnt
     {
         get { return _ammoCnt; }
