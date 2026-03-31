@@ -4,13 +4,13 @@ using UnityEngine.InputSystem;
 
 public class PlayerInteract : MonoBehaviour
 {
-    // TODO : Temp
-    [SerializeField] GameObject _boxUI;
-
     private InputActions _inputActions;
     private InteractableStateUI _ui;
     private PlayerInteractableScanner _scanner;
     private PlayerMove _playerMove;
+
+    private UIManager _uiManager;
+    private GameManager _gameManager;
 
     public event Action OnEnableInteractEvent;
     public event Action OnDisableInteractEvent;
@@ -24,6 +24,8 @@ public class PlayerInteract : MonoBehaviour
 
     private void Awake()
     {
+        _uiManager = UIManager.Instance;
+        _gameManager = GameManager.Instance;
         _scanner = GetComponent<PlayerInteractableScanner>();
         _playerMove = GetComponent<PlayerMove>();
     }
@@ -47,19 +49,19 @@ public class PlayerInteract : MonoBehaviour
 
         _ui.HideCanvas();
 
-        // TODO : OnInteract안으로
         if (_ui.Type == InteractableType.BOX)
         {
-            _boxUI.SetActive(true);
-
-            _scanner.HideAllInteractUI();
-
-            _playerMove.StopMove();
-
-            GameManager.Instance.CurrentBox.OpenBox();
-
-            OnEnableInteractEvent?.Invoke();
+            _uiManager.ShowBoxUI(true);
+            _gameManager.CurrentBox.OpenBox();
         }
+        else if(UI.Type == InteractableType.STORAGE)
+        {
+            _uiManager.ShowStorageUI(true);
+        }
+
+        _scanner.HideAllInteractUI();
+        _playerMove.StopMove();
+        OnEnableInteractEvent?.Invoke();
 
         _ui.OnInteract();
     }
@@ -70,19 +72,20 @@ public class PlayerInteract : MonoBehaviour
 
         OnCloseUIEvent?.Invoke();
 
-        UIManager.Instance.CloseSlotMenu();
+        _uiManager.CloseSlotMenu();
 
         if (_ui.Type == InteractableType.BOX)
         {
-            GameManager.Instance.CurrentOpenBox = null;
-
-            _boxUI.SetActive(false);
-
-            _scanner.StartCheck();
-
-            _playerMove.RestartMove();
-
-            OnDisableInteractEvent?.Invoke();
+            _gameManager.CurrentOpenBox = null;
+            _uiManager.ShowBoxUI(false);
         }
+        else if (UI.Type == InteractableType.STORAGE)
+        {
+            _uiManager.ShowStorageUI(false);
+        }
+
+        _scanner.StartCheck();
+        _playerMove.RestartMove();
+        OnDisableInteractEvent?.Invoke();
     }
 }

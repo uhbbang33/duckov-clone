@@ -28,7 +28,7 @@ public class InteractableBoxUI : InteractableStateUI
         if (_hasBeenOpened)
             _stateImage.sprite = GameResources.Instance.OpenedBoxSprite;
         else
-            _stateImage.sprite = GameResources.Instance.UnopenedBoxSprite;
+            _stateImage.sprite = GameResources.Instance.InteractableSprite;
     }
 
     public override void OnInteract()

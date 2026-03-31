@@ -57,6 +57,9 @@ public class PlayerInteractableScanner : MonoBehaviour
         {
             GameObject obj = _farResults[i].gameObject;
             InteractableStateUI ui = obj.GetComponent<InteractableStateUI>();
+            
+            if (ui == null)
+                continue;
 
             _current.Add(ui);
 

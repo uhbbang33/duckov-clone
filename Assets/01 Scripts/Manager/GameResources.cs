@@ -19,7 +19,7 @@ public class GameResources : MonoBehaviour
     #region SPRITES
     [Space(10)]
     [Header("SPRITES")]
-    public Sprite UnopenedBoxSprite;
+    public Sprite InteractableSprite;
     public Sprite OpenedBoxSprite;
     public Sprite OpenableBoxSprite;
     #endregion

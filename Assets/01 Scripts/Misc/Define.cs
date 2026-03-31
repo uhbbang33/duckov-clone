@@ -34,7 +34,7 @@ public enum InteractableType
 {
     BOX,
     DROPPEDITEM,
-
+    STORAGE
 }
 
 public struct RarityLoadingTime

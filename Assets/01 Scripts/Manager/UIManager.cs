@@ -48,6 +48,8 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     [SerializeField] private GameObject _interactableBoxUI;
     [SerializeField] private GameObject _crosshair;
     [SerializeField] private GameObject _playerCanvas;
+    [SerializeField] private GameObject _boxUI;
+    [SerializeField] private GameObject _storageUI;
 
     [Space(30)]
     [SerializeField] private DefaultHUDSlotUI[] _defaultHUDSlotUI;
@@ -286,12 +288,14 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         _playerCanvas.SetActive(show);
     }
 
-    public void InteractableBoxUIShowToggle(bool show)
+    public void ShowBoxUI(bool show)
     {
-        _interactableBoxUI.SetActive(show);
+        _boxUI.SetActive(show);
+    }
 
-        if (!show)
-            GameManager.Instance.CurrentOpenBox = null;
+    public void ShowStorageUI(bool show)
+    {
+        _storageUI.SetActive(show);
     }
 
     #region On Button Click

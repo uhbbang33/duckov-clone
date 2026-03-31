@@ -29,7 +29,7 @@ public class DropItemUI : InteractableStateUI
     {
         base.Deselected();
 
-        _stateImage.sprite = GameResources.Instance.UnopenedBoxSprite;
+        _stateImage.sprite = GameResources.Instance.InteractableSprite;
     }
 
     public override void OnInteract()

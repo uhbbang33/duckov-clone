@@ -29,7 +29,7 @@ public class ChaseState : EnemyStateBase
         _enemy.SetAnimation(EnemyAnimParm.Run, true);
         _enemy.SetAnimation(EnemyAnimParm.ArmRaised, true);
 
-        _enemy.StartShowWarningIconRoutine();
+        _enemy.StartShowWarningIconRoutine(); 
     }
 
     public override void Update()

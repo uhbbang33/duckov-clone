@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 810a502f028e2df4ea8008778f03107d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameResources
-  UnopenedBoxSprite: {fileID: 21300000, guid: 9418547f764166449891c89fe3af1026, type: 3}
+  InteractableSprite: {fileID: 21300000, guid: 9418547f764166449891c89fe3af1026, type: 3}
   OpenedBoxSprite: {fileID: 21300000, guid: b4a3694f29fbc4c49b96f0a675853bc0, type: 3}
   OpenableBoxSprite: {fileID: 21300000, guid: a491b86cb816e3143bc992d9de6fa45f, type: 3}
   ItemSprites:
