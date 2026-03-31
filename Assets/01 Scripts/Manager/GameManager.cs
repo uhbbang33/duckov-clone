@@ -6,6 +6,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     // TODO
     [SerializeField] private GameObject _playerObject;
     [SerializeField] private GameObject[] _boxItemSlots;
+    [SerializeField] private GameObject[] _storageItemSlots;
 
     [SerializeField] private GameObject _dropItemPrefab;
 
@@ -14,10 +15,13 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     private Box _currentOpenBox;
     private Inventory _inventory;
 
+    private bool _isStorageOpened;
+
     public readonly int BoxSlotNum = 5;
 
     public GameObject PlayerObject { get { return _playerObject; } }
     public GameObject[] BoxItemSlots { get { return _boxItemSlots; } }
+    public GameObject[] StorageItemSlots { get { return _storageItemSlots; } }
     public Inventory Inventory { get { return _inventory; } }
     public InputActions Actions { get { return _inputActions; } }
 
@@ -31,6 +35,12 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     {
         get { return _currentOpenBox; }
         set { _currentOpenBox = value; }
+    }
+
+    public bool IsStorageOpened
+    {
+        get { return _isStorageOpened; }
+        set { _isStorageOpened = value; }
     }
 
     protected override void Awake()

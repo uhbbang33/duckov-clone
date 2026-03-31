@@ -1,3 +1,7 @@
+using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -22,6 +26,7 @@ public class ItemSlotUI : MonoBehaviour,
     private Vector2 _originAncghoredPos;
     private RectTransform _rect;
     private QuickSlot _linkedQuickSlot;
+    private GameManager _gameManager;
 
 
     private float _lastClickTime;
@@ -69,13 +74,14 @@ public class ItemSlotUI : MonoBehaviour,
 
     private void Awake()
     {
+        _gameManager = GameManager.Instance;
         _originParent = transform.parent;
         _originAncghoredPos = ((RectTransform)transform).anchoredPosition;
     }
 
     protected virtual void Start()
     {
-        _inventory = GameManager.Instance.Inventory;
+        _inventory = _gameManager.Inventory;
         _uiManager = UIManager.Instance;
         ChangeImageAlpha(false);
     }
@@ -268,19 +274,22 @@ public class ItemSlotUI : MonoBehaviour,
 
     private void OnDoubleClick()
     {
-        if (_itemSlot.CurrentItem == null
-            || GameManager.Instance.CurrentOpenBox == null)
+        if (_itemSlot.CurrentItem == null)
             return;
 
         if (_infoUI != null)
             _infoUI.HideUI();
 
         if (_itemSlot.Type == SlotType.INVENTORY
-            || _itemSlot.Type == SlotType.EQUIP)
+               || _itemSlot.Type == SlotType.EQUIP)
         {
-            TryMoveToBoxByDoubleClick();
+            if (_gameManager.CurrentOpenBox != null)
+                TryMoveToContainerByDoubleClick(SlotType.BOX);
+            else if (_gameManager.IsStorageOpened)
+                TryMoveToContainerByDoubleClick(SlotType.STORAGE);
         }
-        else if(_itemSlot.Type == SlotType.BOX)
+        else if (_itemSlot.Type == SlotType.BOX 
+            || _itemSlot.Type == SlotType.STORAGE)
         {
             TryMoveToInventoryByDoubleClick();
         }
@@ -294,49 +303,54 @@ public class ItemSlotUI : MonoBehaviour,
         _itemSlot.SubtractItem(_itemSlot.Quantity - remainQuantity);
     }
 
-    private void TryMoveToBoxByDoubleClick()
+    private void TryMoveToContainerByDoubleClick(SlotType openContainerType)
     {
+        List<ItemSlot> targetSlots = GetContainerSlots(openContainerType);
+
         // 같은 ID의 아이템이 있을 경우
-        for (int i = 0; i < GameManager.Instance.BoxSlotNum; ++i)
+        foreach (ItemSlot targetSlot in targetSlots)
         {
-            ItemSlot targetSlot = GameManager.Instance.BoxItemSlots[i].GetComponentInChildren<ItemSlotUI>()._itemSlot;
+            if (targetSlot.CurrentItem == null ||
+                targetSlot.CurrentItem.ID != _itemSlot.CurrentItem.ID)
+                continue;
 
-            if (targetSlot.CurrentItem != null &&
-                targetSlot.CurrentItem.ID == _itemSlot.CurrentItem.ID)
+            int remainAmount = _itemSlot.Quantity;
+            targetSlot.AddItem(_itemSlot.CurrentItem, ref remainAmount);
+            _itemSlot.SubtractItem(_itemSlot.Quantity - remainAmount);
+
+            if (remainAmount == 0)
             {
-                int remainAmount = _itemSlot.Quantity;
-                targetSlot.AddItem(_itemSlot.CurrentItem, ref remainAmount);
-
-                _itemSlot.SubtractItem(_itemSlot.Quantity - remainAmount);
-
-                if (remainAmount == 0)
-                {
-                    if (_linkedQuickSlot != null)
-                        _linkedQuickSlot.UnlinkInventorySlotUI(targetSlot.CurrentItem.ID);
-
-                    return;
-                }
+                _linkedQuickSlot?.UnlinkInventorySlotUI(targetSlot.CurrentItem.ID);
+                return;
             }
         }
 
         // 그렇지 않을 경우
-        for (int i = 0; i < GameManager.Instance.BoxSlotNum; ++i)
+        foreach (ItemSlot targetSlot in targetSlots)
         {
-            ItemSlot targetSlot = GameManager.Instance.BoxItemSlots[i].GetComponentInChildren<ItemSlotUI>()._itemSlot;
+            if (targetSlot.CurrentItem != null)
+                continue;
 
-            if (targetSlot.CurrentItem == null)
-            {
-                int quantity = _itemSlot.Quantity;
-                targetSlot.AddItem(_itemSlot.CurrentItem, ref quantity);
-
-                _itemSlot.SubtractItem(_itemSlot.Quantity);
-
-                if (_linkedQuickSlot != null)
-                    _linkedQuickSlot.UnlinkInventorySlotUI(targetSlot.CurrentItem.ID);
-
-                return;
-            }
+            int remainAmount = _itemSlot.Quantity;
+            targetSlot.AddItem(_itemSlot.CurrentItem, ref remainAmount);
+            _itemSlot.SubtractItem(_itemSlot.Quantity - remainAmount);
+            _linkedQuickSlot?.UnlinkInventorySlotUI(targetSlot.CurrentItem.ID);
+            return;
         }
+    }
+
+    private List<ItemSlot> GetContainerSlots(SlotType openContainerType)
+    {
+        GameObject[] slotObjects = openContainerType switch
+        {
+            SlotType.BOX => _gameManager.BoxItemSlots,
+            SlotType.STORAGE => _gameManager.StorageItemSlots,
+            _ => Array.Empty<GameObject>()
+        };
+
+        return slotObjects
+            .Select(slot => slot.GetComponentInChildren<ItemSlotUI>()._itemSlot)
+            .ToList();
     }
 
     #endregion Double Click

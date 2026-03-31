@@ -56,6 +56,7 @@ public class PlayerInteract : MonoBehaviour
         }
         else if(_ui.Type == InteractableType.STORAGE)
         {
+            _gameManager.IsStorageOpened = true;
             _uiManager.ShowStorageUI(true);
         }
 
@@ -81,6 +82,7 @@ public class PlayerInteract : MonoBehaviour
         }
         else if (_ui.Type == InteractableType.STORAGE)
         {
+            _gameManager.IsStorageOpened = false;
             _uiManager.ShowStorageUI(false);
         }
 
