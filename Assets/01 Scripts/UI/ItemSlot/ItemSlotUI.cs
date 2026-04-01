@@ -139,6 +139,10 @@ public class ItemSlotUI : MonoBehaviour,
             Item startItem = startUI._itemSlot.CurrentItem;
             Item endItem = _itemSlot.CurrentItem;
 
+            if (startUI._linkedQuickSlot != null
+                && Slot.Type == SlotType.STORAGE)
+                startUI._linkedQuickSlot.UnlinkInventorySlotUI(startItem.ID);
+
             // 같은 ID 일 경우 개수 합치기
             if (startItem != null
                 && endItem != null
@@ -159,7 +163,7 @@ public class ItemSlotUI : MonoBehaviour,
                     int subtractCount = startUI._itemSlot.Quantity - remainItemCount;
                     startUI._itemSlot.SubtractItem(subtractCount);
 
-                    if(startUI._itemSlot.CurrentItem == null
+                    if (startUI._itemSlot.CurrentItem == null
                         && startUI._linkedQuickSlot != null)
                     {
                         startUI._linkedQuickSlot.UnlinkInventorySlotUI(startItem.ID);
