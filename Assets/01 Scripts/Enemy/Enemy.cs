@@ -125,7 +125,8 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        _currentState.Update();
+        if (Time.timeScale != 0f)
+            _currentState.Update();
     }
 
     public void ChangeState(EnemyState newState)
