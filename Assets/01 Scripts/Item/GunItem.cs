@@ -54,6 +54,6 @@ public class GunItem : Item
 
         DataManager dataManager = DataManager.Instance;
         _bulletId = dataManager.GetBulletId(bulletType);
-        _ammoName = dataManager.GetAmmo((int)_bulletId).Name;
+        _ammoName = dataManager.GetItemDataByID((int)_bulletId).Name;
     }
 }

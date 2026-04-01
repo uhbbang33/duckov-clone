@@ -30,6 +30,8 @@ public class JsonParsing : MonoBehaviour
 
         jsonText = LoadDataList("JsonData/PlayerSoundData");
         dataManager.PlayerSoundList = JsonUtility.FromJson<PlayerSoundDataList>(jsonText.text);
+
+        dataManager.FillItemDictionary();
     }
 
     private TextAsset LoadDataList(string dataAddress)

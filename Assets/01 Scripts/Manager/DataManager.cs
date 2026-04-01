@@ -15,6 +15,8 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
     private List<UsableItemData> _foodDatas = new();
     private List<UsableItemData> _medicineDatas = new();
 
+    private Dictionary<uint, ItemData> _itemDict = new();
+
     #region Property
     public GunDataList GunDatas
     {
@@ -76,10 +78,27 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
 
     #endregion Property
 
+    public void FillItemDictionary()
+    {
+        foreach (var data in _gunDataList.GunItemDatas)
+            _itemDict.Add(data.Id, data);
+        foreach (var data in _ammoDataList.AmmoItemDatas)
+            _itemDict.Add(data.Id, data);
+        foreach (var data in _usableItemDataList.UsableItemDatas)
+            _itemDict.Add(data.Id, data);
+        foreach (var data in _etcItemDataList.EtcItemDatas)
+            _itemDict.Add(data.Id, data);
+    }
+
 
     #region Get 
 
-    public GunData GetGun(GunType type)
+    public ItemData GetItemDataByID(int id)
+    {
+        return _itemDict.GetValueOrDefault((uint)id);
+    }
+
+    public GunData GetGunByType(GunType type)
     {
         int id = 0;
         if (type == GunType.Glock)
@@ -89,17 +108,8 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
         else if (type == GunType.M700)
             id = GunId.M700Id;
 
-        return GetGun(id);
+        return GetItemDataByID(id) as GunData;
     }
-
-    public GunData GetGun(int id)
-    {
-        foreach (var gun in _gunDataList.GunItemDatas)
-            if (gun.Id == id)
-                return gun;
-        return null;
-    }
-
 
     public AmmoData GetAmmo(string type)
     {
@@ -110,31 +120,7 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
         else if (type == BulletType.Sniping)
             id = BulletId.Sniping;
 
-        return GetAmmo((int)id);
-    }
-
-    public AmmoData GetAmmo(int id)
-    {
-        foreach (var ammo in _ammoDataList.AmmoItemDatas)
-            if (ammo.Id == id)
-                return ammo;
-        return null;
-    }
-
-    public UsableItemData GetUsableItem(int id)
-    {
-        foreach (var usableItem in _usableItemDataList.UsableItemDatas)
-            if (usableItem.Id == id)
-                return usableItem;
-        return null;
-    }
-
-    public ItemData GetEtcItem(int id)
-    {
-        foreach (var etcItem in _etcItemDataList.EtcItemDatas)
-            if (etcItem.Id == id)
-                return etcItem;
-        return null;
+        return GetItemDataByID((int)id) as AmmoData;
     }
 
     public EnemyData GetEnemyData()
