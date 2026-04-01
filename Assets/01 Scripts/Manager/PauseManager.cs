@@ -67,7 +67,6 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager>
 
     public void OnClickReturnToTile()
     {
-        _pauseUI.SetActive(false);
         _pauseReturnToTitleUI.SetActive(true);
 
         EventSystem.current.SetSelectedGameObject(null);
