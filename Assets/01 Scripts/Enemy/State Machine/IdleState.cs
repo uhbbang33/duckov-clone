@@ -6,6 +6,7 @@ public class IdleState : EnemyStateBase
     private float _healTimer;
     private const float _idleTime = 3f;
     private const float _healPerTickAmount = 1f;
+    private const float _healDelay = 0.1f;
 
     public IdleState(Enemy enemy) : base(enemy) { }
 
@@ -30,7 +31,7 @@ public class IdleState : EnemyStateBase
         if (_enemy.HP.CurrentHP < _enemy.HP.MaxHP)
         {
             _healTimer += Time.deltaTime;
-            if (_healTimer >= 0.05f)
+            if (_healTimer >= _healDelay)
             {
                 _enemy.HealHP(_healPerTickAmount);
                 _healTimer = 0f;
