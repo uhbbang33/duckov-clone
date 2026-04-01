@@ -53,7 +53,8 @@ public class ChaseState : EnemyStateBase
         }
 
         // find Duration 동안 공격 전환이 안되거나 시야에 안보일경우 스폰 지점으로
-        _findTimer += Time.deltaTime;
+        if (_isFindingPlayer)
+            _findTimer += Time.deltaTime;
         if (_findTimer > _findDuration)
         {
             ReturnSpawnPoint();
