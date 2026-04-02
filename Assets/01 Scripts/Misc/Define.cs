@@ -27,7 +27,8 @@ public enum SlotType
     EQUIP,
     QUICKSLOT,
     MAINQUICKSLOT,
-    STORAGE
+    STORAGE,
+    SHOP
 }
 
 public enum InteractableType

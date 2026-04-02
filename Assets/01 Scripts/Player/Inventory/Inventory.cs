@@ -24,6 +24,7 @@ public class Inventory : MonoBehaviour, ISortableContainer
     private int _slotCnt;
     private bool _inventoryToggle;
     private float _carryWeight;
+    private int _currentMoney;
 
     // key - id, value - slot count
     private Dictionary<uint, int> _inventoryDict;
@@ -352,6 +353,15 @@ public class Inventory : MonoBehaviour, ISortableContainer
         float weightPercentage = (_carryWeight / _maxWeight) * 100f;
 
         _playerMove.ChangeSpeed(weightPercentage);
+    }
+
+    public void ChangeMoney(int itemValue, int itemCount,bool isAdd)
+    {
+        int amount = itemValue * itemCount;
+
+        _currentMoney += isAdd ? amount : -amount;
+
+        _uiManager.ChangeInventoryMoneyText(_currentMoney);
     }
 
     // Quick slot

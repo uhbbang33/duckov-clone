@@ -122,6 +122,9 @@ public class ItemSlotUI : MonoBehaviour,
         if (eventData.pointerDrag == null)
             return;
 
+        if(_itemSlot.Type == SlotType.SHOP)
+            return;
+
         ItemSlotUI startUI = eventData.pointerDrag.GetComponent<ItemSlotUI>();
 
         if (startUI != null)
@@ -302,6 +305,8 @@ public class ItemSlotUI : MonoBehaviour,
                 TryMoveToContainerByDoubleClick(SlotType.BOX);
             else if (_gameManager.IsStorageOpened)
                 TryMoveToContainerByDoubleClick(SlotType.STORAGE);
+            else if (_gameManager.IsShopOpened)
+                SellItem();
         }
         else if (_itemSlot.Type == SlotType.BOX 
             || _itemSlot.Type == SlotType.STORAGE)
@@ -352,6 +357,16 @@ public class ItemSlotUI : MonoBehaviour,
             _linkedQuickSlot?.UnlinkInventorySlotUI(targetSlot.CurrentItem.ID);
             return;
         }
+    }
+
+    private void SellItem()
+    {
+        // 아이템 value 값만큼 재화 증가
+        _inventory.ChangeMoney((int)_itemSlot.CurrentItem.Value, _itemSlot.Quantity, true);
+
+        // 가방에서 아이템 삭제
+        _linkedQuickSlot?.UnlinkInventorySlotUI(_itemSlot.CurrentItem.ID);
+        _itemSlot.SubtractItem(_itemSlot.Quantity);
     }
 
     private List<ItemSlot> GetContainerSlots(SlotType openContainerType)
