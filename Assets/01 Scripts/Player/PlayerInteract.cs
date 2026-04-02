@@ -54,10 +54,15 @@ public class PlayerInteract : MonoBehaviour
             _uiManager.ShowBoxUI(true);
             _gameManager.CurrentBox.OpenBox();
         }
-        else if(_ui.Type == InteractableType.STORAGE)
+        else if (_ui.Type == InteractableType.STORAGE)
         {
             _gameManager.IsStorageOpened = true;
             _uiManager.ShowStorageUI(true);
+        }
+        else if (_ui.Type == InteractableType.SHOP)
+        {
+            _gameManager.IsShopOpened = true;
+            _uiManager.ShowShopUI(true);
         }
 
         _scanner.HideAllInteractUI();
@@ -84,6 +89,11 @@ public class PlayerInteract : MonoBehaviour
         {
             _gameManager.IsStorageOpened = false;
             _uiManager.ShowStorageUI(false);
+        }
+        else if (_ui.Type == InteractableType.SHOP)
+        {
+            _gameManager.IsShopOpened = false;
+            _uiManager.ShowShopUI(false);
         }
 
         _scanner.StartCheck();

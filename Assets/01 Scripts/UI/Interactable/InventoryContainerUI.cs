@@ -1,5 +1,5 @@
 
-public class StorageUI : InteractableStateUI
+public class InventoryContainerUI : InteractableStateUI
 {
     public override void OnInteract()
     {

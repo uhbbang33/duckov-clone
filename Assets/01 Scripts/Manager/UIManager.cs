@@ -51,6 +51,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     [SerializeField] private GameObject _playerCanvas;
     [SerializeField] private GameObject _boxUI;
     [SerializeField] private GameObject _storageUI;
+    [SerializeField] private GameObject _shopUI;
 
     [Space(30)]
     [SerializeField] private DefaultHUDSlotUI[] _defaultHUDSlotUI;
@@ -302,6 +303,11 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     public void ShowStorageUI(bool show)
     {
         _storageUI.SetActive(show);
+    }
+
+    public void ShowShopUI(bool show)
+    {
+        _shopUI.SetActive(show);
     }
 
     #region On Button Click

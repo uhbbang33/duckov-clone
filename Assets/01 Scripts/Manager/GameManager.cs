@@ -17,6 +17,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     private Inventory _inventory;
 
     private bool _isStorageOpened;
+    private bool _isShopOpened;
 
     public readonly int BoxSlotNum = 5;
 
@@ -44,6 +45,12 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     {
         get { return _isStorageOpened; }
         set { _isStorageOpened = value; }
+    }
+
+    public bool IsShopOpened
+    {
+        get { return _isShopOpened; }
+        set { _isShopOpened = value; }
     }
 
     protected override void Awake()
