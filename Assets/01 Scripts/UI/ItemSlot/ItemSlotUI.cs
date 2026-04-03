@@ -94,7 +94,6 @@ public class ItemSlotUI : MonoBehaviour,
     {
         _inventory = _gameManager.Inventory;
         _uiManager = UIManager.Instance;
-        ChangeImageAlpha(false);
     }
 
     #region Drag And Drop
@@ -122,7 +121,7 @@ public class ItemSlotUI : MonoBehaviour,
         if (eventData.pointerDrag == null)
             return;
 
-        if(_itemSlot.Type == SlotType.SHOP)
+        if (_itemSlot == null || _itemSlot.Type == SlotType.SHOP)
             return;
 
         ItemSlotUI startUI = eventData.pointerDrag.GetComponent<ItemSlotUI>();

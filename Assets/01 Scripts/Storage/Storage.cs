@@ -8,17 +8,11 @@ public class Storage : MonoBehaviour, ISortableContainer
     [SerializeField] private Button _sortButton;
 
     private ItemSlot[] _slots;
-    private InventoryContainerUI _ui;
 
     private GameManager _gameManager;
 
     private int _slotCnt;
     private int _filledSlotCnt;
-
-    private void Awake()
-    {
-        _ui = GetComponent<InventoryContainerUI>();
-    }
 
     private void Start()
     {

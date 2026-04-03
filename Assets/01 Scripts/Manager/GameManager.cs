@@ -7,6 +7,8 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     [SerializeField] private GameObject _playerObject;
     [SerializeField] private GameObject[] _boxItemSlots;
     [SerializeField] private GameObject[] _storageItemSlots;
+    [SerializeField] private GameObject[] _shopItemSlots;
+
     [SerializeField] private Storage _storage;
 
     [SerializeField] private GameObject _dropItemPrefab;
@@ -24,6 +26,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     public GameObject PlayerObject { get { return _playerObject; } }
     public GameObject[] BoxItemSlots { get { return _boxItemSlots; } }
     public GameObject[] StorageItemSlots { get { return _storageItemSlots; } }
+    public GameObject[] ShopItemSlots { get { return _shopItemSlots; } }
     public Inventory Inventory { get { return _inventory; } }
     public InputActions Actions { get { return _inputActions; } }
 
