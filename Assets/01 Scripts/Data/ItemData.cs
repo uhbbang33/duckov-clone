@@ -9,4 +9,9 @@ public class ItemData
     public float Weight;
     public uint WeightValue;
     public uint MaxStackSize;
+
+    public virtual Item ToItem()
+    {
+        return new Item(Id, Rarity, Name, Value, Weight, WeightValue, MaxStackSize);
+    }
 }

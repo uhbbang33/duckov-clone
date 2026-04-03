@@ -24,7 +24,7 @@ public class LootBox : Box
         DataManager dataManager = DataManager.Instance;
 
         // boxSlot 0 - Gun
-        GunItem gunItem = dataManager.CreateItemBasedOnGunData(_enemyGunData);
+        GunItem gunItem = _enemyGunData.ToItem() as GunItem;
         int quantity = 1;
 
         _boxSlots[0].AddItem(gunItem, ref quantity);
@@ -32,7 +32,7 @@ public class LootBox : Box
 
         // boxSlot 1 - Ammo
         AmmoData ammoData = dataManager.GetAmmo(_enemyGunData.BulletType);
-        AmmoItem ammoItem = dataManager.CreateItemBasedOnAmmoData(ammoData);
+        AmmoItem ammoItem = ammoData.ToItem() as AmmoItem;
 
         if (_enemyGunData.BulletType == BulletType.S)
             quantity = Random.Range(52, 91);

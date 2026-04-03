@@ -11,6 +11,11 @@ public class GunData : ItemData
     public float AdsTime;
     public float SoundRange;
     public int EnemyFireCount;
+
+    public override Item ToItem()
+    {
+        return new GunItem(Id,Rarity,Name, Value, Weight, WeightValue, BulletType, Damage, Rps, MagazineCapacity, Range, ReloadTime, AdsTime, SoundRange, MaxStackSize);
+    }
 }
 
 [System.Serializable]

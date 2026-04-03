@@ -144,57 +144,18 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
     public Item GetRandomItem(string type)
     {
         if (type == ItemType.Gun)
-            return CreateItemBasedOnGunData(GetRandomGunData());
+            return GetRandomGunData().ToItem();
         else if (type == ItemType.Ammo)
-            return CreateItemBasedOnAmmoData(GetRandomAmmoData());
+            return GetRandomAmmoData().ToItem();
         else if (type == ItemType.Food)
-            return CreateItemBasedOnFoodData(GetRandomFoodData());
+            return GetRandomFoodData().ToItem();
         else if (type == ItemType.Medicine)
-            return CreateItemBasedOnMedicineData(GetRandomMedicineData());
+            return GetRandomMedicineData().ToItem();
         else if (type == ItemType.Etc)
-            return CreateItemBasedOnEtcData(GetRandomEtcData());
+            return GetRandomEtcData().ToItem();
 
         return null;
     }
-
-
-    #region Create Item Based on Data
-    public GunItem CreateItemBasedOnGunData(GunData data)
-    {
-        GunItem item = new(data.Id, data.Rarity, data.Name, data.Value, data.Weight, data.WeightValue, data.BulletType, data.Damage, data.Rps, data.MagazineCapacity, data.Range, data.ReloadTime, data.AdsTime, data.SoundRange, data.MaxStackSize);
-
-        return item;
-    }
-
-    public AmmoItem CreateItemBasedOnAmmoData(AmmoData data)
-    {
-        AmmoItem item = new(data.Id, data.Rarity, data.Name, data.Value, data.Weight, data.WeightValue, data.MaxStackSize, data.BulletType);
-
-        return item;
-    }
-
-    private UsableItem CreateItemBasedOnFoodData(UsableItemData data)
-    {
-        UsableItem item = new(data.Id, data.Rarity, data.Name, data.Value, data.Weight, data.WeightValue, data.HealHP, data.DurabilityCost, data.Hunger, data.Hydration, data.MaxStackSize, ItemType.Food);
-
-        return item;
-    }
-
-    private UsableItem CreateItemBasedOnMedicineData(UsableItemData data)
-    {
-        UsableItem item = new(data.Id, data.Rarity, data.Name, data.Value, data.Weight, data.WeightValue, data.HealHP, data.DurabilityCost, data.Hunger, data.Hydration, data.MaxStackSize, ItemType.Medicine);
-
-        return item;
-    }
-
-    private Item CreateItemBasedOnEtcData(ItemData data)
-    {
-        Item item = new(data.Id, data.Rarity, data.Name, data.Value, data.Weight, data.WeightValue, data.MaxStackSize);
-
-        return item;
-    }
-
-    #endregion
 
 
     #region Get Random Data
