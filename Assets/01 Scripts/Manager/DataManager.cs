@@ -11,6 +11,7 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
     private PlayerBaseDataList _playerBaseDataList;
     private PlayerMoveDataList _playerMoveDataList;
     private PlayerSoundDataList _playerSoundDataList;
+    private ShopItemDataList _shopItemDataList;
 
     private List<UsableItemData> _foodDatas = new();
     private List<UsableItemData> _medicineDatas = new();
@@ -74,6 +75,12 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
     {
         get { return _playerSoundDataList; }
         set { _playerSoundDataList = value; }
+    }
+
+    public ShopItemDataList ShopItemList
+    {
+        get { return _shopItemDataList; }
+        set { _shopItemDataList = value; }
     }
 
     #endregion Property

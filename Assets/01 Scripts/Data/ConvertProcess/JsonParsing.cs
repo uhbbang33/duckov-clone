@@ -31,6 +31,9 @@ public class JsonParsing : MonoBehaviour
         jsonText = LoadDataList("JsonData/PlayerSoundData");
         dataManager.PlayerSoundList = JsonUtility.FromJson<PlayerSoundDataList>(jsonText.text);
 
+        jsonText = LoadDataList("JsonData/ShopItemData");
+        dataManager.ShopItemList = JsonUtility.FromJson<ShopItemDataList>(jsonText.text);
+
         dataManager.FillItemDictionary();
     }
 
