@@ -420,11 +420,11 @@ public class ItemSlotUI : MonoBehaviour,
         }
 
         if (_infoUI != null)
-            _infoUI.SetInfoUI(item);
+            _infoUI.SetInfoUI(item, _itemSlot.Quantity);
 
         ChangeTexts();
         SetDurabilityOrCountUI(item);
-
+        
         if(_rect == null)
             _rect = GetComponent<RectTransform>();
         // Vertical Layout Group 재정렬

@@ -182,6 +182,11 @@ public class PlayerEquip : MonoBehaviour
         (_currentSelectedSlot.UI as EquipSlotUI).DefaultHUDSlotUI.RefreshAmmoCountText(_currentSelectedSlot.CurrentItem as GunItem);
     }
 
+    public void CurrentGunSlotRefreshUI()
+    {
+        _currentSelectedSlot.UI.RefreshUI();
+    }
+
     #region Animation Event
 
     // TODO : 미리 생성 후 불러오는 방식으로

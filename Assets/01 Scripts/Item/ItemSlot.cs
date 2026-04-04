@@ -192,5 +192,6 @@ public class ItemSlot
         }
 
         gunItem.CurrentAmmoCount = 0;
+        _ui.RefreshUI();
     }
 }

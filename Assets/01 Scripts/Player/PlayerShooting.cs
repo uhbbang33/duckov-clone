@@ -228,11 +228,12 @@ public class PlayerShooting : MonoBehaviour
         // 인벤토리에서 가져올 수 있는 수량 체크 및 아이템 저장
         (int, AmmoItem) reloadable = _inventory.ReloadableAmmoCount(_currentGunItem.BulletId, maxReloadableAmmoCount);
 
-        _currentGunItem.CurrentAmmoCount += reloadable.Item1;
         _currentGunItem.Ammo = reloadable.Item2;
+        _currentGunItem.CurrentAmmoCount += reloadable.Item1;
 
         // ammo count Text
         _playerEquip.RefreshHUDAmmoCountText();
+        _playerEquip.CurrentGunSlotRefreshUI();
 
         _state = PlayerFireState.Idle;
 

@@ -15,6 +15,8 @@ public class GunItem : Item
     private uint _bulletId;
     private AmmoItem _ammo;
     private string _ammoName;
+    private float _originGunWeight;
+    private int _originGunValue;
 
     public string GunItemType { get { return _itemType; } }
     public string GunBulletType { get { return _bulletType; } }
@@ -29,7 +31,12 @@ public class GunItem : Item
     public int CurrentAmmoCount
     {
         get { return _currentAmmoCount; }
-        set { _currentAmmoCount = value; }
+        set
+        {
+            _currentAmmoCount = value;
+            _weight = _originGunWeight + _currentAmmoCount * _ammo.Weight;
+            _value = (uint)(_originGunValue + _ammo.Value * _currentAmmoCount);
+        }
     }
     public uint BulletId { get { return _bulletId; } }
     public AmmoItem Ammo
@@ -51,6 +58,9 @@ public class GunItem : Item
         _reloadTime = reloadTime;
         _adsTime = adsTime;
         _soundRange = soundRange;
+
+        _originGunWeight = weight;
+        _originGunValue = (int)value;
 
         DataManager dataManager = DataManager.Instance;
         _bulletId = dataManager.GetBulletId(bulletType);

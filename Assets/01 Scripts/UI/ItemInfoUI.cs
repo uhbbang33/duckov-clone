@@ -59,7 +59,7 @@ public class ItemInfoUI : MonoBehaviour
         _ammoUI.SetActive(false);
     }
 
-    public void SetInfoUI(Item item)
+    public void SetInfoUI(Item item, int quantity)
     {
         InitializeUI();
 
@@ -71,8 +71,8 @@ public class ItemInfoUI : MonoBehaviour
 
         _nameText.text = item.Name;
         _idText.text = "#" + item.ID.ToString();
-        _weightText.text = item.Weight.ToString() + " kg";
-        _valueText.text = "$ " + item.Value.ToString();
+        _weightText.text = (item.Weight * quantity).ToString() + " kg";
+        _valueText.text = "$ " + (item.Value * quantity).ToString();
 
         if (item.Type == ItemType.Medicine || item.Type == ItemType.Food)
         {
