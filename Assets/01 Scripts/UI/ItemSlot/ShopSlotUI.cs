@@ -8,6 +8,7 @@ public class ShopSlotUI : ItemSlotUI
 
     private const int _ammoItemCount = 30;
     private const int _defaultItemCount = 1;
+    private const float _moneyMultiplier = 1.2f;
 
     public void SetItemData(int id)
     {
@@ -17,8 +18,10 @@ public class ShopSlotUI : ItemSlotUI
         int itemAmount = (item.Type == ItemType.Ammo)
             ? _ammoItemCount : _defaultItemCount;
 
+        int sellPrice = Mathf.FloorToInt(item.Value * itemAmount * _moneyMultiplier);
+        _moneyText.text = sellPrice.ToString();
+
         _itemSlot.AddItem(item, ref itemAmount);
-        _moneyText.text = item.Value.ToString();
 
         SetMoneyUI(true);
     }
