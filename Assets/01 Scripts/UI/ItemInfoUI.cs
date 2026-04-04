@@ -119,13 +119,14 @@ public class ItemInfoUI : MonoBehaviour
     private void SetGunValueText(GunItem item)
     {
         _gunValueText.text =
-            item.GunBulletType + "\n"
+            item.CurrentAmmoCount + "\n"
+            +item.GunBulletType + "\n"
             + item.Damage.ToString() + "\n"
              + item.Rps.ToString() + "\n"
               + item.MagazineCapacity.ToString() + "\n"
-               + item.Range.ToString() + "\n"
-                + item.ReloadTime.ToString() + "\n"
-                 + item.AdsTime.ToString();
+               + item.ReloadTime.ToString() + "\n"
+                + item.Range.ToString() + "\n"
+                 + item.SoundRange.ToString();
     }
 
     private void SetAmmoValueText(AmmoItem item)
@@ -149,8 +150,8 @@ public class ItemInfoUI : MonoBehaviour
         Vector2 mousePos = Mouse.current.position.ReadValue();
         Vector2 targetPos = mousePos + _positionOffest;
 
-        float clampedX = Mathf.Clamp(targetPos.x, 0f, Screen.width - _rectWidth * 2);
-        float clampedY = Mathf.Clamp(targetPos.y, 0f, Screen.height - _rectHeight * 2);
+        float clampedX = Mathf.Clamp(targetPos.x, 0f, Screen.width - _rectWidth);
+        float clampedY = Mathf.Clamp(targetPos.y, 0f, Screen.height - _rectHeight);
 
         transform.position = new Vector2(clampedX, clampedY);
     }
