@@ -37,11 +37,6 @@ public class ShopSlotUI : ItemSlotUI
     {
         base.OnDoubleClick();
 
-        if (_inventory.TryBuyItem(_itemSlot.CurrentItem, _itemSlot.Quantity, _sellPrice))
-        {
-            // TODO : sold out 처리 
-            // 입력 못받도록 slotType 바꾸기?
-
-        }
+        _inventory.TryBuyItem(_itemSlot.CurrentItem, _itemSlot.Quantity, _sellPrice);
     }
 }
