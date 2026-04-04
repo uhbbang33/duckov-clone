@@ -438,7 +438,8 @@ public class ItemSlotUI : MonoBehaviour,
 
     public void OpenSlotMenu()
     {
-        if (_itemSlot.CurrentItem == null)
+        if (_itemSlot.CurrentItem == null
+            || _itemSlot.Type == SlotType.SHOP)
             return;
 
         _uiManager.OpenSlotMenu(_itemSlot, transform.position);
