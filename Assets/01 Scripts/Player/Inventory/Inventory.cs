@@ -209,6 +209,58 @@ public class Inventory : MonoBehaviour, ISortableContainer
         return false;
     }
 
+    private bool CanAddItem(uint itemId, int quantity)
+    {
+        // 빈공간이 있으면 무조건 아이템 추가 가능
+        if (FindFirstEmptySlot() != -1)
+            return true;
+
+        // 빈공간도 없고 인벤토리에 같은 아이템이 없다면 return false
+        if (!_inventoryDict.ContainsKey(itemId))
+            return false;
+
+        int itemInInventoryCount = _inventoryDict[itemId];
+        int remain = quantity;
+
+        for (int i = 0; i < _slotCnt; ++i)
+        {
+            if (_inventorySlots[i].CurrentItem == null)
+                continue;
+
+            if (_inventorySlots[i].CurrentItem.ID == itemId)
+            {
+                int canAddCount = (int)_inventorySlots[i].CurrentItem.MaxStackSize - _inventorySlots[i].Quantity;
+
+                remain -= canAddCount;
+                if (remain <= 0)
+                    return true;
+
+                itemInInventoryCount -= 1;
+                if (itemInInventoryCount == 0)
+                    break;
+            }
+        }
+
+        return false;
+    }
+
+    public bool TryBuyItem(Item item, int quantity, int price)
+    {
+        // 1. 재화 있는지 확인
+        if (_currentMoney < price)
+            return false;
+
+        // 2. 빈자리 있는지 확인
+        if (CanAddItem(item.ID, quantity))
+        {
+            ChangeMoney(price, quantity, false);
+            TryAddItem(item, ref quantity);
+            return true;
+        }
+
+        return false;
+    }
+
     public bool TryAddItemToEmptySlot(Item item, int amount)
     {
         int slotIndex = FindFirstEmptySlot();

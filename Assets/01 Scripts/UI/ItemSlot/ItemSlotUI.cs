@@ -20,7 +20,7 @@ public class ItemSlotUI : MonoBehaviour,
 
     protected UIManager _uiManager;
     protected ItemSlot _itemSlot;
-    private Inventory _inventory;
+    protected Inventory _inventory;
     private Transform _originParent;
     private Vector2 _originAncghoredPos;
     private RectTransform _rect;
@@ -289,7 +289,7 @@ public class ItemSlotUI : MonoBehaviour,
         }
     }
 
-    private void OnDoubleClick()
+    protected virtual void OnDoubleClick()
     {
         if (_itemSlot.CurrentItem == null)
             return;
