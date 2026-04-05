@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Storage : MonoBehaviour, ISortableContainer
+public class Storage : MonoBehaviour, ISortableContainer, ISaveableContainer
 {
     [SerializeField] private Button _sortButton;
 
@@ -20,7 +20,7 @@ public class Storage : MonoBehaviour, ISortableContainer
         _slotCnt = _gameManager.StorageItemSlots.Length;
 
         _slots = new ItemSlot[_slotCnt];
-        for(int i =0; i < _slotCnt; ++i)
+        for (int i = 0; i < _slotCnt; ++i)
         {
             _slots[i] = new ItemSlot();
             _slots[i].UI = _gameManager.StorageItemSlots[i].GetComponentInChildren<ItemSlotUI>();
@@ -30,9 +30,16 @@ public class Storage : MonoBehaviour, ISortableContainer
         _sortButton.onClick.AddListener(() => SortUtility.Sort(this));
     }
 
+    // ISortableContainer
     public List<ItemSlot> GetSortableSlots()
     {
         return _slots.ToList();
+    }
+
+    // ISaveableContainer
+    public IEnumerable<ItemSlot> GetSlots()
+    {
+        return _slots;
     }
 
     public void ChangeStorageItemCount(bool isAdd)

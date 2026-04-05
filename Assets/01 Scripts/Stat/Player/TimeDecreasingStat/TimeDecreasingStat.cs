@@ -19,6 +19,8 @@ public class TimeDecreasingStat : MonoBehaviour
 
     private WaitForSeconds _waitForReduceDelay;
 
+    public float Current { get { return _current; } }
+
     private void Awake()
     {
         _player = GetComponent<Player>();

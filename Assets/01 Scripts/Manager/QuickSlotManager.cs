@@ -45,4 +45,22 @@ public class QuickSlotManager : SingletonMonoBehaviour<QuickSlotManager>
     {
         _quickSlotDictionary.Remove(itemId);
     }
+
+    public List<int> GetLinkedInventoryIndexList()
+    {
+        List<int> indexList = new List<int>();
+
+        for(int i = 0; i < _equipQuickSlots.Length; ++i)
+        {
+            if (_equipQuickSlots[i].LinkedInventorySlotUI == null)
+            {
+                indexList.Add(-1);
+                continue;
+            }
+
+            indexList.Add(_equipQuickSlots[i].LinkedInventorySlotUI.Slot.InventoryIndex);
+        }
+
+        return indexList;
+    }
 }

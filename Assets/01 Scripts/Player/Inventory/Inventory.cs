@@ -5,7 +5,7 @@ using System;
 using UnityEngine.UI;
 using System.Linq;
 
-public class Inventory : MonoBehaviour, ISortableContainer
+public class Inventory : MonoBehaviour, ISortableContainer, ISaveableContainer
 {
     [SerializeField] private GameObject _inventoryUI;
     [SerializeField] private GameObject[] _slotObject;
@@ -35,6 +35,7 @@ public class Inventory : MonoBehaviour, ISortableContainer
     public event Action<float, float> OnWeightChange;
 
     public bool InventoryIsOpen { get { return _inventoryToggle; } }
+    public int CurrnetMoney { get { return _currentMoney; } }
 
     private void Awake()
     {
@@ -86,10 +87,18 @@ public class Inventory : MonoBehaviour, ISortableContainer
         _playerInteract.OnDisableInteractEvent -= OnInventoryCloseAllowed;
     }
 
+    // ISortableContainer
     public List<ItemSlot> GetSortableSlots()
     {
         return _inventorySlots.ToList();
     }
+
+    // ISaveableContainer
+    public IEnumerable<ItemSlot> GetSlots()
+    {
+        return _inventorySlots;
+    }
+
 
     public void OnSortCompleted()
     {
@@ -407,7 +416,7 @@ public class Inventory : MonoBehaviour, ISortableContainer
         _playerMove.ChangeSpeed(weightPercentage);
     }
 
-    public void ChangeMoney(int itemValue, int itemCount,bool isAdd)
+    public void ChangeMoney(int itemValue, int itemCount, bool isAdd)
     {
         int amount = itemValue * itemCount;
 
@@ -422,5 +431,4 @@ public class Inventory : MonoBehaviour, ISortableContainer
         _inventorySlots[itemIndex].UseItem();
     }
 
-    
 }

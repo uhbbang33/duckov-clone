@@ -35,6 +35,15 @@ public class PlayerEquip : MonoBehaviour
         get { return _rightEquipSlot; }
         set { _rightEquipSlot = value; }
     }
+    public int EquipNum
+    {
+        get
+        {
+            if (_isLeftSlotActivated)
+                return 1;
+            else return 2;
+        }
+    }
 
     private void Awake()
     {
