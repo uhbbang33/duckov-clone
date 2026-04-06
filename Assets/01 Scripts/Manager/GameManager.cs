@@ -13,6 +13,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     [SerializeField] private GameObject _dropItemPrefab;
 
+    private SaveManager _saveManager;
     private InputActions _inputActions;
     private Box _currentBox;
     private Box _currentOpenBox;
@@ -66,6 +67,11 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     }
 
+    private void Start()
+    {
+        _saveManager = SaveManager.Instance;
+    }
+
     private void OnDestroy()
     {
         _inputActions.Player.Disable();
@@ -83,5 +89,30 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         }
 
         return true;
+    }
+
+    public void QuitGame()
+    {
+        SaveAllData();
+
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+    }
+
+    // TODO : 필드 씬으로 전환 시 호출
+    public void SaveAllData()
+    {
+        SavePlayerData();
+        _saveManager.SaveStorage();
+    }
+
+    // TODO : 벙커 씬으로 전환 시 호출
+    public void SavePlayerData()
+    {
+        _saveManager.SavePlayerStats();
+        _saveManager.SavePlayerInventory();
     }
 }

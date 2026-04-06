@@ -8,14 +8,12 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager>
     [SerializeField] private GameObject _pauseReturnToTitleUI;
 
     private GameManager _gameManager;
-    private SaveManager _saveManager;
 
     private bool _isPaused = false;
 
     private void Start()
     {
         _gameManager = GameManager.Instance;
-        _saveManager = SaveManager.Instance;
 
         _gameManager.Actions.Player.Cancel.performed += OnPause;
     }
@@ -79,9 +77,7 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager>
         _isPaused = false;
         Resume();
 
-        _saveManager.SavePlayerStats();
-        _saveManager.SavePlayerInventory();
-        _saveManager.SaveStorage();
+        _gameManager.SaveAllData();
 
         SceneLoader.Instance.LoadScene(SceneName.TitleScene);
     }
@@ -93,11 +89,7 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager>
 
     public void OnClickQuit()
     {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
+        _gameManager.QuitGame();
     }
 
     #endregion On Button Clcik
