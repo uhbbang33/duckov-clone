@@ -6,11 +6,18 @@ public class SceneLoader : SingletonMonoBehaviour<SceneLoader>
 {
     [SerializeField] private float _loadDuration = 1.0f;
 
+    private DataManager _dataManager;
+
     protected override void Awake()
     {
         base.Awake();
 
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void Start()
+    {
+        _dataManager = DataManager.Instance;
     }
 
     public void LoadScene(string sceneName)
@@ -36,6 +43,8 @@ public class SceneLoader : SingletonMonoBehaviour<SceneLoader>
         while (!op.isDone)
             yield return null;
 
+        _dataManager.SetDataForScene(sceneName);
+        GameManager.Instance.CurrentSceneName = sceneName;
 
         StartCoroutine(LoadingUI.Instance.FadeOut());
     }

@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using UnityEngine;
 
-public class SaveManager : SingletonMonoBehaviour<SaveManager>
+public class SaveAndLoadManager : SingletonMonoBehaviour<SaveAndLoadManager>
 {
     // TODO : 주소 변경 Application.persistentDataPath
     private readonly string _savePath = Path.Combine("Assets", "Resources", "JsonData", "Save");
@@ -11,10 +11,7 @@ public class SaveManager : SingletonMonoBehaviour<SaveManager>
     private readonly string _storageSaveFileName = "StorageSave.json";
 
     private QuickSlotManager _quickSlotManager;
-    private HealthPoint _playerHP;
-    private StaminaPoint _playerSP;
-    private Hydration _hydration;
-    private Hunger _hunger;
+    private Player _player;
     private PlayerEquip _playerEquip;
     private Inventory _inventory;
     private Storage _storage;
@@ -23,30 +20,22 @@ public class SaveManager : SingletonMonoBehaviour<SaveManager>
     {
         _quickSlotManager = QuickSlotManager.Instance;
 
-        GameManager gameManager = GameManager.Instance;
+        FieldManager gameManager = FieldManager.Instance;
 
         GameObject playerObject = gameManager.PlayerObject;
         _storage = gameManager.storage;
 
-        _playerHP = playerObject.GetComponent<HealthPoint>();
-        _playerSP = playerObject.GetComponent<StaminaPoint>();
-        _hydration = playerObject.GetComponent<Hydration>();
-        _hunger = playerObject.GetComponent<Hunger>();
+        _player = playerObject.GetComponent<Player>();
         _playerEquip = playerObject.GetComponent<PlayerEquip>();
         _inventory = playerObject.GetComponent<Inventory>();
     }
 
+    #region Save
     public void SavePlayerStats()
     {
         try
         {
-            PlayerStatsSaveData data = new PlayerStatsSaveData
-            {
-                CurrentHP = _playerHP.CurrentHP,
-                CurrentSP = Mathf.Floor(_playerSP.CurrentSP),
-                CurrentHydration = Mathf.Floor(_hydration.Current),
-                CurrentHunger = Mathf.Floor(_hunger.Current)
-            };
+            PlayerStatsSaveData data = _player.StatsSaveData;
 
             string json = JsonUtility.ToJson(data, true);
             File.WriteAllText(Path.Combine(_savePath, _statsSaveFileName), json);
@@ -106,4 +95,49 @@ public class SaveManager : SingletonMonoBehaviour<SaveManager>
             Debug.Log("Storage 저장 실패" + ex.Message);
         }
     }
+
+    #endregion Save
+
+
+    #region Load
+
+    public void LoadPlayerStats()
+    {
+        string path = Path.Combine(_savePath, _statsSaveFileName);
+
+        if (!File.Exists(path))
+        {
+            Debug.Log("PlayerStats 데이터 json 파일 없음 - 초기값 사용");
+            return;
+        }
+
+        try
+        {
+            string json = File.ReadAllText(path);
+            PlayerStatsSaveData data = JsonUtility.FromJson<PlayerStatsSaveData>(json);
+            if (data == null)
+            {
+                Debug.LogError("PlayerStatsData JSON 파싱 실패");
+                return;
+            }
+
+            _player.StatsSaveData = data;
+        }
+        catch (Exception ex)
+        {
+            Debug.Log("Player Stats 로드 실패" + ex.Message);
+        }
+    }
+
+    public void LoadPlayerInventory()
+    {
+
+    }
+
+    public void LoadStorage()
+    {
+
+    }
+
+    #endregion Load
 }

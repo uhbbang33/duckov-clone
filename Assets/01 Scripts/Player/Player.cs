@@ -17,6 +17,27 @@ public class Player : MonoBehaviour
 
     private PlayerState _state;
 
+    public PlayerStatsSaveData StatsSaveData
+    {
+        get
+        {
+            return new PlayerStatsSaveData
+            {
+                CurrentHP = _hp.CurrentHP,
+                CurrentSP = Mathf.Floor(_sp.CurrentSP),
+                CurrentHydration = Mathf.Floor(_hydration.Current),
+                CurrentHunger = Mathf.Floor(_hunger.Current)
+            };
+        }
+        set
+        {
+            _hp.LoadCurrentHPData(value.CurrentHP);
+            _sp.LoadCurrentSPData(value.CurrentSP);
+            _hydration.LoadCurrent(value.CurrentHydration);
+            _hunger.LoadCurrent(value.CurrentHunger);
+        }
+    }
+
     public PlayerBaseData BaseData {  get { return _playerBaseData; } }
     public PlayerMoveData MoveData {  get { return _playerMoveData; } }
     public PlayerSoundData SoundData { get { return _playerSoundData; } }

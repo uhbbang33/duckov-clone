@@ -18,6 +18,8 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
 
     private Dictionary<uint, ItemData> _itemDict = new();
 
+    private SaveAndLoadManager _saveAndLoadManager;
+
     #region Property
     public GunDataList GunDatas
     {
@@ -84,6 +86,51 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
     }
 
     #endregion Property
+
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        DontDestroyOnLoad(gameObject);
+    }
+
+    #region Save
+
+    // TODO : 필드 씬으로 전환 시 호출
+    public void SaveAllData()
+    {
+        SavePlayerData();
+        _saveAndLoadManager.SaveStorage();
+    }
+
+    // TODO : 벙커 씬으로 전환 시 호출
+    public void SavePlayerData()
+    {
+        _saveAndLoadManager.SavePlayerStats();
+        _saveAndLoadManager.SavePlayerInventory();
+    }
+
+    public void SetDataForScene(string sceneName)
+    {
+        if (_saveAndLoadManager == null)
+            _saveAndLoadManager = SaveAndLoadManager.Instance;
+
+        if (sceneName == SceneName.FieldScene)
+        {
+            _saveAndLoadManager.LoadPlayerStats();
+            _saveAndLoadManager.LoadPlayerInventory();
+        }
+        else if (sceneName == SceneName.BunkerScene)
+        {
+            _saveAndLoadManager.LoadPlayerStats();
+            _saveAndLoadManager.LoadPlayerInventory();
+            _saveAndLoadManager.LoadStorage();
+        }
+    }
+
+    #endregion Save
+
 
     public void FillItemDictionary()
     {

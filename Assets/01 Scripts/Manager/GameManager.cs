@@ -21,6 +21,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     public void QuitGame()
     {
+        DataManager.Instance.SaveAllData();
 
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;

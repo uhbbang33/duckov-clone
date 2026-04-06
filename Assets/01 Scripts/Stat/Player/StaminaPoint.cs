@@ -156,7 +156,12 @@ public class StaminaPoint : MonoBehaviour
         _currentHealAmountPerTick = _playerBaseData.SPRegenAmount;
     }
 
+    public void LoadCurrentSPData(float currentSP)
+    {
+        _currentSP = currentSP;
 
+        ChangeSPSliderValue();
+    }
 
     #region Coroutine
 

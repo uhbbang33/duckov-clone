@@ -95,6 +95,12 @@ public class TimeDecreasingStat : MonoBehaviour
         _currentReduceAmountPerTick = _originReduceAmountPerTick;
     }
 
+    public void LoadCurrent(float current)
+    {
+        _current = current;
+        RefreshUI();
+    }
+
     private IEnumerator ReducePerTickRoutine()
     {
         while (_current > 0)

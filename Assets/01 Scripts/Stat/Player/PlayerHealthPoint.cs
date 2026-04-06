@@ -79,4 +79,11 @@ public class PlayerHealthPoint : HealthPoint
             yield return _waitForReduceDelay;
         }
     }
+
+    public void LoadCurrentHPData(float currentHP)
+    {
+        _currentHP = currentHP;
+
+        ChangeHPSliderValue();
+    }
 }
