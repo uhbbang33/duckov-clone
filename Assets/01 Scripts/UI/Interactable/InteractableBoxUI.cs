@@ -35,6 +35,6 @@ public class InteractableBoxUI : InteractableStateUI
     {
         base.OnInteract();
 
-        GameManager.Instance.Inventory.OnInventoryOpenWithInteractable();
+        FieldManager.Instance.Inventory.OnInventoryOpenWithInteractable();
     }
 }

@@ -10,7 +10,7 @@ public class PlayerInteract : MonoBehaviour
     private PlayerMove _playerMove;
 
     private UIManager _uiManager;
-    private GameManager _gameManager;
+    private FieldManager _gameManager;
 
     public event Action OnEnableInteractEvent;
     public event Action OnDisableInteractEvent;
@@ -25,7 +25,7 @@ public class PlayerInteract : MonoBehaviour
     private void Awake()
     {
         _uiManager = UIManager.Instance;
-        _gameManager = GameManager.Instance;
+        _gameManager = FieldManager.Instance;
         _scanner = GetComponent<PlayerInteractableScanner>();
         _playerMove = GetComponent<PlayerMove>();
     }

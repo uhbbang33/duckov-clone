@@ -14,7 +14,7 @@ public class EquipDefaultHUDSlotUI : DefaultHUDSlotUI
     {
         base.Start();
 
-        _inventory = GameManager.Instance.Inventory;
+        _inventory = FieldManager.Instance.Inventory;
     }
 
     public void Selected(GunItem gunItem)

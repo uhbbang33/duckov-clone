@@ -3,6 +3,7 @@ public struct SceneName
 {
     public const string TitleScene = "TitleScene";
     public const string FieldScene = "FieldScene";
+    public const string BunkerScene = "BunkerScene";
 }
 
 public struct ItemType

@@ -203,13 +203,13 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         {
             _discardButton.SetActive(true);
 
-            if (GameManager.Instance.Inventory.FindFirstEmptySlot() == -1
+            if (FieldManager.Instance.Inventory.FindFirstEmptySlot() == -1
                 || _currentSlot.Quantity < 2)
                 _splitButton.SetActive(false);
         }
         else if (_currentSlot.Type == SlotType.BOX)
         {
-            if (GameManager.Instance.CurrentBox.FindFirstEmptySlot() == -1
+            if (FieldManager.Instance.CurrentBox.FindFirstEmptySlot() == -1
                 || _currentSlot.Quantity < 2)
                 _splitButton.SetActive(false);
         }
@@ -332,7 +332,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 
     public void OnDiscardButtonClick()
     {
-        if (GameManager.Instance.CreateDropItemObject(_currentSlot.CurrentItem, _currentSlot.Quantity))
+        if (FieldManager.Instance.CreateDropItemObject(_currentSlot.CurrentItem, _currentSlot.Quantity))
         {
             _currentSlot.SubtractItem(_currentSlot.Quantity);
         }

@@ -7,25 +7,29 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager>
     [SerializeField] private GameObject _pauseUI;
     [SerializeField] private GameObject _pauseReturnToTitleUI;
 
+    private FieldManager _fieldManager;
     private GameManager _gameManager;
+    private DataManager _dataManager;
 
     private bool _isPaused = false;
 
     private void Start()
     {
+        _fieldManager = FieldManager.Instance;
         _gameManager = GameManager.Instance;
+        _dataManager = DataManager.Instance;
 
-        _gameManager.Actions.Player.Cancel.performed += OnPause;
+        _fieldManager.Actions.Player.Cancel.performed += OnPause;
     }
 
     private void OnDestroy()
     {
-        _gameManager.Actions.Player.Cancel.performed -= OnPause;
+        _fieldManager.Actions.Player.Cancel.performed -= OnPause;
     }
 
     private void OnPause(InputAction.CallbackContext context)
     {
-        if (_gameManager.Inventory.InventoryIsOpen)
+        if (_fieldManager.Inventory.InventoryIsOpen)
             return;
 
         _isPaused = !_isPaused;
@@ -77,7 +81,7 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager>
         _isPaused = false;
         Resume();
 
-        _gameManager.SaveAllData();
+        _dataManager.SaveAllData();
 
         SceneLoader.Instance.LoadScene(SceneName.TitleScene);
     }

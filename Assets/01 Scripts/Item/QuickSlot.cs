@@ -29,7 +29,7 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     private void Start()
     {
-        _inputActions = GameManager.Instance.PlayerObject.GetComponent<Player>().Actions;
+        _inputActions = FieldManager.Instance.PlayerObject.GetComponent<Player>().Actions;
 
         SubscribeInputEvent(_quickSlotNum);
 

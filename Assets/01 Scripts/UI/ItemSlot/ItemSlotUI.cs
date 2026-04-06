@@ -25,7 +25,7 @@ public class ItemSlotUI : MonoBehaviour,
     private Vector2 _originAncghoredPos;
     private RectTransform _rect;
     private QuickSlot _linkedQuickSlot;
-    private GameManager _gameManager;
+    private FieldManager _gameManager;
 
 
     private float _lastClickTime;
@@ -85,7 +85,7 @@ public class ItemSlotUI : MonoBehaviour,
 
     private void Awake()
     {
-        _gameManager = GameManager.Instance;
+        _gameManager = FieldManager.Instance;
         _originParent = transform.parent;
         _originAncghoredPos = ((RectTransform)transform).anchoredPosition;
     }

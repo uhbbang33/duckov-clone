@@ -125,7 +125,7 @@ public class PlayerInteractableScanner : MonoBehaviour
         if (obj == null)
             return;
 
-        GameManager.Instance.CurrentBox = obj.GetComponent<Box>();
+        FieldManager.Instance.CurrentBox = obj.GetComponent<Box>();
     }
 
     public void StartCheck()

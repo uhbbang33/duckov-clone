@@ -17,7 +17,7 @@ public class InteractableStateUI : MonoBehaviour
 
     private void Start()
     {
-        _interact = GameManager.Instance.PlayerObject.GetComponent<PlayerInteract>();
+        _interact = FieldManager.Instance.PlayerObject.GetComponent<PlayerInteract>();
     }
 
     public void ShowCanvas()

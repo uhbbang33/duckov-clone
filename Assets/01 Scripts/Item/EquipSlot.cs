@@ -7,7 +7,7 @@ public class EquipSlot : ItemSlot
     public EquipSlot(bool isLeftSlot) : base()
     {
         _slotType = SlotType.EQUIP;
-        _playerEquip = GameManager.Instance.PlayerObject.GetComponent<PlayerEquip>();
+        _playerEquip = FieldManager.Instance.PlayerObject.GetComponent<PlayerEquip>();
 
         if (isLeftSlot && _playerEquip.LeftEquipSlot == null)
             _playerEquip.LeftEquipSlot = this;

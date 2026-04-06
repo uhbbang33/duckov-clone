@@ -4,7 +4,7 @@ public class ItemSlot
 {
     protected Item _currentItem;
     protected ItemSlotUI _ui;
-    private GameManager _gameManager;
+    private FieldManager _gameManager;
     private Inventory _inventory;
 
     protected SlotType _slotType;
@@ -16,7 +16,7 @@ public class ItemSlot
         _currentItem = null;
         _quantity = 0;
         _ui = null;
-        _gameManager = GameManager.Instance;
+        _gameManager = FieldManager.Instance;
         _inventory = _gameManager.Inventory;
     }
 

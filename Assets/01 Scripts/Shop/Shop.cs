@@ -5,12 +5,12 @@ public class Shop : MonoBehaviour
     private ItemSlot[] _slots;
     private int _slotCnt;
     DataManager _dataManager;
-    GameManager _gameManager;
+    FieldManager _gameManager;
 
     private void Start()
     {
         _dataManager = DataManager.Instance;
-        _gameManager = GameManager.Instance;
+        _gameManager = FieldManager.Instance;
 
         _slotCnt = _gameManager.ShopItemSlots.Length;
 

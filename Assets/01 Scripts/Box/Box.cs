@@ -16,7 +16,7 @@ public abstract class Box : MonoBehaviour
     private bool _allRarityOpened;
 
     private Coroutine _currentCoroutine;
-    private GameManager _gameManager;
+    private FieldManager _gameManager;
 
     //TODO Define으로
     private const int _ammoQuantity = 30;
@@ -28,7 +28,7 @@ public abstract class Box : MonoBehaviour
 
     private void Start()
     {
-        _gameManager = GameManager.Instance;
+        _gameManager = FieldManager.Instance;
         _slotCnt = _gameManager.BoxSlotNum;
 
         _boxSlots = new ItemSlot[_slotCnt];

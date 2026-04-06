@@ -9,14 +9,14 @@ public class Storage : MonoBehaviour, ISortableContainer, ISaveableContainer
 
     private ItemSlot[] _slots;
 
-    private GameManager _gameManager;
+    private FieldManager _gameManager;
 
     private int _slotCnt;
     private int _filledSlotCnt;
 
     private void Start()
     {
-        _gameManager = GameManager.Instance;
+        _gameManager = FieldManager.Instance;
         _slotCnt = _gameManager.StorageItemSlots.Length;
 
         _slots = new ItemSlot[_slotCnt];
