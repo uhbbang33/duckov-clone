@@ -51,18 +51,7 @@ public class SaveAndLoadManager : SingletonMonoBehaviour<SaveAndLoadManager>
     {
         try
         {
-            PlayerInventorySaveData data = new PlayerInventorySaveData
-            {
-                EquipedGunSlotNum = _playerEquip.EquipNum,
-                QuickSlotLinkedInventoryIndex = _quickSlotManager.GetLinkedInventoryIndexList(),
-
-                ItemIDList = SaveUtility.GetSlotItemsID(_inventory),
-                GunItemAmmoCountList = SaveUtility.GetSlotGunItemsAmmoCount(_inventory),
-                QuantityList = SaveUtility.GetSlotsQuantity(_inventory),
-                DurabilityList = SaveUtility.GetSlotItemsDurability(_inventory),
-
-                Money = _inventory.CurrnetMoney
-            };
+            PlayerInventorySaveData data = _inventory.InventorySaveData;
 
             string json = JsonUtility.ToJson(data, true);
             File.WriteAllText(Path.Combine(_savePath, _inventorySaveFileName), json);
@@ -132,6 +121,30 @@ public class SaveAndLoadManager : SingletonMonoBehaviour<SaveAndLoadManager>
     public void LoadPlayerInventory()
     {
 
+        string path = Path.Combine(_savePath, _inventorySaveFileName);
+
+        if (!File.Exists(path))
+        {
+            Debug.Log("Inventory 데이터 json 파일 없음 - 초기값 사용");
+            return;
+        }
+
+        try
+        {
+            string json = File.ReadAllText(path);
+            PlayerInventorySaveData data = JsonUtility.FromJson<PlayerInventorySaveData>(json);
+            if (data == null)
+            {
+                Debug.LogError("PlayerInventoryData JSON 파싱 실패");
+                return;
+            }
+
+            _inventory.InventorySaveData = data;
+        }
+        catch (Exception ex)
+        {
+            Debug.Log("Player Inventory 로드 실패" + ex.Message);
+        }
     }
 
     public void LoadStorage()

@@ -162,7 +162,7 @@ public class ItemSlot
             item.CurrentDurability -= (int)item.DurabilityCost;
             if (item.CurrentDurability > 0)
             {
-                _ui.ChangeDurabilitySliderValue(item.CurrentDurability, Durability.MaxDurability);
+                _ui.RefreshUI();
                 return;
             }
         }
@@ -194,4 +194,5 @@ public class ItemSlot
         gunItem.CurrentAmmoCount = 0;
         _ui.RefreshUI();
     }
+
 }

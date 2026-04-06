@@ -13,6 +13,7 @@ public class Inventory : MonoBehaviour, ISortableContainer, ISaveableContainer
     [SerializeField] private float _maxWeight;
 
     private UIManager _uiManager;
+    private DataManager _dataManager;
     private InputActions _inputActions;
     private PlayerMove _playerMove;
     private PlayerInteract _playerInteract;
@@ -35,11 +36,46 @@ public class Inventory : MonoBehaviour, ISortableContainer, ISaveableContainer
     public event Action<float, float> OnWeightChange;
 
     public bool InventoryIsOpen { get { return _inventoryToggle; } }
-    public int CurrnetMoney { get { return _currentMoney; } }
+
+    public PlayerInventorySaveData InventorySaveData
+    {
+        get
+        {
+            return new PlayerInventorySaveData
+            {
+                EquipedGunSlotNum = _playerEquip.EquipNum,
+                QuickSlotLinkedInventoryIndex = QuickSlotManager.Instance.GetLinkedInventoryIndexList(),
+
+                ItemIDList = SaveUtility.GetSlotItemsID(this),
+                GunItemAmmoCountList = SaveUtility.GetSlotGunItemsAmmoCount(this),
+                QuantityList = SaveUtility.GetSlotsQuantity(this),
+                DurabilityList = SaveUtility.GetSlotItemsDurability(this),
+
+                Money = _currentMoney
+            };
+        }
+        set
+        {
+            FillInventorySlotsWithData(
+                value.ItemIDList, 
+                value.GunItemAmmoCountList,
+                value.QuantityList,
+                value.DurabilityList);
+
+            _currentMoney = value.Money;
+            _uiManager.ChangeInventoryMoneyText(_currentMoney);
+
+            // quick slot은 마지막에
+            _playerEquip.EquipNum = value.EquipedGunSlotNum;
+            QuickSlotManager.Instance.LinkSlots(value.QuickSlotLinkedInventoryIndex);
+        }
+    }
 
     private void Awake()
     {
         _uiManager = UIManager.Instance;
+        _dataManager = DataManager.Instance;
+
         _playerMove = GetComponent<PlayerMove>();
         _playerInteract = GetComponent<PlayerInteract>();
         _playerEquip = GetComponent<PlayerEquip>();
@@ -99,6 +135,31 @@ public class Inventory : MonoBehaviour, ISortableContainer, ISaveableContainer
         return _inventorySlots;
     }
 
+    private void FillInventorySlotsWithData(List<int> itemIdList, List<int> gunItemAmmoCountList, List<int> quantityList, List<int> DurabilityList)
+    {
+        for (int i = 0; i < _inventorySlots.Length; ++i)
+        {
+            if (itemIdList[i] == -1)
+                continue;
+
+            ItemData data = _dataManager.GetItemDataByID(itemIdList[i]);
+            Item item = data.ToItem();
+
+            if(data.ItemType == ItemType.Gun)
+            {
+                (item as GunItem).CurrentAmmoCount = gunItemAmmoCountList[i];
+            }
+            
+            if(data.ItemType == ItemType.Food || data.ItemType == ItemType.Medicine)
+            {
+                (item as UsableItem).CurrentDurability = DurabilityList[i];
+            }
+
+            int quantity = quantityList[i];
+
+            _inventorySlots[i].AddItem(item, ref quantity);
+        }
+    }
 
     public void OnSortCompleted()
     {

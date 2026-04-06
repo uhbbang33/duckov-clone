@@ -424,8 +424,8 @@ public class ItemSlotUI : MonoBehaviour,
 
         ChangeTexts();
         SetDurabilityOrCountUI(item);
-        
-        if(_rect == null)
+
+        if (_rect == null)
             _rect = GetComponent<RectTransform>();
         // Vertical Layout Group 재정렬
         LayoutRebuilder.ForceRebuildLayoutImmediate(_rect);
@@ -481,19 +481,20 @@ public class ItemSlotUI : MonoBehaviour,
         if (item.Type == ItemType.Food || item.Type == ItemType.Medicine)
         {
             UsableItem usableItem = item as UsableItem;
-            
-            if(usableItem.DurabilityCost != Durability.MaxDurability)
+
+            if (usableItem.DurabilityCost != Durability.MaxDurability)
                 _durabilityUI.SetActive(true);
+
+            ChangeDurabilitySliderValue(usableItem.CurrentDurability, Durability.MaxDurability);
         }
 
         if (!_durabilityUI.activeSelf && _itemSlot.Quantity > 1)
             _countUI.SetActive(true);
     }
 
-    public void ChangeDurabilitySliderValue(int current, int max)
+    private void ChangeDurabilitySliderValue(int current, int max)
     {
         _durabilitySlider.value = (float)current / (float)max;
-        RefreshUI();
     }
 
     public void ChangeImageAlpha(bool showImage)

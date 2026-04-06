@@ -43,6 +43,19 @@ public class PlayerEquip : MonoBehaviour
                 return 1;
             else return 2;
         }
+        set
+        {
+            if (value == 1)
+            {
+                _isLeftSlotActivated = true;
+                _isRightSlotActivated = false;
+            }
+            else if(value == 2)
+            {
+                _isLeftSlotActivated = false;
+                _isRightSlotActivated = true;
+            }
+        }
     }
 
     private void Awake()

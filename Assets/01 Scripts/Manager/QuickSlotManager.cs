@@ -63,4 +63,9 @@ public class QuickSlotManager : SingletonMonoBehaviour<QuickSlotManager>
 
         return indexList;
     }
+
+    public void LinkSlots(List<int> inventoryIndexList)
+    {
+
+    }
 }

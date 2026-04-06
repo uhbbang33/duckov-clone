@@ -12,7 +12,7 @@ public class PlayerInventorySaveData
     public List<int> ItemIDList;
     public List<int> GunItemAmmoCountList;
     public List<int> QuantityList;
-    public List<float> DurabilityList;
+    public List<int> DurabilityList;
 
     // Money
     public int Money;

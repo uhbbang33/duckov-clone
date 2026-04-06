@@ -54,9 +54,9 @@ public static class SaveUtility
         return list;
     }
 
-    public static List<float> GetSlotItemsDurability(ISaveableContainer container)
+    public static List<int> GetSlotItemsDurability(ISaveableContainer container)
     {
-        List<float> list = new List<float>();
+        List<int> list = new List<int>();
         var slots = container.GetSlots();
 
         foreach (var slot in slots) { 
@@ -69,8 +69,7 @@ public static class SaveUtility
                 continue;
             }
 
-            float durability = (item as UsableItem).CurrentDurability;
-            durability = Mathf.Floor(durability);
+            int durability = (item as UsableItem).CurrentDurability;
 
             list.Add(durability);
         }
