@@ -14,6 +14,7 @@ public class Inventory : MonoBehaviour, ISortableContainer, ISaveableContainer
 
     private UIManager _uiManager;
     private DataManager _dataManager;
+    private QuickSlotManager _quickSlotManager;
     private InputActions _inputActions;
     private PlayerMove _playerMove;
     private PlayerInteract _playerInteract;
@@ -44,7 +45,7 @@ public class Inventory : MonoBehaviour, ISortableContainer, ISaveableContainer
             return new PlayerInventorySaveData
             {
                 EquipedGunSlotNum = _playerEquip.EquipNum,
-                QuickSlotLinkedInventoryIndex = QuickSlotManager.Instance.GetLinkedInventoryIndexList(),
+                QuickSlotLinkedInventoryIndex = _quickSlotManager.GetLinkedInventoryIndexList(),
 
                 ItemIDList = SaveUtility.GetSlotItemsID(this),
                 GunItemAmmoCountList = SaveUtility.GetSlotGunItemsAmmoCount(this),
@@ -60,14 +61,13 @@ public class Inventory : MonoBehaviour, ISortableContainer, ISaveableContainer
                 value.ItemIDList, 
                 value.GunItemAmmoCountList,
                 value.QuantityList,
-                value.DurabilityList);
+                value.DurabilityList,
+                value.QuickSlotLinkedInventoryIndex);
 
             _currentMoney = value.Money;
             _uiManager.ChangeInventoryMoneyText(_currentMoney);
 
-            // quick slot은 마지막에
             _playerEquip.EquipNum = value.EquipedGunSlotNum;
-            QuickSlotManager.Instance.LinkSlots(value.QuickSlotLinkedInventoryIndex);
         }
     }
 
@@ -75,6 +75,7 @@ public class Inventory : MonoBehaviour, ISortableContainer, ISaveableContainer
     {
         _uiManager = UIManager.Instance;
         _dataManager = DataManager.Instance;
+        _quickSlotManager = QuickSlotManager.Instance;
 
         _playerMove = GetComponent<PlayerMove>();
         _playerInteract = GetComponent<PlayerInteract>();
@@ -135,7 +136,7 @@ public class Inventory : MonoBehaviour, ISortableContainer, ISaveableContainer
         return _inventorySlots;
     }
 
-    private void FillInventorySlotsWithData(List<int> itemIdList, List<int> gunItemAmmoCountList, List<int> quantityList, List<int> DurabilityList)
+    private void FillInventorySlotsWithData(List<int> itemIdList, List<int> gunItemAmmoCountList, List<int> quantityList, List<int> DurabilityList, List<int> quickSlotIndexList)
     {
         for (int i = 0; i < _inventorySlots.Length; ++i)
         {
@@ -158,6 +159,16 @@ public class Inventory : MonoBehaviour, ISortableContainer, ISaveableContainer
             int quantity = quantityList[i];
 
             _inventorySlots[i].AddItem(item, ref quantity);
+        }
+
+        for (int i = 0; i < quickSlotIndexList.Count; ++i)
+        {
+            int index = quickSlotIndexList[i];
+            if (index == -1)
+                continue;
+
+            QuickSlot quickSlot = _quickSlotManager.GetQuickSlotByIndex(i);
+            quickSlot.LinkToInventorySlotUI(_inventorySlots[index].UI);
         }
     }
 

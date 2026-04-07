@@ -20,6 +20,7 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     private ItemSlotUI _beginSlotUI;
     private UIManager _uiManager;
     private RectTransform _rect;
+    private bool _isSubscribeInputEvent = false;
 
     public ItemSlotUI LinkedInventorySlotUI
     {
@@ -29,18 +30,29 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     private void Start()
     {
-        _inputActions = FieldManager.Instance.PlayerObject.GetComponent<Player>().Actions;
-
-        SubscribeInputEvent(_quickSlotNum);
-
-        _uiManager = UIManager.Instance;
+        Initialize();
         _uiManager.ChangeImageAlpha(_iconImage, false);
+
         RefreshUI();
+    }
+
+    private void Initialize()
+    {
+        if (_uiManager == null)
+        {
+            _uiManager = UIManager.Instance;
+        }
+        if (!_isSubscribeInputEvent)
+        {
+            SubscribeInputEvent(_quickSlotNum);
+        }
     }
 
     // 게임 종료까지 유지
     private void SubscribeInputEvent(int num)
     {
+        _inputActions = FieldManager.Instance.PlayerObject.GetComponent<Player>().Actions;
+
         switch (num)
         {
             case 3:
@@ -62,6 +74,7 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 _inputActions.Player.QuickSlot8.performed += UseQuickSlotItem;
                 break;
         }
+        _isSubscribeInputEvent = true;
     }
 
     private void UseQuickSlotItem(InputAction.CallbackContext context)
@@ -72,6 +85,8 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void RefreshUI()
     {
+        Initialize();
+
         if (_linkedInventorySlotUI == null)
         {
             _nameText.text = "";
@@ -124,6 +139,8 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void LinkToInventorySlotUI(ItemSlotUI inventorySlotUI)
     {
+        Initialize();
+
         if (inventorySlotUI == null)
             return;
         if (_linkedInventorySlotUI == inventorySlotUI)

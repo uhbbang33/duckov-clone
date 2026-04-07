@@ -46,11 +46,14 @@ public class ItemSlotUI : MonoBehaviour,
         }
     }
 
+    // TODO : setter에 _linkedQuickSlot = value;만 있도록 수정
     public QuickSlot LinkedQuickSlot
     {
         get { return _linkedQuickSlot; }
         set
         {
+            _linkedQuickSlot = value;
+
             if(_linkedQuickSlot != null)
                 _linkedQuickSlot.LinkedInventorySlotUI = null;
 

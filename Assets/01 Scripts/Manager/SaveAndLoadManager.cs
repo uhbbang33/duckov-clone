@@ -10,23 +10,18 @@ public class SaveAndLoadManager : SingletonMonoBehaviour<SaveAndLoadManager>
     private readonly string _inventorySaveFileName = "PlayerInventorySave.json";
     private readonly string _storageSaveFileName = "StorageSave.json";
 
-    private QuickSlotManager _quickSlotManager;
     private Player _player;
-    private PlayerEquip _playerEquip;
     private Inventory _inventory;
     private Storage _storage;
 
     private void Start()
     {
-        _quickSlotManager = QuickSlotManager.Instance;
-
         FieldManager gameManager = FieldManager.Instance;
 
         GameObject playerObject = gameManager.PlayerObject;
         _storage = gameManager.storage;
 
         _player = playerObject.GetComponent<Player>();
-        _playerEquip = playerObject.GetComponent<PlayerEquip>();
         _inventory = playerObject.GetComponent<Inventory>();
     }
 
