@@ -1,18 +1,21 @@
+
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerEquip : MonoBehaviour
 {
     [SerializeField] private Transform _rightHandTransform;
+    [SerializeField] private EquipSlotUI _leftEquipSlotUI;
+    [SerializeField] private EquipSlotUI _rightEquipSlotUI;
 
     private Animator _anim;
     private GameObject _gunObject;
     private InputActions _inputActions;
-    private EquipSlot _leftEquipSlot;
-    private EquipSlot _rightEquipSlot;
     private EquipSlot _currentSelectedSlot;
     private PlayerShooting _playerShooting;
     private PoolManager _poolManager;
+    private DataManager _dataManager;
 
     private bool _isLeftSlotActivated = true;
     private bool _isRightSlotActivated = false;
@@ -23,18 +26,6 @@ public class PlayerEquip : MonoBehaviour
     private const string _raiseArm = "RaiseArm";
     private const string _changeWeapon = "ChangeWeapon";
 
-    
-    public EquipSlot LeftEquipSlot
-    {
-        get { return _leftEquipSlot; }
-        set { _leftEquipSlot = value; }
-    }
-
-    public EquipSlot RightEquipSlot
-    {
-        get { return _rightEquipSlot; }
-        set { _rightEquipSlot = value; }
-    }
     public int EquipNum
     {
         get
@@ -43,25 +34,10 @@ public class PlayerEquip : MonoBehaviour
                 return 1;
             else return 2;
         }
-        set
-        {
-            if (value == 1)
-            {
-                _isLeftSlotActivated = true;
-                _isRightSlotActivated = false;
-            }
-            else if(value == 2)
-            {
-                _isLeftSlotActivated = false;
-                _isRightSlotActivated = true;
-            }
-        }
     }
 
     private void Awake()
     {
-        _leftEquipSlot = null;
-        _rightEquipSlot = null;
         _currentSelectedSlot = null;
     }
 
@@ -75,12 +51,77 @@ public class PlayerEquip : MonoBehaviour
         _inputActions.Player.RightWeapon.performed += EquipRightSlotGun;
 
         _poolManager = PoolManager.Instance;
+        _dataManager = DataManager.Instance;
+
+        _leftEquipSlotUI.Init(this);
+        _rightEquipSlotUI.Init(this);
     }
 
     private void OnDisable()
     {
         _inputActions.Player.LeftWeapon.performed -= EquipLeftSlotGun;
         _inputActions.Player.RightWeapon.performed -= EquipRightSlotGun;
+    }
+
+    public List<int> GetGunSlotIDList()
+    {
+        List<int> list = new List<int>
+        {
+            _leftSlotGunId,
+            _rightSlotGunId
+        };
+
+        return list;
+    }
+
+    public List<int> GetGunSlotAmmoCountList()
+    {
+        List<int> list = new List<int>
+        {
+            (_leftEquipSlotUI.Slot.CurrentItem as GunItem).CurrentAmmoCount,
+            (_rightEquipSlotUI.Slot.CurrentItem as GunItem).CurrentAmmoCount
+        };
+
+        return list;
+    }
+
+    public void FillSlotsWithData(int equipNum, List<int> idList, List<int> ammoCountList)
+    {
+        for (int i = 0; i < 2; ++i)
+        {
+            if (idList[i] == 0)
+                continue;
+
+            ItemData data = _dataManager.GetItemDataByID(idList[i]);
+            GunItem item = data.ToItem() as GunItem;
+            item.CurrentAmmoCount = ammoCountList[i];
+
+            int amount = 1;
+
+            if (_leftEquipSlotUI.Slot == null || _rightEquipSlotUI.Slot == null)
+            {
+                Debug.LogError("EquipSlot not initialized");
+                return;
+            }
+
+            if (i == 0)
+                _leftEquipSlotUI.Slot.AddItem(item, ref amount);
+            else if (i == 1)
+                _rightEquipSlotUI.Slot.AddItem(item, ref amount);
+        }
+
+        if (equipNum == 1)
+        {
+            _isLeftSlotActivated = true;
+            _isRightSlotActivated = false;
+            SyncSlotState(true);
+        }
+        else if (equipNum == 2)
+        {
+            _isLeftSlotActivated = false;
+            _isRightSlotActivated = true;
+            SyncSlotState(false);
+        }
     }
 
     private void EquipLeftSlotGun(InputAction.CallbackContext context)
@@ -107,7 +148,7 @@ public class PlayerEquip : MonoBehaviour
 
     public void SyncSlotState(bool isLeftSlot)
     {
-        EquipSlot equipSlot = isLeftSlot ? _leftEquipSlot : _rightEquipSlot;
+        EquipSlot equipSlot = isLeftSlot ? (EquipSlot)_leftEquipSlotUI.Slot : (EquipSlot)_rightEquipSlotUI.Slot;
         bool isActivated = isLeftSlot ? _isLeftSlotActivated : _isRightSlotActivated;
 
         if (!isActivated)
@@ -186,8 +227,8 @@ public class PlayerEquip : MonoBehaviour
     // 여러번 총기 change시 InfoUI 호출 순서 겹치는 오류 방지
     private void RefreshHUDSelection(EquipSlot slot)
     {
-        DeselectDefaultHUD(_leftEquipSlot);
-        DeselectDefaultHUD(_rightEquipSlot);
+        DeselectDefaultHUD(_leftEquipSlotUI.Slot as EquipSlot);
+        DeselectDefaultHUD(_rightEquipSlotUI.Slot as EquipSlot);
 
         if (slot != null)
             SelectDefaultHUD(slot);

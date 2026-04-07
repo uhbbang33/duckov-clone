@@ -13,15 +13,23 @@ public class EquipSlotUI : ItemSlotUI
         get { return _equipDefaultHUDSlotUI;}
     }
 
+    protected override void Awake()
+    {
+        base.Awake();
+    }
+
     protected override void Start()
     {
         base.Start();
 
-        _itemSlot = new EquipSlot(_isLeftSlot);
-        _itemSlot.UI = this;
-
         _pistolIcon = _uiManager.PistolIcon;
         SetPistolIcon();
+    }
+
+    public void Init(PlayerEquip playerEquip)
+    {
+        _itemSlot = new EquipSlot(playerEquip);
+        _itemSlot.UI = this;
     }
 
     public override void RefreshUI()

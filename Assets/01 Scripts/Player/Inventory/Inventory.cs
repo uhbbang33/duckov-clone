@@ -44,8 +44,11 @@ public class Inventory : MonoBehaviour, ISortableContainer, ISaveableContainer
         {
             return new PlayerInventorySaveData
             {
-                EquipedGunSlotNum = _playerEquip.EquipNum,
                 QuickSlotLinkedInventoryIndex = _quickSlotManager.GetLinkedInventoryIndexList(),
+
+                EquipedGunSlotNum = _playerEquip.EquipNum,
+                GunSlotItemIDList = _playerEquip.GetGunSlotIDList(),
+                GunSlotItemAmmoCountList = _playerEquip.GetGunSlotAmmoCountList(),
 
                 ItemIDList = SaveUtility.GetSlotItemsID(this),
                 GunItemAmmoCountList = SaveUtility.GetSlotGunItemsAmmoCount(this),
@@ -67,7 +70,8 @@ public class Inventory : MonoBehaviour, ISortableContainer, ISaveableContainer
             _currentMoney = value.Money;
             _uiManager.ChangeInventoryMoneyText(_currentMoney);
 
-            _playerEquip.EquipNum = value.EquipedGunSlotNum;
+            _playerEquip.FillSlotsWithData(value.EquipedGunSlotNum,
+                value.GunSlotItemIDList, value.GunSlotItemAmmoCountList);
         }
     }
 

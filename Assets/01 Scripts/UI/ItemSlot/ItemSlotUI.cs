@@ -86,7 +86,7 @@ public class ItemSlotUI : MonoBehaviour,
         get { return _durabilitySlider.value; }
     }
 
-    private void Awake()
+    protected virtual void Awake()
     {
         _gameManager = FieldManager.Instance;
         _originParent = transform.parent;

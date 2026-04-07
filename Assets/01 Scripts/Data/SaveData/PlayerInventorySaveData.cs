@@ -8,6 +8,10 @@ public class PlayerInventorySaveData
     public int EquipedGunSlotNum;
     public List<int> QuickSlotLinkedInventoryIndex;
 
+    // Gun Slot
+    public List<int> GunSlotItemIDList;
+    public List<int> GunSlotItemAmmoCountList;
+
     // Inventory
     public List<int> ItemIDList;
     public List<int> GunItemAmmoCountList;

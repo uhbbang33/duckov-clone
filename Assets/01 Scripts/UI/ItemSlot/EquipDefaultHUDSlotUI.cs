@@ -22,7 +22,7 @@ public class EquipDefaultHUDSlotUI : DefaultHUDSlotUI
         _outline.SetActive(true);
         _infoUI.SetActive(true);
 
-        _ammoNameText.text = gunItem.AmmoName;
+        _ammoNameText.text = gunItem.Ammo.Name;
         RefreshAmmoCountText(gunItem);
     }
 

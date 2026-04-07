@@ -4,15 +4,10 @@ public class EquipSlot : ItemSlot
 {
     private PlayerEquip _playerEquip;
 
-    public EquipSlot(bool isLeftSlot) : base()
+    public EquipSlot(PlayerEquip playerEquip) : base()
     {
         _slotType = SlotType.EQUIP;
-        _playerEquip = FieldManager.Instance.PlayerObject.GetComponent<PlayerEquip>();
-
-        if (isLeftSlot && _playerEquip.LeftEquipSlot == null)
-            _playerEquip.LeftEquipSlot = this;
-        else if(_playerEquip.RightEquipSlot == null)
-            _playerEquip.RightEquipSlot = this;
+        _playerEquip = playerEquip;
     }
 
     public override void SubtractItem(int amount = 1)

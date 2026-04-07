@@ -4,7 +4,7 @@ public class ItemSlot
 {
     protected Item _currentItem;
     protected ItemSlotUI _ui;
-    private FieldManager _gameManager;
+    private FieldManager _fieldManager;
     private Inventory _inventory;
 
     protected SlotType _slotType;
@@ -16,8 +16,8 @@ public class ItemSlot
         _currentItem = null;
         _quantity = 0;
         _ui = null;
-        _gameManager = FieldManager.Instance;
-        _inventory = _gameManager.Inventory;
+        _fieldManager = FieldManager.Instance;
+        _inventory = _fieldManager.Inventory;
     }
 
     public Item CurrentItem
@@ -74,9 +74,9 @@ public class ItemSlot
             if (_slotType == SlotType.INVENTORY)
                 _inventory.RemoveItemSlot(_currentItem.ID);
             else if (_slotType == SlotType.BOX)
-                _gameManager.CurrentOpenBox.ChangeBoxItemCount(false);
+                _fieldManager.CurrentOpenBox.ChangeBoxItemCount(false);
             else if (_slotType == SlotType.STORAGE)
-                _gameManager.storage.ChangeStorageItemCount(false);
+                _fieldManager.storage.ChangeStorageItemCount(false);
 
             _currentItem = null;
             _quantity = 0;
@@ -101,9 +101,9 @@ public class ItemSlot
             if (_slotType == SlotType.INVENTORY)
                 _inventory.AddToInventoryDictByID(item.ID);
             else if (_slotType == SlotType.BOX)
-                _gameManager.CurrentOpenBox.ChangeBoxItemCount(true);
+                _fieldManager.CurrentOpenBox.ChangeBoxItemCount(true);
             else if (_slotType == SlotType.STORAGE)
-                _gameManager.storage.ChangeStorageItemCount(true);
+                _fieldManager.storage.ChangeStorageItemCount(true);
         }
 
         _currentItem = item;
@@ -142,11 +142,11 @@ public class ItemSlot
         }
         else if (_slotType == SlotType.BOX)
         {
-            _gameManager.CurrentBox.AddItemToEmptySlot(_currentItem, amount);
+            _fieldManager.CurrentBox.AddItemToEmptySlot(_currentItem, amount);
         }
         else if(_slotType == SlotType.STORAGE)
         {
-            _gameManager.storage.AddItemToEmptySlot(_currentItem, amount);
+            _fieldManager.storage.AddItemToEmptySlot(_currentItem, amount);
         }
     }
 
@@ -154,7 +154,7 @@ public class ItemSlot
     {
         UsableItem item = _currentItem as UsableItem;
 
-        if (!_gameManager.PlayerObject.GetComponent<Player>().UseItem(item))
+        if (!_fieldManager.PlayerObject.GetComponent<Player>().UseItem(item))
             return;
 
         if (item.DurabilityCost > 0)
@@ -188,7 +188,7 @@ public class ItemSlot
         if(!_inventory.TryAddItem(ammoItem, ref ammoCount))
         {
             // 버리기
-            _gameManager.CreateDropItemObject(ammoItem, ammoCount);
+            _fieldManager.CreateDropItemObject(ammoItem, ammoCount);
         }
 
         gunItem.CurrentAmmoCount = 0;
