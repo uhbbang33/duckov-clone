@@ -29,6 +29,8 @@ public class SceneLoader : SingletonMonoBehaviour<SceneLoader>
     {
         yield return LoadingUI.Instance.FadeIn();
 
+        bool isSceneReady = false;
+        SceneInitializer.OnSceneReady += () => isSceneReady = true;
 
         AsyncOperation op = SceneManager.LoadSceneAsync(sceneName);
         op.allowSceneActivation = false;
@@ -42,6 +44,8 @@ public class SceneLoader : SingletonMonoBehaviour<SceneLoader>
 
         while (!op.isDone)
             yield return null;
+
+        yield return new WaitUntil(() => isSceneReady);
 
         _dataManager.SetDataForScene(sceneName);
         GameManager.Instance.CurrentSceneName = sceneName;
