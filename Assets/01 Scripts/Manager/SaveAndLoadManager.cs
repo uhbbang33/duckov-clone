@@ -62,13 +62,7 @@ public class SaveAndLoadManager : SingletonMonoBehaviour<SaveAndLoadManager>
     {
         try
         {
-            StorageSaveData data = new StorageSaveData
-            {
-                ItemIDList = SaveUtility.GetSlotItemsID(_storage),
-                GunItemAmmoCountList = SaveUtility.GetSlotGunItemsAmmoCount(_storage),
-                QuantityList = SaveUtility.GetSlotsQuantity(_storage),
-                DurabilityList = SaveUtility.GetSlotItemsDurability(_storage),
-            };
+            StorageSaveData data = _storage.SaveData;
 
             string json = JsonUtility.ToJson(data, true);
             File.WriteAllText(Path.Combine(_savePath, _storageSaveFileName), json);
@@ -115,7 +109,6 @@ public class SaveAndLoadManager : SingletonMonoBehaviour<SaveAndLoadManager>
 
     public void LoadPlayerInventory()
     {
-
         string path = Path.Combine(_savePath, _inventorySaveFileName);
 
         if (!File.Exists(path))
@@ -144,7 +137,30 @@ public class SaveAndLoadManager : SingletonMonoBehaviour<SaveAndLoadManager>
 
     public void LoadStorage()
     {
+        string path = Path.Combine(_savePath, _storageSaveFileName);
 
+        if (!File.Exists(path))
+        {
+            Debug.Log("Storage 데이터 json 파일 없음 - 초기값 사용");
+            return;
+        }
+
+        try
+        {
+            string json = File.ReadAllText(path);
+            StorageSaveData data = JsonUtility.FromJson<StorageSaveData>(json);
+            if (data == null)
+            {
+                Debug.LogError("StorageData JSON 파싱 실패");
+                return;
+            }
+
+            _storage.SaveData = data;
+        }
+        catch (Exception ex)
+        {
+            Debug.Log("Player Inventory 로드 실패" + ex.Message);
+        }
     }
 
     #endregion Load

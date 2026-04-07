@@ -136,7 +136,7 @@ public class Inventory : MonoBehaviour, ISortableContainer, ISaveableContainer
         return _inventorySlots;
     }
 
-    private void FillInventorySlotsWithData(List<int> itemIdList, List<int> gunItemAmmoCountList, List<int> quantityList, List<int> DurabilityList, List<int> quickSlotIndexList)
+    private void FillInventorySlotsWithData(List<int> itemIdList, List<int> gunItemAmmoCountList, List<int> quantityList, List<int> durabilityList, List<int> quickSlotIndexList)
     {
         for (int i = 0; i < _inventorySlots.Length; ++i)
         {
@@ -146,14 +146,14 @@ public class Inventory : MonoBehaviour, ISortableContainer, ISaveableContainer
             ItemData data = _dataManager.GetItemDataByID(itemIdList[i]);
             Item item = data.ToItem();
 
-            if(data.ItemType == ItemType.Gun)
+            if(item.Type == ItemType.Gun)
             {
                 (item as GunItem).CurrentAmmoCount = gunItemAmmoCountList[i];
             }
             
-            if(data.ItemType == ItemType.Food || data.ItemType == ItemType.Medicine)
+            if(item.Type == ItemType.Food || item.Type == ItemType.Medicine)
             {
-                (item as UsableItem).CurrentDurability = DurabilityList[i];
+                (item as UsableItem).CurrentDurability = durabilityList[i];
             }
 
             int quantity = quantityList[i];
