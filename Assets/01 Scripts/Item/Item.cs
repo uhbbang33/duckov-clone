@@ -31,5 +31,6 @@ public class Item
         _weight = weight;
         _weightValue = weightValue;
         _maxStackSize = maxStackSize;
+        _itemType = ItemType.Etc;
     }
 }
