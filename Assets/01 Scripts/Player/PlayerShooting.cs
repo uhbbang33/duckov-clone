@@ -106,16 +106,14 @@ public class PlayerShooting : MonoBehaviour
             || _currentGunObject == null
             || _player.State == PlayerState.Running
             || _player.State == PlayerState.Rolling
-            || _state == PlayerFireState.Reloading
+            || _state != PlayerFireState.Idle
             || _inventory.InventoryIsOpen
             || Time.timeScale != 1f)
             return;
 
-        if (_state != PlayerFireState.Idle)
-            return;
-
         if (_fireCoroutine != null)
             return;
+
         _fireCoroutine = StartCoroutine(FireRoutine());
     }
 
@@ -140,7 +138,7 @@ public class PlayerShooting : MonoBehaviour
         // bullet
         GameObject bulletObject = _poolManager.GetObject(PoolId.Bullet, _currentGun.MuzzleTransform, false);
 
-        Vector3 dir = GetFireDirection();
+        Vector3 dir = _currentGun.MuzzleTransform.forward;
 
         Bullet bullet = bulletObject.GetComponent<Bullet>();
         bullet.BulletDamage = _currentGunItem.Damage;
@@ -257,33 +255,4 @@ public class PlayerShooting : MonoBehaviour
 
     #endregion Coroutine
 
-
-    #region Set Shoot Direction
-
-    private Vector3 GetMouseWorldPosition()
-    {
-        Vector2 mousePos = Mouse.current.position.ReadValue();
-        Ray ray = Camera.main.ScreenPointToRay(mousePos);
-
-        Plane groundPlane = new Plane(Vector3.up, _currentGun.MuzzleTransform.position);
-        float distance;
-
-        if (groundPlane.Raycast(ray, out distance))
-        {
-            return ray.GetPoint(distance);
-        }
-
-        return Vector3.zero;
-    }
-
-    private Vector3 GetFireDirection()
-    {
-        Vector3 target = GetMouseWorldPosition();
-
-        Vector3 dir = (target - _currentGun.MuzzleTransform.position);
-
-        return dir.normalized;
-    }
-
-    #endregion Set Shoot Direction
 }
