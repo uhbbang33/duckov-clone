@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 455176}
   - component: {fileID: 3382484}
   - component: {fileID: 2315220}
-  - component: {fileID: 6463996}
+  - component: {fileID: 9145090932422065714}
   m_Layer: 0
   m_Name: Garbage_Can_Blue
   m_TagString: Untagged
@@ -29,8 +29,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.000000021855701, y: 0.000000014158253, z: 0.00000007366601, w: 1}
   m_LocalPosition: {x: 0, y: 0.486, z: 0}
-  m_LocalScale: {x: 0.9999999, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -91,8 +91,8 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &6463996
-MeshCollider:
+--- !u!65 &9145090932422065714
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -109,7 +109,6 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: f4169bae00484c948a2b9d782b10b298, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 0.4, y: 0.95000005, z: 0.4}
+  m_Center: {x: 0, y: -0.02, z: -0.0000005066395}
