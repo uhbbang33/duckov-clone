@@ -133,7 +133,7 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 _durabilityUI.SetActive(true);
         }
 
-        if (!_durabilityUI.activeSelf)
+        if (!_durabilityUI.activeSelf && _linkedInventorySlotUI.Slot.Quantity > 1)
             _countUI.SetActive(true);
     }
 
