@@ -77,7 +77,7 @@ public class PlayerShooting : MonoBehaviour
     private void Start()
     {
         _actions = GetComponent<Player>().Actions;
-
+        
         _actions.Player.Fire.performed += OnFirePerformed;
         _actions.Player.Fire.canceled += OnFireCanceled;
         _actions.Player.Reload.performed += OnReload;
@@ -107,7 +107,8 @@ public class PlayerShooting : MonoBehaviour
             || _player.State == PlayerState.Running
             || _player.State == PlayerState.Rolling
             || _state == PlayerFireState.Reloading
-            || _inventory.InventoryIsOpen)
+            || _inventory.InventoryIsOpen
+            || Time.timeScale != 1f)
             return;
 
         if (_state != PlayerFireState.Idle)
