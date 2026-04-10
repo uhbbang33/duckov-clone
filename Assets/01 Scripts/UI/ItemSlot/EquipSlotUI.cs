@@ -23,7 +23,6 @@ public class EquipSlotUI : ItemSlotUI
         base.Start();
 
         _pistolIcon = _uiManager.PistolIcon;
-        SetPistolIcon();
     }
 
     public void Init(PlayerEquip playerEquip)
