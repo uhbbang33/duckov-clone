@@ -34,6 +34,12 @@ public class EquipDefaultHUDSlotUI : DefaultHUDSlotUI
 
     public void RefreshAmmoCountText(GunItem gunItem)
     {
+        if(gunItem == null)
+        {
+            _ammoCountText.text = string.Empty;
+            return;
+        }
+
         int ammoCountInInventory = _inventory.GetAmmoCount(gunItem.BulletId);
 
         _ammoCountText.text = gunItem.CurrentAmmoCount.ToString() + "/" + ammoCountInInventory;
