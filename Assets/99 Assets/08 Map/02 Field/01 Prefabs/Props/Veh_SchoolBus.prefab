@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 426880}
   - component: {fileID: 3363516}
   - component: {fileID: 2355518}
-  - component: {fileID: 6468126}
+  - component: {fileID: 4733580104103252087}
   m_Layer: 0
   m_Name: Veh_SchoolBus
   m_TagString: Untagged
@@ -118,8 +118,8 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &6468126
-MeshCollider:
+--- !u!65 &4733580104103252087
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -136,10 +136,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: cb8175a0c8c2f9a4087380f3b7149f43, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 2.8, y: 3.19, z: 8.62}
+  m_Center: {x: 0, y: 1.57, z: 0}
 --- !u!1 &107268
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,7 +240,6 @@ GameObject:
   - component: {fileID: 406102}
   - component: {fileID: 3361288}
   - component: {fileID: 2378522}
-  - component: {fileID: 6428822}
   m_Layer: 0
   m_Name: door_front01
   m_TagString: Untagged
@@ -322,28 +320,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &6428822
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 109068}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300016, guid: cb8175a0c8c2f9a4087380f3b7149f43, type: 3}
 --- !u!1 &111754
 GameObject:
   m_ObjectHideFlags: 0
@@ -535,7 +511,6 @@ GameObject:
   - component: {fileID: 472480}
   - component: {fileID: 3332996}
   - component: {fileID: 2366608}
-  - component: {fileID: 6448804}
   m_Layer: 0
   m_Name: wheel_backR
   m_TagString: Untagged
@@ -615,28 +590,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &6448804
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 114366}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300006, guid: cb8175a0c8c2f9a4087380f3b7149f43, type: 3}
 --- !u!1 &118488
 GameObject:
   m_ObjectHideFlags: 0
@@ -1098,7 +1051,6 @@ GameObject:
   - component: {fileID: 499156}
   - component: {fileID: 3323712}
   - component: {fileID: 2316116}
-  - component: {fileID: 6447982}
   m_Layer: 0
   m_Name: door_front02
   m_TagString: Untagged
@@ -1179,28 +1131,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &6447982
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 140012}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300014, guid: cb8175a0c8c2f9a4087380f3b7149f43, type: 3}
 --- !u!1 &140846
 GameObject:
   m_ObjectHideFlags: 0
@@ -1572,7 +1502,6 @@ GameObject:
   - component: {fileID: 486070}
   - component: {fileID: 3344024}
   - component: {fileID: 2333238}
-  - component: {fileID: 6472418}
   m_Layer: 0
   m_Name: door_rear
   m_TagString: Untagged
@@ -1653,28 +1582,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &6472418
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 147426}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300012, guid: cb8175a0c8c2f9a4087380f3b7149f43, type: 3}
 --- !u!1 &149374
 GameObject:
   m_ObjectHideFlags: 0
@@ -1776,7 +1683,6 @@ GameObject:
   - component: {fileID: 463708}
   - component: {fileID: 3382866}
   - component: {fileID: 2380316}
-  - component: {fileID: 6488012}
   m_Layer: 0
   m_Name: wheel_frontR
   m_TagString: Untagged
@@ -1856,28 +1762,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &6488012
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 151276}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300002, guid: cb8175a0c8c2f9a4087380f3b7149f43, type: 3}
 --- !u!1 &151840
 GameObject:
   m_ObjectHideFlags: 0
@@ -2699,7 +2583,6 @@ GameObject:
   - component: {fileID: 446988}
   - component: {fileID: 3323676}
   - component: {fileID: 2371760}
-  - component: {fileID: 6464080}
   m_Layer: 0
   m_Name: wheel_frontL
   m_TagString: Untagged
@@ -2779,28 +2662,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &6464080
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 187186}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300004, guid: cb8175a0c8c2f9a4087380f3b7149f43, type: 3}
 --- !u!1 &187800
 GameObject:
   m_ObjectHideFlags: 0
@@ -2812,7 +2673,6 @@ GameObject:
   - component: {fileID: 464728}
   - component: {fileID: 3303550}
   - component: {fileID: 2306118}
-  - component: {fileID: 6407030}
   m_Layer: 0
   m_Name: wheel_backL
   m_TagString: Untagged
@@ -2892,28 +2752,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &6407030
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 187800}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300008, guid: cb8175a0c8c2f9a4087380f3b7149f43, type: 3}
 --- !u!1 &190138
 GameObject:
   m_ObjectHideFlags: 0
@@ -2925,7 +2763,6 @@ GameObject:
   - component: {fileID: 414466}
   - component: {fileID: 3396328}
   - component: {fileID: 2303552}
-  - component: {fileID: 6441824}
   m_Layer: 0
   m_Name: seats
   m_TagString: Untagged
@@ -3005,25 +2842,3 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &6441824
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 190138}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300010, guid: cb8175a0c8c2f9a4087380f3b7149f43, type: 3}
