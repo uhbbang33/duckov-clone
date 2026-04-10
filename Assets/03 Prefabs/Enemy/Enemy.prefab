@@ -2460,7 +2460,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5c7d9ed23f5bc1944b062603acb3a66e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0d6de5bdde31b6647b8193d4fb79b11a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4406,15 +4406,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c9029d0de3b97146baa4ec5c10e3595, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
+  _playerLayer:
+    serializedVersion: 2
+    m_Bits: 0
   _obstacleLayer:
     serializedVersion: 2
     m_Bits: 704
+  _groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
   _detectPlayerDuration: 3
   _handTransform: {fileID: 6387639141002872610}
   _enemyAudioSource: {fileID: 6701365832029075487}
-  _dividendRTS: 10
   _targetingIcon: {fileID: 4400918394284861631}
   _warningIcon: {fileID: 5701181407407358194}
+  _destinationTransformList: []
+  _eyeOffset: 0
 --- !u!1 &8024061000680402165
 GameObject:
   m_ObjectHideFlags: 0
