@@ -23,6 +23,7 @@ public class EquipSlotUI : ItemSlotUI
         base.Start();
 
         _pistolIcon = _uiManager.PistolIcon;
+        SetPistolIcon();
     }
 
     public void Init(PlayerEquip playerEquip)
@@ -48,6 +49,9 @@ public class EquipSlotUI : ItemSlotUI
 
     private void SetPistolIcon()
     {
+        if (_itemSlot.CurrentItem != null)
+            return;
+
         _iconImage.sprite = _pistolIcon;
         _uiManager.ChangeImageAlpha(_iconImage, true);
     }

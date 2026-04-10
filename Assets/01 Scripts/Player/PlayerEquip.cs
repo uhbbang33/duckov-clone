@@ -76,11 +76,20 @@ public class PlayerEquip : MonoBehaviour
 
     public List<int> GetGunSlotAmmoCountList()
     {
-        List<int> list = new List<int>
-        {
-            (_leftEquipSlotUI.Slot.CurrentItem as GunItem).CurrentAmmoCount,
-            (_rightEquipSlotUI.Slot.CurrentItem as GunItem).CurrentAmmoCount
-        };
+        List<int> list = new List<int>();
+
+        GunItem leftItem = _leftEquipSlotUI.Slot.CurrentItem as GunItem;
+        GunItem rightItem = _rightEquipSlotUI.Slot.CurrentItem as GunItem;
+
+        if (leftItem != null)
+            list.Add(leftItem.CurrentAmmoCount);
+        else
+            list.Add(-1);
+
+        if (rightItem != null)
+            list.Add(rightItem.CurrentAmmoCount);
+        else
+            list.Add(-1);
 
         return list;
     }
