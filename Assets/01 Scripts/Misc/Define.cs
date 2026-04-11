@@ -2,7 +2,7 @@
 public struct SceneName
 {
     public const string TitleScene = "TitleScene";
-    public const string FieldScene = "FieldScene";
+    public const string FieldScene = "FieldMap"; // TODO - FieldScene으로 변경하기
     public const string BunkerScene = "BunkerScene";
 }
 
