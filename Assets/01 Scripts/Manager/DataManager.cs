@@ -120,9 +120,6 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
         {
             _saveAndLoadManager.LoadPlayerStats();
             _saveAndLoadManager.LoadPlayerInventory();
-
-            // Temp 확인용 - 나중에 지울것
-            _saveAndLoadManager.LoadStorage();
         }
         else if (sceneName == SceneName.BunkerScene)
         {
