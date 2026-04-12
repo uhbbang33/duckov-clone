@@ -18892,6 +18892,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7937633683448847363, guid: 645e3015243e40245bb801c45f6c5582, type: 3}
+      propertyPath: _targetScene
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8152572475622919056, guid: 645e3015243e40245bb801c45f6c5582, type: 3}
       propertyPath: m_Name
       value: Map

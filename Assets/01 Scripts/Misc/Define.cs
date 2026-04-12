@@ -6,6 +6,13 @@ public struct SceneName
     public const string BunkerScene = "BunkerScene";
 }
 
+public enum SceneList
+{
+    TITLE,
+    BUNKER,
+    FIELD,
+}
+
 public struct ItemType
 {
     public const string Gun = "Gun";
@@ -83,4 +90,9 @@ public struct EnemyAnimParm
     public const string Run = "IsRun";
     public const string ArmRaised = "IsArmRaised";
     public const string Reload = "IsReload";
+}
+
+public struct Tag
+{
+    public const string Player = "Player";
 }
