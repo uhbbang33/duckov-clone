@@ -10,6 +10,13 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
     [SerializeField] private AudioClip _reloadStartSFX;
     [SerializeField] private AudioClip _reloadEndSFX;
 
+    protected override void Awake()
+    {
+        base.Awake();
+
+        DontDestroyOnLoad(gameObject);
+    }
+
     public void PlayGunSFX(uint gunId, AudioSource source)
     {
         if (gunId == GunId.GlockId)

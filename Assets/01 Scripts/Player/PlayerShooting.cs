@@ -18,6 +18,7 @@ public class PlayerShooting : MonoBehaviour
     private PlayerMove _playerMove;
     private PlayerEnemyScanner _playerEnemyScanner;
     private Inventory _inventory;
+    private InventoryController _inventoryController;
     private PlayerEquip _playerEquip;
     private PoolManager _poolManager;
 
@@ -84,10 +85,11 @@ public class PlayerShooting : MonoBehaviour
 
         _player = GetComponent<Player>();
         _playerMove = GetComponent<PlayerMove>();
-        _inventory = GetComponent<Inventory>();
+        _inventoryController = GetComponent<InventoryController>();
         _playerEquip = GetComponent<PlayerEquip>();
         _playerEnemyScanner = GetComponent<PlayerEnemyScanner>();
 
+        _inventory = GameManager.Instance.Inventory;
         _poolManager = PoolManager.Instance;
     }
 
@@ -107,7 +109,7 @@ public class PlayerShooting : MonoBehaviour
             || _player.State == PlayerState.Running
             || _player.State == PlayerState.Rolling
             || _state != PlayerFireState.Idle
-            || _inventory.InventoryIsOpen
+            || _inventoryController.InventoryIsOpen
             || Time.timeScale != 1f)
             return;
 

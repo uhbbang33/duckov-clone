@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class FieldManager : SingletonMonoBehaviour<FieldManager>
 {
-    // TODO
-    [SerializeField] private GameObject _playerObject;
     [SerializeField] private GameObject[] _boxItemSlots;
     [SerializeField] private GameObject[] _storageItemSlots;
     [SerializeField] private GameObject[] _shopItemSlots;
@@ -11,23 +9,19 @@ public class FieldManager : SingletonMonoBehaviour<FieldManager>
     [SerializeField] private Storage _storage;
 
     [SerializeField] private GameObject _dropItemPrefab;
+    [SerializeField] private GameObject _playerObject;
 
-    private InputActions _inputActions;
     private Box _currentBox;
     private Box _currentOpenBox;
-    private Inventory _inventory;
 
     private bool _isStorageOpened;
     private bool _isShopOpened;
 
     public readonly int BoxSlotNum = 5;
 
-    public GameObject PlayerObject { get { return _playerObject; } }
     public GameObject[] BoxItemSlots { get { return _boxItemSlots; } }
     public GameObject[] StorageItemSlots { get { return _storageItemSlots; } }
     public GameObject[] ShopItemSlots { get { return _shopItemSlots; } }
-    public Inventory Inventory { get { return _inventory; } }
-    public InputActions Actions { get { return _inputActions; } }
 
     public Box CurrentBox
     {
@@ -58,16 +52,7 @@ public class FieldManager : SingletonMonoBehaviour<FieldManager>
     protected override void Awake()
     {
         base.Awake();
-
-        _inventory = _playerObject.GetComponent<Inventory>();
-        _inputActions = new InputActions();
-        _inputActions.Player.Enable();
-
-    }
-
-    private void OnDestroy()
-    {
-        _inputActions.Player.Disable();
+        GameManager.Instance.PlayerObject = _playerObject;
     }
 
     // TODO : PoolManager?

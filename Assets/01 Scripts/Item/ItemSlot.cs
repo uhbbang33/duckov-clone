@@ -17,7 +17,7 @@ public class ItemSlot
         _quantity = 0;
         _ui = null;
         _fieldManager = FieldManager.Instance;
-        _inventory = _fieldManager.Inventory;
+        //_inventory = GameManager.Instance.Inventory;
     }
 
     public Item CurrentItem
@@ -54,6 +54,10 @@ public class ItemSlot
         set { _inventoryIndex = value; }
     }
 
+    public void InitInventory(Inventory inventory)
+    {
+        _inventory = inventory;
+    }
 
     public virtual void SubtractItem(int amount = 1)
     {
@@ -154,7 +158,7 @@ public class ItemSlot
     {
         UsableItem item = _currentItem as UsableItem;
 
-        if (!_fieldManager.PlayerObject.GetComponent<Player>().UseItem(item))
+        if (!GameManager.Instance.PlayerObject.GetComponent<Player>().UseItem(item))
             return;
 
         if (item.DurabilityCost > 0)

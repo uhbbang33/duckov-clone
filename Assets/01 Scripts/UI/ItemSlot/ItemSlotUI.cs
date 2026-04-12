@@ -25,7 +25,7 @@ public class ItemSlotUI : MonoBehaviour,
     private Vector2 _originAncghoredPos;
     private RectTransform _rect;
     private QuickSlot _linkedQuickSlot;
-    private FieldManager _gameManager;
+    private FieldManager _fieldManager;
 
 
     private float _lastClickTime;
@@ -88,14 +88,14 @@ public class ItemSlotUI : MonoBehaviour,
 
     protected virtual void Awake()
     {
-        _gameManager = FieldManager.Instance;
+        _fieldManager = FieldManager.Instance;
         _originParent = transform.parent;
         _originAncghoredPos = ((RectTransform)transform).anchoredPosition;
     }
 
     protected virtual void Start()
     {
-        _inventory = _gameManager.Inventory;
+        _inventory = GameManager.Instance.Inventory;
         _uiManager = UIManager.Instance;
     }
 
@@ -303,11 +303,11 @@ public class ItemSlotUI : MonoBehaviour,
         if (_itemSlot.Type == SlotType.INVENTORY
                || _itemSlot.Type == SlotType.EQUIP)
         {
-            if (_gameManager.CurrentOpenBox != null)
+            if (_fieldManager.CurrentOpenBox != null)
                 TryMoveToContainerByDoubleClick(SlotType.BOX);
-            else if (_gameManager.IsStorageOpened)
+            else if (_fieldManager.IsStorageOpened)
                 TryMoveToContainerByDoubleClick(SlotType.STORAGE);
-            else if (_gameManager.IsShopOpened)
+            else if (_fieldManager.IsShopOpened)
                 SellItem();
         }
         else if (_itemSlot.Type == SlotType.BOX 
@@ -375,8 +375,8 @@ public class ItemSlotUI : MonoBehaviour,
     {
         GameObject[] slotObjects = openContainerType switch
         {
-            SlotType.BOX => _gameManager.BoxItemSlots,
-            SlotType.STORAGE => _gameManager.StorageItemSlots,
+            SlotType.BOX => _fieldManager.BoxItemSlots,
+            SlotType.STORAGE => _fieldManager.StorageItemSlots,
             _ => Array.Empty<GameObject>()
         };
 

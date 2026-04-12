@@ -16,7 +16,7 @@ public abstract class Box : MonoBehaviour
     private bool _allRarityOpened;
 
     private Coroutine _currentCoroutine;
-    private FieldManager _gameManager;
+    private FieldManager _fieldManager;
 
     //TODO Define으로
     private const int _ammoQuantity = 30;
@@ -28,8 +28,8 @@ public abstract class Box : MonoBehaviour
 
     private void Start()
     {
-        _gameManager = FieldManager.Instance;
-        _slotCnt = _gameManager.BoxSlotNum;
+        _fieldManager = FieldManager.Instance;
+        _slotCnt = _fieldManager.BoxSlotNum;
 
         _boxSlots = new ItemSlot[_slotCnt];
         for (int i = 0; i < _slotCnt; ++i)
@@ -55,20 +55,20 @@ public abstract class Box : MonoBehaviour
         _typeWeights[4].Type = ItemType.Etc;
 
 
-        _gameManager.PlayerObject.GetComponent<PlayerInteract>().OnCloseUIEvent += OnCloseUI;
+        GameManager.Instance.PlayerObject.GetComponent<PlayerInteract>().OnCloseUIEvent += OnCloseUI;
     }
 
     protected abstract void SetWeightValue();
 
     public void OpenBox()
     {
-        _gameManager.CurrentOpenBox = this;
+        _fieldManager.CurrentOpenBox = this;
 
         for (int i = 0; i < _slotCnt; ++i)
         {
-            _boxSlots[i].UI = _gameManager.BoxItemSlots[i].GetComponentInChildren<ItemSlotUI>();
+            _boxSlots[i].UI = _fieldManager.BoxItemSlots[i].GetComponentInChildren<ItemSlotUI>();
 
-            _boxSlotLoad[i] = _gameManager.BoxItemSlots[i].GetComponent<BoxSlotLoad>();
+            _boxSlotLoad[i] = _fieldManager.BoxItemSlots[i].GetComponent<BoxSlotLoad>();
         }
 
         if (!_boxInteractableUI.HasBeenOpened)

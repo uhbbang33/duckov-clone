@@ -105,7 +105,7 @@ public class Enemy : MonoBehaviour
         _hp.OnHpChanged += HandleHpChanged;
         HealHP(_hp.MaxHP);
 
-        _playerTransform = FieldManager.Instance.PlayerObject.transform;
+        _playerTransform = GameManager.Instance.PlayerObject.transform;
         _spawnPosition = transform.position;
         _waitForShowWarningIcon = new WaitForSeconds(_showWarningIconDuration);
 

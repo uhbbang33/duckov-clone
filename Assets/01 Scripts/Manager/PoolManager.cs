@@ -20,6 +20,8 @@ public class PoolManager : SingletonMonoBehaviour<PoolManager>
     {
         base.Awake();
 
+        DontDestroyOnLoad(gameObject);
+
         _poolDictionary = new();
 
         for (int i = 0; i < _pools.Count; ++i)

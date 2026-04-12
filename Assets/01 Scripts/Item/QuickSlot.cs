@@ -51,7 +51,7 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     // 게임 종료까지 유지
     private void SubscribeInputEvent(int num)
     {
-        _inputActions = FieldManager.Instance.PlayerObject.GetComponent<Player>().Actions;
+        _inputActions = GameManager.Instance.PlayerObject.GetComponent<Player>().Actions;
 
         switch (num)
         {

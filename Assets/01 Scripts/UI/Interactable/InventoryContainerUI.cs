@@ -4,6 +4,7 @@ public class InventoryContainerUI : InteractableStateUI
     public override void OnInteract()
     {
         base.OnInteract();
-        FieldManager.Instance.Inventory.OnInventoryOpenWithInteractable();
+
+        GameManager.Instance.PlayerObject.GetComponent<InventoryController>().OnInventoryOpenWithInteractable();
     }
 }

@@ -203,7 +203,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         {
             _discardButton.SetActive(true);
 
-            if (FieldManager.Instance.Inventory.FindFirstEmptySlot() == -1
+            if (GameManager.Instance.Inventory.FindFirstEmptySlot() == -1
                 || _currentSlot.Quantity < 2)
                 _splitButton.SetActive(false);
         }

@@ -11,18 +11,16 @@ public class SaveAndLoadManager : SingletonMonoBehaviour<SaveAndLoadManager>
     private readonly string _storageSaveFileName = "StorageSave.json";
 
     private Player _player;
-    private Inventory _inventory;
+    private InventoryController _inventoryController;
     private Storage _storage;
 
     private void Start()
     {
-        FieldManager gameManager = FieldManager.Instance;
-
-        GameObject playerObject = gameManager.PlayerObject;
-        _storage = gameManager.storage;
+        GameObject playerObject = GameManager.Instance.PlayerObject;
+        _storage = FieldManager.Instance.storage;
 
         _player = playerObject.GetComponent<Player>();
-        _inventory = playerObject.GetComponent<Inventory>();
+        _inventoryController = playerObject.GetComponent<InventoryController>();
     }
 
     #region Save
@@ -46,7 +44,7 @@ public class SaveAndLoadManager : SingletonMonoBehaviour<SaveAndLoadManager>
     {
         try
         {
-            PlayerInventorySaveData data = _inventory.InventorySaveData;
+            PlayerInventorySaveData data = _inventoryController.InventorySaveData;
 
             string json = JsonUtility.ToJson(data, true);
             File.WriteAllText(Path.Combine(_savePath, _inventorySaveFileName), json);
@@ -117,7 +115,7 @@ public class SaveAndLoadManager : SingletonMonoBehaviour<SaveAndLoadManager>
             return;
         }
 
-        //try
+        try
         {
             string json = File.ReadAllText(path);
             PlayerInventorySaveData data = JsonUtility.FromJson<PlayerInventorySaveData>(json);
@@ -127,11 +125,11 @@ public class SaveAndLoadManager : SingletonMonoBehaviour<SaveAndLoadManager>
                 return;
             }
 
-            _inventory.InventorySaveData = data;
+            _inventoryController.InventorySaveData = data;
         }
-        //catch (Exception ex)
+        catch (Exception ex)
         {
-          //  Debug.Log("Player Inventory 로드 실패" + ex.Message);
+            Debug.Log("Player Inventory 로드 실패" + ex.Message);
         }
     }
 

@@ -7,7 +7,6 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager>
     [SerializeField] private GameObject _pauseUI;
     [SerializeField] private GameObject _pauseReturnToTitleUI;
 
-    private FieldManager _fieldManager;
     private GameManager _gameManager;
     private DataManager _dataManager;
 
@@ -15,21 +14,20 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager>
 
     private void Start()
     {
-        _fieldManager = FieldManager.Instance;
         _gameManager = GameManager.Instance;
         _dataManager = DataManager.Instance;
 
-        _fieldManager.Actions.Player.Cancel.performed += OnPause;
+        _gameManager.Actions.Player.Cancel.performed += OnPause;
     }
 
     private void OnDestroy()
     {
-        _fieldManager.Actions.Player.Cancel.performed -= OnPause;
+        _gameManager.Actions.Player.Cancel.performed -= OnPause;
     }
 
     private void OnPause(InputAction.CallbackContext context)
     {
-        if (_fieldManager.Inventory.InventoryIsOpen)
+        if (_gameManager.PlayerObject.GetComponent<InventoryController>().InventoryIsOpen)
             return;
 
         _isPaused = !_isPaused;

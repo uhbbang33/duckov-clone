@@ -40,7 +40,7 @@ public class ItemInfoUI : MonoBehaviour
     private void Start()
     {
      // TODO
-        _playerInteract = FieldManager.Instance.PlayerObject.GetComponent<PlayerInteract>();
+        _playerInteract = GameManager.Instance.PlayerObject.GetComponent<PlayerInteract>();
         _playerInteract.OnCloseUIEvent += HideUI;
     }
 

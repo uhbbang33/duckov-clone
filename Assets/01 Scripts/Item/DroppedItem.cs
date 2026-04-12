@@ -46,7 +46,7 @@ public class DroppedItem : MonoBehaviour
 
     private bool TrySetPosition()
     {
-        Transform playerTransform = FieldManager.Instance.PlayerObject.transform;
+        Transform playerTransform = GameManager.Instance.PlayerObject.transform;
 
         const int tryNum = 20;
 
@@ -94,7 +94,7 @@ public class DroppedItem : MonoBehaviour
 
     public void OnInteract()
     {
-        if (FieldManager.Instance.Inventory.TryAddItem(_item, ref _quantity))
+        if (GameManager.Instance.Inventory.TryAddItem(_item, ref _quantity))
             Destroy(gameObject);
         else
         {

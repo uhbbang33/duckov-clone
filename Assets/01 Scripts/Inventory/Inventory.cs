@@ -1,32 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using System;
-using UnityEngine.UI;
 using System.Linq;
 
-public class Inventory : MonoBehaviour, ISortableContainer, ISaveableContainer
+public class Inventory : ISortableContainer, ISaveableContainer
 {
-    [SerializeField] private GameObject _inventoryUI;
-    [SerializeField] private GameObject[] _slotObject;
-    [SerializeField] private Button _sortButton;
-    [SerializeField] private float _maxWeight;
-
-    private UIManager _uiManager;
-    private DataManager _dataManager;
-    private QuickSlotManager _quickSlotManager;
-    private InputActions _inputActions;
-    private PlayerMove _playerMove;
-    private PlayerInteract _playerInteract;
-    private PlayerEquip _playerEquip;
-    private PlayerShooting _playerShooting;
-
     private ItemSlot[] _inventorySlots;
     private int _itemCnt;
     private int _slotCnt;
-    private bool _inventoryToggle;
     private float _carryWeight;
     private int _currentMoney;
+    private float _maxWeight;
 
     // key - id, value - slot count
     private Dictionary<uint, int> _inventoryDict;
@@ -35,97 +19,31 @@ public class Inventory : MonoBehaviour, ISortableContainer, ISaveableContainer
     private Dictionary<uint, int> _ammoDict;
 
     public event Action<float, float> OnWeightChange;
+    public event Action<int> OnMoneyChange;
+    public event Action<int, int> OnItemCountChange;
+    public event Action OnAmmoDictChange;
+    public event Action OnInventoryChanged;
 
-    public bool InventoryIsOpen { get { return _inventoryToggle; } }
+    public int CurrentMoney => _currentMoney;
+    public int SlotCnt => _slotCnt;
+    public int ItemCnt => _itemCnt;
 
-    public PlayerInventorySaveData InventorySaveData
+
+    public Inventory (int slotCount, float maxWeight)
     {
-        get
-        {
-            return new PlayerInventorySaveData
-            {
-                QuickSlotLinkedInventoryIndex = _quickSlotManager.GetLinkedInventoryIndexList(),
-
-                EquipedGunSlotNum = _playerEquip.EquipNum,
-                GunSlotItemIDList = _playerEquip.GetGunSlotIDList(),
-                GunSlotItemAmmoCountList = _playerEquip.GetGunSlotAmmoCountList(),
-
-                ItemIDList = SaveUtility.GetSlotItemsID(this),
-                GunItemAmmoCountList = SaveUtility.GetSlotGunItemsAmmoCount(this),
-                QuantityList = SaveUtility.GetSlotsQuantity(this),
-                DurabilityList = SaveUtility.GetSlotItemsDurability(this),
-
-                Money = _currentMoney
-            };
-        }
-        set
-        {
-            FillInventorySlotsWithData(
-                value.ItemIDList, 
-                value.GunItemAmmoCountList,
-                value.QuantityList,
-                value.DurabilityList,
-                value.QuickSlotLinkedInventoryIndex);
-
-            _currentMoney = value.Money;
-            _uiManager.ChangeInventoryMoneyText(_currentMoney);
-
-            _playerEquip.FillSlotsWithData(value.EquipedGunSlotNum,
-                value.GunSlotItemIDList, value.GunSlotItemAmmoCountList);
-        }
-    }
-
-    private void Awake()
-    {
-        _uiManager = UIManager.Instance;
-        _dataManager = DataManager.Instance;
-        _quickSlotManager = QuickSlotManager.Instance;
-
-        _playerMove = GetComponent<PlayerMove>();
-        _playerInteract = GetComponent<PlayerInteract>();
-        _playerEquip = GetComponent<PlayerEquip>();
-        _playerShooting = GetComponent<PlayerShooting>();
-
-        _inventoryUI.SetActive(false);
+        _slotCnt = slotCount;
+        _maxWeight = maxWeight;
         _inventoryDict = new Dictionary<uint, int>();
         _ammoDict = new Dictionary<uint, int>();
-
-        _slotCnt = _slotObject.Length;
-
         _inventorySlots = new ItemSlot[_slotCnt];
-    }
 
-    private void Start()
-    {
         for (int i = 0; i < _slotCnt; ++i)
         {
-            ItemSlotUI slotUI = _slotObject[i].GetComponentInChildren<ItemSlotUI>();
-
             _inventorySlots[i] = new ItemSlot();
-            _inventorySlots[i].UI = slotUI;
             _inventorySlots[i].Type = SlotType.INVENTORY;
             _inventorySlots[i].InventoryIndex = i;
+            _inventorySlots[i].InitInventory(this);
         }
-
-
-        _inputActions = GetComponent<Player>().Actions;
-        _inputActions.Player.Inventory.performed += OnInventory;
-        _inputActions.Player.Cancel.performed += OnInventoryClose;
-        // TODO : Inventory에 player가 가지고 있는 물품 넣기 (저장)
-
-        _playerInteract.OnEnableInteractEvent += OnInventoryCloseBlocked;
-        _playerInteract.OnDisableInteractEvent += OnInventoryCloseAllowed;
-
-        _sortButton.onClick.AddListener(() => SortUtility.Sort(this));
-    }
-
-    private void OnDisable()
-    {
-        _inputActions.Player.Inventory.performed -= OnInventory;
-        _inputActions.Player.Cancel.performed -= OnInventoryClose;
-
-        _playerInteract.OnEnableInteractEvent -= OnInventoryCloseBlocked;
-        _playerInteract.OnDisableInteractEvent -= OnInventoryCloseAllowed;
     }
 
     // ISortableContainer
@@ -140,7 +58,12 @@ public class Inventory : MonoBehaviour, ISortableContainer, ISaveableContainer
         return _inventorySlots;
     }
 
-    private void FillInventorySlotsWithData(List<int> itemIdList, List<int> gunItemAmmoCountList, List<int> quantityList, List<int> durabilityList, List<int> quickSlotIndexList)
+    public void OnSortCompleted()
+    {
+        OnInventoryChanged?.Invoke();
+    }
+
+    public void FillSlotsWithSaveData(List<int> itemIdList, List<int> gunItemAmmoCountList, List<int> quantityList, List<int> durabilityList, List<int> quickSlotIndexList,int money, DataManager _dataManager, QuickSlotManager _quickSlotManager)
     {
         for (int i = 0; i < _inventorySlots.Length; ++i)
         {
@@ -174,88 +97,20 @@ public class Inventory : MonoBehaviour, ISortableContainer, ISaveableContainer
             QuickSlot quickSlot = _quickSlotManager.GetQuickSlotByIndex(i);
             quickSlot.LinkToInventorySlotUI(_inventorySlots[index].UI);
         }
+
+        _currentMoney = money;
+        OnMoneyChange?.Invoke(_currentMoney);
     }
 
-    public void OnSortCompleted()
+    public void LinkSlotUI(ItemSlotUI[] slotUIs)
     {
-        RefreshQuickSlots();
-    }
+        if (_slotCnt != slotUIs.Length)
+            Debug.LogError("ui와 slot의 개수가 맞지 않습니다");
 
-    private void RefreshQuickSlots()
-    {
-
-    }
-
-    private void OnInventory(InputAction.CallbackContext context)
-    {
-        OpenInventory();
-    }
-
-    public void OnInventoryOpenWithInteractable()
-    {
-        if (_playerInteract.UI == null || _inventoryToggle)
-            return;
-
-        OpenInventory();
-    }
-
-    private void OnInventoryClose(InputAction.CallbackContext context)
-    {
-        if (!_inventoryToggle)
-            return;
-
-        _inventoryUI.SetActive(false);
-
-        _playerMove.RestartMove();
-
-        _inventoryToggle = false;
-
-        _uiManager.DefaultUHDShowToggle(true);
-        _uiManager.ShowCursor(false);
-        _uiManager.PlayerCanvasShowToggle(true);
-    }
-
-    private void OpenInventory()
-    {
-        // TODO : 상호작용 UI도 없어져야함
-        // TODO : UIManager에서 
-        // TODO : Player HP, SP Bar hide
-        _inventoryToggle = !_inventoryToggle;
-
-        _inventoryUI.SetActive(_inventoryToggle);
-
-        if (_inventoryToggle)
+        for (int i = 0; i < _slotCnt; ++i)
         {
-            _playerMove.StopMove();
-
-            _uiManager.DefaultUHDShowToggle(false);
-            _uiManager.ShowCursor(true);
+            _inventorySlots[i].UI = slotUIs[i];
         }
-        else
-        {
-            _playerMove.RestartMove();
-
-            _uiManager.DefaultUHDShowToggle(true);
-            _uiManager.ShowCursor(false);
-        }
-
-        OnWeightChange?.Invoke(_carryWeight, _maxWeight);
-
-        _uiManager.ChangeInventoryItemCountText(_itemCnt, _slotCnt);
-        _uiManager.PlayerCanvasShowToggle(false);
-
-        _playerShooting.IsFirePressed = false;
-    }
-
-
-    private void OnInventoryCloseBlocked()
-    {
-        _inputActions.Player.Inventory.performed -= OnInventory;
-    }
-
-    private void OnInventoryCloseAllowed()
-    {
-        _inputActions.Player.Inventory.performed += OnInventory;
     }
 
     public bool TryAddItem(Item item, ref int amount)
@@ -428,7 +283,7 @@ public class Inventory : MonoBehaviour, ISortableContainer, ISaveableContainer
         else
             _ammoDict.Add(id, ammoCount);
 
-        _playerEquip.RefreshHUDAmmoCountText();
+        OnAmmoDictChange?.Invoke();
     }
 
     public void RemoveItemSlot(uint id)
@@ -454,7 +309,7 @@ public class Inventory : MonoBehaviour, ISortableContainer, ISaveableContainer
         if (_ammoDict[id] <= 0)
             _ammoDict.Remove(id);
 
-        _playerEquip.RefreshHUDAmmoCountText();
+        OnAmmoDictChange?.Invoke();
     }
 
     public int GetAmmoCount(uint id)
@@ -472,7 +327,7 @@ public class Inventory : MonoBehaviour, ISortableContainer, ISaveableContainer
         else
             --_itemCnt;
 
-        _uiManager.ChangeInventoryItemCountText(_itemCnt, _slotCnt);
+        OnItemCountChange?.Invoke(_itemCnt, _slotCnt);
     }
 
     public void ChangeWeight(bool isAdd, float weightAmount)
@@ -481,15 +336,6 @@ public class Inventory : MonoBehaviour, ISortableContainer, ISaveableContainer
         _carryWeight = Mathf.Round(_carryWeight * 1000f) / 1000f;
 
         OnWeightChange?.Invoke(_carryWeight, _maxWeight);
-
-        ChangePlayerSpeed();
-    }
-
-    private void ChangePlayerSpeed()
-    {
-        float weightPercentage = (_carryWeight / _maxWeight) * 100f;
-
-        _playerMove.ChangeSpeed(weightPercentage);
     }
 
     public void ChangeMoney(int itemValue, int itemCount, bool isAdd)
@@ -498,7 +344,7 @@ public class Inventory : MonoBehaviour, ISortableContainer, ISaveableContainer
 
         _currentMoney += isAdd ? amount : -amount;
 
-        _uiManager.ChangeInventoryMoneyText(_currentMoney);
+        OnMoneyChange?.Invoke(_currentMoney);
     }
 
     // Quick slot
@@ -506,5 +352,4 @@ public class Inventory : MonoBehaviour, ISortableContainer, ISaveableContainer
     {
         _inventorySlots[itemIndex].UseItem();
     }
-
 }

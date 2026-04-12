@@ -10,7 +10,7 @@ public class CarryWeightUI : MonoBehaviour
 
     private void Awake()
     {
-        FieldManager.Instance.Inventory.OnWeightChange += ChangeWeightText;
+        GameManager.Instance.Inventory.OnWeightChange += ChangeWeightText;
 
     }
 
