@@ -20,6 +20,8 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
 
     private SaveAndLoadManager _saveAndLoadManager;
 
+    private bool _isParsed = false;
+
     #region Property
     public GunDataList GunDatas
     {
@@ -83,6 +85,12 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
     {
         get { return _shopItemDataList; }
         set { _shopItemDataList = value; }
+    }
+
+    public bool IsParsed
+    {
+        get { return _isParsed; }
+        set { _isParsed = value; }
     }
 
     #endregion Property

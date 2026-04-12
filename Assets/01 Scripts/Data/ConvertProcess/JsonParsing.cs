@@ -7,6 +7,9 @@ public class JsonParsing : MonoBehaviour
     {
         DataManager dataManager = DataManager.Instance;
 
+        if (dataManager.IsParsed)
+            return;
+
         TextAsset jsonText = LoadDataList("JsonData/GunItemData");
         dataManager.GunDatas = JsonUtility.FromJson<GunDataList>(jsonText.text);
 
@@ -35,6 +38,8 @@ public class JsonParsing : MonoBehaviour
         dataManager.ShopItemList = JsonUtility.FromJson<ShopItemDataList>(jsonText.text);
 
         dataManager.FillItemDictionary();
+
+        dataManager.IsParsed = true;
     }
 
     private TextAsset LoadDataList(string dataAddress)

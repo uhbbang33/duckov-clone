@@ -8,6 +8,9 @@ public class ItemSpriteDictionary : SingletonMonoBehaviour<ItemSpriteDictionary>
     protected override void Awake()
     {
         base.Awake();
+
+        DontDestroyOnLoad(gameObject);
+
         CreateItemDictionary();
     }
 
