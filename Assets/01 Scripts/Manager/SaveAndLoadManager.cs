@@ -115,7 +115,7 @@ public class SaveAndLoadManager : SingletonMonoBehaviour<SaveAndLoadManager>
             return;
         }
 
-        try
+        //try
         {
             string json = File.ReadAllText(path);
             PlayerInventorySaveData data = JsonUtility.FromJson<PlayerInventorySaveData>(json);
@@ -127,9 +127,9 @@ public class SaveAndLoadManager : SingletonMonoBehaviour<SaveAndLoadManager>
 
             _inventoryController.InventorySaveData = data;
         }
-        catch (Exception ex)
+        //catch (Exception ex)
         {
-            Debug.Log("Player Inventory 로드 실패" + ex.Message);
+          //  Debug.Log("Player Inventory 로드 실패" + ex.Message);
         }
     }
 

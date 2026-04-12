@@ -64,6 +64,10 @@ public class PlayerInteract : MonoBehaviour
             _gameManager.IsShopOpened = true;
             _uiManager.ShowShopUI(true);
         }
+        else if(_ui.Type == InteractableType.DROPPEDITEM)
+        {
+            return;
+        }    
 
         _scanner.HideAllInteractUI();
         _playerMove.StopMove();
