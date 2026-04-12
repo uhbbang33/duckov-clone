@@ -16,7 +16,6 @@ public class InventoryUI : MonoBehaviour
         _uiManager = UIManager.Instance;
         _inventory = GameManager.Instance.Inventory;
 
-        // TODO : Player Object 어떻게 할건지 생각하기
         _inventoryController = GameManager.Instance.PlayerObject.GetComponent<InventoryController>();
         _inventoryController.OnInventoryToggle += OnInventoryToggled;
 
