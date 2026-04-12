@@ -298,8 +298,53 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8490192244500436959, guid: 71505fe4beac1014da30143a43d5f2ee, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 21130616}
+    - targetCorrespondingSourceObject: {fileID: 8490192244500436959, guid: 71505fe4beac1014da30143a43d5f2ee, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 21130617}
   m_SourcePrefab: {fileID: 100100000, guid: 71505fe4beac1014da30143a43d5f2ee, type: 3}
+--- !u!1 &21130615 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8490192244500436959, guid: 71505fe4beac1014da30143a43d5f2ee, type: 3}
+  m_PrefabInstance: {fileID: 21130614}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &21130616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 21130615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d778267d0cdf1ed4f943c611868d8f8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GoToAnotherSceneTrigger
+  _targetScene: 1
+--- !u!65 &21130617
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 21130615}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2, y: 2, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &36718563
 GameObject:
   m_ObjectHideFlags: 0
