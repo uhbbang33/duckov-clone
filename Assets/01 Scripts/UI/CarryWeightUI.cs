@@ -11,7 +11,11 @@ public class CarryWeightUI : MonoBehaviour
     private void Awake()
     {
         GameManager.Instance.Inventory.OnWeightChange += ChangeWeightText;
+    }
 
+    private void OnDisable()
+    {
+        GameManager.Instance.Inventory.OnWeightChange -= ChangeWeightText;
     }
 
     private void ChangeWeightText(float current, float max)
