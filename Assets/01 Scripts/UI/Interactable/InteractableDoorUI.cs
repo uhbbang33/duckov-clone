@@ -1,13 +1,12 @@
 using UnityEngine;
 
-public class GoToAnotherSceneTrigger : MonoBehaviour
+public class InteractableDoorUI : InteractableStateUI
 {
     [SerializeField] private SceneList _targetScene;
 
-    private void OnTriggerEnter(Collider other)
+    public override void OnInteract()
     {
-        if (!other.CompareTag(Tag.Player))
-            return;
+        base.OnInteract();
 
         if (_targetScene == SceneList.BUNKER)
             SceneLoader.Instance.LoadScene(SceneName.BunkerScene);
