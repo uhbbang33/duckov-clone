@@ -66,6 +66,7 @@ public class PlayerInteract : MonoBehaviour
         }
         else if(_ui.Type == InteractableType.DROPPEDITEM)
         {
+            _ui.OnInteract();
             return;
         }    
 
