@@ -94,5 +94,10 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager>
         _gameManager.QuitGame();
     }
 
+   public void OnClickCancel()
+    {
+        _pauseReturnToTitleUI.SetActive(false);
+    }
+
     #endregion On Button Clcik
 }
