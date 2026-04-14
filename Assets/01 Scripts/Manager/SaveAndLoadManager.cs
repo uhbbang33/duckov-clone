@@ -17,7 +17,9 @@ public class SaveAndLoadManager : SingletonMonoBehaviour<SaveAndLoadManager>
     private void Start()
     {
         GameObject playerObject = GameManager.Instance.PlayerObject;
-        _storage = BunkerManager.Instance.storage;
+
+        if(BunkerManager.Instance != null)
+            _storage = BunkerManager.Instance.storage;
 
         _player = playerObject.GetComponent<Player>();
         _inventoryController = playerObject.GetComponent<InventoryController>();
@@ -115,7 +117,7 @@ public class SaveAndLoadManager : SingletonMonoBehaviour<SaveAndLoadManager>
             return;
         }
 
-        //try
+        try
         {
             string json = File.ReadAllText(path);
             PlayerInventorySaveData data = JsonUtility.FromJson<PlayerInventorySaveData>(json);
@@ -127,9 +129,9 @@ public class SaveAndLoadManager : SingletonMonoBehaviour<SaveAndLoadManager>
 
             _inventoryController.InventorySaveData = data;
         }
-        //catch (Exception ex)
+        catch (Exception ex)
         {
-          //  Debug.Log("Player Inventory 로드 실패" + ex.Message);
+            Debug.Log("Player Inventory 로드 실패" + ex.Message);
         }
     }
 
