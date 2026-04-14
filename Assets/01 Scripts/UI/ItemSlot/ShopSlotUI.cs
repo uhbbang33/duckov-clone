@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class ShopSlotUI : ItemSlotUI
 {
@@ -31,6 +32,16 @@ public class ShopSlotUI : ItemSlotUI
     private void SetMoneyUI(bool show)
     {
         _moneyUI.SetActive(show);
+    }
+
+    protected override void OpenSlotMenu()
+    {
+        return;
+    }
+
+    public override void OnDrop(PointerEventData eventData)
+    {
+        return;
     }
 
     protected override void OnDoubleClick()

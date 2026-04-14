@@ -95,7 +95,7 @@ public class Inventory : ISortableContainer, ISaveableContainer
                 continue;
 
             QuickSlot quickSlot = _quickSlotManager.GetQuickSlotByIndex(i);
-            quickSlot.LinkToInventorySlotUI(_inventorySlots[index].UI);
+            quickSlot.LinkToInventorySlotUI(_inventorySlots[index].UI as InventorySlotUI);
         }
 
         _currentMoney = money;

@@ -64,6 +64,15 @@ public class EquipSlotUI : ItemSlotUI
         return true;
     }
 
+    protected override void SwapItem(ItemSlotUI target)
+    {
+        if (_itemSlot.CurrentItem != null 
+            && _itemSlot.CurrentItem.Type != ItemType.Gun)
+            return;
+
+        base.SwapItem(target);
+    }
+
     public void ChangeLeftGunSlotItem(ItemSlot fromSlot)
     {
         if (fromSlot.CurrentItem.Type != ItemType.Gun)

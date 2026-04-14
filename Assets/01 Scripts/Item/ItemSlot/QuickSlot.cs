@@ -16,13 +16,13 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     [SerializeField] private DefaultHUDSlotUI _defaultHUDSlotUI;
 
     private InputActions _inputActions;
-    private ItemSlotUI _linkedInventorySlotUI;
+    private InventorySlotUI _linkedInventorySlotUI;
     private ItemSlotUI _beginSlotUI;
     private UIManager _uiManager;
     private RectTransform _rect;
     private bool _isSubscribeInputEvent = false;
 
-    public ItemSlotUI LinkedInventorySlotUI
+    public InventorySlotUI LinkedInventorySlotUI
     {
         get { return _linkedInventorySlotUI; }
         set { _linkedInventorySlotUI = value; }
@@ -137,7 +137,7 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             _countUI.SetActive(true);
     }
 
-    public void LinkToInventorySlotUI(ItemSlotUI inventorySlotUI)
+    public void LinkToInventorySlotUI(InventorySlotUI inventorySlotUI)
     {
         Initialize();
 
@@ -218,7 +218,7 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         if (eventData.pointerDrag == null)
             return;
 
-        ItemSlotUI startSlotUI = eventData.pointerDrag?.GetComponent<ItemSlotUI>();
+        InventorySlotUI startSlotUI = eventData.pointerDrag?.GetComponent<InventorySlotUI>();
 
         // 시작이 인벤토리일 경우
         if (startSlotUI != null)
@@ -256,7 +256,7 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             }
             else // 연결되어 있는 경우
             {
-                ItemSlotUI tempSlot = _linkedInventorySlotUI;
+                InventorySlotUI tempSlot = _linkedInventorySlotUI;
 
                 LinkToInventorySlotUI(startQuickSlot._linkedInventorySlotUI);
                 startQuickSlot.LinkToInventorySlotUI(tempSlot);
