@@ -38,14 +38,15 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
     public UsableItemDataList UsableItemDatas
     {
         get { return _usableItemDataList; }
-        set {
+        set
+        {
             _usableItemDataList = value;
 
-            foreach(var data in value.UsableItemDatas)
+            foreach (var data in value.UsableItemDatas)
             {
                 if (data.ItemType == ItemType.Food)
                     _foodDatas.Add(data);
-                else if(data.ItemType == ItemType.Medicine)
+                else if (data.ItemType == ItemType.Medicine)
                     _medicineDatas.Add(data);
             }
         }
@@ -105,14 +106,12 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
 
     #region Save
 
-    // TODO : 필드 씬으로 전환 시 호출
     public void SaveAllData()
     {
         SavePlayerData();
         _saveAndLoadManager.SaveStorage();
     }
 
-    // TODO : 벙커 씬으로 전환 시 호출
     public void SavePlayerData()
     {
         _saveAndLoadManager.SavePlayerStats();
@@ -222,7 +221,7 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
 
     #region Get Random Data
 
-    private T GetRandomItemData<T> (IEnumerable<T> dataList) where T : ItemData
+    private T GetRandomItemData<T>(IEnumerable<T> dataList) where T : ItemData
     {
         float totalWeightValue = 0;
         foreach (var data in dataList)

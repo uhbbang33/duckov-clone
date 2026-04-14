@@ -20,8 +20,10 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager>
         _gameManager.Actions.Player.Cancel.performed += OnPause;
     }
 
-    private void OnDestroy()
+    protected override void OnDestroy()
     {
+        base.OnDestroy();
+
         _gameManager.Actions.Player.Cancel.performed -= OnPause;
     }
 
