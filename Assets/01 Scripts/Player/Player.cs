@@ -3,9 +3,6 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private InputActions _inputActions;
-    public InputActions Actions { get { return _inputActions; } }
-
     private PlayerHealthPoint _hp;
     private StaminaPoint _sp;
     private Hunger _hunger;
@@ -48,9 +45,6 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        _inputActions = new InputActions();
-        _inputActions.Player.Enable();
-
         _hp = GetComponent<PlayerHealthPoint>();
         _sp = GetComponent<StaminaPoint>();
         _hunger = GetComponent<Hunger>();
@@ -68,11 +62,6 @@ public class Player : MonoBehaviour
         _playerSoundData = dataManager.PlayerSoundList.PlayerSoundDatas[0];
 
         OnPlayerDataInitialized?.Invoke();
-    }
-
-    private void OnDestroy()
-    {
-        _inputActions.Player.Disable();
     }
 
     public void ChangePlayerState(PlayerState newState)

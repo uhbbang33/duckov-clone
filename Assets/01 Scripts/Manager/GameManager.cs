@@ -35,6 +35,10 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         _inputActions.Player.Enable();
     }
 
+    private void OnDisable()
+    {
+        _inputActions.Player.Disable();
+    }
 
     public void QuitGame()
     {

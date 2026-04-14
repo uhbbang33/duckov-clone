@@ -74,7 +74,7 @@ public class InventoryController : MonoBehaviour
     {
         _inventory = GameManager.Instance.Inventory;
 
-        _inputActions = GetComponent<Player>().Actions;
+        _inputActions = GameManager.Instance.Actions;
         _inputActions.Player.Inventory.performed += OnInventoryInput;
         _inputActions.Player.Cancel.performed += OnInventoryClose;
 

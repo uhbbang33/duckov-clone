@@ -77,7 +77,7 @@ public class PlayerShooting : MonoBehaviour
 
     private void Start()
     {
-        _actions = GetComponent<Player>().Actions;
+        _actions = GameManager.Instance.Actions;
         
         _actions.Player.Fire.performed += OnFirePerformed;
         _actions.Player.Fire.canceled += OnFireCanceled;

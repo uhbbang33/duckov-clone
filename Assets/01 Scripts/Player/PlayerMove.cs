@@ -78,7 +78,7 @@ public class PlayerMove : MonoBehaviour
 
     private void Start()
     {
-        _inputActions = GetComponent<Player>().Actions;
+        _inputActions = GameManager.Instance.Actions;
         SubscribeInputActions();
     }
 

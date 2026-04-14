@@ -36,6 +36,11 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         RefreshUI();
     }
 
+    private void OnDisable()
+    {
+        UnsubscribeInputEvent(_quickSlotNum);
+    }
+
     private void Initialize()
     {
         if (_uiManager == null)
@@ -48,10 +53,9 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         }
     }
 
-    // 게임 종료까지 유지
     private void SubscribeInputEvent(int num)
     {
-        _inputActions = GameManager.Instance.PlayerObject.GetComponent<Player>().Actions;
+        _inputActions = GameManager.Instance.Actions;
 
         switch (num)
         {
@@ -75,6 +79,32 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 break;
         }
         _isSubscribeInputEvent = true;
+    }
+
+    private void UnsubscribeInputEvent(int num)
+    {
+        switch (num)
+        {
+            case 3:
+                _inputActions.Player.QuickSlot3.performed -= UseQuickSlotItem;
+                break;
+            case 4:
+                _inputActions.Player.QuickSlot4.performed -= UseQuickSlotItem;
+                break;
+            case 5:
+                _inputActions.Player.QuickSlot5.performed -= UseQuickSlotItem;
+                break;
+            case 6:
+                _inputActions.Player.QuickSlot6.performed -= UseQuickSlotItem;
+                break;
+            case 7:
+                _inputActions.Player.QuickSlot7.performed -= UseQuickSlotItem;
+                break;
+            case 8:
+                _inputActions.Player.QuickSlot8.performed -= UseQuickSlotItem;
+                break;
+        }
+        _isSubscribeInputEvent = false;
     }
 
     private void UseQuickSlotItem(InputAction.CallbackContext context)

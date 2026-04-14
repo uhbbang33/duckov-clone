@@ -34,7 +34,7 @@ public class PlayerInteract : MonoBehaviour
 
     private void Start()
     {
-        _inputActions = GetComponent<Player>().Actions;
+        _inputActions = GameManager.Instance.Actions;
         _inputActions.Player.Interact.performed += OnInteract;
         _inputActions.Player.Cancel.performed += OnCancel;
     }

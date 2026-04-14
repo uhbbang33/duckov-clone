@@ -27,7 +27,7 @@ public class CrosshairUI : MonoBehaviour
 
     private void Start()
     {
-        _actions = GameManager.Instance.PlayerObject.GetComponent<Player>().Actions;
+        _actions = GameManager.Instance.Actions;
         SubscribeInputActions();
 
         UIManager.Instance.ShowCursor(false);
