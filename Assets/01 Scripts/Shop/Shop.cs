@@ -5,21 +5,21 @@ public class Shop : MonoBehaviour
     private ItemSlot[] _slots;
     private int _slotCnt;
     DataManager _dataManager;
-    FieldManager _gameManager;
+    BunkerManager _bunkerManager;
 
     private void Start()
     {
         _dataManager = DataManager.Instance;
-        _gameManager = FieldManager.Instance;
+        _bunkerManager = BunkerManager.Instance;
 
-        _slotCnt = _gameManager.ShopItemSlots.Length;
+        _slotCnt = _bunkerManager.ShopItemSlots.Length;
 
         _slots = new ItemSlot[_slotCnt];
 
         for (int i = 0; i < _slotCnt; ++i)
         {
             _slots[i] = new ItemSlot();
-            _slots[i].UI = _gameManager.ShopItemSlots[i].GetComponentInChildren<ShopSlotUI>();
+            _slots[i].UI = _bunkerManager.ShopItemSlots[i].GetComponentInChildren<ShopSlotUI>();
             _slots[i].Type = SlotType.SHOP;
         }
 

@@ -10,7 +10,8 @@ public class PlayerInteract : MonoBehaviour
     private PlayerMove _playerMove;
 
     private UIManager _uiManager;
-    private FieldManager _gameManager;
+    private BunkerManager _bunkerManager;
+    private FieldManager _fieldManager;
 
     public event Action OnEnableInteractEvent;
     public event Action OnDisableInteractEvent;
@@ -25,7 +26,8 @@ public class PlayerInteract : MonoBehaviour
     private void Awake()
     {
         _uiManager = UIManager.Instance;
-        _gameManager = FieldManager.Instance;
+        _bunkerManager = BunkerManager.Instance;
+        _fieldManager = FieldManager.Instance;
         _scanner = GetComponent<PlayerInteractableScanner>();
         _playerMove = GetComponent<PlayerMove>();
     }
@@ -52,16 +54,16 @@ public class PlayerInteract : MonoBehaviour
         if (_ui.Type == InteractableType.BOX)
         {
             _uiManager.ShowBoxUI(true);
-            _gameManager.CurrentBox.OpenBox();
+            _fieldManager.CurrentBox.OpenBox();
         }
         else if (_ui.Type == InteractableType.STORAGE)
         {
-            _gameManager.IsStorageOpened = true;
+            _bunkerManager.IsStorageOpened = true;
             _uiManager.ShowStorageUI(true);
         }
         else if (_ui.Type == InteractableType.SHOP)
         {
-            _gameManager.IsShopOpened = true;
+            _bunkerManager.IsShopOpened = true;
             _uiManager.ShowShopUI(true);
         }
         else if(_ui.Type == InteractableType.DROPPEDITEM)
@@ -87,17 +89,17 @@ public class PlayerInteract : MonoBehaviour
 
         if (_ui.Type == InteractableType.BOX)
         {
-            _gameManager.CurrentOpenBox = null;
+            _fieldManager.CurrentOpenBox = null;
             _uiManager.ShowBoxUI(false);
         }
         else if (_ui.Type == InteractableType.STORAGE)
         {
-            _gameManager.IsStorageOpened = false;
+            _bunkerManager.IsStorageOpened = false;
             _uiManager.ShowStorageUI(false);
         }
         else if (_ui.Type == InteractableType.SHOP)
         {
-            _gameManager.IsShopOpened = false;
+            _bunkerManager.IsShopOpened = false;
             _uiManager.ShowShopUI(false);
         }
 

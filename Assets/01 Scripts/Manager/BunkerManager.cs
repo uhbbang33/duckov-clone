@@ -1,0 +1,50 @@
+using UnityEngine;
+
+public class BunkerManager : SingletonMonoBehaviour<BunkerManager>
+{
+    [SerializeField] private GameObject[] _storageItemSlots;
+    [SerializeField] private GameObject[] _shopItemSlots;
+
+    [SerializeField] private Storage _storage;
+    [SerializeField] private GameObject _dropItemPrefab;
+    [SerializeField] private GameObject _playerObject;
+
+    private bool _isStorageOpened;
+    private bool _isShopOpened;
+
+    public GameObject[] StorageItemSlots { get { return _storageItemSlots; } }
+    public GameObject[] ShopItemSlots { get { return _shopItemSlots; } }
+    public Storage storage { get { return _storage; } }
+
+    public bool IsStorageOpened
+    {
+        get { return _isStorageOpened; }
+        set { _isStorageOpened = value; }
+    }
+
+    public bool IsShopOpened
+    {
+        get { return _isShopOpened; }
+        set { _isShopOpened = value; }
+    }
+
+    protected override void Awake()
+    {
+        base.Awake();
+        GameManager.Instance.PlayerObject = _playerObject;
+    }
+
+    // TODO : PoolManager?
+    public bool CreateDropItemObject(Item item, int quantity)
+    {
+        GameObject dropItem = Instantiate(_dropItemPrefab);
+
+        if (!dropItem.GetComponent<DroppedItem>().InitializeDroppedItem(item, quantity))
+        {
+            Destroy(dropItem);
+            return false;
+        }
+
+        return true;
+    }
+}

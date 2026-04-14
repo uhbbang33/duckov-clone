@@ -9,7 +9,7 @@ public class Storage : MonoBehaviour, ISortableContainer, ISaveableContainer
 
     private ItemSlot[] _slots;
 
-    private FieldManager _fieldManager;
+    private BunkerManager _bunkerManager;
     private DataManager _dataManager;
 
     private int _slotCnt;
@@ -35,15 +35,15 @@ public class Storage : MonoBehaviour, ISortableContainer, ISaveableContainer
 
     private void Start()
     {
-        _fieldManager = FieldManager.Instance;
+        _bunkerManager = BunkerManager.Instance;
         _dataManager = DataManager.Instance;
-        _slotCnt = _fieldManager.StorageItemSlots.Length;
+        _slotCnt = _bunkerManager.StorageItemSlots.Length;
 
         _slots = new ItemSlot[_slotCnt];
         for (int i = 0; i < _slotCnt; ++i)
         {
             _slots[i] = new ItemSlot();
-            _slots[i].UI = _fieldManager.StorageItemSlots[i].GetComponentInChildren<ItemSlotUI>();
+            _slots[i].UI = _bunkerManager.StorageItemSlots[i].GetComponentInChildren<ItemSlotUI>();
             _slots[i].Type = SlotType.STORAGE;
         }
 

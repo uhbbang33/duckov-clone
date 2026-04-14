@@ -17,7 +17,7 @@ public class SaveAndLoadManager : SingletonMonoBehaviour<SaveAndLoadManager>
     private void Start()
     {
         GameObject playerObject = GameManager.Instance.PlayerObject;
-        _storage = FieldManager.Instance.storage;
+        _storage = BunkerManager.Instance.storage;
 
         _player = playerObject.GetComponent<Player>();
         _inventoryController = playerObject.GetComponent<InventoryController>();

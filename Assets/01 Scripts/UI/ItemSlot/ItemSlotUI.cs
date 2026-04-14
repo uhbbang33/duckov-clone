@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class ItemSlotUI : MonoBehaviour,
     IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
-{
+{ 
     [SerializeField] protected TextMeshProUGUI _nameText;
     [SerializeField] protected TextMeshProUGUI _countText;
     [SerializeField] private ItemInfoUI _infoUI;
@@ -26,6 +26,7 @@ public class ItemSlotUI : MonoBehaviour,
     private RectTransform _rect;
     private QuickSlot _linkedQuickSlot;
     private FieldManager _fieldManager;
+    private BunkerManager _bunkerManager;
 
 
     private float _lastClickTime;
@@ -88,7 +89,6 @@ public class ItemSlotUI : MonoBehaviour,
 
     protected virtual void Awake()
     {
-        _fieldManager = FieldManager.Instance;
         _originParent = transform.parent;
         _originAncghoredPos = ((RectTransform)transform).anchoredPosition;
     }
@@ -97,6 +97,8 @@ public class ItemSlotUI : MonoBehaviour,
     {
         _inventory = GameManager.Instance.Inventory;
         _uiManager = UIManager.Instance;
+        _fieldManager = FieldManager.Instance;
+        _bunkerManager = BunkerManager.Instance;
     }
 
     #region Drag And Drop
@@ -305,9 +307,9 @@ public class ItemSlotUI : MonoBehaviour,
         {
             if (_fieldManager.CurrentOpenBox != null)
                 TryMoveToContainerByDoubleClick(SlotType.BOX);
-            else if (_fieldManager.IsStorageOpened)
+            else if (_bunkerManager.IsStorageOpened)
                 TryMoveToContainerByDoubleClick(SlotType.STORAGE);
-            else if (_fieldManager.IsShopOpened)
+            else if (_bunkerManager.IsShopOpened)
                 SellItem();
         }
         else if (_itemSlot.Type == SlotType.BOX 
@@ -376,7 +378,7 @@ public class ItemSlotUI : MonoBehaviour,
         GameObject[] slotObjects = openContainerType switch
         {
             SlotType.BOX => _fieldManager.BoxItemSlots,
-            SlotType.STORAGE => _fieldManager.StorageItemSlots,
+            SlotType.STORAGE => _bunkerManager.StorageItemSlots,
             _ => Array.Empty<GameObject>()
         };
 

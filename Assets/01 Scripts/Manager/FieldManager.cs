@@ -3,10 +3,6 @@ using UnityEngine;
 public class FieldManager : SingletonMonoBehaviour<FieldManager>
 {
     [SerializeField] private GameObject[] _boxItemSlots;
-    [SerializeField] private GameObject[] _storageItemSlots;
-    [SerializeField] private GameObject[] _shopItemSlots;
-
-    [SerializeField] private Storage _storage;
 
     [SerializeField] private GameObject _dropItemPrefab;
     [SerializeField] private GameObject _playerObject;
@@ -14,15 +10,10 @@ public class FieldManager : SingletonMonoBehaviour<FieldManager>
     private Box _currentBox;
     private Box _currentOpenBox;
 
-    private bool _isStorageOpened;
-    private bool _isShopOpened;
-
     public readonly int BoxSlotNum = 5;
 
     public GameObject[] BoxItemSlots { get { return _boxItemSlots; } }
-    public GameObject[] StorageItemSlots { get { return _storageItemSlots; } }
-    public GameObject[] ShopItemSlots { get { return _shopItemSlots; } }
-
+   
     public Box CurrentBox
     {
         get { return _currentBox; }
@@ -34,21 +25,6 @@ public class FieldManager : SingletonMonoBehaviour<FieldManager>
         get { return _currentOpenBox; }
         set { _currentOpenBox = value; }
     }
-
-    public Storage storage { get { return _storage; } }
-
-    public bool IsStorageOpened
-    {
-        get { return _isStorageOpened; }
-        set { _isStorageOpened = value; }
-    }
-
-    public bool IsShopOpened
-    {
-        get { return _isShopOpened; }
-        set { _isShopOpened = value; }
-    }
-
     protected override void Awake()
     {
         base.Awake();
