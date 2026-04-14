@@ -32,12 +32,16 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         _currentSceneName = SceneName.TitleScene;
         _inventory = new Inventory(_inventorySlotCount, _inventoryMaxWeight);
         _inputActions = new InputActions();
-        _inputActions.Player.Enable();
+    }
+
+    private void OnEnable()
+    {
+        _inputActions?.Player.Enable();
     }
 
     private void OnDisable()
     {
-        _inputActions.Player.Disable();
+        _inputActions?.Player.Disable();
     }
 
     public void QuitGame()

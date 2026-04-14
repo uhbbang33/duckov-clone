@@ -15,9 +15,15 @@ public abstract class SingletonMonoBehaviour<T> : MonoBehaviour where T : MonoBe
         {
             instance = this as T;
         }
-        else
+        else if(instance != this)
         {
             Destroy(gameObject);
         }
+    }
+
+    protected virtual void OnDestroy()
+    {
+        if (instance == this)
+            instance = null;
     }
 }
