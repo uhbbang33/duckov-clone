@@ -5,6 +5,7 @@ public class ItemSlot
     protected Item _currentItem;
     protected ItemSlotUI _ui;
     private FieldManager _fieldManager;
+    private BunkerManager _bunkerManager;
     private Inventory _inventory;
 
     protected SlotType _slotType;
@@ -17,6 +18,7 @@ public class ItemSlot
         _quantity = 0;
         _ui = null;
         _fieldManager = FieldManager.Instance;
+        _bunkerManager = BunkerManager.Instance;
         //_inventory = GameManager.Instance.Inventory;
     }
 
@@ -80,7 +82,7 @@ public class ItemSlot
             else if (_slotType == SlotType.BOX)
                 _fieldManager.CurrentOpenBox.ChangeBoxItemCount(false);
             else if (_slotType == SlotType.STORAGE)
-                _fieldManager.storage.ChangeStorageItemCount(false);
+                _bunkerManager.storage.ChangeStorageItemCount(false);
 
             _currentItem = null;
             _quantity = 0;
@@ -107,7 +109,7 @@ public class ItemSlot
             else if (_slotType == SlotType.BOX)
                 _fieldManager.CurrentOpenBox.ChangeBoxItemCount(true);
             else if (_slotType == SlotType.STORAGE)
-                _fieldManager.storage.ChangeStorageItemCount(true);
+                _bunkerManager.storage.ChangeStorageItemCount(true);
         }
 
         _currentItem = item;
@@ -150,7 +152,7 @@ public class ItemSlot
         }
         else if(_slotType == SlotType.STORAGE)
         {
-            _fieldManager.storage.AddItemToEmptySlot(_currentItem, amount);
+            _bunkerManager.storage.AddItemToEmptySlot(_currentItem, amount);
         }
     }
 
