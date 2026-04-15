@@ -106,6 +106,20 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
 
     #region Save
 
+    public void SaveDataByScene()
+    {
+        string current = GameManager.Instance.CurrentSceneName;
+
+        if (current == SceneName.BunkerScene)
+        {
+            SaveAllData();
+        }
+        else if (current == SceneName.FieldScene)
+        {
+            SavePlayerData();
+        }
+    }
+
     public void SaveAllData()
     {
         SavePlayerData();

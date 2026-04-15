@@ -8,14 +8,14 @@ public class InteractableDoorUI : InteractableStateUI
     {
         base.OnInteract();
 
+        DataManager.Instance.SaveDataByScene();
+
         if (_targetScene == SceneList.BUNKER)
         {
-            DataManager.Instance.SavePlayerData();
             SceneLoader.Instance.LoadScene(SceneName.BunkerScene);
         }
         else if (_targetScene == SceneList.FIELD)
         {
-            DataManager.Instance.SaveAllData();
             SceneLoader.Instance.LoadScene(SceneName.FieldScene);
         }
     }

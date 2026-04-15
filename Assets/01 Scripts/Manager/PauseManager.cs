@@ -78,10 +78,11 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager>
 
     public void OnClickConfirmReturnToTitle()
     {
-        _isPaused = false;
-        Resume();
+        Time.timeScale = 1f;
 
-        _dataManager.SaveAllData();
+        _dataManager.SaveDataByScene();
+
+        _gameManager.Actions.Player.Cancel.performed -= OnPause;
 
         SceneLoader.Instance.LoadScene(SceneName.TitleScene);
     }
