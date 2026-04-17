@@ -1,4 +1,4 @@
-Shader "Custom/StencilCustom"
+Shader "Custom/CustomLit"
 {
     // Keep properties of StandardSpecular shader for upgrade reasons.
     Properties
@@ -17,8 +17,10 @@ Shader "Custom/StencilCustom"
         [HideInInspector] _BumpScale("Scale", Float) = 1.0
         [NoScaleOffset] _BumpMap("Normal Map", 2D) = "bump" {}
 
-        [HDR] _EmissionColor("Emission Color", Color) = (0,0,0)
-        [NoScaleOffset]_EmissionMap("Emission Map", 2D) = "white" {}
+        _Emission ("Emission", Range (0,1)) = 0.5
+
+        // [HDR] _EmissionColor("Emission Color", Color) = (0,0,0)
+        // [NoScaleOffset]_EmissionMap("Emission Map", 2D) = "white" {}
 
         // Blending state
         _Surface("__surface", Float) = 0.0
@@ -63,12 +65,6 @@ Shader "Custom/StencilCustom"
         }
         LOD 300
 
-        Stencil
-        {
-            Ref 1           // 기준값 1
-            Comp NotEqual   // 스텐실 값이 1이 아닌 곳만 렌더링
-        }
-
         Pass
         {
             Name "ForwardLit"
@@ -96,7 +92,7 @@ Shader "Custom/StencilCustom"
             // -------------------------------------
             // Material Keywords
             #pragma shader_feature_local _NORMALMAP
-            #pragma shader_feature_local_fragment _EMISSION
+            //#pragma shader_feature_local_fragment _EMISSION
             #pragma shader_feature_local _RECEIVE_SHADOWS_OFF
             #pragma shader_feature_local_fragment _SURFACE_TYPE_TRANSPARENT
             #pragma shader_feature_local_fragment _ALPHATEST_ON
@@ -233,7 +229,7 @@ Shader "Custom/StencilCustom"
             #pragma shader_feature_local_fragment _ _SPECGLOSSMAP _SPECULAR_COLOR
             #pragma shader_feature_local_fragment _GLOSSINESS_FROM_BASE_ALPHA
             #pragma shader_feature_local _NORMALMAP
-            #pragma shader_feature_local_fragment _EMISSION
+            //#pragma shader_feature_local_fragment _EMISSION
             #pragma shader_feature_local _RECEIVE_SHADOWS_OFF
 
             // -------------------------------------
