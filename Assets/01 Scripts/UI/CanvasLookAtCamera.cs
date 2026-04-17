@@ -10,6 +10,6 @@ public class CanvasLookAtCamera : MonoBehaviour
     }
     private void LateUpdate()
     {
-        transform.forward = _cam.transform.forward;
+        transform.rotation = _cam.transform.rotation;
     }
 }
