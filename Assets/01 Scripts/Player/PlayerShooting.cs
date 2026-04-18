@@ -8,6 +8,7 @@ public class PlayerShooting : MonoBehaviour
     [SerializeField] private GameObject _bulletPrefab;
     [SerializeField] private float _reloadDelay = 0.1f;
     [SerializeField] private float _soundLevelDuration = 0.1f;
+    [SerializeField] private float _rotationIgnoreRadius = 2f;
     [SerializeField] private AudioSource _playerShootingAudioSource;
 
     private GameObject _currentGunObject;
@@ -135,13 +136,13 @@ public class PlayerShooting : MonoBehaviour
 
     private void Fire()
     {
-        _currentGunItem.CurrentAmmoCount -= 1;
+        Vector3 dir = GetFireDirection();
+
+        if (dir == Vector3.zero)
+            return;
 
         // bullet
         GameObject bulletObject = _poolManager.GetObject(PoolId.Bullet, _currentGun.MuzzleTransform, false);
-
-        Vector3 dir = _currentGun.MuzzleTransform.forward;
-        dir.y = 0f;
 
         Bullet bullet = bulletObject.GetComponent<Bullet>();
         bullet.BulletDamage = _currentGunItem.Damage;
@@ -158,6 +159,7 @@ public class PlayerShooting : MonoBehaviour
         
         StartCoroutine(SoundLevelUpByFireRoutine());
 
+        _currentGunItem.CurrentAmmoCount -= 1;
 
         _playerEquip.RefreshHUDAmmoCountText();
     }
@@ -258,4 +260,32 @@ public class PlayerShooting : MonoBehaviour
 
     #endregion Coroutine
 
+    #region Set Shoot Direction
+
+    private Vector3 GetMouseWorldPosition()
+    {
+        Vector2 mousePos = Mouse.current.position.ReadValue();
+        Ray ray = Camera.main.ScreenPointToRay(mousePos);
+
+        Plane groundPlane = new Plane(Vector3.up, _currentGun.MuzzleTransform.position);
+        float distance;
+
+        if (groundPlane.Raycast(ray, out distance))
+        {
+            return ray.GetPoint(distance);
+        }
+
+        return Vector3.zero;
+    }
+
+    private Vector3 GetFireDirection()
+    {
+        Vector3 target = GetMouseWorldPosition();
+
+        Vector3 dir = (target - _currentGun.MuzzleTransform.position);
+
+        return dir.normalized;
+    }
+
+    #endregion Set Shoot Direction
 }

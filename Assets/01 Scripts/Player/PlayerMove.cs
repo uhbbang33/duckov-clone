@@ -75,7 +75,7 @@ public class PlayerMove : MonoBehaviour
         _mousePosition = Vector2.zero;
         _lookDirection = Vector3.zero;
         _rollDirection = Vector3.zero;
-        
+
         _lookBaseTransform = _originLookBaseTransform;
     }
 
@@ -279,7 +279,7 @@ public class PlayerMove : MonoBehaviour
         if (_player.State == PlayerState.Rolling || _rollCoolTime > 0f)
             return;
 
-        if (_sp.CurrentSP < _playerMoveData.RollSPCost) 
+        if (_sp.CurrentSP < _playerMoveData.RollSPCost)
             return;
 
         _sp.ReduceSPImmediately(_playerMoveData.RollSPCost);
@@ -302,7 +302,7 @@ public class PlayerMove : MonoBehaviour
         }
 
         StartCoroutine(RollRoutine());
-        
+
         _anim.SetTrigger("Roll");
     }
 

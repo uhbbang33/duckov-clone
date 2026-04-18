@@ -25908,7 +25908,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ea0b58667a880a4f86272eb6cdbfa07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMove
-  _rotationIgnoreRadius: 1.2
+  _rotationIgnoreRadius: 1.5
   _mouseTurnSpeed: 10
   _runTurnSpeed: 3
   _originLookBaseTransform: {fileID: 1473866031}
@@ -26073,6 +26073,7 @@ MonoBehaviour:
   _bulletPrefab: {fileID: 6673845262605201894, guid: bf4a61b978ce5344b808da224093d8a3, type: 3}
   _reloadDelay: 0.1
   _soundLevelDuration: 0.1
+  _rotationIgnoreRadius: 2
   _playerShootingAudioSource: {fileID: 1473866032}
 --- !u!114 &6032076664905499566
 MonoBehaviour:

@@ -1,9 +1,9 @@
 
 public struct SceneName
 {
-    public const string TitleScene = "TitleScene";
-    public const string FieldScene = "FieldScene";
-    public const string BunkerScene = "BunkerScene";
+    public const string TitleScene = "01TitleScene";
+    public const string BunkerScene = "02BunkerScene";
+    public const string FieldScene = "03FieldScene";
 }
 
 public enum SceneList
