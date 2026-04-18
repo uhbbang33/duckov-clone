@@ -8,6 +8,7 @@ public class SceneLoader : SingletonMonoBehaviour<SceneLoader>
 
     private DataManager _dataManager;
     private GameManager _gameManager;
+    private Coroutine _coroutine;
 
     protected override void Awake()
     {
@@ -24,7 +25,10 @@ public class SceneLoader : SingletonMonoBehaviour<SceneLoader>
 
     public void LoadScene(string sceneName)
     {
-        StartCoroutine(LoadRoutine(sceneName));
+        if (_coroutine != null)
+            return;
+
+        _coroutine = StartCoroutine(LoadRoutine(sceneName));
     }
 
     private IEnumerator LoadRoutine(string sceneName)
@@ -58,5 +62,6 @@ public class SceneLoader : SingletonMonoBehaviour<SceneLoader>
         StartCoroutine(LoadingUI.Instance.FadeOut());
 
         _gameManager.EnableInputActions();
+        _coroutine = null;
     }
 }
