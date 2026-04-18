@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8803064370393976686}
   - component: {fileID: 6639610809225737606}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Glock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56,7 +56,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8777045827994431913}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Muzzle Transform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,6 +86,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8803064370393976686}
     m_Modifications:
+    - target: {fileID: 3592885223502909351, guid: 46649f0fb00533840802eba10dac4799, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 6142013099291405442, guid: 46649f0fb00533840802eba10dac4799, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -129,6 +133,18 @@ PrefabInstance:
     - target: {fileID: 6806910408285173304, guid: 46649f0fb00533840802eba10dac4799, type: 3}
       propertyPath: m_Name
       value: P-17
+      objectReference: {fileID: 0}
+    - target: {fileID: 6806910408285173304, guid: 46649f0fb00533840802eba10dac4799, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8028925249270215441, guid: 46649f0fb00533840802eba10dac4799, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8166845668719074426, guid: 46649f0fb00533840802eba10dac4799, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
