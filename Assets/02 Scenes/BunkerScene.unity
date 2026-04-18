@@ -27303,6 +27303,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ea0b58667a880a4f86272eb6cdbfa07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMove
+  _rotationIgnoreRadius: 1.2
   _mouseTurnSpeed: 10
   _runTurnSpeed: 3
   _originLookBaseTransform: {fileID: 1473866031}

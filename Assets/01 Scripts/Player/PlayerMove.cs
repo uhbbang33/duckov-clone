@@ -19,6 +19,8 @@ public class PlayerMove : MonoBehaviour
     private Vector2 _mousePosition;
     private Vector3 _lookDirection;
     private Vector3 _rollDirection;
+
+    [SerializeField] private float _rotationIgnoreRadius;
     private float _rollCoolTime;
     private bool _isRunButtonPressed;
     private float _speedDebuffRate;
@@ -148,27 +150,27 @@ public class PlayerMove : MonoBehaviour
 
             dir.y = 0;
 
-            if (dir.sqrMagnitude > 0.01f
-                && _player.State != PlayerState.Rolling)
-            {
-                Vector3 lookDir = dir.normalized;
-                _lookDirection = lookDir;
+            if (dir.sqrMagnitude <= _rotationIgnoreRadius * _rotationIgnoreRadius
+                || _player.State == PlayerState.Rolling)
+                return;
 
-                Quaternion targetRotation;
-                if (_player.State == PlayerState.Running)
+            Vector3 lookDir = dir.normalized;
+            _lookDirection = lookDir;
+
+            Quaternion targetRotation;
+            if (_player.State == PlayerState.Running)
+            {
+                Vector3 runDir = SetDirection(_moveInput);
+                if (runDir.sqrMagnitude > 0.01f)
                 {
-                    Vector3 runDir = SetDirection(_moveInput);
-                    if (runDir.sqrMagnitude > 0.01f)
-                    {
-                        targetRotation = Quaternion.LookRotation(runDir);
-                        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, _runTurnSpeed * Time.deltaTime);
-                    }
+                    targetRotation = Quaternion.LookRotation(runDir);
+                    transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, _runTurnSpeed * Time.deltaTime);
                 }
-                else
-                {
-                    targetRotation = Quaternion.LookRotation(lookDir);
-                    transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, _mouseTurnSpeed * Time.deltaTime);
-                }
+            }
+            else
+            {
+                targetRotation = Quaternion.LookRotation(lookDir);
+                transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, _mouseTurnSpeed * Time.deltaTime);
             }
         }
     }
