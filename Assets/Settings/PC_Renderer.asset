@@ -24,9 +24,9 @@ MonoBehaviour:
       PassNames: []
     overrideMaterial: {fileID: 2100000, guid: 797669773fa10544383b7822df49f5d9, type: 2}
     overrideMaterialPassIndex: 0
-    overrideShader: {fileID: 0}
+    overrideShader: {fileID: 4800000, guid: ac5e845885402804499d98f5aeaa1fa3, type: 3}
     overrideShaderPassIndex: 0
-    overrideMode: 1
+    overrideMode: 2
     overrideDepthState: 0
     depthCompareFunction: 4
     enableWrite: 0
@@ -73,7 +73,7 @@ MonoBehaviour:
     depthCompareFunction: 5
     enableWrite: 0
     stencilSettings:
-      overrideStencilState: 0
+      overrideStencilState: 1
       stencilReference: 0
       stencilCompareFunction: 8
       passOperation: 0
