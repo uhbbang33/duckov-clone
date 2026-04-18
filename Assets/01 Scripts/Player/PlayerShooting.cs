@@ -141,6 +141,7 @@ public class PlayerShooting : MonoBehaviour
         GameObject bulletObject = _poolManager.GetObject(PoolId.Bullet, _currentGun.MuzzleTransform, false);
 
         Vector3 dir = _currentGun.MuzzleTransform.forward;
+        dir.y = 0f;
 
         Bullet bullet = bulletObject.GetComponent<Bullet>();
         bullet.BulletDamage = _currentGunItem.Damage;
