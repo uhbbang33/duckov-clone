@@ -10,6 +10,8 @@ public class InteractableStateUI : MonoBehaviour
 
     private PlayerInteract _interact;
 
+    private const float _scaleOffset = 0.005f;
+
     public InteractableType Type
     {
         get { return _type; }
@@ -18,6 +20,14 @@ public class InteractableStateUI : MonoBehaviour
     private void Start()
     {
         _interact = GameManager.Instance.PlayerObject.GetComponent<PlayerInteract>();
+        SetScale();
+    }
+
+    private void SetScale()
+    {
+        Vector3 scale = transform.localScale;
+
+        _canvas.transform.localScale = new Vector3(1f / scale.x, 1f / scale.y, 1f / scale.z) * _scaleOffset;
     }
 
     public void ShowCanvas()
