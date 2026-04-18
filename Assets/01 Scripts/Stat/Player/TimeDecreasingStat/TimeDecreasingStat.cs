@@ -10,6 +10,7 @@ public class TimeDecreasingStat : MonoBehaviour
     private PlayerMove _playerMove;
     private PlayerInteract _playerInteract;
     protected UIManager _uiManager;
+    private GameManager _gameManager;
 
     protected float _max;
     protected float _current;
@@ -41,8 +42,10 @@ public class TimeDecreasingStat : MonoBehaviour
         _playerBaseData = _player.BaseData;
 
         _uiManager = UIManager.Instance;
+        _gameManager = GameManager.Instance;
 
-        StartCoroutine(ReducePerTickRoutine());
+        if (_gameManager.CurrentSceneName != SceneName.BunkerScene)
+            StartCoroutine(ReducePerTickRoutine());
 
         _playerMove = GetComponent<PlayerMove>();
         _playerMove.OnRun += DoubleReduceAmount;
@@ -63,7 +66,8 @@ public class TimeDecreasingStat : MonoBehaviour
 
     protected virtual void OnExitZeroStat() 
     {
-        StartCoroutine(ReducePerTickRoutine());
+        if (_gameManager.CurrentSceneName != SceneName.BunkerScene)
+            StartCoroutine(ReducePerTickRoutine());
     }
 
     public void Heal(float amount)

@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerMove : MonoBehaviour
 {
+    private GameManager _gameManager;
     private Player _player;
     private InputActions _inputActions;
     private Rigidbody _rb;
@@ -78,7 +79,9 @@ public class PlayerMove : MonoBehaviour
 
     private void Start()
     {
-        _inputActions = GameManager.Instance.Actions;
+        _gameManager = GameManager.Instance;
+        _inputActions = _gameManager.Actions;
+
         SubscribeInputActions();
     }
 
@@ -316,7 +319,8 @@ public class PlayerMove : MonoBehaviour
         if (_rb.linearVelocity == Vector3.zero)
             return;
 
-        _sp.ReduceSPPerSecond(_playerMoveData.RunSPCost);
+        if (_gameManager.CurrentSceneName != SceneName.BunkerScene)
+            _sp.ReduceSPPerSecond(_playerMoveData.RunSPCost);
 
         _player.ChangePlayerState(PlayerState.Running);
         _anim.SetBool("IsRun", true);

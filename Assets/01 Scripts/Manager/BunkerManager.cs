@@ -9,6 +9,8 @@ public class BunkerManager : SingletonMonoBehaviour<BunkerManager>
     [SerializeField] private GameObject _dropItemPrefab;
     [SerializeField] private GameObject _playerObject;
 
+    private GameManager _gameManager;
+
     private bool _isStorageOpened;
     private bool _isShopOpened;
 
@@ -31,7 +33,9 @@ public class BunkerManager : SingletonMonoBehaviour<BunkerManager>
     protected override void Awake()
     {
         base.Awake();
-        GameManager.Instance.PlayerObject = _playerObject;
+
+        _gameManager = GameManager.Instance;
+        _gameManager.PlayerObject = _playerObject;
     }
 
     // TODO : PoolManager?

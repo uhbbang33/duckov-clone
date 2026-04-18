@@ -42,13 +42,14 @@ public class SceneLoader : SingletonMonoBehaviour<SceneLoader>
 
         op.allowSceneActivation = true;
 
+        GameManager.Instance.CurrentSceneName = sceneName;
+
         while (!op.isDone)
             yield return null;
 
         yield return new WaitUntil(() => isSceneReady);
 
         _dataManager.SetDataForScene(sceneName);
-        GameManager.Instance.CurrentSceneName = sceneName;
 
         StartCoroutine(LoadingUI.Instance.FadeOut());
     }
