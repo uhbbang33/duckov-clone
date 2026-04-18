@@ -7,6 +7,7 @@ public class SceneLoader : SingletonMonoBehaviour<SceneLoader>
     [SerializeField] private float _loadDuration = 1.0f;
 
     private DataManager _dataManager;
+    private GameManager _gameManager;
 
     protected override void Awake()
     {
@@ -18,6 +19,7 @@ public class SceneLoader : SingletonMonoBehaviour<SceneLoader>
     private void Start()
     {
         _dataManager = DataManager.Instance;
+        _gameManager = GameManager.Instance;
     }
 
     public void LoadScene(string sceneName)
@@ -27,6 +29,8 @@ public class SceneLoader : SingletonMonoBehaviour<SceneLoader>
 
     private IEnumerator LoadRoutine(string sceneName)
     {
+        _gameManager.DisableInputActions();
+
         yield return LoadingUI.Instance.FadeIn();
 
         bool isSceneReady = false;
@@ -52,5 +56,7 @@ public class SceneLoader : SingletonMonoBehaviour<SceneLoader>
         _dataManager.SetDataForScene(sceneName);
 
         StartCoroutine(LoadingUI.Instance.FadeOut());
+
+        _gameManager.EnableInputActions();
     }
 }
