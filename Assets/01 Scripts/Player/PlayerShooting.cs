@@ -4,11 +4,10 @@ using UnityEngine.InputSystem;
 
 public class PlayerShooting : MonoBehaviour
 {
-    [SerializeField] private LayerMask _targetLayer;
     [SerializeField] private GameObject _bulletPrefab;
     [SerializeField] private float _reloadDelay = 0.1f;
     [SerializeField] private float _soundLevelDuration = 0.1f;
-    [SerializeField] private float _rotationIgnoreRadius = 2f;
+    [SerializeField] private float _shootIgnoreRadius = 2f;
     [SerializeField] private AudioSource _playerShootingAudioSource;
 
     private GameObject _currentGunObject;
@@ -262,17 +261,38 @@ public class PlayerShooting : MonoBehaviour
 
     #region Set Shoot Direction
 
-    private Vector3 GetMouseWorldPosition()
+    // 타겟의 월드 위치와 플레이어 사이의 거리 제곱값 return
+    private float GetSqrDistanceToTarget(Vector3 targetPosition)
+    {
+        Vector3 distance = targetPosition - transform.position;
+        return distance.sqrMagnitude;
+    }
+
+    // 마우스 에임이 가리키는 월드 좌표 return
+    private Vector3 GetAimWorldPosition()
     {
         Vector2 mousePos = Mouse.current.position.ReadValue();
         Ray ray = Camera.main.ScreenPointToRay(mousePos);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
+        {
+            // 플레이어 위에 커서가 있을 경우
+            if (hit.collider.gameObject.layer == LayerMask.NameToLayer(Layer.Player))
+                return Vector3.zero;
+        }
 
         Plane groundPlane = new Plane(Vector3.up, _currentGun.MuzzleTransform.position);
         float distance;
 
         if (groundPlane.Raycast(ray, out distance))
         {
-            return ray.GetPoint(distance);
+            Vector3 worldPos = ray.GetPoint(distance);
+
+            // 무시 반경 내부일 경우
+            if (GetSqrDistanceToTarget(worldPos) < _shootIgnoreRadius * _shootIgnoreRadius)
+                return Vector3.zero;
+
+            return worldPos;
         }
 
         return Vector3.zero;
@@ -280,10 +300,12 @@ public class PlayerShooting : MonoBehaviour
 
     private Vector3 GetFireDirection()
     {
-        Vector3 target = GetMouseWorldPosition();
+        Vector3 aimTarget = GetAimWorldPosition();
 
-        Vector3 dir = (target - _currentGun.MuzzleTransform.position);
+        if (aimTarget == Vector3.zero)
+            return Vector3.zero;
 
+        Vector3 dir = (aimTarget - _currentGun.MuzzleTransform.position);
         return dir.normalized;
     }
 

@@ -97,3 +97,8 @@ public struct Tag
 {
     public const string Player = "Player";
 }
+
+public struct Layer
+{
+    public const string Player = "Player";
+}
