@@ -130,6 +130,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3330565119200557997}
     m_Modifications:
+    - target: {fileID: 555332411381140339, guid: ee2a52dce47dd5645ace95d1b2e5da28, type: 3}
+      propertyPath: _infoUI
+      value: 
+      objectReference: {fileID: 4292626001320822474}
     - target: {fileID: 5971617023370346060, guid: ee2a52dce47dd5645ace95d1b2e5da28, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -156,11 +160,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5971617023370346060, guid: ee2a52dce47dd5645ace95d1b2e5da28, type: 3}
       propertyPath: m_SizeDelta.x
-      value: -3
+      value: -8
       objectReference: {fileID: 0}
     - target: {fileID: 5971617023370346060, guid: ee2a52dce47dd5645ace95d1b2e5da28, type: 3}
       propertyPath: m_SizeDelta.y
-      value: -5
+      value: -8
       objectReference: {fileID: 0}
     - target: {fileID: 5971617023370346060, guid: ee2a52dce47dd5645ace95d1b2e5da28, type: 3}
       propertyPath: m_LocalPosition.x
@@ -192,11 +196,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5971617023370346060, guid: ee2a52dce47dd5645ace95d1b2e5da28, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -1.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5971617023370346060, guid: ee2a52dce47dd5645ace95d1b2e5da28, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5971617023370346060, guid: ee2a52dce47dd5645ace95d1b2e5da28, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -466,3 +470,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6996124582524296093, guid: 838a41c0a3fc9a6498231c5958a5a78b, type: 3}
   m_PrefabInstance: {fileID: 8956108958558522382}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4292626001320822474 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5176893542735694532, guid: 838a41c0a3fc9a6498231c5958a5a78b, type: 3}
+  m_PrefabInstance: {fileID: 8956108958558522382}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29b64d109b8fb8546a6765f4cd81b212, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemInfoUI

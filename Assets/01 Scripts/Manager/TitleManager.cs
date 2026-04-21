@@ -40,7 +40,7 @@ public class TitleManager : MonoBehaviour
 
     public void OnClickSettings()
     {
-
+        SceneLoader.Instance.LoadScene(SceneName.FieldScene);
     }
 
     public void OnClickQuit()
