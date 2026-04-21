@@ -129,6 +129,11 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
+    - _StencilComp: 8
+    - _StencilFail: 0
+    - _StencilPass: 2
+    - _StencilRef: 2
+    - _StencilZFail: 0
     - _Surface: 0
     - _UVSec: 0
     - _WorkflowMode: 1
