@@ -1,22 +1,21 @@
-Shader "Custom/StencilCustom"
+Shader "Custom/EnemyCustom"
 {
-    // Keep properties of StandardSpecular shader for upgrade reasons.
     Properties
     {
-        [MainTexture] _BaseMap("Base Map (RGB) Smoothness / Alpha (A)", 2D) = "white" {}
+        [MainTexture] _BaseMap("Base Map", 2D) = "white" {}
         [MainColor]   _BaseColor("Base Color", Color) = (1, 1, 1, 1)
 
+        [IntRange] _StencilRef ("Stencil Reference", Range(0, 255)) = 3
+        [Enum(UnityEngine.Rendering.CompareFunction)] _StencilComp ("Stencil Comp", Int) = 3
+        
+        // Editmode props
+        _QueueOffset("Queue offset", Float) = 0.0
+
         _Cutoff("Alpha Clipping", Range(0.0, 1.0)) = 0.5
-
         _Smoothness("Smoothness", Range(0.0, 1.0)) = 0.5
-        _SpecColor("Specular Color", Color) = (0.5, 0.5, 0.5, 0.5)
-        _SpecGlossMap("Specular Map", 2D) = "white" {}
         _SmoothnessSource("Smoothness Source", Float) = 0.0
-        _SpecularHighlights("Specular Highlights", Float) = 1.0
-
         [HideInInspector] _BumpScale("Scale", Float) = 1.0
         [NoScaleOffset] _BumpMap("Normal Map", 2D) = "bump" {}
-
         [HDR] _EmissionColor("Emission Color", Color) = (0,0,0)
         [NoScaleOffset]_EmissionMap("Emission Map", 2D) = "white" {}
 
@@ -30,21 +29,18 @@ Shader "Custom/StencilCustom"
         [HideInInspector] _SrcBlendAlpha("__srcA", Float) = 1.0
         [HideInInspector] _DstBlendAlpha("__dstA", Float) = 0.0
         [HideInInspector] _ZWrite("__zw", Float) = 1.0
-        [HideInInspector] _BlendModePreserveSpecular("_BlendModePreserveSpecular", Float) = 1.0
         [HideInInspector] _AlphaToMask("__alphaToMask", Float) = 0.0
         [HideInInspector] _AddPrecomputedVelocity("_AddPrecomputedVelocity", Float) = 0.0
         [HideInInspector] _XRMotionVectorsPass("_XRMotionVectorsPass", Float) = 1.0
 
         [ToggleUI] _ReceiveShadows("Receive Shadows", Float) = 1.0
-        // Editmode props
-        _QueueOffset("Queue offset", Float) = 0.0
+
 
         // ObsoleteProperties
         [HideInInspector] _MainTex("BaseMap", 2D) = "white" {}
         [HideInInspector] _Color("Base Color", Color) = (1, 1, 1, 1)
         [HideInInspector] _Shininess("Smoothness", Float) = 0.0
         [HideInInspector] _GlossinessSource("GlossinessSource", Float) = 0.0
-        [HideInInspector] _SpecSource("SpecularHighlights", Float) = 0.0
 
         [HideInInspector][NoScaleOffset]unity_Lightmaps("unity_Lightmaps", 2DArray) = "" {}
         [HideInInspector][NoScaleOffset]unity_LightmapsInd("unity_LightmapsInd", 2DArray) = "" {}
@@ -56,18 +52,11 @@ Shader "Custom/StencilCustom"
         Tags
         {
             "RenderType" = "Opaque"
-            //"Queue"="Geometry"
             "RenderPipeline" = "UniversalPipeline"
             "UniversalMaterialType" = "SimpleLit"
             "IgnoreProjector" = "True"
         }
         LOD 300
-
-        Stencil
-        {
-            Ref 1           // 기준값 1
-            Comp NotEqual   // 스텐실 값이 1이 아닌 곳만 렌더링
-        }
 
         Pass
         {
@@ -85,6 +74,12 @@ Shader "Custom/StencilCustom"
             Cull[_Cull]
             AlphaToMask[_AlphaToMask]
 
+            Stencil
+            {
+                Ref [_StencilRef]       // 인스펙터에서 설정한 Reference 값 사용
+                Comp [_StencilComp]     // 비교 함수
+            }
+
             HLSLPROGRAM
             #pragma target 2.0
 
@@ -95,13 +90,11 @@ Shader "Custom/StencilCustom"
 
             // -------------------------------------
             // Material Keywords
-            #pragma shader_feature_local _NORMALMAP
             #pragma shader_feature_local_fragment _EMISSION
             #pragma shader_feature_local _RECEIVE_SHADOWS_OFF
             #pragma shader_feature_local_fragment _SURFACE_TYPE_TRANSPARENT
             #pragma shader_feature_local_fragment _ALPHATEST_ON
             #pragma shader_feature_local_fragment _ _ALPHAPREMULTIPLY_ON _ALPHAMODULATE_ON
-            #pragma shader_feature_local_fragment _ _SPECGLOSSMAP _SPECULAR_COLOR
             #pragma shader_feature_local_fragment _GLOSSINESS_FROM_BASE_ALPHA
 
             // -------------------------------------
@@ -168,6 +161,12 @@ Shader "Custom/StencilCustom"
             ColorMask 0
             Cull[_Cull]
 
+            Stencil
+            {
+                Ref [_StencilRef]       // 인스펙터에서 설정한 Reference 값 사용
+                Comp [_StencilComp]     // 비교 함수
+            }
+
             HLSLPROGRAM
             #pragma target 2.0
 
@@ -229,10 +228,7 @@ Shader "Custom/StencilCustom"
             // -------------------------------------
             // Material Keywords
             #pragma shader_feature_local_fragment _ALPHATEST_ON
-            //#pragma shader_feature _ALPHAPREMULTIPLY_ON
-            #pragma shader_feature_local_fragment _ _SPECGLOSSMAP _SPECULAR_COLOR
             #pragma shader_feature_local_fragment _GLOSSINESS_FROM_BASE_ALPHA
-            #pragma shader_feature_local _NORMALMAP
             #pragma shader_feature_local_fragment _EMISSION
             #pragma shader_feature_local _RECEIVE_SHADOWS_OFF
 
@@ -345,7 +341,6 @@ Shader "Custom/StencilCustom"
 
             // -------------------------------------
             // Material Keywords
-            #pragma shader_feature_local _NORMALMAP
             #pragma shader_feature_local _ALPHATEST_ON
             #pragma shader_feature_local_fragment _GLOSSINESS_FROM_BASE_ALPHA
 
@@ -370,5 +365,5 @@ Shader "Custom/StencilCustom"
     }
 
     Fallback  "Hidden/Universal Render Pipeline/FallbackError"
-    CustomEditor "UnityEditor.Rendering.Universal.ShaderGUI.SimpleLitShader"
+    //CustomEditor "UnityEditor.Rendering.Universal.ShaderGUI.SimpleLitShader"
 }

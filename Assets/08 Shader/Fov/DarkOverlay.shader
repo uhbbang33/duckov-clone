@@ -2,23 +2,27 @@ Shader "Custom/DarkOverlay"
 {
     Properties
     {
-        _Color ("Overlay Color", Color) = (0, 0, 0, 0.85)
+        [IntRange] _StencilRef ("Stencil Reference", Range(0, 255)) = 3
+        [Enum(UnityEngine.Rendering.CompareFunction)] _StencilComp ("Stencil Comp", Int) = 6
+        _Color ("Color", Color) = (0, 0, 0, 0.85)
     }
 
     SubShader
     {
-        Tags { "Queue" = "Transparent+1" "RenderType" = "Transparent" }
+        Tags
+        {
+            "RenderType" = "Transparent"
+            "Queue" = "Transparent"
+        }
 
         Stencil
         {
-            Ref  2
-            Comp NotEqual
+            Ref [_StencilRef]
+            Comp [_StencilComp]
         }
 
         Blend SrcAlpha OneMinusSrcAlpha
         ZWrite Off
-        ZTest  Always
-        Cull   Off
 
         Pass
         {

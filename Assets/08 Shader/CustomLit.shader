@@ -2,7 +2,7 @@ Shader "Custom/CustomLit"
 {
     Properties
     {
-        [MainTexture] _BaseMap("Base Map (RGB) Smoothness / Alpha (A)", 2D) = "white" {}
+        [MainTexture] _BaseMap("Base Map", 2D) = "white" {}
         [MainColor]   _BaseColor("Base Color", Color) = (1, 1, 1, 1)
 
         [IntRange] _StencilRef ("Stencil Reference", Range(0, 255)) = 0
@@ -13,15 +13,15 @@ Shader "Custom/CustomLit"
         [Enum(UnityEngine.Rendering.StencilOp)] _StencilFail ("Stencil Fail", Int) = 0
         [Enum(UnityEngine.Rendering.StencilOp)] _StencilZFail ("Stencil ZFail", Int) = 0
         // 0 : Keep (기존 스텐실 버퍼 값을 유지함) / 1 : Zero (0으로 설정) / 2 : Replace (레퍼런스 값으로 교체)
+        
+        // Editmode props
+        _QueueOffset("Queue offset", Float) = 0.0
 
         _Cutoff("Alpha Clipping", Range(0.0, 1.0)) = 0.5
-
         _Smoothness("Smoothness", Range(0.0, 1.0)) = 0.5
         _SmoothnessSource("Smoothness Source", Float) = 0.0
-
         [HideInInspector] _BumpScale("Scale", Float) = 1.0
         [NoScaleOffset] _BumpMap("Normal Map", 2D) = "bump" {}
-
         [HDR] _EmissionColor("Emission Color", Color) = (0,0,0)
         [NoScaleOffset]_EmissionMap("Emission Map", 2D) = "white" {}
 
@@ -40,8 +40,7 @@ Shader "Custom/CustomLit"
         [HideInInspector] _XRMotionVectorsPass("_XRMotionVectorsPass", Float) = 1.0
 
         [ToggleUI] _ReceiveShadows("Receive Shadows", Float) = 1.0
-        // Editmode props
-        _QueueOffset("Queue offset", Float) = 0.0
+
 
         // ObsoleteProperties
         [HideInInspector] _MainTex("BaseMap", 2D) = "white" {}
