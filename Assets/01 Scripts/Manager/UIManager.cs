@@ -24,6 +24,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     [Header("Text")]
     [SerializeField] private TextMeshProUGUI _boxItemCountText;
     [SerializeField] private TextMeshProUGUI _inventoryItemCountText;
+    [SerializeField] private TextMeshProUGUI _weightText;
     [SerializeField] private TextMeshProUGUI _inventoryMoneyText;
     [SerializeField] private TextMeshProUGUI _storageItemCountText;
     [SerializeField] private TextMeshProUGUI _mainUIHPBarText;
@@ -31,8 +32,12 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     [Space(10)]
     [Header("Slider")]
     [SerializeField] private Slider _mainUIHPBarSlider;
+    [SerializeField] private Slider _weightSlider;
     [SerializeField] private Slider _mainUIHydrationSlider;
     [SerializeField] private Slider _mainUIHungerSlider;
+
+    [Space(5)]
+    [Header("SliderBackgroundImage")]
     [SerializeField] private Image _mainUIHydrationSliderBackground;
     [SerializeField] private Image _mainUIHungerSliderBackground;
 
@@ -224,6 +229,13 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     {
         _inventoryItemCountText.text
             = "가방 (" + itemCnt + " / " + maxCnt + ")";
+    }
+
+    public void ChangeWeightText(float current, float max)
+    {
+        _weightText.text = current.ToString() + "/" + max.ToString() + "kg";
+
+        _weightSlider.value = current / max;
     }
 
     public void ChangeInventoryMoneyText(int money)

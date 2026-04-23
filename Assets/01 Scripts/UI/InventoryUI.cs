@@ -28,6 +28,7 @@ public class InventoryUI : MonoBehaviour
 
         _inventory.OnMoneyChange += _uiManager.ChangeInventoryMoneyText;
         _inventory.OnItemCountChange += _uiManager.ChangeInventoryItemCountText;
+        _inventory.OnWeightChange += _uiManager.ChangeWeightText;
 
         _sortButton.onClick.AddListener(() => SortUtility.Sort(_inventory));
         _inventoryUIObject.SetActive(false);
@@ -37,6 +38,7 @@ public class InventoryUI : MonoBehaviour
     {
         _inventory.OnMoneyChange -= _uiManager.ChangeInventoryMoneyText;
         _inventory.OnItemCountChange -= _uiManager.ChangeInventoryItemCountText;
+        _inventory.OnWeightChange -= _uiManager.ChangeWeightText;
         _inventoryController.OnInventoryToggle -= OnInventoryToggled;
     }
 
@@ -46,11 +48,5 @@ public class InventoryUI : MonoBehaviour
         _uiManager.DefaultUHDShowToggle(!isInventoryOpen);
         _uiManager.ShowCursor(isInventoryOpen);
         _uiManager.PlayerCanvasShowToggle(!isInventoryOpen);
-
-        //if (isInventoryOpen)
-        //{
-        //    _uiManager.ChangeInventoryItemCountText(_inventory.ItemCnt, _inventory.SlotCnt);
-        //    // 무게 UI 갱신? 
-        //}
     }
 }
