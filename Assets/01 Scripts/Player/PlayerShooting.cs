@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -29,6 +30,8 @@ public class PlayerShooting : MonoBehaviour
     private Coroutine _reloadCoroutine;
     private WaitForSeconds _waitforReloadDelay;
     private WaitForSeconds _waitforSoundLevelDuration;
+
+    public event Action OnFire;
 
     public GameObject CurrentGunObject
     {
@@ -161,6 +164,8 @@ public class PlayerShooting : MonoBehaviour
         _currentGunItem.CurrentAmmoCount -= 1;
 
         _playerEquip.RefreshHUDAmmoCountText();
+
+        OnFire?.Invoke();
     }
 
     private void Reload()
