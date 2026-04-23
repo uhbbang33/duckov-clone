@@ -132,32 +132,6 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
---- !u!1102 &-5255511613200624001
-AnimatorState:
-  serializedVersion: 6
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: RotateArm
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: a8df5cd08e049f74f865867eff649f4d, type: 2}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
 --- !u!1101 &-4713035552932447803
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -311,32 +285,6 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
---- !u!1102 &-1123870876946686561
-AnimatorState:
-  serializedVersion: 6
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: IdleArm
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: fa90b47c1f2dc944a81a92f1f2fae837, type: 2}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
 --- !u!1102 &-1033343296455055694
 AnimatorState:
   serializedVersion: 6
@@ -507,32 +455,6 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &3096971144946948911
-AnimatorState:
-  serializedVersion: 6
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: LowerArm
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 1934f788793de4e419528937aca88cfd, type: 2}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
 --- !u!1107 &4686696415955758433
 AnimatorStateMachine:
   serializedVersion: 6
@@ -547,25 +469,13 @@ AnimatorStateMachine:
     m_Position: {x: 290, y: 150, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6172785147803495755}
-    m_Position: {x: 550, y: 120, z: 0}
+    m_Position: {x: 560, y: 150, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7076660218386595202}
-    m_Position: {x: 400, y: 220, z: 0}
+    m_Position: {x: 410, y: 260, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1713951616809281010}
     m_Position: {x: 280, y: 20, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -5255511613200624001}
-    m_Position: {x: 315, y: 85, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -1123870876946686561}
-    m_Position: {x: 350, y: 150, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 3096971144946948911}
-    m_Position: {x: 385, y: 215, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 7269024369472368118}
-    m_Position: {x: 420, y: 280, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: -5876000928846349997}
@@ -628,32 +538,6 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 5522812681064789136, guid: 34f30712d30697648b80843f9e09934c, type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &7269024369472368118
-AnimatorState:
-  serializedVersion: 6
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: ChangeWeaponArm
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 5f187058037e85c44a87de6529ce5c25, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
