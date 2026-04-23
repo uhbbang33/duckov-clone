@@ -69,13 +69,11 @@ public class Player : MonoBehaviour
         if(_state == newState)
             return;
 
-        //Debug.Log(newState.ToString());
-
         _state = newState;
 
         if(newState == PlayerState.Die)
         {
-            // GameOver - GameManager
+            SceneLoader.Instance.LoadScene(SceneName.BunkerScene);
         }
     }
 
