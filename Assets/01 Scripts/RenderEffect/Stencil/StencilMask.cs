@@ -7,6 +7,7 @@ public class StencilMask : MonoBehaviour
 
     protected virtual void Start()
     {
-        transform.localScale = Vector3.one * _maskRadius;
+        //transform.localScale = Vector3.one * _maskRadius;
+        transform.localScale = new Vector3(_maskRadius, transform.localScale.y, _maskRadius);
     }
 }
