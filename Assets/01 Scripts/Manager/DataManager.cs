@@ -128,7 +128,7 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
 
     public void SavePlayerData()
     {
-        //_saveAndLoadManager.SavePlayerStats();
+        _saveAndLoadManager.SavePlayerStats();
         _saveAndLoadManager.SavePlayerInventory();
     }
 
@@ -139,12 +139,12 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
 
         if (sceneName == SceneName.FieldScene)
         {
-            //_saveAndLoadManager.LoadPlayerStats();
+            _saveAndLoadManager.LoadPlayerStats();
             _saveAndLoadManager.LoadPlayerInventory();
         }
         else if (sceneName == SceneName.BunkerScene)
         {
-            //_saveAndLoadManager.LoadPlayerStats();
+            _saveAndLoadManager.LoadPlayerStats();
             _saveAndLoadManager.LoadPlayerInventory();
             _saveAndLoadManager.LoadStorage();
         }

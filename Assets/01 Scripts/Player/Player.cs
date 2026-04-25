@@ -20,16 +20,16 @@ public class Player : MonoBehaviour
         {
             return new PlayerStatsSaveData
             {
-                CurrentHP = _hp.CurrentHP,
-                CurrentSP = Mathf.Floor(_sp.CurrentSP),
+                //CurrentHP = _hp.CurrentHP,
+                //CurrentSP = Mathf.Floor(_sp.CurrentSP),
                 CurrentHydration = Mathf.Floor(_hydration.Current),
                 CurrentHunger = Mathf.Floor(_hunger.Current)
             };
         }
         set
         {
-            _hp.LoadCurrentHPData(value.CurrentHP);
-            _sp.LoadCurrentSPData(value.CurrentSP);
+            //_hp.LoadCurrentHPData(value.CurrentHP);
+            //_sp.LoadCurrentSPData(value.CurrentSP);
             _hydration.LoadCurrent(value.CurrentHydration);
             _hunger.LoadCurrent(value.CurrentHunger);
         }
