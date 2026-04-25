@@ -140,7 +140,7 @@ public class StaminaPoint : MonoBehaviour
 
     private void ChangeSPSliderValue()
     {
-        if (!_SPSlider.gameObject.activeSelf)
+        if (!_SPSlider.gameObject.activeSelf && _currentSP != _maxSP)
             _SPSlider.gameObject.SetActive(true);
 
         _SPSlider.value = _currentSP / _maxSP;

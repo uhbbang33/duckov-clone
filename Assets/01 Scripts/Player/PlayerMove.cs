@@ -283,7 +283,8 @@ public class PlayerMove : MonoBehaviour
         if (_sp.CurrentSP < _playerMoveData.RollSPCost)
             return;
 
-        _sp.ReduceSPImmediately(_playerMoveData.RollSPCost);
+        if (_gameManager.CurrentSceneName != SceneName.BunkerScene)
+            _sp.ReduceSPImmediately(_playerMoveData.RollSPCost);
 
         _player.ChangePlayerState(PlayerState.Rolling);
 
