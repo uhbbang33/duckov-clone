@@ -28,6 +28,8 @@ public class InteractableStateUI : MonoBehaviour
         Vector3 scale = transform.localScale;
 
         _canvas.transform.localScale = new Vector3(1f / scale.x, 1f / scale.y, 1f / scale.z) * _scaleOffset;
+
+        _canvas.transform.position = transform.position + new Vector3(0f, 1f, 0f);
     }
 
     public void ShowCanvas()
