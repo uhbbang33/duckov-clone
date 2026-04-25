@@ -22,6 +22,7 @@ public class PlayerShooting : MonoBehaviour
     private InventoryController _inventoryController;
     private PlayerEquip _playerEquip;
     private PoolManager _poolManager;
+    private GameManager _gameManager;
 
     private PlayerFireState _state;
     private bool _isFirePressed;
@@ -94,6 +95,7 @@ public class PlayerShooting : MonoBehaviour
 
         _inventory = GameManager.Instance.Inventory;
         _poolManager = PoolManager.Instance;
+        _gameManager = GameManager.Instance;
     }
 
     private void OnDisable()
@@ -161,7 +163,8 @@ public class PlayerShooting : MonoBehaviour
         
         StartCoroutine(SoundLevelUpByFireRoutine());
 
-        _currentGunItem.CurrentAmmoCount -= 1;
+        if (_gameManager.CurrentSceneName != SceneName.BunkerScene)
+            _currentGunItem.CurrentAmmoCount -= 1;
 
         _playerEquip.RefreshHUDAmmoCountText();
 
