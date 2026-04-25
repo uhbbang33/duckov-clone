@@ -37747,6 +37747,9 @@ MonoBehaviour:
   _mouseTurnSpeed: 12
   _runTurnSpeed: 3
   _originLookBaseTransform: {fileID: 1473866031}
+  _groundLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!54 &6032076664905499554
 Rigidbody:
   m_ObjectHideFlags: 0

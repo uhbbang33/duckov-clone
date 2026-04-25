@@ -31,6 +31,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float _mouseTurnSpeed;
     [SerializeField] private float _runTurnSpeed;
     [SerializeField] private Transform _originLookBaseTransform;
+    [SerializeField] private LayerMask _groundLayer;
 
     private WaitForSeconds _waitForRoll;
 
@@ -144,7 +145,7 @@ public class PlayerMove : MonoBehaviour
     {
         Ray ray = Camera.main.ScreenPointToRay(mousePos);
 
-        if (Physics.Raycast(ray, out RaycastHit hit, 100f))
+        if (Physics.Raycast(ray, out RaycastHit hit, 100f, _groundLayer))
         {
             Vector3 dir = hit.point - _lookBaseTransform.position;
 
