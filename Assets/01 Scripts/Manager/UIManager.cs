@@ -63,6 +63,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     [SerializeField] private DefaultHUDSlotUI[] _defaultHUDSlotUI;
     [SerializeField] private EquipSlotUI _leftEquipSlotUI;
     [SerializeField] private ItemSplitUI _splitUI;
+    [SerializeField] private GameOverUI _gameOverUI;
     [SerializeField] private Transform _dragCanvasTransform;
 
     private ItemSlot _currentSlot;
@@ -328,6 +329,12 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     public void ShowShopUI(bool show)
     {
         _shopUI.SetActive(show);
+    }
+
+    public void ShowGameOverUI()
+    {
+        _gameOverUI.ShowGameOverUI();
+        Cursor.visible = true;
     }
 
     #region On Button Click

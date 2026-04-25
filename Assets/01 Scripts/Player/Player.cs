@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -7,6 +8,9 @@ public class Player : MonoBehaviour
     private StaminaPoint _sp;
     private Hunger _hunger;
     private Hydration _hydration;
+    private PlayerMove _playerMove;
+    private PlayerShooting _playerShooting;
+    private Animator _anim;
 
     private PlayerBaseData _playerBaseData;
     private PlayerMoveData _playerMoveData;
@@ -49,6 +53,9 @@ public class Player : MonoBehaviour
         _sp = GetComponent<StaminaPoint>();
         _hunger = GetComponent<Hunger>();
         _hydration = GetComponent<Hydration>();
+        _playerMove = GetComponent<PlayerMove>();
+        _playerShooting = GetComponent<PlayerShooting>();
+        _anim = GetComponent<Animator>();
 
         _state = PlayerState.Idle;
     }
@@ -73,7 +80,7 @@ public class Player : MonoBehaviour
 
         if(newState == PlayerState.Die)
         {
-            SceneLoader.Instance.LoadScene(SceneName.BunkerScene);
+            Die();
         }
     }
 
@@ -90,5 +97,28 @@ public class Player : MonoBehaviour
         _hydration.Heal(item.Hydration);
 
         return true;
+    }
+
+    private void Die()
+    {
+        _anim.SetTrigger("Die");
+
+        _playerMove.enabled = false;
+        _playerShooting.enabled = false;
+
+        StartCoroutine(GameOverRoutine());
+    }
+
+
+    private IEnumerator GameOverRoutine()
+    {
+        yield return new WaitForSeconds(2f);
+
+        DataManager.Instance.SaveDataByScene();
+
+        if (GameManager.Instance.CurrentSceneName == SceneName.FieldScene)
+        {
+            UIManager.Instance.ShowGameOverUI();
+        }
     }
 }

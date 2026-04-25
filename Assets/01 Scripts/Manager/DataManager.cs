@@ -120,13 +120,13 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
         }
     }
 
-    public void SaveAllData()
+    private void SaveAllData()
     {
         SavePlayerData();
         _saveAndLoadManager.SaveStorage();
     }
 
-    public void SavePlayerData()
+    private void SavePlayerData()
     {
         _saveAndLoadManager.SavePlayerStats();
         _saveAndLoadManager.SavePlayerInventory();

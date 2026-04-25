@@ -1440,6 +1440,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cc7bd5512d9f7046b54fdff3907a1b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneLoader
+  _loadingUI: {fileID: 1513770061}
   _loadDuration: 2
 --- !u!4 &814478434
 Transform:
@@ -1858,7 +1859,7 @@ GameObject:
   - component: {fileID: 1264295498}
   - component: {fileID: 1264295497}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Loading Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

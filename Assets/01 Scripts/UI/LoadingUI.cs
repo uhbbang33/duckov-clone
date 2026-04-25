@@ -1,51 +1,32 @@
-using System.Collections;
-using UnityEngine;
 
-public class LoadingUI : SingletonMonoBehaviour<LoadingUI>
+public class LoadingUI : FadeController
 {
-    [SerializeField] private float _fadeInDuration = 2.0f;
-    [SerializeField] private float _fadeOutDuration = 2.0f;
+    private static LoadingUI instance;
 
-    private CanvasGroup _canvasGroup;
+    public static LoadingUI Instance
+    {
+        get { return instance; }
+    }
 
     protected override void Awake()
     {
         base.Awake();
 
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+
         DontDestroyOnLoad(gameObject);
-
-        _canvasGroup = GetComponent<CanvasGroup>();
-        _canvasGroup.alpha = 0f;
     }
 
-    public IEnumerator FadeIn()
+    protected virtual void OnDestroy()
     {
-        _canvasGroup.blocksRaycasts = true;
-
-        float startAlpha = _canvasGroup.alpha;
-        float timer = 0f;
-        while(timer < _fadeInDuration)
-        {
-            timer += Time.unscaledDeltaTime; 
-            _canvasGroup.alpha = Mathf.Lerp(startAlpha, 1f, timer / _fadeInDuration);
-            yield return null;
-        }
-
-        _canvasGroup.alpha = 1f;
-    }
-
-    public IEnumerator FadeOut()
-    {
-        float startAlpha = _canvasGroup.alpha;
-        float timer = 0f;
-        while (timer < _fadeOutDuration)
-        {
-            timer += Time.unscaledDeltaTime;
-            _canvasGroup.alpha = Mathf.Lerp(startAlpha, 0f, timer / _fadeOutDuration);
-            yield return null;
-        }
-
-        _canvasGroup.alpha = 0f;
-        _canvasGroup.blocksRaycasts = false;
+        if (instance == this)
+            instance = null;
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : SingletonMonoBehaviour<SceneLoader>
 {
+    [SerializeField] private LoadingUI _loadingUI;
     [SerializeField] private float _loadDuration = 1.0f;
 
     private DataManager _dataManager;
@@ -35,7 +36,7 @@ public class SceneLoader : SingletonMonoBehaviour<SceneLoader>
     {
         _gameManager.DisableInputActions();
 
-        yield return LoadingUI.Instance.FadeIn();
+        yield return _loadingUI.FadeIn();
 
         bool isSceneReady = false;
         SceneInitializer.OnSceneReady += () => isSceneReady = true;
@@ -59,7 +60,7 @@ public class SceneLoader : SingletonMonoBehaviour<SceneLoader>
 
         _dataManager.SetDataForScene(sceneName);
 
-        StartCoroutine(LoadingUI.Instance.FadeOut());
+        StartCoroutine(_loadingUI.FadeOut());
 
         _gameManager.EnableInputActions();
         _coroutine = null;
