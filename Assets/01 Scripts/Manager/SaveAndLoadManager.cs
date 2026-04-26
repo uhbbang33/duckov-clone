@@ -10,19 +10,38 @@ public class SaveAndLoadManager : SingletonMonoBehaviour<SaveAndLoadManager>
     private readonly string _inventorySaveFileName = "PlayerInventorySave.json";
     private readonly string _storageSaveFileName = "StorageSave.json";
 
-    private Player _player;
-    private InventoryController _inventoryController;
+    private GameManager _gameManager;
     private Storage _storage;
+
+    private Player _player
+    {
+        get
+        {
+            return _gameManager.PlayerObject.GetComponent<Player>();
+        }
+    }
+
+    private InventoryController _inventoryController
+    {
+        get
+        {
+            return _gameManager.PlayerObject.GetComponent<InventoryController>();
+        }
+    }
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        DontDestroyOnLoad(gameObject);
+    }
 
     private void Start()
     {
-        GameObject playerObject = GameManager.Instance.PlayerObject;
+        _gameManager = GameManager.Instance;
 
-        if(BunkerManager.Instance != null)
+        if (BunkerManager.Instance != null)
             _storage = BunkerManager.Instance.storage;
-
-        _player = playerObject.GetComponent<Player>();
-        _inventoryController = playerObject.GetComponent<InventoryController>();
     }
 
     #region Save
@@ -114,6 +133,10 @@ public class SaveAndLoadManager : SingletonMonoBehaviour<SaveAndLoadManager>
         if (!File.Exists(path))
         {
             Debug.Log("Inventory 데이터 json 파일 없음 - 초기값 사용");
+
+            //Inventory Clear
+            _gameManager.Inventory.ClearInventory();
+
             return;
         }
 
@@ -139,14 +162,16 @@ public class SaveAndLoadManager : SingletonMonoBehaviour<SaveAndLoadManager>
     {
         string path = Path.Combine(_savePath, _storageSaveFileName);
 
+        _storage = BunkerManager.Instance?.storage;
+
         if (!File.Exists(path))
         {
             Debug.Log("Storage 데이터 json 파일 없음 - 초기값 사용");
             return;
         }
 
-        try
-        {
+        //try
+        //{
             string json = File.ReadAllText(path);
             StorageSaveData data = JsonUtility.FromJson<StorageSaveData>(json);
             if (data == null)
@@ -156,12 +181,53 @@ public class SaveAndLoadManager : SingletonMonoBehaviour<SaveAndLoadManager>
             }
 
             _storage.SaveData = data;
-        }
-        catch (Exception ex)
-        {
-            Debug.Log("Player Inventory 로드 실패" + ex.Message);
-        }
+        //}
+        //catch (Exception ex)
+        //{
+        //    Debug.Log("Storage 로드 실패" + ex.Message);
+        //}
     }
 
     #endregion Load
+
+
+    #region Delete
+
+    private void DeleteFile(string path)
+    {
+        if (File.Exists(path))
+        {
+            File.Delete(path);
+            Debug.Log(path + "파일 삭제 완료");
+        }
+        else
+        {
+            Debug.Log(path + " 파일이 존재하지 않음");
+        }
+    }
+
+    public void DeletePlayerStats()
+    {
+        string path = Path.Combine(_savePath, _statsSaveFileName);
+
+        DeleteFile(path);
+    }
+
+
+    public void DeletePlayerInventory()
+    {
+        string path = Path.Combine(_savePath, _inventorySaveFileName);
+
+        DeleteFile(path);
+    }
+
+
+    public void DeleteStorage()
+    {
+        string path = Path.Combine(_savePath, _storageSaveFileName);
+
+        DeleteFile(path);
+    }
+
+    #endregion Delete
 }

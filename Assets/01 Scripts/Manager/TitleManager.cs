@@ -1,7 +1,7 @@
 using System.IO;
 using UnityEngine;
 
-public class TitleManager : MonoBehaviour
+public class TitleManager : SingletonMonoBehaviour<TitleManager>
 {
     [SerializeField] private GameObject _newGamePopup;
 
@@ -56,17 +56,11 @@ public class TitleManager : MonoBehaviour
 
     public void OnClickConfirmNewGame()
     {
-        if (Directory.Exists(_saveFilePath))
-        {
-            string[] files = Directory.GetFiles(_saveFilePath);
+        SaveAndLoadManager saveAndLoadManager = SaveAndLoadManager.Instance;
 
-            foreach (string file in files)
-            {
-                File.Delete(file);
-            }
-
-            Debug.Log("모든 파일 삭제 완료");
-        }
+        saveAndLoadManager.DeletePlayerStats();
+        saveAndLoadManager.DeletePlayerInventory();
+        saveAndLoadManager.DeleteStorage();
 
         LoadBunkerScene();
     }

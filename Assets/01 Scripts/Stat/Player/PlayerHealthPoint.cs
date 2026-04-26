@@ -38,7 +38,7 @@ public class PlayerHealthPoint : HealthPoint
     {
         _playerBaseData = _player.BaseData;
 
-        _maxHP = 10000;//_playerBaseData.MaxHP;
+        _maxHP = 1;//_playerBaseData.MaxHP;
         _currentHP = _maxHP;
         
         ChangeHPSliderValue();

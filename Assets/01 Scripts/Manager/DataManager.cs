@@ -112,27 +112,18 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
 
         if (current == SceneName.BunkerScene)
         {
-            SaveAllData();
+            _saveAndLoadManager.SavePlayerStats();
+            _saveAndLoadManager.SavePlayerInventory();
+            _saveAndLoadManager.SaveStorage();
         }
         else if (current == SceneName.FieldScene)
         {
-            SavePlayerData();
+            _saveAndLoadManager.SavePlayerStats();
+            _saveAndLoadManager.SavePlayerInventory();
         }
     }
 
-    private void SaveAllData()
-    {
-        SavePlayerData();
-        _saveAndLoadManager.SaveStorage();
-    }
-
-    private void SavePlayerData()
-    {
-        _saveAndLoadManager.SavePlayerStats();
-        _saveAndLoadManager.SavePlayerInventory();
-    }
-
-    public void SetDataForScene(string sceneName)
+    public void SetDataByScene(string sceneName)
     {
         if (_saveAndLoadManager == null)
             _saveAndLoadManager = SaveAndLoadManager.Instance;

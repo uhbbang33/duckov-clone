@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     private PlayerShooting _playerShooting;
     private Animator _anim;
 
+    private DataManager _dataManager;
     private PlayerBaseData _playerBaseData;
     private PlayerMoveData _playerMoveData;
     private PlayerSoundData _playerSoundData;
@@ -62,11 +63,11 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        DataManager dataManager = DataManager.Instance;
+        _dataManager = DataManager.Instance;
 
-        _playerBaseData = dataManager.PlayerBaseList.PlayerBaseStatsDatas[0];
-        _playerMoveData = dataManager.PlayerMoveList.PlayerMoveStatsDatas[0];
-        _playerSoundData = dataManager.PlayerSoundList.PlayerSoundDatas[0];
+        _playerBaseData = _dataManager.PlayerBaseList.PlayerBaseStatsDatas[0];
+        _playerMoveData = _dataManager.PlayerMoveList.PlayerMoveStatsDatas[0];
+        _playerSoundData = _dataManager.PlayerSoundList.PlayerSoundDatas[0];
 
         OnPlayerDataInitialized?.Invoke();
     }
@@ -114,7 +115,9 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
 
-        DataManager.Instance.SaveDataByScene();
+        SaveAndLoadManager saveAndLoadManager = SaveAndLoadManager.Instance;
+        saveAndLoadManager.DeletePlayerStats();
+        saveAndLoadManager.DeletePlayerInventory();
 
         if (GameManager.Instance.CurrentSceneName == SceneName.FieldScene)
         {

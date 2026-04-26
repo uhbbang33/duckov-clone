@@ -347,6 +347,14 @@ public class Inventory : ISortableContainer, ISaveableContainer
         OnMoneyChange?.Invoke(_currentMoney);
     }
 
+    public void ClearInventory()
+    {
+        foreach(ItemSlot slot in _inventorySlots)
+            slot.SubtractItem(slot.Quantity);
+
+        _currentMoney = 0;
+    }
+
     // Quick slot
     public void UseInventoryItem(int itemIndex)
     {

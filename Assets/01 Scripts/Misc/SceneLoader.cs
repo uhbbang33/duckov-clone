@@ -58,7 +58,7 @@ public class SceneLoader : SingletonMonoBehaviour<SceneLoader>
 
         yield return new WaitUntil(() => isSceneReady);
 
-        _dataManager.SetDataForScene(sceneName);
+        _dataManager.SetDataByScene(sceneName);
 
         StartCoroutine(_loadingUI.FadeOut());
 
