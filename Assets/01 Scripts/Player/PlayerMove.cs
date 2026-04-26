@@ -143,36 +143,45 @@ public class PlayerMove : MonoBehaviour
 
     private void LookAtMouse(Vector2 mousePos)
     {
-        Ray ray = Camera.main.ScreenPointToRay(mousePos);
+        Vector3 dir = Vector3.zero;
 
-        if (Physics.Raycast(ray, out RaycastHit hit, 100f, _groundLayer))
+        Vector3 aimWorldPos = _playerShooting.GetAimWorldPosition();
+        if (aimWorldPos != Vector3.zero)
         {
-            Vector3 dir = hit.point - _lookBaseTransform.position;
-
-            dir.y = 0;
-
-            if (dir.sqrMagnitude <= _rotationIgnoreRadius * _rotationIgnoreRadius
-                || _player.State == PlayerState.Rolling)
-                return;
-
-            Vector3 lookDir = dir.normalized;
-            _lookDirection = lookDir;
-
-            Quaternion targetRotation;
-            if (_player.State == PlayerState.Running)
+            dir = aimWorldPos - _lookBaseTransform.position;
+        }
+        else
+        {
+            Ray ray = Camera.main.ScreenPointToRay(mousePos);
+            if (Physics.Raycast(ray, out RaycastHit hit, 100f, _groundLayer))
             {
-                Vector3 runDir = SetDirection(_moveInput);
-                if (runDir.sqrMagnitude > 0.01f)
-                {
-                    targetRotation = Quaternion.LookRotation(runDir);
-                    transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, _runTurnSpeed * Time.deltaTime);
-                }
+                dir = hit.point - _lookBaseTransform.position;
             }
-            else
+        }
+
+        dir.y = 0;
+
+        if (dir.sqrMagnitude <= _rotationIgnoreRadius * _rotationIgnoreRadius
+            || _player.State == PlayerState.Rolling)
+            return;
+
+        Vector3 lookDir = dir.normalized;
+        _lookDirection = lookDir;
+
+        Quaternion targetRotation;
+        if (_player.State == PlayerState.Running)
+        {
+            Vector3 runDir = SetDirection(_moveInput);
+            if (runDir.sqrMagnitude > 0.01f)
             {
-                targetRotation = Quaternion.LookRotation(lookDir);
-                transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, _mouseTurnSpeed * Time.deltaTime);
+                targetRotation = Quaternion.LookRotation(runDir);
+                transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, _runTurnSpeed * Time.deltaTime);
             }
+        }
+        else
+        {
+            targetRotation = Quaternion.LookRotation(lookDir);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, _mouseTurnSpeed * Time.deltaTime);
         }
     }
 

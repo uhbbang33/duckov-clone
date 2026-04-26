@@ -277,8 +277,11 @@ public class PlayerShooting : MonoBehaviour
     }
 
     // 마우스 에임이 가리키는 월드 좌표 return
-    private Vector3 GetAimWorldPosition()
+    public Vector3 GetAimWorldPosition()
     {
+        if (_currentGunItem == null)
+            return Vector3.zero;
+
         Vector2 mousePos = Mouse.current.position.ReadValue();
         Ray ray = Camera.main.ScreenPointToRay(mousePos);
 
@@ -290,9 +293,8 @@ public class PlayerShooting : MonoBehaviour
         }
 
         Plane groundPlane = new Plane(Vector3.up, _currentGun.MuzzleTransform.position);
-        float distance;
 
-        if (groundPlane.Raycast(ray, out distance))
+        if (groundPlane.Raycast(ray, out float distance))
         {
             Vector3 worldPos = ray.GetPoint(distance);
 
