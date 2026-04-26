@@ -202,7 +202,7 @@ public class PlayerMove : MonoBehaviour
     public void StopMove()
     {
         StopRun();
-        _anim.SetBool("IsWalk", false);
+        _anim.SetBool(PlayerAnimParm.Walk, false);
         _moveInput = Vector2.zero;
 
         OnWalkCancel?.Invoke();
@@ -246,7 +246,7 @@ public class PlayerMove : MonoBehaviour
     private void OnMovePerformed(InputAction.CallbackContext context)
     {
         _moveInput = context.ReadValue<Vector2>().normalized;
-        _anim.SetBool("IsWalk", true);
+        _anim.SetBool(PlayerAnimParm.Walk, true);
 
         if (_isRunButtonPressed)
         {
@@ -262,7 +262,7 @@ public class PlayerMove : MonoBehaviour
     private void OnMoveCanceled(InputAction.CallbackContext context)
     {
         _moveInput = Vector2.zero;
-        _anim.SetBool("IsWalk", false);
+        _anim.SetBool(PlayerAnimParm.Walk, false);
 
         _sp.IsReducing = false;
 
@@ -314,7 +314,7 @@ public class PlayerMove : MonoBehaviour
 
         StartCoroutine(RollRoutine());
 
-        _anim.SetTrigger("Roll");
+        _anim.SetTrigger(PlayerAnimParm.Roll);
     }
 
     private void OnLook(InputAction.CallbackContext context)
@@ -336,7 +336,7 @@ public class PlayerMove : MonoBehaviour
             _sp.ReduceSPPerSecond(_playerMoveData.RunSPCost);
 
         _player.ChangePlayerState(PlayerState.Running);
-        _anim.SetBool("IsRun", true);
+        _anim.SetBool(PlayerAnimParm.Run, true);
         _playerShooting.IsFirePressed = false;
         OnRun?.Invoke();
     }
@@ -351,7 +351,7 @@ public class PlayerMove : MonoBehaviour
         else
             _player.ChangePlayerState(PlayerState.Idle);
 
-        _anim.SetBool("IsRun", false);
+        _anim.SetBool(PlayerAnimParm.Run, false);
         _sp.IsReducing = false;
         OnRunCancel?.Invoke();
     }

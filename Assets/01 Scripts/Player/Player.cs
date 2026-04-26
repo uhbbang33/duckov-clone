@@ -102,7 +102,7 @@ public class Player : MonoBehaviour
 
     private void Die()
     {
-        _anim.SetTrigger("Die");
+        _anim.SetTrigger(PlayerAnimParm.Die);
 
         _playerMove.enabled = false;
         _playerShooting.enabled = false;

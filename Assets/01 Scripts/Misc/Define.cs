@@ -85,6 +85,14 @@ public struct PoolId
     public const uint BloodSmoke = 7;
 }
 
+public struct PlayerAnimParm
+{
+    public const string Walk = "IsWalk";
+    public const string Run = "IsRun";
+    public const string Roll = "Roll";
+    public const string Die = "Die";
+}
+
 public struct EnemyAnimParm
 {
     public const string Walk = "IsWalk";
