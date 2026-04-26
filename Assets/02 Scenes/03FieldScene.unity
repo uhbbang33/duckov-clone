@@ -11949,8 +11949,8 @@ MonoBehaviour:
   _edgeResolveIterations: 5
   _edgeDistanceThreshold: 0.3
   _sectorMeshFilter: {fileID: 1944805162}
-  _sectorViewRadius: 20
-  _sectorViewAngle: 70
+  _sectorViewRadius: 50
+  _sectorViewAngle: 75
   _circleMeshFilter: {fileID: 1810655394}
   _circleRayCount: 60
   _circleViewRadius: 4
@@ -41579,7 +41579,8 @@ MonoBehaviour:
     m_Bits: 128
   _detectPlayerDuration: 3
   _handTransform: {fileID: 6387639142539014982}
-  _enemyAudioSource: {fileID: 6701365833315699835}
+  _gunAudioSource: {fileID: 0}
+  _detectAudioSource: {fileID: 0}
   _targetingIcon: {fileID: 4400918393405070555}
   _warningIcon: {fileID: 5701181408540849302}
   _destinationTransformList:

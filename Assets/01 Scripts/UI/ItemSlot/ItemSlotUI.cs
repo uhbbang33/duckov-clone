@@ -84,7 +84,7 @@ public class ItemSlotUI : MonoBehaviour,
         _iconImage.raycastTarget = false;
     }
 
-    public void OnDrag(PointerEventData eventData)
+    public virtual void OnDrag(PointerEventData eventData)
     {
         if (_itemSlot.CurrentItem == null)
             return;

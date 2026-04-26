@@ -39,6 +39,16 @@ public class ShopSlotUI : ItemSlotUI
         return;
     }
 
+    public override void OnBeginDrag(PointerEventData eventData)
+    {
+        return;
+    }
+
+    public override void OnDrag(PointerEventData eventData)
+    {
+        return;
+    }
+
     public override void OnDrop(PointerEventData eventData)
     {
         return;
