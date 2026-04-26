@@ -110,3 +110,17 @@ public struct Layer
 {
     public const string Player = "Player";
 }
+
+public struct SFXName
+{
+    public const string GameOver = "GameOver";
+    public const string MenuHover = "MenuHover";
+    public const string Hit = "Hit";
+    public const string OpenInventory = "OpenInventory";
+    public const string PickItem = "PickItem";
+    public const string SellBuy = "SellBuy";
+    public const string FootStep = "FootStep";
+    public const string Roll = "Roll";
+    public const string Quack = "Quack";
+
+}

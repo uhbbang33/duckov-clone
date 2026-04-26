@@ -11,7 +11,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] private LayerMask _groundLayer;
     [SerializeField] private float _detectPlayerDuration;
     [SerializeField] private Transform _handTransform;
-    [SerializeField] private AudioSource _enemyAudioSource;
+    [SerializeField] private AudioSource _gunAudioSource;
+    [SerializeField] private AudioSource _detectAudioSource;
     [SerializeField] private GameObject _targetingIcon;
     [SerializeField] private GameObject _warningIcon;
     [SerializeField] private List<Transform> _destinationTransformList;
@@ -271,12 +272,12 @@ public class Enemy : MonoBehaviour
 
     public void PlayFireSound()
     {
-        _soundManager.PlayGunSFX(_gunData.Id, _enemyAudioSource);
+        _soundManager.PlayGunSFX(_gunData.Id, _gunAudioSource);
     }
 
     public void PlayReloadSound(bool isStart)
     {
-        _soundManager.PlayReloadSFX(isStart, _enemyAudioSource);
+        _soundManager.PlayReloadSFX(isStart, _gunAudioSource);
     }
 
     #endregion Sound

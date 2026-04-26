@@ -1,12 +1,14 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class TitleButtonHoverArrow : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class TitleButtonHoverArrow : ButtonHoverSound, IPointerExitHandler
 {
     [SerializeField] private GameObject _arrow;
 
-    public void OnPointerEnter(PointerEventData eventData)
+    public override void OnPointerEnter(PointerEventData eventData)
     {
+        base.OnPointerEnter(eventData);
+
         _arrow.SetActive(true);
     }
 

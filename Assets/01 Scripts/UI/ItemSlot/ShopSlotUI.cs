@@ -48,6 +48,9 @@ public class ShopSlotUI : ItemSlotUI
     {
         base.OnDoubleClick();
 
-        _inventory.TryBuyItem(_itemSlot.CurrentItem, _itemSlot.Quantity, _sellPrice);
+        if(_inventory.TryBuyItem(_itemSlot.CurrentItem, _itemSlot.Quantity, _sellPrice))
+        {
+            PlaySellBuySound();
+        }
     }
 }

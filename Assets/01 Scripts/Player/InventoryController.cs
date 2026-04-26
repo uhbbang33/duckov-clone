@@ -6,6 +6,7 @@ public class InventoryController : MonoBehaviour
 {
     private Inventory _inventory;
     private QuickSlotManager _quickSlotManager;
+    private SoundManager _soundManager;
 
     private InputActions _inputActions;
     private PlayerMove _playerMove;
@@ -73,6 +74,7 @@ public class InventoryController : MonoBehaviour
     private void Start()
     {
         _inventory = GameManager.Instance.Inventory;
+        _soundManager = SoundManager.Instance;
 
         _inputActions = GameManager.Instance.Actions;
         _inputActions.Player.Inventory.performed += OnInventoryInput;
@@ -122,7 +124,10 @@ public class InventoryController : MonoBehaviour
         if (_inventoryToggle)
             CloseInventory();
         else
+        {
+            _soundManager.PlaySFXOneShot(SFXName.OpenInventory, 1f);
             OpenInventory();
+        }
     }
 
     public void OpenInventory()

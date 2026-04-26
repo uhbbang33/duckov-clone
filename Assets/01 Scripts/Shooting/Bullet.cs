@@ -55,6 +55,13 @@ public class Bullet : MonoBehaviour
             hitEffectObject = _poolManager.GetObject(PoolId.BloodSmoke, obj.transform, false);
 
             obj.GetComponent<HealthPoint>().TakeDamage(_damage);
+
+            AudioSource source = obj.GetComponent<AudioSource>();
+
+            if (source != null)
+                SoundManager.Instance.PlaySFXOneShot(SFXName.Hit, source);
+            else
+                SoundManager.Instance.PlaySFXOneShot(SFXName.Hit);
         }
         else
         {
@@ -65,6 +72,7 @@ public class Bullet : MonoBehaviour
 
         hitEffectObject.transform.position = contactPoint.point;
         hitEffectObject.transform.rotation = Quaternion.LookRotation(contactPoint.normal);
+
 
         ReturnToPool();
     }

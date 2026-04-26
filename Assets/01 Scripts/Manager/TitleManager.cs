@@ -4,6 +4,7 @@ using UnityEngine;
 public class TitleManager : SingletonMonoBehaviour<TitleManager>
 {
     [SerializeField] private GameObject _newGamePopup;
+    [SerializeField] private AudioSource _audioSource;
 
     private readonly string _saveFilePath = Path.Combine(Application.dataPath, "Resources", "JsonData", "Save");
 
@@ -11,6 +12,8 @@ public class TitleManager : SingletonMonoBehaviour<TitleManager>
     private void Start()
     {
         Cursor.visible = true;
+
+        SoundManager.Instance.PlayTitleBGM(_audioSource);
     }
 
     private void LoadBunkerScene()

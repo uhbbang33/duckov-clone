@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerMove : MonoBehaviour
 {
     private GameManager _gameManager;
+    private SoundManager _soundManager;
     private Player _player;
     private InputActions _inputActions;
     private Rigidbody _rb;
@@ -32,6 +33,8 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float _runTurnSpeed;
     [SerializeField] private Transform _originLookBaseTransform;
     [SerializeField] private LayerMask _groundLayer;
+    [SerializeField] private AudioSource _footStepSource;
+    [SerializeField] private AudioSource _rollSource;
 
     private WaitForSeconds _waitForRoll;
 
@@ -83,6 +86,7 @@ public class PlayerMove : MonoBehaviour
     private void Start()
     {
         _gameManager = GameManager.Instance;
+        _soundManager = SoundManager.Instance;
         _inputActions = _gameManager.Actions;
 
         SubscribeInputActions();
@@ -241,12 +245,15 @@ public class PlayerMove : MonoBehaviour
         _inputActions.Player.Roll.performed -= OnRollPerformed;
 
         _inputActions.Player.Look.performed -= OnLook;
+
+        _footStepSource.Stop();
     }
 
     private void OnMovePerformed(InputAction.CallbackContext context)
     {
         _moveInput = context.ReadValue<Vector2>().normalized;
         _anim.SetBool(PlayerAnimParm.Walk, true);
+        _soundManager.PlayFootStepSFX(false, _footStepSource);
 
         if (_isRunButtonPressed)
         {
@@ -269,6 +276,7 @@ public class PlayerMove : MonoBehaviour
         if (_player.State != PlayerState.Rolling)
             _player.ChangePlayerState(PlayerState.Idle);
 
+        _footStepSource.Stop();
         OnWalkCancel?.Invoke();
     }
 
@@ -315,6 +323,9 @@ public class PlayerMove : MonoBehaviour
         StartCoroutine(RollRoutine());
 
         _anim.SetTrigger(PlayerAnimParm.Roll);
+
+        _footStepSource.Stop();
+        _soundManager.PlaySFXOneShot(SFXName.Roll, _rollSource);
     }
 
     private void OnLook(InputAction.CallbackContext context)
@@ -338,6 +349,8 @@ public class PlayerMove : MonoBehaviour
         _player.ChangePlayerState(PlayerState.Running);
         _anim.SetBool(PlayerAnimParm.Run, true);
         _playerShooting.IsFirePressed = false;
+        _soundManager.PlayFootStepSFX(true, _footStepSource);
+
         OnRun?.Invoke();
     }
 

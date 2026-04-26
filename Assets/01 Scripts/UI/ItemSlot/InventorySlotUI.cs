@@ -24,7 +24,6 @@ public class InventorySlotUI : ItemSlotUI
 
     public override void OnDrop(PointerEventData eventData)
     {
-
         if (eventData.pointerDrag == null
             || _itemSlot == null)
             return;
@@ -56,6 +55,8 @@ public class InventorySlotUI : ItemSlotUI
             SwapQuickSlot(startUI, _linkedQuickSlot);
             SwapItem(startUI);
         }
+
+        PlayPickItemSound();
 
         QuickSlot startQuickSlot = eventData.pointerDrag?.GetComponent<QuickSlot>();
 
@@ -151,6 +152,8 @@ public class InventorySlotUI : ItemSlotUI
             if (remainAmount == 0)
             {
                 _linkedQuickSlot?.UnlinkInventorySlotUI(targetSlot.CurrentItem.ID);
+
+                PlayPickItemSound();
                 return;
             }
         }
@@ -165,6 +168,9 @@ public class InventorySlotUI : ItemSlotUI
             targetSlot.AddItem(_itemSlot.CurrentItem, ref remainAmount);
             _itemSlot.SubtractItem(_itemSlot.Quantity - remainAmount);
             _linkedQuickSlot?.UnlinkInventorySlotUI(targetSlot.CurrentItem.ID);
+
+            PlayPickItemSound();
+
             return;
         }
     }
@@ -174,6 +180,8 @@ public class InventorySlotUI : ItemSlotUI
         _inventory.ChangeMoney((int)_itemSlot.CurrentItem.Value, _itemSlot.Quantity, true);
         _linkedQuickSlot?.UnlinkInventorySlotUI(_itemSlot.CurrentItem.ID);
         _itemSlot.SubtractItem(_itemSlot.Quantity);
+
+        PlaySellBuySound();
     }
 
     #endregion Double Click

@@ -9,6 +9,8 @@ public class BunkerManager : SingletonMonoBehaviour<BunkerManager>
     [SerializeField] private GameObject _dropItemPrefab;
     [SerializeField] private GameObject _playerObject;
 
+    [SerializeField] private AudioSource _audioSource;
+
     private GameManager _gameManager;
 
     private bool _isStorageOpened;
@@ -36,6 +38,11 @@ public class BunkerManager : SingletonMonoBehaviour<BunkerManager>
 
         _gameManager = GameManager.Instance;
         _gameManager.PlayerObject = _playerObject;
+    }
+
+    private void Start()
+    {
+        SoundManager.Instance.PlayBunkerBGM(_audioSource);
     }
 
     // TODO : PoolManager?

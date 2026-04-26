@@ -21,6 +21,7 @@ public class ItemSlotUI : MonoBehaviour,
     protected UIManager _uiManager;
     protected FieldManager _fieldManager;
     protected BunkerManager _bunkerManager;
+    protected SoundManager _soundManager;
     protected ItemSlot _itemSlot;
     protected Inventory _inventory;
     private Transform _originParent;
@@ -67,6 +68,7 @@ public class ItemSlotUI : MonoBehaviour,
         _uiManager = UIManager.Instance;
         _fieldManager = FieldManager.Instance;
         _bunkerManager = BunkerManager.Instance;
+        _soundManager = SoundManager.Instance;
     }
 
     #region Drag And Drop
@@ -125,6 +127,8 @@ public class ItemSlotUI : MonoBehaviour,
 
         if (_itemSlot.CurrentItem != null && _infoUI != null)
             _infoUI.ShowUI();
+
+        PlayPickItemSound();
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -214,7 +218,10 @@ public class ItemSlotUI : MonoBehaviour,
         int remainQuantity = _itemSlot.Quantity;
 
         if (_inventory.TryAddItem(_itemSlot.CurrentItem, ref remainQuantity))
+        {
             _itemSlot.SubtractItem(_itemSlot.Quantity - remainQuantity);
+            PlayPickItemSound();
+        }
     }
 
     protected List<ItemSlot> GetContainerSlots(SlotType openContainerType)
@@ -341,5 +348,15 @@ public class ItemSlotUI : MonoBehaviour,
     public void ChangeImageAlpha(bool showImage)
     {
         _uiManager.ChangeImageAlpha(_iconImage, showImage);
+    }
+
+    protected void PlayPickItemSound()
+    {
+        _soundManager.PlaySFXOneShot(SFXName.PickItem);
+    }
+
+    protected void PlaySellBuySound()
+    {
+        _soundManager.PlaySFXOneShot(SFXName.SellBuy);
     }
 }
