@@ -1082,6 +1082,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gun
   _muzzleTransform: {fileID: 2574878111462843552}
+  _renderersParent: {fileID: 1741410647506203429}
 --- !u!1 &6719320869522767839
 GameObject:
   m_ObjectHideFlags: 0

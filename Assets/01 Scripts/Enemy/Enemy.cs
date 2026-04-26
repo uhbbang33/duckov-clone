@@ -16,6 +16,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] private GameObject _warningIcon;
     [SerializeField] private List<Transform> _destinationTransformList;
     [SerializeField] private float _eyeOffset;
+    [SerializeField] private Renderer _renderer;
+    [SerializeField] private GameObject _canvas;
     
     private Animator _anim;
     private HealthPoint _hp;
@@ -27,6 +29,7 @@ public class Enemy : MonoBehaviour
     private Transform _playerTransform;
     private Transform _muzzleTransform;
     private GameObject _gunObject;
+    private Gun _gun;
     private List<Vector3> _patrolDestinationList;
 
     private EnemyData _enemyData;
@@ -94,7 +97,9 @@ public class Enemy : MonoBehaviour
         _ammoCnt = _gunData.MagazineCapacity;
         _gunObject = _poolManager.GetObject(_gunData.Id, _handTransform, true);
         _muzzleTransform = _gunObject.GetComponent<Gun>().MuzzleTransform;
-        
+        _gun = _gunObject.GetComponent<Gun>();
+        _gun.SetRendererEnabled(false);
+
         //Temp
         _lootBoxOffset = new Vector3(0, 0.5f, 0f);
 
@@ -226,7 +231,15 @@ public class Enemy : MonoBehaviour
     private void UpdateLastSeenPlayerPosition()
     {
         _lastSeenPlayerPosition = _playerTransform.position;
+    }
 
+    public void SetVisible(bool isShow)
+    {
+        _renderer.enabled = isShow;
+
+        _canvas.SetActive(isShow);
+
+        _gun.SetRendererEnabled(isShow);
     }
 
     #endregion Detect Player

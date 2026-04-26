@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2737488045125981729}
   - component: {fileID: 3860529937506666944}
   - component: {fileID: 8717313420300120766}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: RoofHide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -67,4 +67,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoofHide
   _hideTargetRenderer: []
-  _fadeDuration: 0.3

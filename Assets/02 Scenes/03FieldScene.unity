@@ -11593,6 +11593,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 729717132}
+  - component: {fileID: 729717133}
   m_Layer: 8
   m_Name: FOV
   m_TagString: Untagged
@@ -11609,7 +11610,7 @@ Transform:
   m_GameObject: {fileID: 729717131}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.01, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -11617,6 +11618,33 @@ Transform:
   - {fileID: 1810655391}
   m_Father: {fileID: 5522063729559741274}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &729717133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 729717131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 043592f0a4b0f884187badec7e1273c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FieldOfView
+  _obstacleMask:
+    serializedVersion: 2
+    m_Bits: 65
+  _enemyMask:
+    serializedVersion: 2
+    m_Bits: 512
+  _meshResolution: 3
+  _edgeResolveIterations: 5
+  _edgeDistanceThreshold: 0.3
+  _sectorMeshFilter: {fileID: 1944805162}
+  _sectorViewRadius: 20
+  _sectorViewAngle: 70
+  _circleMeshFilter: {fileID: 1810655394}
+  _circleRayCount: 60
+  _circleViewRadius: 4
 --- !u!1 &734424085
 GameObject:
   m_ObjectHideFlags: 0
@@ -13038,6 +13066,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1754106067936219889, guid: ba02c52f26981b94fa1746b716da8999, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3807672029399567129, guid: ba02c52f26981b94fa1746b716da8999, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -13089,6 +13121,10 @@ PrefabInstance:
     - target: {fileID: 7816902416033577882, guid: ba02c52f26981b94fa1746b716da8999, type: 3}
       propertyPath: m_Name
       value: Enemy (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7816902416033577882, guid: ba02c52f26981b94fa1746b716da8999, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8926998495863260726, guid: ba02c52f26981b94fa1746b716da8999, type: 3}
       propertyPath: _groundLayer.m_Bits
@@ -14537,37 +14573,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3330565119200557997, guid: 632902114bbe5d248aef16d566bc7877, type: 3}
   m_PrefabInstance: {fileID: 914371216}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &917279763
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 917279764}
-  m_Layer: 0
-  m_Name: Temp
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &917279764
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 917279763}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &924993839
 GameObject:
   m_ObjectHideFlags: 0
@@ -29351,7 +29356,6 @@ GameObject:
   - component: {fileID: 1810655391}
   - component: {fileID: 1810655394}
   - component: {fileID: 1810655393}
-  - component: {fileID: 1810655395}
   m_Layer: 0
   m_Name: Circle FOV
   m_TagString: Untagged
@@ -29431,26 +29435,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1810655390}
   m_Mesh: {fileID: 0}
---- !u!114 &1810655395
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1810655390}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72bc6d7cca2574840b2543e0662dccb9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CircleFOV
-  _obstacleMask:
-    serializedVersion: 2
-    m_Bits: 1
-  _meshResolution: 3
-  _edgeResolveIterations: 5
-  _edgeDistanceThreshold: 0.3
-  _rayCount: 360
-  _viewRadius: 4
 --- !u!1001 &1812746410
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30973,7 +30957,6 @@ GameObject:
   - component: {fileID: 1944805158}
   - component: {fileID: 1944805162}
   - component: {fileID: 1944805161}
-  - component: {fileID: 1944805163}
   m_Layer: 0
   m_Name: Sector FOV
   m_TagString: Untagged
@@ -31053,26 +31036,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1944805157}
   m_Mesh: {fileID: 0}
---- !u!114 &1944805163
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1944805157}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e117333c84877a4fa263632408d25e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SectorFOV
-  _obstacleMask:
-    serializedVersion: 2
-    m_Bits: 1
-  _meshResolution: 3
-  _edgeResolveIterations: 5
-  _edgeDistanceThreshold: 0.3
-  _viewRadius: 40
-  _viewAngle: 60
 --- !u!1 &1947444471 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5013057112956887040, guid: 228da5877cab00948b0b3ea682b75901, type: 3}
@@ -32606,7 +32569,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2052041456}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
@@ -40227,6 +40190,8 @@ MonoBehaviour:
   - {fileID: 976417345}
   - {fileID: 283790532}
   _eyeOffset: 0.7
+  _renderer: {fileID: 0}
+  _canvas: {fileID: 0}
 --- !u!4 &8960289677795010568
 Transform:
   m_ObjectHideFlags: 0
@@ -40473,7 +40438,6 @@ SceneRoots:
   - {fileID: 780812591}
   - {fileID: 5522063729559741274}
   - {fileID: 5243648590042280244}
-  - {fileID: 917279764}
   - {fileID: 1124153420}
   - {fileID: 21130614}
   - {fileID: 979703211}

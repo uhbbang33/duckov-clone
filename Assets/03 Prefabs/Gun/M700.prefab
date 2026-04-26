@@ -78,6 +78,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Gun
   _muzzleTransform: {fileID: 6434682619783362379}
+  _renderersParent: {fileID: 5768015397990187030}
 --- !u!1001 &1687592420763758448
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -179,6 +180,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8d51fc40962fae449965c7966e9c0109, type: 3}
+--- !u!1 &5768015397990187030 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5145242917378699110, guid: 8d51fc40962fae449965c7966e9c0109, type: 3}
+  m_PrefabInstance: {fileID: 1687592420763758448}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6577449931424930476 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5488836265841522140, guid: 8d51fc40962fae449965c7966e9c0109, type: 3}

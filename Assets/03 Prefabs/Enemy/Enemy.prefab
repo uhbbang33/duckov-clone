@@ -1607,7 +1607,7 @@ SkinnedMeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3140805393099337528}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1913,7 +1913,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2916928877007448383
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4208,7 +4208,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 6.98, y: 0, z: -2.15}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5575233629593570073}
@@ -4408,13 +4408,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
   _playerLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   _obstacleLayer:
     serializedVersion: 2
-    m_Bits: 704
+    m_Bits: 705
   _groundLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   _detectPlayerDuration: 3
   _handTransform: {fileID: 6387639141002872610}
   _enemyAudioSource: {fileID: 6701365832029075487}
@@ -4422,6 +4422,8 @@ MonoBehaviour:
   _warningIcon: {fileID: 5701181407407358194}
   _destinationTransformList: []
   _eyeOffset: 0.7
+  _renderer: {fileID: 1754106067936219889}
+  _canvas: {fileID: 3488459840634442246}
 --- !u!1 &8024061000680402165
 GameObject:
   m_ObjectHideFlags: 0
@@ -5038,11 +5040,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 49628042541081655, guid: eff8a46bc10e77b4c949ecc723fa5650, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 49628042541081655, guid: eff8a46bc10e77b4c949ecc723fa5650, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2996588608622453453, guid: eff8a46bc10e77b4c949ecc723fa5650, type: 3}
       propertyPath: m_Pivot.x
