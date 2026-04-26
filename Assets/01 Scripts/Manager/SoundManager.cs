@@ -126,12 +126,17 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 
     public void PlayFootStepSFX(bool isRun, AudioSource source)
     {
+        if (source.isPlaying)
+            return;
+
+        Debug.Log("play");
+
         source.clip = _clipDict[SFXName.FootStep];
         source.loop = true;
 
         if (isRun)
         {
-            SetSFXSpeed(source, 1.5f);
+            SetSFXSpeed(source, 1.6f);
         }
         else
         {

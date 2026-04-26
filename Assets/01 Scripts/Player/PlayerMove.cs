@@ -253,7 +253,9 @@ public class PlayerMove : MonoBehaviour
     {
         _moveInput = context.ReadValue<Vector2>().normalized;
         _anim.SetBool(PlayerAnimParm.Walk, true);
-        _soundManager.PlayFootStepSFX(false, _footStepSource);
+
+        if (!_footStepSource.isPlaying)
+            _soundManager.PlayFootStepSFX(false, _footStepSource);
 
         if (_isRunButtonPressed)
         {
@@ -283,12 +285,18 @@ public class PlayerMove : MonoBehaviour
     private void OnRunPerformed(InputAction.CallbackContext context)
     {
         _isRunButtonPressed = true;
+
+        _footStepSource.Stop();
+        _soundManager.PlayFootStepSFX(true, _footStepSource);
+
         StartRun();
     }
 
     private void OnRunCanceled(InputAction.CallbackContext context)
     {
         _isRunButtonPressed = false;
+
+        _footStepSource.Stop();
         StopRun();
     }
 
@@ -349,7 +357,6 @@ public class PlayerMove : MonoBehaviour
         _player.ChangePlayerState(PlayerState.Running);
         _anim.SetBool(PlayerAnimParm.Run, true);
         _playerShooting.IsFirePressed = false;
-        _soundManager.PlayFootStepSFX(true, _footStepSource);
 
         OnRun?.Invoke();
     }
