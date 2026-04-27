@@ -225,6 +225,8 @@ public class Enemy : MonoBehaviour
     {
         if (_hasSeenPlayer) return;
 
+        _soundManager.PlaySFXOneShot(SFXName.Quack, _detectAudioSource);
+
         StartCoroutine(ShowWarningIconCoroutine());
         _hasSeenPlayer = true;
     }
@@ -313,14 +315,17 @@ public class Enemy : MonoBehaviour
 
     public void ShowTargetingIcon(bool show)
     {
-        _targetingIcon.SetActive(show);
-
-        if (_warningIcon.activeSelf && show)
-            ShowWarningIcon(false);
+        if (show && _warningIcon.activeSelf == false)
+            _targetingIcon.SetActive(true);
+        else
+            _targetingIcon.SetActive(false);
     }
 
     private void ShowWarningIcon(bool show)
     {
+        if (show && _targetingIcon.activeSelf)
+            ShowTargetingIcon(false);
+
         _warningIcon.SetActive(show);
     }
 
