@@ -25,6 +25,7 @@ public class ItemInfoUI : MonoBehaviour
 
     private PlayerInteract _playerInteract;
     private RectTransform _rectTransform;
+    private UIManager _uiManager;
 
     private float _rectWidth;
     private float _rectHeight;
@@ -42,6 +43,8 @@ public class ItemInfoUI : MonoBehaviour
      // TODO
         _playerInteract = GameManager.Instance.PlayerObject.GetComponent<PlayerInteract>();
         _playerInteract.OnCloseUIEvent += HideUI;
+
+        _uiManager = UIManager.Instance;
     }
 
     private void Update()
@@ -136,6 +139,16 @@ public class ItemInfoUI : MonoBehaviour
 
     public void ShowUI()
     {
+        if (_uiManager == null) _uiManager = UIManager.Instance;
+
+        if(_uiManager.CurrentInfoUI != null
+            && _uiManager.CurrentInfoUI.gameObject.activeSelf)
+        {
+            _uiManager.CurrentInfoUI.HideUI();
+        }
+
+        _uiManager.CurrentInfoUI = this;
+
         gameObject.SetActive(true);
         FollowMouse();
     }

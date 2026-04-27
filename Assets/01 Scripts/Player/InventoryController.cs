@@ -7,6 +7,7 @@ public class InventoryController : MonoBehaviour
     private Inventory _inventory;
     private QuickSlotManager _quickSlotManager;
     private SoundManager _soundManager;
+    private UIManager _uiManager;
 
     private InputActions _inputActions;
     private PlayerMove _playerMove;
@@ -75,6 +76,7 @@ public class InventoryController : MonoBehaviour
     {
         _inventory = GameManager.Instance.Inventory;
         _soundManager = SoundManager.Instance;
+        _uiManager = UIManager.Instance;
 
         _inputActions = GameManager.Instance.Actions;
         _inputActions.Player.Inventory.performed += OnInventoryInput;
@@ -143,6 +145,7 @@ public class InventoryController : MonoBehaviour
         _inventoryToggle = false;
         _playerMove.RestartMove();
         _playerShooting.IsFirePressed = true;
+        _uiManager.CurrentInfoUI?.HideUI();
         OnInventoryToggle?.Invoke(false);
     }
 

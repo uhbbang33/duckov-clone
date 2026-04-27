@@ -129,8 +129,6 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
         if (source.isPlaying)
             return;
 
-        Debug.Log("play");
-
         source.clip = _clipDict[SFXName.FootStep];
         source.loop = true;
 

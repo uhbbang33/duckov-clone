@@ -67,13 +67,18 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     [SerializeField] private Transform _dragCanvasTransform;
 
     private ItemSlot _currentSlot;
+    private ItemInfoUI _currentInfoUI = null;
     private InputActions _inputActions;
     private Color _hydrationBackgroundOriginColor;
     private Color _hungerBackgroundOriginColor;
 
-    public Transform DragCanvasTransform { get { return _dragCanvasTransform; } }
-
-    public Sprite PistolIcon { get { return _pistolIcon; } }
+    public Transform DragCanvasTransform => _dragCanvasTransform;
+    public Sprite PistolIcon => _pistolIcon;
+    public ItemInfoUI CurrentInfoUI
+    {
+        get { return _currentInfoUI; }
+        set { _currentInfoUI = value; }
+    }
 
     protected override void Awake()
     {
