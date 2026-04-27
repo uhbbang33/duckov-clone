@@ -291,6 +291,7 @@ public class PlayerMove : MonoBehaviour
         _footStepSource.Stop();
         _soundManager.PlayFootStepSFX(true, _footStepSource);
 
+        _anim.SetBool(PlayerAnimParm.Run, true);
         StartRun();
     }
 
@@ -299,6 +300,7 @@ public class PlayerMove : MonoBehaviour
         _isRunButtonPressed = false;
 
         _footStepSource.Stop();
+        _anim.SetBool(PlayerAnimParm.Run, false);
         StopRun();
     }
 
@@ -357,7 +359,6 @@ public class PlayerMove : MonoBehaviour
             _sp.ReduceSPPerSecond(_playerMoveData.RunSPCost);
 
         _player.ChangePlayerState(PlayerState.Running);
-        _anim.SetBool(PlayerAnimParm.Run, true);
         _playerShooting.IsFirePressed = false;
 
         OnRun?.Invoke();
@@ -373,7 +374,6 @@ public class PlayerMove : MonoBehaviour
         else
             _player.ChangePlayerState(PlayerState.Idle);
 
-        _anim.SetBool(PlayerAnimParm.Run, false);
         _sp.IsReducing = false;
         OnRunCancel?.Invoke();
     }
