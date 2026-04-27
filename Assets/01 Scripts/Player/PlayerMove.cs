@@ -57,6 +57,8 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
+    public Vector2 MousePosition => _mousePosition;
+
     #region MonoBehaviour
 
     private void Awake()

@@ -282,7 +282,8 @@ public class PlayerShooting : MonoBehaviour
         if (_currentGunItem == null)
             return Vector3.zero;
 
-        Vector2 mousePos = Mouse.current.position.ReadValue();
+        //Vector2 mousePos = Mouse.current.position.ReadValue();
+        Vector2 mousePos = _playerMove.MousePosition;
         Ray ray = Camera.main.ScreenPointToRay(mousePos);
 
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
