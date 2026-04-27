@@ -38,6 +38,8 @@ public class SceneLoader : SingletonMonoBehaviour<SceneLoader>
 
         yield return _loadingUI.FadeIn();
 
+        _gameManager.Inventory.ClearInventory();
+
         bool isSceneReady = false;
         SceneInitializer.OnSceneReady += () => isSceneReady = true;
 
