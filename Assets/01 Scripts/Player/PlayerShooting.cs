@@ -100,6 +100,7 @@ public class PlayerShooting : MonoBehaviour
 
     private void OnDisable()
     {
+        _isFirePressed = false;
         _actions.Player.Fire.performed -= OnFirePerformed;
         _actions.Player.Fire.canceled -= OnFireCanceled;
         _actions.Player.Reload.performed -= OnReload;
