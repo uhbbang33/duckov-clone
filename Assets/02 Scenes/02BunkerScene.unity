@@ -20060,6 +20060,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[2]'
       value: 
       objectReference: {fileID: 2100000, guid: 5a39bd3dffc95dc4ca4759d5823e6622, type: 2}
+    - target: {fileID: 4555067703214474266, guid: 645e3015243e40245bb801c45f6c5582, type: 3}
+      propertyPath: _positionOffest.y
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4610497943860712628, guid: 645e3015243e40245bb801c45f6c5582, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -29230,6 +29234,7 @@ GameObject:
   - component: {fileID: 6032076664905499565}
   - component: {fileID: 6032076664905499567}
   - component: {fileID: 6032076664905499568}
+  - component: {fileID: 6032076664905499569}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -29758,6 +29763,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6032076664905499569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2919116958976057407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 417fe86ac62172b499992fff7f33f9b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SetWorldSpaceCanvas
+  _canvas: {fileID: 1272288416}
+  _scaleOffset: 0.02
+  _positionOffest: {x: 0, y: 2, z: 0}
 --- !u!1 &6104561713744950228
 GameObject:
   m_ObjectHideFlags: 0

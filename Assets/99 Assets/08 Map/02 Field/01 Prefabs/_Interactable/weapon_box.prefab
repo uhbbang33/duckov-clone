@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1688746657961592654}
   - component: {fileID: 1429641924160401661}
   - component: {fileID: 562557217345138534}
+  - component: {fileID: 1770077030790677582}
   m_Layer: 6
   m_Name: weapon_box
   m_TagString: Untagged
@@ -86,6 +87,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2f01033240955a48aa8a03d8d01abe4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponBox
+--- !u!114 &1770077030790677582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1181574321910500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 417fe86ac62172b499992fff7f33f9b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SetWorldSpaceCanvas
+  _canvas: {fileID: 7028688179260927758}
+  _scaleOffset: 0.005
 --- !u!1 &1954823949151432
 GameObject:
   m_ObjectHideFlags: 0

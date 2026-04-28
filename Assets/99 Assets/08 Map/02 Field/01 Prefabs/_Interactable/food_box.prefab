@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3849502277143839021}
   - component: {fileID: -5263066622423213353}
   - component: {fileID: 4197211019011083549}
+  - component: {fileID: 2539399781219067860}
   m_Layer: 6
   m_Name: food_box
   m_TagString: Untagged
@@ -144,6 +145,20 @@ MonoBehaviour:
   _stateImage: {fileID: 1487751654920023190}
   _infoUI: {fileID: 7969636506408000715}
   _type: 0
+--- !u!114 &2539399781219067860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7402638131752033043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 417fe86ac62172b499992fff7f33f9b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SetWorldSpaceCanvas
+  _canvas: {fileID: 8374119456381191654}
+  _scaleOffset: 0.005
 --- !u!1001 &7691781238497536072
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8207845517339597316}
   - component: {fileID: -7978699768939573849}
   - component: {fileID: 3024537927556236911}
+  - component: {fileID: 6583256041117907542}
   m_Layer: 6
   m_Name: medicine_box
   m_TagString: Untagged
@@ -143,6 +144,20 @@ MonoBehaviour:
   _stateImage: {fileID: 5406907734950694171}
   _infoUI: {fileID: 3545856701207067974}
   _type: 0
+--- !u!114 &6583256041117907542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9015811012856725698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 417fe86ac62172b499992fff7f33f9b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SetWorldSpaceCanvas
+  _canvas: {fileID: 3141936426002965611}
+  _scaleOffset: 0.005
 --- !u!1001 &3824133910957476293
 PrefabInstance:
   m_ObjectHideFlags: 0

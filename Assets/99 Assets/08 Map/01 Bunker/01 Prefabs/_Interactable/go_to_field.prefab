@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 35151859892059470}
   - component: {fileID: 4780520678595530725}
   - component: {fileID: 4689511397541578409}
+  - component: {fileID: 7765950334333666075}
   m_Layer: 6
   m_Name: go_to_field
   m_TagString: Untagged
@@ -72,6 +73,20 @@ MonoBehaviour:
   _infoUI: {fileID: 1572455322553175008}
   _type: 4
   _targetScene: 2
+--- !u!114 &7765950334333666075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8235607376063027840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 417fe86ac62172b499992fff7f33f9b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SetWorldSpaceCanvas
+  _canvas: {fileID: 1116176524824974029}
+  _scaleOffset: 0.005
 --- !u!1001 &1293975296872267619
 PrefabInstance:
   m_ObjectHideFlags: 0

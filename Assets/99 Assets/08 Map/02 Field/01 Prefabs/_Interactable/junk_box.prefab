@@ -102,6 +102,7 @@ GameObject:
   - component: {fileID: -7233786809047145387}
   - component: {fileID: 5307433216974858208}
   - component: {fileID: 5822089701693714882}
+  - component: {fileID: 2830214190013330784}
   m_Layer: 6
   m_Name: junk_box
   m_TagString: Untagged
@@ -176,6 +177,20 @@ MonoBehaviour:
   _stateImage: {fileID: 4990292888192130605}
   _infoUI: {fileID: 4574897335346622064}
   _type: 0
+--- !u!114 &2830214190013330784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1745481740348960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 417fe86ac62172b499992fff7f33f9b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SetWorldSpaceCanvas
+  _canvas: {fileID: 2725314981612599133}
+  _scaleOffset: 0.005
 --- !u!1 &1781813259710470
 GameObject:
   m_ObjectHideFlags: 0

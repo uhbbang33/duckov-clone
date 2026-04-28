@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 9063820316196544338}
   - component: {fileID: 4898581134342451525}
   - component: {fileID: -4742367153475717036}
+  - component: {fileID: 5998627412096006660}
   m_Layer: 6
   m_Name: LootBox
   m_TagString: Untagged
@@ -143,6 +144,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1651397986f3e042ac1a3fed05117f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LootBox
+--- !u!114 &5998627412096006660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4383166452641412196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 417fe86ac62172b499992fff7f33f9b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SetWorldSpaceCanvas
+  _canvas: {fileID: 2067115349593974077}
+  _scaleOffset: 0.005
 --- !u!1001 &155292251259357331
 PrefabInstance:
   m_ObjectHideFlags: 0

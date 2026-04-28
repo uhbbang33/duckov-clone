@@ -597,6 +597,7 @@ GameObject:
   - component: {fileID: 881868316979976608}
   - component: {fileID: 5931184900295182189}
   - component: {fileID: 6599942537216267461}
+  - component: {fileID: 7340715564530277981}
   m_Layer: 0
   m_Name: shop
   m_TagString: Untagged
@@ -693,6 +694,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08a609a824bb49542ac7b550cc8089a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Shop
+--- !u!114 &7340715564530277981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6496110125763448791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 417fe86ac62172b499992fff7f33f9b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SetWorldSpaceCanvas
+  _canvas: {fileID: 1675271592647109704}
+  _scaleOffset: 0.005
 --- !u!1 &6591677757536383905
 GameObject:
   m_ObjectHideFlags: 0

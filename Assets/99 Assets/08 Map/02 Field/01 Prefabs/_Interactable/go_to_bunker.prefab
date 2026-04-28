@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2644368703445100685}
   - component: {fileID: 2857417221428379983}
   - component: {fileID: 2339278421846669414}
+  - component: {fileID: 2468170865797619123}
   m_Layer: 6
   m_Name: go_to_bunker
   m_TagString: Untagged
@@ -72,6 +73,20 @@ MonoBehaviour:
   _infoUI: {fileID: 4594809865969867794}
   _type: 4
   _targetScene: 1
+--- !u!114 &2468170865797619123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7329447033917613098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 417fe86ac62172b499992fff7f33f9b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SetWorldSpaceCanvas
+  _canvas: {fileID: 2696253547426530623}
+  _scaleOffset: 0.005
 --- !u!1001 &4315415323581868177
 PrefabInstance:
   m_ObjectHideFlags: 0

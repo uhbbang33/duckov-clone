@@ -429,6 +429,7 @@ GameObject:
   - component: {fileID: 3379190180026500537}
   - component: {fileID: 1059536626322877537}
   - component: {fileID: 6116628146588577661}
+  - component: {fileID: 5424755170611337757}
   m_Layer: 6
   m_Name: storage
   m_TagString: Untagged
@@ -489,6 +490,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Storage
   _sortButton: {fileID: 0}
+--- !u!114 &5424755170611337757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2248110533757627489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 417fe86ac62172b499992fff7f33f9b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SetWorldSpaceCanvas
+  _canvas: {fileID: 3837086892421882207}
+  _scaleOffset: 0.005
 --- !u!1 &3454011705195755634
 GameObject:
   m_ObjectHideFlags: 0
