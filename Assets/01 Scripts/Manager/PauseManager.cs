@@ -17,14 +17,14 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager>
         _gameManager = GameManager.Instance;
         _dataManager = DataManager.Instance;
 
-        _gameManager.Actions.Player.Cancel.performed += OnPause;
+        _gameManager.Actions.UI.Pause.performed += OnPause;
     }
 
     protected override void OnDestroy()
     {
         base.OnDestroy();
 
-        _gameManager.Actions.Player.Cancel.performed -= OnPause;
+        _gameManager.Actions.UI.Pause.performed -= OnPause;
     }
 
     private void OnPause(InputAction.CallbackContext context)
@@ -49,7 +49,7 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager>
 
         EventSystem.current.SetSelectedGameObject(null);
 
-        // TODO : Sound Pause
+        _gameManager.Actions.Player.Disable();
     }
 
     private void Resume()
@@ -59,6 +59,8 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager>
 
         _pauseUI.SetActive(false);
         _pauseReturnToTitleUI.SetActive(false);
+
+        _gameManager.Actions.Player.Enable();
     }
 
     #region On Button Clcik
@@ -69,7 +71,7 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager>
         Resume();
     }
 
-    public void OnClickReturnToTile()
+    public void OnClickReturnToTitle()
     {
         _pauseReturnToTitleUI.SetActive(true);
 
@@ -78,8 +80,6 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager>
 
     public void OnClickConfirmReturnToTitle()
     {
-        Time.timeScale = 1f;
-
         _dataManager.SaveDataByScene();
 
         _gameManager.Actions.Player.Cancel.performed -= OnPause;

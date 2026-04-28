@@ -66,5 +66,7 @@ public class SceneLoader : SingletonMonoBehaviour<SceneLoader>
 
         _gameManager.EnableInputActions();
         _coroutine = null;
+
+        Time.timeScale = 1f;
     }
 }
