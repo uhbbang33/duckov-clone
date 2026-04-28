@@ -44,6 +44,7 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 
     private Dictionary<string, AudioClip> _clipDict;
     private AudioSource _defaultAudioSource;
+    private float _prevSpeed;
 
     private const string _pitchShifterParam = "PitchShifter";
 
@@ -126,21 +127,14 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
 
     public void PlayFootStepSFX(bool isRun, AudioSource source)
     {
-        if (source.isPlaying)
+        float speed = isRun ? 1.6f : 1.0f;
+        if (source.isPlaying && _prevSpeed == speed)
             return;
+        _prevSpeed = speed;
 
         source.clip = _clipDict[SFXName.FootStep];
         source.loop = true;
-
-        if (isRun)
-        {
-            SetSFXSpeed(source, 1.6f);
-        }
-        else
-        {
-            SetSFXSpeed(source, 1f);
-        }
-
+        SetSFXSpeed(source, speed);
         source.Play();
     }
 

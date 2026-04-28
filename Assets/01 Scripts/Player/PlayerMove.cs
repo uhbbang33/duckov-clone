@@ -256,15 +256,15 @@ public class PlayerMove : MonoBehaviour
         _moveInput = context.ReadValue<Vector2>().normalized;
         _anim.SetBool(PlayerAnimParm.Walk, true);
 
-        if (!_footStepSource.isPlaying)
-            _soundManager.PlayFootStepSFX(false, _footStepSource);
-
         if (_isRunButtonPressed)
         {
             StartRun();
         }
         else
         {
+            if (!_footStepSource.isPlaying)
+                _soundManager.PlayFootStepSFX(false, _footStepSource);
+
             OnWalk?.Invoke();
             _player.ChangePlayerState(PlayerState.Walking);
         }
@@ -288,9 +288,6 @@ public class PlayerMove : MonoBehaviour
     {
         _isRunButtonPressed = true;
 
-        _footStepSource.Stop();
-        _soundManager.PlayFootStepSFX(true, _footStepSource);
-
         _anim.SetBool(PlayerAnimParm.Run, true);
         StartRun();
     }
@@ -299,7 +296,6 @@ public class PlayerMove : MonoBehaviour
     {
         _isRunButtonPressed = false;
 
-        _footStepSource.Stop();
         _anim.SetBool(PlayerAnimParm.Run, false);
         StopRun();
     }
@@ -355,6 +351,9 @@ public class PlayerMove : MonoBehaviour
         if (_rb.linearVelocity == Vector3.zero)
             return;
 
+        if (_moveInput != Vector2.zero)
+            _soundManager.PlayFootStepSFX(true, _footStepSource);
+
         if (_gameManager.CurrentSceneName != SceneName.BunkerScene)
             _sp.ReduceSPPerSecond(_playerMoveData.RunSPCost);
 
@@ -369,8 +368,13 @@ public class PlayerMove : MonoBehaviour
         if (_player.State != PlayerState.Running)
             return;
 
+        _footStepSource.Stop();
+
         if (_moveInput != Vector2.zero)
+        {
             _player.ChangePlayerState(PlayerState.Walking);
+            _soundManager.PlayFootStepSFX(false, _footStepSource);
+        }
         else
             _player.ChangePlayerState(PlayerState.Idle);
 
