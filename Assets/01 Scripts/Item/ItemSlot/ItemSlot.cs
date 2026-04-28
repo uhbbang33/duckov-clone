@@ -19,7 +19,6 @@ public class ItemSlot
         _ui = null;
         _fieldManager = FieldManager.Instance;
         _bunkerManager = BunkerManager.Instance;
-        //_inventory = GameManager.Instance.Inventory;
     }
 
     public Item CurrentItem
@@ -162,6 +161,8 @@ public class ItemSlot
 
         if (!GameManager.Instance.PlayerObject.GetComponent<Player>().UseItem(item))
             return;
+
+        SoundManager.Instance.PlaySFXOneShot(SFXName.PickItem);
 
         if (item.DurabilityCost > 0)
         {

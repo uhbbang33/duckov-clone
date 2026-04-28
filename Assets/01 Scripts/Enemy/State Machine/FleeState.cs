@@ -16,6 +16,8 @@ public class FleeState : EnemyStateBase
 
         _enemy.SetAnimation(EnemyAnimParm.ArmRaised, false);
         _enemy.SetAnimation(EnemyAnimParm.Run, true);
+
+        _enemy.PlayFootStepSound(true);
     }
 
     public override void Update()

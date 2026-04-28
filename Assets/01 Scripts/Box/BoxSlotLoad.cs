@@ -9,6 +9,7 @@ public class BoxSlotLoad : MonoBehaviour
     [SerializeField] private float _iconRotateSpeed = 6.5f;
     [SerializeField] private float _iconRotateRadius = 5f;
 
+    private SoundManager _soundManager;
     private Vector3 _centerPosition;
     private float _angle = 0f;
 
@@ -25,6 +26,11 @@ public class BoxSlotLoad : MonoBehaviour
 
         _unloadedImage.SetActive(false);
         _loadingIcon.SetActive(false);
+    }
+
+    private void Start()
+    {
+        _soundManager = SoundManager.Instance;
     }
 
     private void Update()
@@ -62,6 +68,7 @@ public class BoxSlotLoad : MonoBehaviour
 
     public void LoadComplete()
     {
+        _soundManager.PlaySFXOneShot(SFXName.PickItem);
         _unloadedImage.SetActive(false);
         _loadingIcon.SetActive(false);
     }

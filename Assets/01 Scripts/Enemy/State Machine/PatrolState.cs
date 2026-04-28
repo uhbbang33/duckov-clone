@@ -26,6 +26,8 @@ public class PatrolState : EnemyStateBase
         ++_enemy.CurrentDestinationCount;
         if (_enemy.CurrentDestinationCount >= _destinationList.Count)
             _enemy.CurrentDestinationCount = 0;
+
+        _enemy.PlayFootStepSound(false);
     }
 
     public override void Update()

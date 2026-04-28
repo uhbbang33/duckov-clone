@@ -22,6 +22,8 @@ public class ReturnState : EnemyStateBase
 
         _enemy.SetAnimation(EnemyAnimParm.ArmRaised, false);
         _enemy.SetAnimation(EnemyAnimParm.Walk, true);
+
+        _enemy.PlayFootStepSound(false);
     }
 
     public override void Update()

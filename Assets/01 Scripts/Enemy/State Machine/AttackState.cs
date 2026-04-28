@@ -30,6 +30,7 @@ public class AttackState : EnemyStateBase
         _reloadTimer = 0f;
         _attackTimer = 0f;
         _burstCooldownTimer = 0f;
+        _enemy.StopFootStepSound();
     }
 
     public override void Update()

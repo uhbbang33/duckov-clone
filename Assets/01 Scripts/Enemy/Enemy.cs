@@ -11,6 +11,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private LayerMask _groundLayer;
     [SerializeField] private float _detectPlayerDuration;
     [SerializeField] private Transform _handTransform;
+    [SerializeField] private AudioSource _footStepAudioSource;
     [SerializeField] private AudioSource _gunAudioSource;
     [SerializeField] private AudioSource _detectAudioSource;
     [SerializeField] private GameObject _targetingIcon;
@@ -158,6 +159,7 @@ public class Enemy : MonoBehaviour
     public void EnemyDeath()
     {
         MakeLootBox();
+        StopFootStepSound();
         Destroy(gameObject);
     }
 
@@ -280,6 +282,16 @@ public class Enemy : MonoBehaviour
     public void PlayReloadSound(bool isStart)
     {
         _soundManager.PlayReloadSFX(isStart, _gunAudioSource);
+    }
+
+    public void PlayFootStepSound(bool isRun)
+    {
+        _soundManager.PlayFootStepSFX(isRun, _footStepAudioSource);
+    }
+
+    public void StopFootStepSound()
+    {
+        _footStepAudioSource.Stop();
     }
 
     #endregion Sound

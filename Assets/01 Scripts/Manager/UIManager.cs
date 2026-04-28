@@ -66,6 +66,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     [SerializeField] private GameOverUI _gameOverUI;
     [SerializeField] private Transform _dragCanvasTransform;
 
+    private SoundManager _soundManager;
     private ItemSlot _currentSlot;
     private ItemInfoUI _currentInfoUI = null;
     private InputActions _inputActions;
@@ -98,6 +99,11 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     {
         _inputActions.UI.Enable();
         _inputActions.UI.CloseSlotMenuUI.performed += OnClick;
+    }
+
+    private void Start()
+    {
+        _soundManager = SoundManager.Instance;
     }
 
     private void OnDisable()
@@ -358,16 +364,22 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 
     public void OnDiscardButtonClick()
     {
+        CloseSlotMenu();
+
+        if (FieldManager.Instance == null)
+            return;
+        
+        // TODO
         if (FieldManager.Instance.CreateDropItemObject(_currentSlot.CurrentItem, _currentSlot.Quantity))
         {
             _currentSlot.SubtractItem(_currentSlot.Quantity);
+            _soundManager.PlaySFXOneShot(SFXName.PickItem);
         }
         else // TODO: 버릴 수 없습니다 UI
         {
             Debug.Log("버릴 수 없습니다.");
         }
 
-        CloseSlotMenu();
     }
 
     public void OnUsebuttonClick()

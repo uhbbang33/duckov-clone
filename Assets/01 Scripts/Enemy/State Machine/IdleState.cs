@@ -18,6 +18,7 @@ public class IdleState : EnemyStateBase
         _enemy.SetAnimation(EnemyAnimParm.ArmRaised, false);
         _timer = 0;
         _healTimer = 0;
+        _enemy.StopFootStepSound();
     }
 
     public override void Update()
