@@ -109,8 +109,6 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     private void UseQuickSlotItem(InputAction.CallbackContext context)
     {
-        Debug.Log("!");
-
         if (_linkedInventorySlotUI != null)
             _linkedInventorySlotUI.Slot.UseItem();
     }
