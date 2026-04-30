@@ -50,6 +50,8 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager>
         EventSystem.current.SetSelectedGameObject(null);
 
         _gameManager.Actions.Player.Disable();
+
+        AudioListener.pause = true;
     }
 
     private void Resume()
@@ -61,6 +63,8 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager>
         _pauseReturnToTitleUI.SetActive(false);
 
         _gameManager.Actions.Player.Enable();
+
+        AudioListener.pause = false;
     }
 
     #region On Button Clcik

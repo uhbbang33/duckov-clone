@@ -55,6 +55,7 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
         DontDestroyOnLoad(gameObject);
 
         _defaultAudioSource = GetComponent<AudioSource>();
+        _defaultAudioSource.ignoreListenerPause = true;
 
         _clipDict = new()
         {
