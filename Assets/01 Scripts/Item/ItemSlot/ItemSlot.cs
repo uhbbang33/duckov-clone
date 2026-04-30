@@ -4,8 +4,7 @@ public class ItemSlot
 {
     protected Item _currentItem;
     protected ItemSlotUI _ui;
-    private FieldManager _fieldManager;
-    private BunkerManager _bunkerManager;
+    private GameManager _gameManager;
     private Inventory _inventory;
 
     protected SlotType _slotType;
@@ -17,8 +16,7 @@ public class ItemSlot
         _currentItem = null;
         _quantity = 0;
         _ui = null;
-        _fieldManager = FieldManager.Instance;
-        _bunkerManager = BunkerManager.Instance;
+        _gameManager = GameManager.Instance;
     }
 
     public Item CurrentItem
@@ -79,9 +77,9 @@ public class ItemSlot
             if (_slotType == SlotType.INVENTORY)
                 _inventory.RemoveItemSlot(_currentItem.ID);
             else if (_slotType == SlotType.BOX)
-                _fieldManager.CurrentOpenBox.ChangeBoxItemCount(false);
+                FieldManager.Instance.CurrentOpenBox.ChangeBoxItemCount(false);
             else if (_slotType == SlotType.STORAGE)
-                _bunkerManager.storage.ChangeStorageItemCount(false);
+                BunkerManager.Instance.storage.ChangeStorageItemCount(false);
 
             _currentItem = null;
             _quantity = 0;
@@ -106,9 +104,9 @@ public class ItemSlot
             if (_slotType == SlotType.INVENTORY)
                 _inventory.AddToInventoryDictByID(item.ID);
             else if (_slotType == SlotType.BOX)
-                _fieldManager.CurrentOpenBox.ChangeBoxItemCount(true);
+                FieldManager.Instance.CurrentOpenBox.ChangeBoxItemCount(true);
             else if (_slotType == SlotType.STORAGE)
-                _bunkerManager.storage.ChangeStorageItemCount(true);
+                BunkerManager.Instance.storage.ChangeStorageItemCount(true);
         }
 
         _currentItem = item;
@@ -147,11 +145,11 @@ public class ItemSlot
         }
         else if (_slotType == SlotType.BOX)
         {
-            _fieldManager.CurrentBox.AddItemToEmptySlot(_currentItem, amount);
+            FieldManager.Instance.CurrentBox.AddItemToEmptySlot(_currentItem, amount);
         }
         else if(_slotType == SlotType.STORAGE)
         {
-            _bunkerManager.storage.AddItemToEmptySlot(_currentItem, amount);
+            BunkerManager.Instance.storage.AddItemToEmptySlot(_currentItem, amount);
         }
     }
 
@@ -182,6 +180,25 @@ public class ItemSlot
         }
     }
 
+    public void DiscardItem()
+    {
+        if (_gameManager.CreateDropItemObject(_currentItem, _quantity))
+        {
+            InventorySlotUI inventorySlotUI = (_ui as InventorySlotUI);
+
+            if (inventorySlotUI != null
+                && inventorySlotUI.LinkedQuickSlot != null)
+                inventorySlotUI.LinkedQuickSlot.UnlinkInventorySlotUI(_currentItem.ID);
+
+            SubtractItem(_quantity);
+            SoundManager.Instance.PlaySFXOneShot(SFXName.PickItem);
+        }
+        else
+        {
+            Debug.Log("버릴 수 없습니다.");
+        }
+    }
+
     public virtual void UnloadAmmo()
     {
         GunItem gunItem = _currentItem as GunItem;
@@ -195,7 +212,7 @@ public class ItemSlot
         if(!_inventory.TryAddItem(ammoItem, ref ammoCount))
         {
             // 버리기
-            _fieldManager.CreateDropItemObject(ammoItem, ammoCount);
+            _gameManager.CreateDropItemObject(ammoItem, ammoCount);
         }
 
         gunItem.CurrentAmmoCount = 0;

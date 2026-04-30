@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5700961636505676318
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5785865045001347573}
+  - component: {fileID: 2704805186449454921}
+  m_Layer: 0
+  m_Name: PoolManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5785865045001347573
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5700961636505676318}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2704805186449454921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5700961636505676318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ee3d9f55f05c2e4b8f0da6537832590, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PoolManager
+  _pools:
+  - Id: 1
+    PoolSize: 10
+    Prefab: {fileID: 6673845262605201894, guid: bf4a61b978ce5344b808da224093d8a3, type: 3}
+  - Id: 258
+    PoolSize: 2
+    Prefab: {fileID: 6669379501984884854, guid: 7d67cadabf52444439ad536abd565043, type: 3}
+  - Id: 780
+    PoolSize: 2
+    Prefab: {fileID: 9203890126400519520, guid: 93615696260ad3d4798e7a2f878e4e5a, type: 3}
+  - Id: 254
+    PoolSize: 2
+    Prefab: {fileID: 1964813639525027548, guid: 6681ef70b3b09084892f231dfdd35fe9, type: 3}
+  - Id: 5
+    PoolSize: 50
+    Prefab: {fileID: 6369798586217714994, guid: 6b1908417802b6a47bfe90f93f667ef7, type: 3}
+  - Id: 6
+    PoolSize: 50
+    Prefab: {fileID: 4452193835735270760, guid: 20bacbc54cdcc944b9f0691c3282fe09, type: 3}
+  - Id: 7
+    PoolSize: 50
+    Prefab: {fileID: 4452193835735270760, guid: cd23b9bff3c6f8e4cb7cc9bec2a18f26, type: 3}
+  - Id: 8
+    PoolSize: 50
+    Prefab: {fileID: 4657523201944039374, guid: 9b050a6a9b5f25d4596c5b3196df1bba, type: 3}

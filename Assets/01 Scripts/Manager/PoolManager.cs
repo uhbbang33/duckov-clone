@@ -20,8 +20,6 @@ public class PoolManager : SingletonMonoBehaviour<PoolManager>
     {
         base.Awake();
 
-        DontDestroyOnLoad(gameObject);
-
         _poolDictionary = new();
 
         for (int i = 0; i < _pools.Count; ++i)
@@ -57,7 +55,7 @@ public class PoolManager : SingletonMonoBehaviour<PoolManager>
         }
     }
 
-    public GameObject GetObject(uint id, Transform parentTransform, bool isChangeParent)
+    public GameObject GetObject(uint id, Transform parentTransform = null, bool isChangeParent = false)
     {
         if (!_poolDictionary.ContainsKey(id))
             return null;
@@ -80,7 +78,7 @@ public class PoolManager : SingletonMonoBehaviour<PoolManager>
             obj.transform.SetParent(parentTransform, false);
             obj.transform.localScale = Vector3.one;
         }
-        else
+        else if(parentTransform != null)
         {
             obj.transform.position = parentTransform.position;
             obj.transform.rotation = parentTransform.rotation;

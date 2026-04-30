@@ -3,8 +3,6 @@ using UnityEngine;
 public class FieldManager : SingletonMonoBehaviour<FieldManager>
 {
     [SerializeField] private GameObject[] _boxItemSlots;
-
-    [SerializeField] private GameObject _dropItemPrefab;
     [SerializeField] private GameObject _playerObject;
 
     private Box _currentBox;
@@ -30,19 +28,4 @@ public class FieldManager : SingletonMonoBehaviour<FieldManager>
         base.Awake();
         GameManager.Instance.PlayerObject = _playerObject;
     }
-
-    // TODO : PoolManager?
-    public bool CreateDropItemObject(Item item, int quantity)
-    {
-        GameObject dropItem = Instantiate(_dropItemPrefab);
-
-        if (!dropItem.GetComponent<DroppedItem>().InitializeDroppedItem(item, quantity))
-        {
-            Destroy(dropItem);
-            return false;
-        }
-
-        return true;
-    }
-
 }

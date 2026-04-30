@@ -83,6 +83,7 @@ public struct PoolId
     public const uint MuzzleFlash = 5;
     public const uint Smoke = 6;
     public const uint BloodSmoke = 7;
+    public const uint DroppedItem = 8;
 }
 
 public struct PlayerAnimParm
