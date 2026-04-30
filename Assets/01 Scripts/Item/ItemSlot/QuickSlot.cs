@@ -12,7 +12,7 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     [SerializeField] private GameObject _durabilityUI;
     [SerializeField] private GameObject _countUI;
     [SerializeField] private Slider _durabilitySlider;
-    [SerializeField] private int _quickSlotNum;
+    [SerializeField] public int _quickSlotNum;
     [SerializeField] private DefaultHUDSlotUI _defaultHUDSlotUI;
 
     private InputActions _inputActions;
@@ -36,7 +36,7 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         RefreshUI();
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         UnsubscribeInputEvent(_quickSlotNum);
     }
@@ -109,6 +109,8 @@ public class QuickSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     private void UseQuickSlotItem(InputAction.CallbackContext context)
     {
+        Debug.Log("!");
+
         if (_linkedInventorySlotUI != null)
             _linkedInventorySlotUI.Slot.UseItem();
     }

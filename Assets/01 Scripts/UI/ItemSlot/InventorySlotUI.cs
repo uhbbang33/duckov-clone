@@ -6,7 +6,6 @@ public class InventorySlotUI : ItemSlotUI
 {
     private QuickSlot _linkedQuickSlot;
 
-    // TODO : setter에 _linkedQuickSlot = value;만 있도록 수정
     public override QuickSlot LinkedQuickSlot
     {
         get { return _linkedQuickSlot; }
