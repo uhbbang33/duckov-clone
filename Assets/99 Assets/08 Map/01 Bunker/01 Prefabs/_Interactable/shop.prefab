@@ -707,7 +707,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SetWorldSpaceCanvas
   _canvas: {fileID: 1675271592647109704}
-  _scaleOffset: 0.005
+  _scaleOffset: 0.0075
+  _positionOffest: {x: 0, y: 0, z: 0}
 --- !u!1 &6591677757536383905
 GameObject:
   m_ObjectHideFlags: 0

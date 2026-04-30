@@ -3,7 +3,7 @@ using UnityEngine;
 public class SetWorldSpaceCanvas : MonoBehaviour
 {
     [SerializeField] private GameObject _canvas;
-    [SerializeField] private float _scaleOffset = 0.005f;
+    [SerializeField] private float _scaleOffset = 0.0075f;
     [SerializeField] private Vector3 _positionOffest;
     
     void Start()
