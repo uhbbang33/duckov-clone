@@ -26,6 +26,8 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
     [SerializeField] private AudioClip _openInventorySFX;
     [SerializeField] private AudioClip _pickItemSFX;
     [SerializeField] private AudioClip _SellBuySFX;
+    [SerializeField] private AudioClip _eatFoodSFX;
+    [SerializeField] private AudioClip _useMedicineSFX;
 
     [Space(10)]
     [Header("Move Audio Clip")]
@@ -67,7 +69,9 @@ public class SoundManager : SingletonMonoBehaviour<SoundManager>
             { SFXName.SellBuy, _SellBuySFX },
             { SFXName.FootStep, _footStepSFX },
             { SFXName.Roll, _rollSFX },
-            { SFXName.Quack, _quackSFX }
+            { SFXName.Quack, _quackSFX },
+            { SFXName.EatFood, _eatFoodSFX },
+            { SFXName.UseMedicine, _useMedicineSFX }
         };
     }
     

@@ -123,5 +123,6 @@ public struct SFXName
     public const string FootStep = "FootStep";
     public const string Roll = "Roll";
     public const string Quack = "Quack";
-
+    public const string EatFood = "EatFood";
+    public const string UseMedicine = "UseMedicine";
 }

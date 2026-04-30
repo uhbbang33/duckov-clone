@@ -160,7 +160,10 @@ public class ItemSlot
         if (!GameManager.Instance.PlayerObject.GetComponent<Player>().UseItem(item))
             return;
 
-        SoundManager.Instance.PlaySFXOneShot(SFXName.PickItem);
+        if (item.Type == ItemType.Food)
+            SoundManager.Instance.PlaySFXOneShot(SFXName.EatFood);
+        else if (item.Type == ItemType.Medicine)
+            SoundManager.Instance.PlaySFXOneShot(SFXName.UseMedicine);
 
         if (item.DurabilityCost > 0)
         {

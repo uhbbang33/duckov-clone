@@ -68,7 +68,7 @@ public class BoxSlotLoad : MonoBehaviour
 
     public void LoadComplete()
     {
-        _soundManager.PlaySFXOneShot(SFXName.PickItem);
+        _soundManager.PlaySFXOneShot(SFXName.MenuHover);
         _unloadedImage.SetActive(false);
         _loadingIcon.SetActive(false);
     }
