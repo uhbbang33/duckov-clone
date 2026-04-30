@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     private PlayerMove _playerMove;
     private PlayerShooting _playerShooting;
     private Animator _anim;
+    private AudioSource _audioSource;
 
     private DataManager _dataManager;
     private PlayerBaseData _playerBaseData;
@@ -57,6 +58,7 @@ public class Player : MonoBehaviour
         _playerMove = GetComponent<PlayerMove>();
         _playerShooting = GetComponent<PlayerShooting>();
         _anim = GetComponent<Animator>();
+        _audioSource = GetComponent<AudioSource>();
 
         _state = PlayerState.Idle;
     }
@@ -96,6 +98,11 @@ public class Player : MonoBehaviour
 
         _hunger.Heal(item.Hunger);
         _hydration.Heal(item.Hydration);
+
+        if (item.Type == ItemType.Food)
+            SoundManager.Instance.PlaySFXOneShot(SFXName.EatFood, _audioSource);
+        else if (item.Type == ItemType.Medicine)
+            SoundManager.Instance.PlaySFXOneShot(SFXName.UseMedicine, _audioSource);
 
         return true;
     }

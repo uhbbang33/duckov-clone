@@ -9,6 +9,7 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager>
 
     private GameManager _gameManager;
     private DataManager _dataManager;
+    private InventoryController _inventoryController;
 
     private bool _isPaused = false;
 
@@ -16,6 +17,7 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager>
     {
         _gameManager = GameManager.Instance;
         _dataManager = DataManager.Instance;
+        _inventoryController = _gameManager.PlayerObject.GetComponent<InventoryController>();
 
         _gameManager.Actions.UI.Pause.performed += OnPause;
     }
@@ -29,7 +31,7 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager>
 
     private void OnPause(InputAction.CallbackContext context)
     {
-        if (_gameManager.PlayerObject.GetComponent<InventoryController>().InventoryIsOpen)
+        if (_inventoryController.InventoryIsOpen)
             return;
 
         _isPaused = !_isPaused;

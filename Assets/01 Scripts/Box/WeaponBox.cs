@@ -9,4 +9,9 @@ public class WeaponBox : Box
         _typeWeights[3].WeightValue = 0;
         _typeWeights[4].WeightValue = 0;
     }
+
+    protected override void ChangeBoxText()
+    {
+        UIManager.Instance.ChangeBoxItemCountText("무기 상자", _filledSlotCnt, _slotCnt);
+    }
 }

@@ -234,9 +234,9 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         }
     }
 
-    public void ChangeBoxItemCountText(int itemCnt, int maxCnt)
+    public void ChangeBoxItemCountText(string boxName, int itemCnt, int maxCnt)
     {
-        _boxItemCountText.text = "상자 (" + itemCnt + " / " + maxCnt + ")";
+        _boxItemCountText.text = boxName + " (" + itemCnt + " / " + maxCnt + ")";
     }
 
     public void ChangeInventoryItemCountText(int itemCnt, int maxCnt)

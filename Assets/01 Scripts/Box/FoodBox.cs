@@ -8,4 +8,9 @@ public class FoodBox : Box
         _typeWeights[3].WeightValue = 10;
         _typeWeights[4].WeightValue = 0;
     }
+
+    protected override void ChangeBoxText()
+    {
+        UIManager.Instance.ChangeBoxItemCountText("음식 상자", _filledSlotCnt, _slotCnt);
+    }
 }

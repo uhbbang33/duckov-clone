@@ -9,4 +9,9 @@ public class MedicineBox : Box
         _typeWeights[3].WeightValue = 2;
         _typeWeights[4].WeightValue = 0;
     }
+
+    protected override void ChangeBoxText()
+    {
+        UIManager.Instance.ChangeBoxItemCountText("약품 상자", _filledSlotCnt, _slotCnt);
+    }
 }

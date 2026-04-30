@@ -43,6 +43,7 @@ public class BunkerManager : SingletonMonoBehaviour<BunkerManager>
     private void Start()
     {
         SoundManager.Instance.PlayBunkerBGM(_audioSource);
+        _audioSource.ignoreListenerPause = true;
     }
 
     // TODO : PoolManager?

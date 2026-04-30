@@ -14,6 +14,7 @@ public class TitleManager : SingletonMonoBehaviour<TitleManager>
         Cursor.visible = true;
 
         SoundManager.Instance.PlayTitleBGM(_audioSource);
+        _audioSource.ignoreListenerPause = true;
     }
 
     private void LoadBunkerScene()

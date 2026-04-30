@@ -19,6 +19,11 @@ public class LootBox : Box
         _typeWeights[4].WeightValue = 5;
     }
 
+    protected override void ChangeBoxText()
+    {
+        UIManager.Instance.ChangeBoxItemCountText("전리품", _filledSlotCnt, _slotCnt);
+    }
+
     protected override void SetBoxItems()
     {
         DataManager dataManager = DataManager.Instance;

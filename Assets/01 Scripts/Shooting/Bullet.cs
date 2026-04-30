@@ -56,7 +56,8 @@ public class Bullet : MonoBehaviour
 
             obj.GetComponent<HealthPoint>().TakeDamage(_damage);
 
-            SoundManager.Instance.PlaySFXOneShot(SFXName.Hit);
+            AudioSource source = obj.GetComponent<AudioSource>();
+            SoundManager.Instance.PlaySFXOneShot(SFXName.Hit, source);
         }
         else
         {
