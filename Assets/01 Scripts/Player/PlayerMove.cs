@@ -23,6 +23,7 @@ public class PlayerMove : MonoBehaviour
 
     [SerializeField] private float _rotationIgnoreRadius;
     private float _rollCoolTime;
+    private float _rollDistance;
     private bool _isRunButtonPressed;
     private float _speedDebuffRate;
     private bool _isZeroHydration;
@@ -35,8 +36,6 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private LayerMask _groundLayer;
     [SerializeField] private AudioSource _footStepSource;
     [SerializeField] private AudioSource _rollSource;
-
-    private WaitForSeconds _waitForRoll;
 
     public event Action OnRun;
     public event Action OnRunCancel;
@@ -112,6 +111,8 @@ public class PlayerMove : MonoBehaviour
         {
             dir = _rollDirection;
             speed = _playerMoveData.RollMoveSpeed;
+
+            _rollDistance += speed * Time.fixedDeltaTime;
         }
         else
         {
@@ -144,7 +145,6 @@ public class PlayerMove : MonoBehaviour
     private void MoveDataSetup()
     {
         _playerMoveData = _player.MoveData;
-        _waitForRoll = new WaitForSeconds(_playerMoveData.RollDuration);
     }
 
     private void LookAtMouse(Vector2 mousePos)
@@ -328,6 +328,7 @@ public class PlayerMove : MonoBehaviour
             _rollDirection = _lookDirection;
         }
 
+        _rollDistance = 0f;
         StartCoroutine(RollRoutine());
 
         _anim.SetTrigger(PlayerAnimParm.Roll);
@@ -409,7 +410,10 @@ public class PlayerMove : MonoBehaviour
 
     private IEnumerator RollRoutine()
     {
-        yield return _waitForRoll;
+        while (_rollDistance < _playerMoveData.RollDistance)
+        {
+            yield return new WaitForFixedUpdate();
+        }
 
         _rollCoolTime = _playerMoveData.RollCooldown;
 
