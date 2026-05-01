@@ -253,6 +253,9 @@ public class PlayerMove : MonoBehaviour
 
     private void OnMovePerformed(InputAction.CallbackContext context)
     {
+        if (_player.State == PlayerState.Rolling)
+            return;
+
         _moveInput = context.ReadValue<Vector2>().normalized;
         _anim.SetBool(PlayerAnimParm.Walk, true);
 
