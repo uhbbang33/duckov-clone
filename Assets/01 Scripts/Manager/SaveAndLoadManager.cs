@@ -198,7 +198,7 @@ public class SaveAndLoadManager : SingletonMonoBehaviour<SaveAndLoadManager>
         if (File.Exists(path))
         {
             File.Delete(path);
-            Debug.Log(path + "파일 삭제 완료");
+            //Debug.Log(path + "파일 삭제 완료");
         }
         else
         {
