@@ -53,7 +53,7 @@ public class SaveAndLoadManager : SingletonMonoBehaviour<SaveAndLoadManager>
 
             string json = JsonUtility.ToJson(data, true);
             File.WriteAllText(Path.Combine(_savePath, _statsSaveFileName), json);
-            Debug.Log("Player Stats 저장 완료");
+            //Debug.Log("Player Stats 저장 완료");
         }
         catch (Exception ex)
         {
@@ -69,7 +69,7 @@ public class SaveAndLoadManager : SingletonMonoBehaviour<SaveAndLoadManager>
 
             string json = JsonUtility.ToJson(data, true);
             File.WriteAllText(Path.Combine(_savePath, _inventorySaveFileName), json);
-            Debug.Log("PlayerInventory 저장 완료");
+            //Debug.Log("PlayerInventory 저장 완료");
         }
         catch (Exception ex)
         {
@@ -85,7 +85,7 @@ public class SaveAndLoadManager : SingletonMonoBehaviour<SaveAndLoadManager>
 
             string json = JsonUtility.ToJson(data, true);
             File.WriteAllText(Path.Combine(_savePath, _storageSaveFileName), json);
-            Debug.Log("Storage 저장 완료");
+            //Debug.Log("Storage 저장 완료");
         }
         catch (Exception ex)
         {
@@ -170,8 +170,8 @@ public class SaveAndLoadManager : SingletonMonoBehaviour<SaveAndLoadManager>
             return;
         }
 
-        //try
-        //{
+        try
+        {
             string json = File.ReadAllText(path);
             StorageSaveData data = JsonUtility.FromJson<StorageSaveData>(json);
             if (data == null)
@@ -181,11 +181,11 @@ public class SaveAndLoadManager : SingletonMonoBehaviour<SaveAndLoadManager>
             }
 
             _storage.SaveData = data;
-        //}
-        //catch (Exception ex)
-        //{
-        //    Debug.Log("Storage 로드 실패" + ex.Message);
-        //}
+        }
+        catch (Exception ex)
+        {
+            Debug.Log("Storage 로드 실패" + ex.Message);
+        }
     }
 
     #endregion Load

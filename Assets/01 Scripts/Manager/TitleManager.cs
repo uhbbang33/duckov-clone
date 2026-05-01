@@ -44,7 +44,6 @@ public class TitleManager : SingletonMonoBehaviour<TitleManager>
 
     public void OnClickSettings()
     {
-        SceneLoader.Instance.LoadScene(SceneName.FieldScene);
     }
 
     public void OnClickQuit()
