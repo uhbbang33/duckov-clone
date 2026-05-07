@@ -92,7 +92,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         _hydrationBackgroundOriginColor = _mainUIHydrationSliderBackground.color;
 
         // 커서가 화면 밖으로 못 나가도록
-        Cursor.lockState = CursorLockMode.Confined;
+        //Cursor.lockState = CursorLockMode.Confined;
     }
 
     private void OnEnable()

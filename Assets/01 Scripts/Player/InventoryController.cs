@@ -18,6 +18,7 @@ public class InventoryController : MonoBehaviour
     private bool _inventoryToggle;
 
     public bool InventoryIsOpen { get { return _inventoryToggle; } }
+    public int FrameClosedByCancel { get; private set; }
 
     public event Action<bool> OnInventoryToggle;
 
@@ -110,7 +111,10 @@ public class InventoryController : MonoBehaviour
     private void OnInventoryClose(InputAction.CallbackContext context)
     {
         if (_inventoryToggle)
-            CloseInventory();
+        {
+            SetInventory(false);
+            FrameClosedByCancel = Time.frameCount;
+        }
     }
 
     public void OnInventoryOpenWithInteractable()
@@ -122,31 +126,23 @@ public class InventoryController : MonoBehaviour
     }
 
     private void ToggleInventory()
-    {
-        if (_inventoryToggle)
-            CloseInventory();
-        else
-        {
+    { 
+        if (!_inventoryToggle)
             _soundManager.PlaySFXOneShot(SFXName.OpenInventory, 1f);
-            OpenInventory();
-        }
+
+        SetInventory(!_inventoryToggle);
     }
 
-    public void OpenInventory()
+    private void SetInventory(bool open)
     {
-        _inventoryToggle = true;
+        _inventoryToggle = open;
         _playerMove.StopMove();
-        _playerShooting.IsFirePressed = false;
-        OnInventoryToggle?.Invoke(true);
-    }
+        _playerShooting.IsFirePressed = !open;
 
-    public void CloseInventory()
-    {
-        _inventoryToggle = false;
-        _playerMove.RestartMove();
-        _playerShooting.IsFirePressed = true;
-        _uiManager.CurrentInfoUI?.HideUI();
-        OnInventoryToggle?.Invoke(false);
+        if (!open)
+            _uiManager.CurrentInfoUI?.HideUI();
+
+        OnInventoryToggle?.Invoke(open);
     }
 
     private void OnWeightChanged(float carryWeight, float maxWeight)

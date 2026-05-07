@@ -31,7 +31,8 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager>
 
     private void OnPause(InputAction.CallbackContext context)
     {
-        if (_inventoryController.InventoryIsOpen)
+        if (_inventoryController.InventoryIsOpen
+            || _inventoryController.FrameClosedByCancel == Time.frameCount)
             return;
 
         _isPaused = !_isPaused;
