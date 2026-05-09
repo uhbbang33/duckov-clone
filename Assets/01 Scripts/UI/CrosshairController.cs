@@ -50,6 +50,8 @@ public class CrosshairController : MonoBehaviour
     private Vector2 _targetRecoilOffset = Vector2.zero;
     private Vector2 _mousePos;
 
+    public float CurrentSpread => _currentSpread;
+
     private void Awake()
     {
         _rect = GetComponent<RectTransform>();
@@ -166,7 +168,7 @@ public class CrosshairController : MonoBehaviour
     }
 
 
-    private void ApplyRecoil()
+    private float ApplyRecoil()
     {
         Vector2 screenCenter = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
 
@@ -177,5 +179,7 @@ public class CrosshairController : MonoBehaviour
         _currentSpread = Mathf.Min(_currentSpread + _spreadPerShot, _maxSpread);
 
         _shakeTimer += _shakeDuration;
+
+        return _currentSpread;
     }
 }

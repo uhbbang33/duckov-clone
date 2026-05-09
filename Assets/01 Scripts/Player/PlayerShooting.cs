@@ -9,6 +9,7 @@ public class PlayerShooting : MonoBehaviour
     [SerializeField] private float _reloadDelay = 0.1f;
     [SerializeField] private float _soundLevelDuration = 0.1f;
     [SerializeField] private float _shootIgnoreRadius = 2f;
+    [SerializeField] private float _spreadToAngle;
     [SerializeField] private AudioSource _playerShootingAudioSource;
 
     private GameObject _currentGunObject;
@@ -32,7 +33,7 @@ public class PlayerShooting : MonoBehaviour
     private WaitForSeconds _waitforReloadDelay;
     private WaitForSeconds _waitforSoundLevelDuration;
 
-    public event Action OnFire;
+    public event Func<float> OnFire;
 
     public GameObject CurrentGunObject
     {
@@ -141,7 +142,9 @@ public class PlayerShooting : MonoBehaviour
 
     private void Fire()
     {
-        Vector3 dir = GetFireDirection();
+        float spread = OnFire?.Invoke() ?? 0f;
+
+        Vector3 dir = GetFireDirection(spread);
 
         if (dir == Vector3.zero)
             return;
@@ -169,7 +172,6 @@ public class PlayerShooting : MonoBehaviour
 
         _playerEquip.RefreshHUDAmmoCountText();
 
-        OnFire?.Invoke();
     }
 
     private void Reload()
@@ -310,15 +312,23 @@ public class PlayerShooting : MonoBehaviour
         return Vector3.zero;
     }
 
-    private Vector3 GetFireDirection()
+    private Vector3 GetFireDirection(float spread)
     {
         Vector3 aimTarget = GetAimWorldPosition();
 
         if (aimTarget == Vector3.zero)
             return Vector3.zero;
 
-        Vector3 dir = (aimTarget - _currentGun.MuzzleTransform.position);
-        return dir.normalized;
+        Vector3 dir = (aimTarget - _currentGun.MuzzleTransform.position).normalized;
+
+        if (spread <= 0f)
+            return dir;
+
+        float spreadAngle = spread * _spreadToAngle;
+        float randomAngle = UnityEngine.Random.Range(-spreadAngle, spreadAngle);
+        Vector3 spreadDir = Quaternion.AngleAxis(randomAngle, Vector3.up) * dir;
+
+        return spreadDir.normalized;
     }
 
     #endregion Set Shoot Direction
