@@ -1481,6 +1481,52 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5013057112956887040, guid: 1b536f232061e954b9334be072b67f5c, type: 3}
   m_PrefabInstance: {fileID: 113601220}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &116433007
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 116433009}
+  - component: {fileID: 116433008}
+  m_Layer: 0
+  m_Name: CameraShakeController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &116433008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 116433007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 453cf827293746b45a7ac08dfeb7aa0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraShakeController
+  _impulseSource: {fileID: 6032076664905499570}
+  _baseImpulseForce: 0.1
+--- !u!4 &116433009
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 116433007}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &117298491
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23077,6 +23123,7 @@ GameObject:
   - component: {fileID: 1680202691}
   - component: {fileID: 1680202688}
   - component: {fileID: 1680202687}
+  - component: {fileID: 1680202692}
   m_Layer: 0
   m_Name: Cinemachine Camera
   m_TagString: Untagged
@@ -23162,6 +23209,30 @@ Transform:
   - {fileID: 2081990346}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 45, y: -45, z: 0}
+--- !u!114 &1680202692
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1680202685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00b2d199b96b516448144ab30fb26aed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineImpulseListener
+  ApplyAfter: 2
+  ChannelMask: 1
+  Gain: 1
+  Use2DDistance: 1
+  UseCameraSpace: 1
+  SignalCombinationMode: 0
+  ReactionSettings:
+    m_SecondaryNoise: {fileID: 0}
+    AmplitudeGain: 1
+    FrequencyGain: 1
+    Duration: 1
+    m_NoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!1 &1682220517
 GameObject:
   m_ObjectHideFlags: 0
@@ -29293,6 +29364,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5522063729559741274}
+  - component: {fileID: 6032076664905499570}
   - component: {fileID: 4579580697642508236}
   - component: {fileID: 6032076664905499552}
   - component: {fileID: 6032076664905499554}
@@ -29715,6 +29787,7 @@ MonoBehaviour:
   _shootIgnoreRadius: 2
   _spreadToAngle: 0.08
   _playerShootingAudioSource: {fileID: 1473866032}
+  _cameraShakeController: {fileID: 116433008}
 --- !u!114 &6032076664905499566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29854,6 +29927,59 @@ MonoBehaviour:
   _canvas: {fileID: 1272288416}
   _scaleOffset: 0.02
   _positionOffest: {x: 0, y: 2, z: 0}
+--- !u!114 &6032076664905499570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2919116958976057407}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineImpulseSource
+  ImpulseDefinition:
+    ImpulseChannel: 1
+    ImpulseShape: 1
+    CustomImpulseShape:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    ImpulseDuration: 0.2
+    ImpulseType: 0
+    DissipationRate: 0.25
+    RawSignal: {fileID: 0}
+    AmplitudeGain: 1
+    FrequencyGain: 1
+    RepeatMode: 0
+    Randomize: 1
+    TimeEnvelope:
+      AttackShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      DecayShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      AttackTime: 0
+      SustainTime: 0.2
+      DecayTime: 0.7
+      ScaleWithImpact: 1
+      HoldForever: 0
+    ImpactRadius: 100
+    DirectionMode: 0
+    DissipationMode: 2
+    DissipationDistance: 100
+    PropagationSpeed: 343
+  DefaultVelocity: {x: 0, y: -1, z: 0}
 --- !u!1 &6104561713744950228
 GameObject:
   m_ObjectHideFlags: 0
@@ -30067,3 +30193,4 @@ SceneRoots:
   - {fileID: 5522063729559741274}
   - {fileID: 1422524059}
   - {fileID: 1010405151}
+  - {fileID: 116433009}

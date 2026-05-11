@@ -11,6 +11,7 @@ public class PlayerShooting : MonoBehaviour
     [SerializeField] private float _shootIgnoreRadius = 2f;
     [SerializeField] private float _spreadToAngle;
     [SerializeField] private AudioSource _playerShootingAudioSource;
+    [SerializeField] private CameraShakeController _cameraShakeController;
 
     private GameObject _currentGunObject;
     private Gun _currentGun;
@@ -148,6 +149,8 @@ public class PlayerShooting : MonoBehaviour
 
         if (dir == Vector3.zero)
             return;
+
+        _cameraShakeController.ShakeOnFire(dir, spread);
 
         // bullet
         GameObject bulletObject = _poolManager.GetObject(PoolId.Bullet, _currentGun.MuzzleTransform, false);
