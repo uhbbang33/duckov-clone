@@ -35,6 +35,7 @@ public class PlayerShooting : MonoBehaviour
     private WaitForSeconds _waitforSoundLevelDuration;
 
     public event Func<float> OnFire;
+    public event Action OnFireFail;
 
     public GameObject CurrentGunObject
     {
@@ -148,7 +149,10 @@ public class PlayerShooting : MonoBehaviour
         Vector3 dir = GetFireDirection(spread);
 
         if (dir == Vector3.zero)
+        {
+            OnFireFail?.Invoke();
             return;
+        }
 
         _cameraShakeController.ShakeOnFire(dir, spread);
 

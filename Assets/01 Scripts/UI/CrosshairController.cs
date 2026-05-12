@@ -68,7 +68,10 @@ public class CrosshairController : MonoBehaviour
         SubscribeInputActions();
 
         if (_playerShooting != null)
+        {
             _playerShooting.OnFire += ApplyRecoil;
+            _playerShooting.OnFireFail += FailFire;
+        }
     }
 
     private void Start()
@@ -83,6 +86,7 @@ public class CrosshairController : MonoBehaviour
         _playerShooting = _gameManager.PlayerObject.GetComponent<PlayerShooting>();
 
         _playerShooting.OnFire += ApplyRecoil;
+        _playerShooting.OnFireFail += FailFire;
     }
 
     private void Update()
@@ -103,6 +107,7 @@ public class CrosshairController : MonoBehaviour
         _actions.Player.Aim.canceled -= OnAimCanceled;
 
         _playerShooting.OnFire -= ApplyRecoil;
+        _playerShooting.OnFireFail -= FailFire;
     }
 
     private void SubscribeInputActions()
@@ -181,5 +186,13 @@ public class CrosshairController : MonoBehaviour
         _shakeTimer += _shakeDuration;
 
         return _currentSpread;
+    }
+
+    private void FailFire()
+    {
+        _targetRecoilOffset = Vector2.zero;
+        _currentSpread = _defaultSpread;
+        _shakeTimer = 0f;
+        _shakeIntervalTimer = 0f;
     }
 }
