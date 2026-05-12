@@ -136,7 +136,12 @@ public class InventoryController : MonoBehaviour
     private void SetInventory(bool open)
     {
         _inventoryToggle = open;
-        _playerMove.StopMove();
+
+        if (open)
+            _playerMove.StopMove();
+        else
+            _playerMove.RestartMove();
+
         _playerShooting.IsFirePressed = !open;
 
         if (!open)
