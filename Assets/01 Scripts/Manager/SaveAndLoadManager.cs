@@ -9,6 +9,7 @@ public class SaveAndLoadManager : SingletonMonoBehaviour<SaveAndLoadManager>
     private readonly string _statsSaveFileName = "PlayerStatsSave.json";
     private readonly string _inventorySaveFileName = "PlayerInventorySave.json";
     private readonly string _storageSaveFileName = "StorageSave.json";
+    private readonly string _timeSaveFileName = "TimeSave.json";
 
     private GameManager _gameManager;
     private Storage _storage;
@@ -62,11 +63,7 @@ public class SaveAndLoadManager : SingletonMonoBehaviour<SaveAndLoadManager>
     public void SavePlayerStats() => Save(_player.StatsSaveData, _statsSaveFileName);
     public void SavePlayerInventory() => Save(_inventoryController.InventorySaveData, _inventorySaveFileName);
     public void SaveStorage() => Save(_storage.SaveData, _storageSaveFileName);
-
-    public void SaveTime()
-    {
-
-    }
+    public void SaveTime() => Save(_gameManager.DayNightCycle.SaveData, _timeSaveFileName);
 
     #endregion Save
 
@@ -107,7 +104,8 @@ public class SaveAndLoadManager : SingletonMonoBehaviour<SaveAndLoadManager>
         => Load<PlayerStatsSaveData>(_statsSaveFileName,
         onSuccess: data => _player.StatsSaveData = data);
     
-    public void LoadPlayerInventory() => Load<PlayerInventorySaveData>(_inventorySaveFileName,
+    public void LoadPlayerInventory()
+        => Load<PlayerInventorySaveData>(_inventorySaveFileName,
         onSuccess: data => _inventoryController.InventorySaveData = data,
         onFileNotFound: () => _gameManager.Inventory.ClearInventory());
 
@@ -118,6 +116,9 @@ public class SaveAndLoadManager : SingletonMonoBehaviour<SaveAndLoadManager>
         Load<StorageSaveData>(_storageSaveFileName,
             onSuccess: data => _storage.SaveData = data);
     }
+    public void LoadTime() 
+        => Load<TimeSaveData>(_timeSaveFileName,
+        onSuccess: data => _gameManager.DayNightCycle.SaveData = data);
 
     #endregion Load
 

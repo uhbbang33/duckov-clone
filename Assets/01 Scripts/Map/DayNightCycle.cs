@@ -15,12 +15,31 @@ public class DayNightCycle : MonoBehaviour
 
     public float CurrentTime => _currentTime;
 
+    public TimeSaveData SaveData
+    {
+        get
+        {
+            return new TimeSaveData
+            {
+                SaveTime = _currentTime
+            };
+        }
+        set
+        {
+            _currentTime = value.SaveTime;
+        }
+    }
+
     private void Start()
     {
-        if (GameManager.Instance.CurrentSceneName == SceneName.FieldScene)
+        GameManager gameManager = GameManager.Instance;
+
+        if (gameManager.CurrentSceneName == SceneName.FieldScene)
             _isFieldScene = true;
         else
             _isFieldScene = false;
+
+        gameManager.DayNightCycle = this;
     }
 
     private void Update()

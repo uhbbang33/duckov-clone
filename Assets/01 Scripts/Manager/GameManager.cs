@@ -9,6 +9,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     private string _currentSceneName;
     private GameObject _playerObject;
     private InputActions _inputActions;
+    private DayNightCycle _dayNightCycle;
 
     public Inventory Inventory => _inventory;
     public string CurrentSceneName
@@ -20,6 +21,11 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     {
         get { return _playerObject; }
         set { _playerObject = value; }
+    }
+    public DayNightCycle DayNightCycle
+    {
+        get { return _dayNightCycle; }
+        set { _dayNightCycle = value; }
     }
 
     public InputActions Actions => _inputActions;
