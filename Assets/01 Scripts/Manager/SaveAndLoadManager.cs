@@ -93,6 +93,11 @@ public class SaveAndLoadManager : SingletonMonoBehaviour<SaveAndLoadManager>
         }
     }
 
+    public void SaveTime()
+    {
+
+    }
+
     #endregion Save
 
 
