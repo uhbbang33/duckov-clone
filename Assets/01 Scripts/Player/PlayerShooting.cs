@@ -154,7 +154,7 @@ public class PlayerShooting : MonoBehaviour
             return;
         }
 
-        _cameraShakeController.ShakeOnFire(dir, spread);
+        _cameraShakeController.ShakeOnFire(-dir, spread);
 
         // bullet
         GameObject bulletObject = _poolManager.GetObject(PoolId.Bullet, _currentGun.MuzzleTransform, false);

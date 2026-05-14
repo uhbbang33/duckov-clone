@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6749933126103781246}
   - component: {fileID: 2263927893813792744}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Explosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AutoReturnParticle
   _particle: {fileID: 5679509749635322170}
+  _poolId: 0
 --- !u!1 &377478304872616706
 GameObject:
   m_ObjectHideFlags: 0
@@ -57,7 +58,7 @@ GameObject:
   - component: {fileID: 3561793794852959595}
   - component: {fileID: 4333084002360078644}
   - component: {fileID: 536548284313568186}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Shockwave (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4951,7 +4952,7 @@ GameObject:
   - component: {fileID: 2121033189890640768}
   - component: {fileID: 4720599204978503312}
   - component: {fileID: 3879521676791282584}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Shockwave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9845,7 +9846,7 @@ GameObject:
   - component: {fileID: 3141338817231946959}
   - component: {fileID: 8293699962976763155}
   - component: {fileID: 5741982436380904540}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Particle System (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14739,7 +14740,7 @@ GameObject:
   - component: {fileID: 1902026083625067176}
   - component: {fileID: 7169318498635720914}
   - component: {fileID: 2941265208327222287}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Particle System (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19633,7 +19634,7 @@ GameObject:
   - component: {fileID: 4438064765140289682}
   - component: {fileID: 3155915167836628537}
   - component: {fileID: 6655121143482054570}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Particle System (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24527,7 +24528,7 @@ GameObject:
   - component: {fileID: 2873067837184786831}
   - component: {fileID: 5901717746230080173}
   - component: {fileID: 6545952536624407626}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Particle System (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29421,7 +29422,7 @@ GameObject:
   - component: {fileID: 7153199183340283002}
   - component: {fileID: 4872446638777820618}
   - component: {fileID: 6543677689069240423}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Flares
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34315,7 +34316,7 @@ GameObject:
   - component: {fileID: 1382964769495919739}
   - component: {fileID: 3765979945332151394}
   - component: {fileID: 3590994069885479073}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Particle System (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39209,7 +39210,7 @@ GameObject:
   - component: {fileID: 8876057809662835808}
   - component: {fileID: 2957982989197971224}
   - component: {fileID: 4743103747328060444}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Flash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44103,7 +44104,7 @@ GameObject:
   - component: {fileID: 8373681332751671659}
   - component: {fileID: 9210722417923856561}
   - component: {fileID: 5415934690105246480}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Shockwave (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48997,7 +48998,7 @@ GameObject:
   - component: {fileID: 6021991905379739296}
   - component: {fileID: 4611539677011308665}
   - component: {fileID: 8898999680226175526}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53891,7 +53892,7 @@ GameObject:
   - component: {fileID: 7733232977849459008}
   - component: {fileID: 5679509749635322170}
   - component: {fileID: 4748985692255647630}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: vfx_Explosion_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}

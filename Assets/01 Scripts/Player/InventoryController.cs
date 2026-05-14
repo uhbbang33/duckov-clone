@@ -142,8 +142,6 @@ public class InventoryController : MonoBehaviour
         else
             _playerMove.RestartMove();
 
-        _playerShooting.IsFirePressed = !open;
-
         if (!open)
             _uiManager.CurrentInfoUI?.HideUI();
 
