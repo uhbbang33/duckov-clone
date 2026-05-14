@@ -45,53 +45,23 @@ public class SaveAndLoadManager : SingletonMonoBehaviour<SaveAndLoadManager>
     }
 
     #region Save
-    public void SavePlayerStats()
+    
+    public void Save<T>(T data, string fileName)
     {
         try
         {
-            PlayerStatsSaveData data = _player.StatsSaveData;
-
             string json = JsonUtility.ToJson(data, true);
-            File.WriteAllText(Path.Combine(_savePath, _statsSaveFileName), json);
-            //Debug.Log("Player Stats 저장 완료");
+            File.WriteAllText(Path.Combine(_savePath, fileName), json);
         }
         catch (Exception ex)
         {
-            Debug.Log("Player Stats 저장 실패" + ex.Message);
+            Debug.Log(fileName + " 저장 실패" + ex.Message);
         }
     }
 
-    public void SavePlayerInventory()
-    {
-        try
-        {
-            PlayerInventorySaveData data = _inventoryController.InventorySaveData;
-
-            string json = JsonUtility.ToJson(data, true);
-            File.WriteAllText(Path.Combine(_savePath, _inventorySaveFileName), json);
-            //Debug.Log("PlayerInventory 저장 완료");
-        }
-        catch (Exception ex)
-        {
-            Debug.Log("PlayerInventory 저장 실패" + ex.Message);
-        }
-    }
-
-    public void SaveStorage()
-    {
-        try
-        {
-            StorageSaveData data = _storage.SaveData;
-
-            string json = JsonUtility.ToJson(data, true);
-            File.WriteAllText(Path.Combine(_savePath, _storageSaveFileName), json);
-            //Debug.Log("Storage 저장 완료");
-        }
-        catch (Exception ex)
-        {
-            Debug.Log("Storage 저장 실패" + ex.Message);
-        }
-    }
+    public void SavePlayerStats() => Save(_player.StatsSaveData, _statsSaveFileName);
+    public void SavePlayerInventory() => Save(_inventoryController.InventorySaveData, _inventorySaveFileName);
+    public void SaveStorage() => Save(_storage.SaveData, _storageSaveFileName);
 
     public void SaveTime()
     {
@@ -103,94 +73,50 @@ public class SaveAndLoadManager : SingletonMonoBehaviour<SaveAndLoadManager>
 
     #region Load
 
+    public void Load<T>(string fileName, Action<T> onSuccess, Action onFileNotFound = null) where T : class
+    {
+        string path = Path.Combine(_savePath, fileName);
+
+        if (!File.Exists(path))
+        {
+            Debug.Log(fileName + " 데이터 json 파일 없음 - 초기값 사용");
+            onFileNotFound?.Invoke();
+            return;
+        }
+
+        try
+        {
+            string json = File.ReadAllText(path);
+            T data = JsonUtility.FromJson<T>(json);
+
+            if (data == null)
+            {
+                Debug.LogError(fileName + " JSON 파싱 실패");
+                return;
+            }
+
+            onSuccess(data);
+        }
+        catch (Exception ex)
+        {
+            Debug.Log(fileName + " 로드 실패" + ex.Message);
+        }
+    }
+
     public void LoadPlayerStats()
-    {
-        string path = Path.Combine(_savePath, _statsSaveFileName);
-
-        if (!File.Exists(path))
-        {
-            Debug.Log("PlayerStats 데이터 json 파일 없음 - 초기값 사용");
-            return;
-        }
-
-        try
-        {
-            string json = File.ReadAllText(path);
-            PlayerStatsSaveData data = JsonUtility.FromJson<PlayerStatsSaveData>(json);
-            if (data == null)
-            {
-                Debug.LogError("PlayerStatsData JSON 파싱 실패");
-                return;
-            }
-
-            _player.StatsSaveData = data;
-        }
-        catch (Exception ex)
-        {
-            Debug.Log("Player Stats 로드 실패" + ex.Message);
-        }
-    }
-
-    public void LoadPlayerInventory()
-    {
-        string path = Path.Combine(_savePath, _inventorySaveFileName);
-
-        if (!File.Exists(path))
-        {
-            Debug.Log("Inventory 데이터 json 파일 없음 - 초기값 사용");
-
-            //Inventory Clear
-            _gameManager.Inventory.ClearInventory();
-
-            return;
-        }
-
-        try
-        {
-            string json = File.ReadAllText(path);
-            PlayerInventorySaveData data = JsonUtility.FromJson<PlayerInventorySaveData>(json);
-            if (data == null)
-            {
-                Debug.LogError("PlayerInventoryData JSON 파싱 실패");
-                return;
-            }
-
-            _inventoryController.InventorySaveData = data;
-        }
-        catch (Exception ex)
-        {
-            Debug.Log("Player Inventory 로드 실패" + ex.Message);
-        }
-    }
+        => Load<PlayerStatsSaveData>(_statsSaveFileName,
+        onSuccess: data => _player.StatsSaveData = data);
+    
+    public void LoadPlayerInventory() => Load<PlayerInventorySaveData>(_inventorySaveFileName,
+        onSuccess: data => _inventoryController.InventorySaveData = data,
+        onFileNotFound: () => _gameManager.Inventory.ClearInventory());
 
     public void LoadStorage()
     {
-        string path = Path.Combine(_savePath, _storageSaveFileName);
-
         _storage = BunkerManager.Instance?.storage;
 
-        if (!File.Exists(path))
-        {
-            Debug.Log("Storage 데이터 json 파일 없음 - 초기값 사용");
-            return;
-        }
-
-        try
-        {
-            string json = File.ReadAllText(path);
-            StorageSaveData data = JsonUtility.FromJson<StorageSaveData>(json);
-            if (data == null)
-            {
-                Debug.LogError("StorageData JSON 파싱 실패");
-                return;
-            }
-
-            _storage.SaveData = data;
-        }
-        catch (Exception ex)
-        {
-            Debug.Log("Storage 로드 실패" + ex.Message);
-        }
+        Load<StorageSaveData>(_storageSaveFileName,
+            onSuccess: data => _storage.SaveData = data);
     }
 
     #endregion Load
