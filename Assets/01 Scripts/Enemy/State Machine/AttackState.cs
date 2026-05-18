@@ -14,7 +14,7 @@ public class AttackState : EnemyStateBase
     private const float _turnSpeed = 3f;
     private const float _attackOffset = -1f;
     private const float _reloadWalkSpeed = 1f;
-    private const float _burstCooldownDuration = 1f;
+    private const float _burstCooldownDuration = 1.5f;
     
 
     public AttackState(Enemy enemy, GunData gunData) : base(enemy)
