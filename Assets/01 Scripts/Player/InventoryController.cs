@@ -106,10 +106,11 @@ public class InventoryController : MonoBehaviour
 
     private void OnInventoryClose(InputAction.CallbackContext context)
     {
-        if (_inventoryToggle)
-        {
-            SetInventory(false);
-        }
+        IUICloseable ui = _uiManager.PeekStack();
+        if (ui != null)
+            return;
+
+        _uiManager.CloseTopUI();
     }
 
     public void OnInventoryOpenWithInteractable()
@@ -121,10 +122,15 @@ public class InventoryController : MonoBehaviour
     }
 
     private void ToggleInventory()
-    { 
+    {
         if (!_inventoryToggle)
-            _soundManager.PlaySFXOneShot(SFXName.OpenInventory, 1f);
+        {
+            IUICloseable ui = _uiManager.PeekStack();
+            if (ui != null)
+                return;
 
+            _soundManager.PlaySFXOneShot(SFXName.OpenInventory, 1f);
+        }
         SetInventory(!_inventoryToggle);
     }
 
