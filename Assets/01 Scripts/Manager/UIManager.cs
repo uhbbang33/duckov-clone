@@ -355,14 +355,11 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 
     public void PushStack(IUICloseable ui)
     {
-        Debug.Log("push stack");
         _uiStack.Push(ui);
     }
 
     public IUICloseable PopStack()
     {
-        Debug.Log("pop stack");
-
         if(_uiStack.Count > 0)
             return _uiStack.Pop();
 
@@ -371,8 +368,6 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 
     public IUICloseable PeekStack()
     {
-        Debug.Log("Peek stack");
-
         if (_uiStack.Count > 0)
             return _uiStack.Peek();
 
@@ -381,8 +376,6 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 
     public void CloseTopUI()
     {
-        Debug.Log("CloseTopUI");
-
         IUICloseable ui = PopStack();
         ui?.CloseUI();
     }
