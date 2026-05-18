@@ -72,6 +72,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     private InputActions _inputActions;
     private Color _hydrationBackgroundOriginColor;
     private Color _hungerBackgroundOriginColor;
+    private Stack<IUICloseable> _uiStack;
 
     public Transform DragCanvasTransform => _dragCanvasTransform;
     public Sprite PistolIcon => _pistolIcon;
@@ -87,6 +88,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 
         _currentSlot = new ItemSlot();
         _inputActions = new InputActions();
+        _uiStack = new Stack<IUICloseable>();
 
         _hungerBackgroundOriginColor = _mainUIHungerSliderBackground.color;
         _hydrationBackgroundOriginColor = _mainUIHydrationSliderBackground.color;
@@ -347,6 +349,46 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         _gameOverUI.ShowGameOverUI();
         Cursor.visible = true;
     }
+
+
+    #region Stack
+
+    public void PushStack(IUICloseable ui)
+    {
+        Debug.Log("push stack");
+        _uiStack.Push(ui);
+    }
+
+    public IUICloseable PopStack()
+    {
+        Debug.Log("pop stack");
+
+        if(_uiStack.Count > 0)
+            return _uiStack.Pop();
+
+        return null;
+    }
+
+    public IUICloseable PeekStack()
+    {
+        Debug.Log("Peek stack");
+
+        if (_uiStack.Count > 0)
+            return _uiStack.Peek();
+
+        return null;
+    }
+
+    public void CloseTopUI()
+    {
+        Debug.Log("CloseTopUI");
+
+        IUICloseable ui = PopStack();
+        ui?.CloseUI();
+    }
+
+    #endregion Stack
+
 
     #region On Button Click
     public void OnEquipButtonClick()

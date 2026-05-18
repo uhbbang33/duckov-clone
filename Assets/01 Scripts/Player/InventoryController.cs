@@ -13,12 +13,10 @@ public class InventoryController : MonoBehaviour
     private PlayerMove _playerMove;
     private PlayerInteract _playerInteract;
     private PlayerEquip _playerEquip;
-    private PlayerShooting _playerShooting;
 
     private bool _inventoryToggle;
 
     public bool InventoryIsOpen { get { return _inventoryToggle; } }
-    public int FrameClosedByCancel { get; private set; }
 
     public event Action<bool> OnInventoryToggle;
 
@@ -70,7 +68,6 @@ public class InventoryController : MonoBehaviour
         _playerMove = GetComponent<PlayerMove>();
         _playerInteract = GetComponent<PlayerInteract>();
         _playerEquip = GetComponent<PlayerEquip>();
-        _playerShooting = GetComponent<PlayerShooting>();
     }
 
     private void Start()
@@ -102,7 +99,6 @@ public class InventoryController : MonoBehaviour
         _playerInteract.OnDisableInteractEvent -= OnInventoryCloseAllowed;
     }
 
-
     private void OnInventoryInput(InputAction.CallbackContext context)
     {
         ToggleInventory();
@@ -113,7 +109,6 @@ public class InventoryController : MonoBehaviour
         if (_inventoryToggle)
         {
             SetInventory(false);
-            FrameClosedByCancel = Time.frameCount;
         }
     }
 
@@ -146,6 +141,12 @@ public class InventoryController : MonoBehaviour
             _uiManager.CurrentInfoUI?.HideUI();
 
         OnInventoryToggle?.Invoke(open);
+    }
+
+    public void CloseInventory()
+    {
+        if (_inventoryToggle)
+            SetInventory(false);
     }
 
     private void OnWeightChanged(float carryWeight, float maxWeight)

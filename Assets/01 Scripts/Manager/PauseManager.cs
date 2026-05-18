@@ -2,22 +2,20 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 
-public class PauseManager : SingletonMonoBehaviour<PauseManager>
+public class PauseManager : SingletonMonoBehaviour<PauseManager>, IUICloseable
 {
     [SerializeField] private GameObject _pauseUI;
     [SerializeField] private GameObject _pauseReturnToTitleUI;
 
     private GameManager _gameManager;
     private DataManager _dataManager;
-    private InventoryController _inventoryController;
-
-    private bool _isPaused = false;
+    private UIManager _uiManager;
 
     private void Start()
     {
         _gameManager = GameManager.Instance;
         _dataManager = DataManager.Instance;
-        _inventoryController = _gameManager.PlayerObject.GetComponent<InventoryController>();
+        _uiManager = UIManager.Instance;
 
         _gameManager.Actions.UI.Pause.performed += OnPause;
     }
@@ -31,21 +29,24 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager>
 
     private void OnPause(InputAction.CallbackContext context)
     {
-        if (_inventoryController.InventoryIsOpen
-            || _inventoryController.FrameClosedByCancel == Time.frameCount)
-            return;
+        IUICloseable peekObject = _uiManager.PeekStack();
 
-        _isPaused = !_isPaused;
-
-        if (_isPaused)
+        if (peekObject == null)
             Pause();
-        else
-            Resume();
+        else if (peekObject == (IUICloseable)this)
+            _uiManager.CloseTopUI();
+    }
+
+    public void CloseUI()
+    {
+        Resume();
     }
 
     private void Pause()
     {
-        UIManager.Instance.ShowCursor(true);
+        _uiManager.ShowCursor(true);
+        _uiManager.PushStack(this);
+
         Time.timeScale = 0f;
 
         _pauseUI.SetActive(true);
@@ -59,7 +60,8 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager>
 
     private void Resume()
     {
-        UIManager.Instance.ShowCursor(false);
+        _uiManager.ShowCursor(false);
+
         Time.timeScale = 1f;
 
         _pauseUI.SetActive(false);
@@ -74,8 +76,7 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager>
 
     public void OnClickContinue()
     {
-        _isPaused = false;
-        Resume();
+        _uiManager.CloseTopUI();
     }
 
     public void OnClickReturnToTitle()

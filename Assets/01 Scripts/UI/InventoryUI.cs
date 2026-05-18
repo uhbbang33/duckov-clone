@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InventoryUI : MonoBehaviour
+public class InventoryUI : MonoBehaviour, IUICloseable
 {
     [SerializeField] private GameObject _inventoryUIObject;
     [SerializeField] private GameObject[] _slotObjects;
@@ -48,5 +48,15 @@ public class InventoryUI : MonoBehaviour
         _uiManager.DefaultUHDShowToggle(!isInventoryOpen);
         _uiManager.ShowCursor(isInventoryOpen);
         _uiManager.PlayerCanvasShowToggle(!isInventoryOpen);
+
+        if (isInventoryOpen)
+            _uiManager.PushStack(this);
+        else if (_uiManager.PeekStack() == (IUICloseable)this)
+            _uiManager.PopStack();
+    }
+
+    public void CloseUI()
+    {
+        _inventoryController.CloseInventory();
     }
 }

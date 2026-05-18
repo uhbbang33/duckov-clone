@@ -1511,7 +1511,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraShakeController
   _impulseSource: {fileID: 6032076664905499570}
-  _baseImpulseForce: 0.1
+  _speedMultiplier: 0.001
 --- !u!4 &116433009
 Transform:
   m_ObjectHideFlags: 0
@@ -16594,7 +16594,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 55074716}
         m_TargetAssemblyTypeName: PauseManager, Assembly-CSharp
-        m_MethodName: OnClickReturnToTile
+        m_MethodName: OnClickReturnToTitle
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
