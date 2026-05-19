@@ -54,10 +54,10 @@ public class Bullet : MonoBehaviour
         {
             hitEffectObject = _poolManager.GetObject(PoolId.BloodSmoke, obj.transform, false);
 
-            obj.GetComponent<HealthPoint>().TakeDamage(_damage);
-
             AudioSource source = obj.GetComponent<AudioSource>();
             SoundManager.Instance.PlaySFXOneShot(SFXName.Hit, source);
+
+            obj.GetComponent<HealthPoint>().TakeDamage(_damage);
         }
         else
         {
