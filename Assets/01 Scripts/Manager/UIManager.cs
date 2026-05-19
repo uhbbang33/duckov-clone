@@ -356,13 +356,16 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     public void PushStack(IUICloseable ui)
     {
         _uiStack.Push(ui);
+        Debug.Log("Push" + ui.ToString());
     }
 
     public IUICloseable PopStack()
     {
-        if(_uiStack.Count > 0)
+        if (_uiStack.Count > 0)
+        {
+            Debug.Log("Pop" + _uiStack.Peek());
             return _uiStack.Pop();
-
+        }
         return null;
     }
 

@@ -291,7 +291,7 @@ public class ItemSlotUI : MonoBehaviour,
         LayoutRebuilder.ForceRebuildLayoutImmediate(_rect);
 
         if(_dynamicFontSize != null)
-        _dynamicFontSize.SetTextSize();
+            _dynamicFontSize.SetTextSize();
     }
 
     protected virtual void OpenSlotMenu()

@@ -107,7 +107,7 @@ public class InventoryController : MonoBehaviour
     private void OnInventoryClose(InputAction.CallbackContext context)
     {
         IUICloseable ui = _uiManager.PeekStack();
-        if (ui != null)
+        if (ui == null || ui.GetType() != typeof(InventoryUI))
             return;
 
         _uiManager.CloseTopUI();
