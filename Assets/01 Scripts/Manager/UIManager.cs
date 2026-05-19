@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
+using System.Collections;
 
 public class UIManager : SingletonMonoBehaviour<UIManager>
 {
@@ -74,6 +75,8 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     private Color _hungerBackgroundOriginColor;
     private Stack<IUICloseable> _uiStack;
 
+    private Coroutine _waitOneFrameCoroutine;
+
     public Transform DragCanvasTransform => _dragCanvasTransform;
     public Sprite PistolIcon => _pistolIcon;
     public ItemInfoUI CurrentInfoUI
@@ -89,6 +92,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         _currentSlot = new ItemSlot();
         _inputActions = new InputActions();
         _uiStack = new Stack<IUICloseable>();
+
 
         _hungerBackgroundOriginColor = _mainUIHungerSliderBackground.color;
         _hydrationBackgroundOriginColor = _mainUIHydrationSliderBackground.color;
@@ -353,17 +357,21 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 
     #region Stack
 
-    public void PushStack(IUICloseable ui)
+    public bool TryPushStack(IUICloseable ui)
     {
+        if (_waitOneFrameCoroutine != null)
+            return false;
+
         _uiStack.Push(ui);
-        Debug.Log("Push" + ui.ToString());
+        return true;
     }
 
     public IUICloseable PopStack()
     {
         if (_uiStack.Count > 0)
         {
-            Debug.Log("Pop" + _uiStack.Peek());
+            _waitOneFrameCoroutine = StartCoroutine(WaitOneFrame());
+
             return _uiStack.Pop();
         }
         return null;
@@ -381,6 +389,14 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     {
         IUICloseable ui = PopStack();
         ui?.CloseUI();
+    }
+
+    // ESC키를 눌렀을 때, stack pop후 push(일시정지UI)가 한 프레임에서 일어나지 않도록
+    private IEnumerator WaitOneFrame()
+    {
+        yield return null;
+
+        _waitOneFrameCoroutine = null;
     }
 
     #endregion Stack

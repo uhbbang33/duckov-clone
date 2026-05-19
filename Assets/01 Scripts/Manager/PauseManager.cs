@@ -44,8 +44,10 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager>, IUICloseable
 
     private void Pause()
     {
+        if (!_uiManager.TryPushStack(this))
+            return;
+
         _uiManager.ShowCursor(true);
-        _uiManager.PushStack(this);
 
         Time.timeScale = 0f;
 

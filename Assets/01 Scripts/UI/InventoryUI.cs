@@ -44,15 +44,18 @@ public class InventoryUI : MonoBehaviour, IUICloseable
 
     private void OnInventoryToggled(bool isInventoryOpen)
     {
+        if (isInventoryOpen)
+        {
+            if (!_uiManager.TryPushStack(this))
+                return;
+        }
+        else if (_uiManager.PeekStack() == (IUICloseable)this)
+            _uiManager.PopStack();
+
         _inventoryUIObject.SetActive(isInventoryOpen);
         _uiManager.DefaultUHDShowToggle(!isInventoryOpen);
         _uiManager.ShowCursor(isInventoryOpen);
         _uiManager.PlayerCanvasShowToggle(!isInventoryOpen);
-
-        if (isInventoryOpen)
-            _uiManager.PushStack(this);
-        else if (_uiManager.PeekStack() == (IUICloseable)this)
-            _uiManager.PopStack();
     }
 
     public void CloseUI()

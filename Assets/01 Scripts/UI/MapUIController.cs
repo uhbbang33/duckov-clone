@@ -32,8 +32,10 @@ public class MapUIController : MonoBehaviour, IUICloseable
 
         if (ui == null)
         {
+            if (!_uiManager.TryPushStack(this))
+                return;
+
             _mapUI.SetActive(true);
-            _uiManager.PushStack(this);
             SetPlayerIconTransform();
             _playerMove.StopMove();
         }
