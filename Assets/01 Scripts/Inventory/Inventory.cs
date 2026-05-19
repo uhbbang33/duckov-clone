@@ -193,7 +193,7 @@ public class Inventory : ISortableContainer, ISaveableContainer
         // 2. 빈자리 있는지 확인
         if (CanAddItem(item.ID, quantity))
         {
-            ChangeMoney(price, quantity, false);
+            ChangeMoney(price, 1, false);
             TryAddItem(item, ref quantity);
             return true;
         }
