@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8262644270758899198}
   - component: {fileID: 7254232206000000717}
   - component: {fileID: 8496251720656075453}
+  - component: {fileID: 2818488065498045196}
   m_Layer: 5
   m_Name: Slot UI
   m_TagString: Untagged
@@ -96,6 +97,21 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 1
   m_ReverseArrangement: 0
+--- !u!114 &2818488065498045196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 508364713572692040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 004e9861269c8bb438cef4cf2285ce62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DynamicFontSize
+  _text: {fileID: 2528373646699555767}
+  _defaultSize: 180
+  _startReduceLength: 5
 --- !u!1 &1258824077438358117
 GameObject:
   m_ObjectHideFlags: 0
@@ -530,8 +546,8 @@ MonoBehaviour:
   m_fontSizeBase: 180
   m_fontWeight: 400
   m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMin: 150
+  m_fontSizeMax: 180
   m_fontStyle: 0
   m_HorizontalAlignment: 4
   m_VerticalAlignment: 512
@@ -543,7 +559,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 0
+  m_TextWrappingMode: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 1
   m_linkedTextComponent: {fileID: 0}

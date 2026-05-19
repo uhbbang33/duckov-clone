@@ -528,6 +528,10 @@ PrefabInstance:
       propertyPath: m_text
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3135286495342680194, guid: 4bdde2e8d571a0441a9a1c1f40a45706, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4464448921523010223, guid: 4bdde2e8d571a0441a9a1c1f40a45706, type: 3}
       propertyPath: m_Name
       value: BoxSlotUI 1
@@ -554,11 +558,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6309909869162218611, guid: 4bdde2e8d571a0441a9a1c1f40a45706, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6309909869162218611, guid: 4bdde2e8d571a0441a9a1c1f40a45706, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6309909869162218611, guid: 4bdde2e8d571a0441a9a1c1f40a45706, type: 3}
       propertyPath: m_SizeDelta.x
@@ -566,15 +570,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6309909869162218611, guid: 4bdde2e8d571a0441a9a1c1f40a45706, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 220
       objectReference: {fileID: 0}
     - target: {fileID: 6309909869162218611, guid: 4bdde2e8d571a0441a9a1c1f40a45706, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 6309909869162218611, guid: 4bdde2e8d571a0441a9a1c1f40a45706, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -220
       objectReference: {fileID: 0}
     - target: {fileID: 7504555724722992299, guid: 4bdde2e8d571a0441a9a1c1f40a45706, type: 3}
       propertyPath: m_Pivot.x
@@ -666,11 +670,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7531485361492380084, guid: 4bdde2e8d571a0441a9a1c1f40a45706, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 7531485361492380084, guid: 4bdde2e8d571a0441a9a1c1f40a45706, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 220
       objectReference: {fileID: 0}
     - target: {fileID: 7531485361492380084, guid: 4bdde2e8d571a0441a9a1c1f40a45706, type: 3}
       propertyPath: m_AnchoredPosition.x

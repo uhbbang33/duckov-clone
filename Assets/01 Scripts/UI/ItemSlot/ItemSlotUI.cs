@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(DynamicFontSize))]
 public class ItemSlotUI : MonoBehaviour,
     IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 { 
@@ -27,6 +28,7 @@ public class ItemSlotUI : MonoBehaviour,
     private Transform _originParent;
     private Vector2 _originAncghoredPos;
     private RectTransform _rect;
+    private DynamicFontSize _dynamicFontSize;
 
     private float _lastClickTime;
 
@@ -60,6 +62,8 @@ public class ItemSlotUI : MonoBehaviour,
     {
         _originParent = transform.parent;
         _originAncghoredPos = ((RectTransform)transform).anchoredPosition;
+
+        _dynamicFontSize = GetComponent<DynamicFontSize>();
     }
 
     protected virtual void Start()
@@ -285,6 +289,9 @@ public class ItemSlotUI : MonoBehaviour,
             _rect = GetComponent<RectTransform>();
         // Vertical Layout Group 재정렬
         LayoutRebuilder.ForceRebuildLayoutImmediate(_rect);
+
+        if(_dynamicFontSize != null)
+        _dynamicFontSize.SetTextSize();
     }
 
     protected virtual void OpenSlotMenu()
