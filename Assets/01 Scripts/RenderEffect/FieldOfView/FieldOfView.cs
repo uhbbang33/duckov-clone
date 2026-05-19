@@ -165,15 +165,12 @@ public class FieldOfView : MonoBehaviour
         // 시야각
         if (Vector3.Angle(transform.forward, dirToTarget) > angle)
         {
-            Debug.Log("시야각");
             return false;
         }
 
         // 장애물
         if (Physics.Raycast(transform.position, dirToTarget.normalized, dirToTarget.magnitude, _obstacleMask, QueryTriggerInteraction.Ignore))
         {
-
-            Debug.Log("장애물");
             return false;
         }
 
