@@ -145,11 +145,11 @@ public class FieldOfView : MonoBehaviour
 
     protected void UpdateEnemyVisibility(float radius, float angle)
     {
-        Collider[] eniemiesCollider = Physics.OverlapSphere(transform.position, radius, _enemyMask);
-
-        foreach (Collider col in eniemiesCollider)
+        Collider[] enemiesCollider = Physics.OverlapSphere(transform.position, radius, _enemyMask, QueryTriggerInteraction.Collide);
+        
+        foreach (Collider col in enemiesCollider)
         {
-            bool isVisible = IsVisible(col.transform.position, radius, angle);
+            bool isVisible = IsVisible(col.transform.position, angle);
 
             if (isVisible)
             {
@@ -158,21 +158,22 @@ public class FieldOfView : MonoBehaviour
         }
     }
 
-    private bool IsVisible(Vector3 targetPos, float radius, float angle)
+    private bool IsVisible(Vector3 targetPos, float angle)
     {
         Vector3 dirToTarget = (targetPos - transform.position);
 
         // 시야각
         if (Vector3.Angle(transform.forward, dirToTarget) > angle)
         {
+            Debug.Log("시야각");
             return false;
         }
 
-        float dist = dirToTarget.magnitude;
-
         // 장애물
-        if (Physics.Raycast(transform.position, dirToTarget.normalized, dirToTarget.magnitude, _obstacleMask))
+        if (Physics.Raycast(transform.position, dirToTarget.normalized, dirToTarget.magnitude, _obstacleMask, QueryTriggerInteraction.Ignore))
         {
+
+            Debug.Log("장애물");
             return false;
         }
 
@@ -183,7 +184,7 @@ public class FieldOfView : MonoBehaviour
     {
         Vector3 dir = DirFromAngle(globalAngle);
 
-        if (Physics.Raycast(transform.position, dir, out RaycastHit hit, radius, _obstacleMask))
+        if (Physics.Raycast(transform.position, dir, out RaycastHit hit, radius, _obstacleMask, QueryTriggerInteraction.Ignore))
             return new ViewCastInfo(true, hit.point, hit.distance, globalAngle);
 
         return new ViewCastInfo(false, transform.position + dir * radius, radius, globalAngle);
