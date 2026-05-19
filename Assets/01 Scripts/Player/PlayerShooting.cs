@@ -21,10 +21,10 @@ public class PlayerShooting : MonoBehaviour
     private PlayerMove _playerMove;
     private PlayerEnemyScanner _playerEnemyScanner;
     private Inventory _inventory;
-    private InventoryController _inventoryController;
     private PlayerEquip _playerEquip;
     private PoolManager _poolManager;
     private GameManager _gameManager;
+    private UIManager _uiManager;
 
     private PlayerFireState _state;
     private bool _isFirePressed;
@@ -92,13 +92,13 @@ public class PlayerShooting : MonoBehaviour
 
         _player = GetComponent<Player>();
         _playerMove = GetComponent<PlayerMove>();
-        _inventoryController = GetComponent<InventoryController>();
         _playerEquip = GetComponent<PlayerEquip>();
         _playerEnemyScanner = GetComponent<PlayerEnemyScanner>();
 
         _inventory = GameManager.Instance.Inventory;
         _poolManager = PoolManager.Instance;
         _gameManager = GameManager.Instance;
+        _uiManager = UIManager.Instance;
     }
 
     private void OnDisable()
@@ -118,7 +118,7 @@ public class PlayerShooting : MonoBehaviour
             || _player.State == PlayerState.Running
             || _player.State == PlayerState.Rolling
             || _state != PlayerFireState.Idle
-            || _inventoryController.InventoryIsOpen
+            || _uiManager.PeekStack() != null
             || Time.timeScale != 1f)
             return;
 
