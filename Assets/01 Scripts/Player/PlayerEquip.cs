@@ -1,4 +1,5 @@
 
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -39,12 +40,12 @@ public class PlayerEquip : MonoBehaviour
     private void Awake()
     {
         _currentSelectedSlot = null;
+        _anim = GetComponent<Animator>();
+        _playerShooting = GetComponent<PlayerShooting>();
     }
 
     private void Start()
     {
-        _anim = GetComponent<Animator>();
-        _playerShooting = GetComponent<PlayerShooting>();
         _inputActions = GameManager.Instance.Actions;
 
         _inputActions.Player.LeftWeapon.performed += EquipLeftSlotGun;
@@ -53,8 +54,7 @@ public class PlayerEquip : MonoBehaviour
         _poolManager = PoolManager.Instance;
         _dataManager = DataManager.Instance;
 
-        _leftEquipSlotUI.Init(this);
-        _rightEquipSlotUI.Init(this);
+        StartCoroutine(EquipSlotInitRoutine());
     }
 
     private void OnDisable()
@@ -257,6 +257,14 @@ public class PlayerEquip : MonoBehaviour
     public void CurrentGunSlotRefreshUI()
     {
         _currentSelectedSlot.UI.RefreshUI();
+    }
+
+    private IEnumerator EquipSlotInitRoutine()
+    {
+        yield return null;
+
+        _leftEquipSlotUI.Init(this);
+        _rightEquipSlotUI.Init(this);
     }
 
     #region Animation Event

@@ -63,8 +63,6 @@ public class InventoryController : MonoBehaviour
 
     private void Awake()
     {
-        _quickSlotManager = QuickSlotManager.Instance;
-
         _playerMove = GetComponent<PlayerMove>();
         _playerInteract = GetComponent<PlayerInteract>();
         _playerEquip = GetComponent<PlayerEquip>();
@@ -72,6 +70,8 @@ public class InventoryController : MonoBehaviour
 
     private void Start()
     {
+        _quickSlotManager = QuickSlotManager.Instance;
+
         _inventory = GameManager.Instance.Inventory;
         _soundManager = SoundManager.Instance;
         _uiManager = UIManager.Instance;

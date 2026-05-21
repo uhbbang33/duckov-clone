@@ -50,8 +50,8 @@ public class StaminaPoint : MonoBehaviour
 
     private void Start()
     {
-        _hydration.OnEnterZeroHydration += HalveHealAmountPerTick;
-        _hydration.OnExitZeroHydration += RestoreHealAmountPerTick;
+        //_hydration.OnEnterZeroHydration += HalveHealAmountPerTick;
+        //_hydration.OnExitZeroHydration += RestoreHealAmountPerTick;
     }
 
     private void OnDisable()
@@ -72,6 +72,9 @@ public class StaminaPoint : MonoBehaviour
         _waitHealDelay = new WaitForSeconds(_playerBaseData.SPRegenInterval);
 
         ChangeSlider();
+
+        _hydration.OnEnterZeroHydration += HalveHealAmountPerTick;
+        _hydration.OnExitZeroHydration += RestoreHealAmountPerTick;
     }
 
     public void ReduceSPImmediately(float amount)

@@ -25,15 +25,15 @@ public class PlayerInteract : MonoBehaviour
 
     private void Awake()
     {
-        _uiManager = UIManager.Instance;
-        _bunkerManager = BunkerManager.Instance;
-        _fieldManager = FieldManager.Instance;
         _scanner = GetComponent<PlayerInteractableScanner>();
         _playerMove = GetComponent<PlayerMove>();
     }
 
     private void Start()
     {
+        _uiManager = UIManager.Instance;
+        _bunkerManager = BunkerManager.Instance;
+        _fieldManager = FieldManager.Instance;
         _inputActions = GameManager.Instance.Actions;
         _inputActions.Player.Interact.performed += OnInteract;
         _inputActions.Player.Cancel.performed += OnCancel;
