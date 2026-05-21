@@ -7,6 +7,12 @@ public class StarterBox : Box
     [SerializeField] private int _usableItemId = 10;
     [SerializeField] private int _usableItemQuantity = 3;
 
+    protected override void Start()
+    {
+        base.Start();
+        _allRarityOpened = true;
+    }
+
     protected override void ChangeBoxText()
     {
         UIManager.Instance.ChangeBoxItemCountText("보급 상자", _filledSlotCnt, _slotCnt);
@@ -30,10 +36,10 @@ public class StarterBox : Box
 
         int quantity = 1;
         
-        // boxSlot 0 - Gun (Glock)
+        // boxSlot 0 - Gun
         _boxSlots[0].AddItem(gunItem, ref quantity);
 
-        // boxslot 1 - Ammo (30)
+        // boxslot 1 - Ammo
         AmmoData ammoData = dataManager.GetAmmo(gunData.BulletType);
         AmmoItem ammoItem = ammoData.ToItem() as AmmoItem;
         quantity = _ammoNum;

@@ -351,7 +351,7 @@ public class Enemy : MonoBehaviour
             return;
         }
 
-        if (_hp.CurrentHP / _hp.MaxHP < 0.1f)
+        if (_hp.CurrentHP / _hp.MaxHP <= 0.2f)
         {
             ChangeState(EnemyState.Flee);
             return;

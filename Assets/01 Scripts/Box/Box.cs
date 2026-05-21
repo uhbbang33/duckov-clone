@@ -13,7 +13,7 @@ public abstract class Box : MonoBehaviour
     private int _loadCnt;
 
     private bool[] _loaded;
-    private bool _allRarityOpened;
+    protected bool _allRarityOpened;
 
     private Coroutine _currentCoroutine;
     private FieldManager _fieldManager;
@@ -26,7 +26,7 @@ public abstract class Box : MonoBehaviour
         _boxInteractableUI = GetComponent<InteractableBoxUI>();
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         _fieldManager = FieldManager.Instance;
         _slotCnt = _fieldManager.BoxSlotNum;
