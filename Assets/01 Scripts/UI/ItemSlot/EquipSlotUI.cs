@@ -30,6 +30,7 @@ public class EquipSlotUI : ItemSlotUI
     {
         _itemSlot = new EquipSlot(playerEquip);
         _itemSlot.UI = this;
+        _itemSlot.InitInventory(GameManager.Instance.Inventory);
     }
 
     public override void RefreshUI()
