@@ -138,6 +138,8 @@ public class Enemy : MonoBehaviour
 
     public void ChangeState(EnemyState newState)
     {
+        Debug.Log(newState);
+
         _currentState?.Exit();
         _currentState = _stateDictionary[newState];
         _currentState.Enter();
@@ -351,7 +353,8 @@ public class Enemy : MonoBehaviour
             return;
         }
 
-        if (_hp.CurrentHP / _hp.MaxHP <= 0.2f)
+        if (_hp.CurrentHP / _hp.MaxHP <= 0.2f
+             && _currentState != _stateDictionary[EnemyState.Idle])
         {
             ChangeState(EnemyState.Flee);
             return;

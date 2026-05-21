@@ -6,7 +6,7 @@ public class IdleState : EnemyStateBase
     private float _healTimer;
     private const float _idleTime = 3f;
     private const float _healPerTickAmount = 1f;
-    private const float _healDelay = 0.1f;
+    private const float _healDelay = 0.02f;
 
     public IdleState(Enemy enemy) : base(enemy) { }
 
@@ -23,12 +23,6 @@ public class IdleState : EnemyStateBase
 
     public override void Update()
     {
-        if (_enemy.IsPlayerInSight || _enemy.IsNoiseHeard)
-        {
-            _enemy.ChangeState(EnemyState.Chase);
-            return;
-        }
-
         if (_enemy.HP.CurrentHP < _enemy.HP.MaxHP)
         {
             _healTimer += Time.deltaTime;
@@ -37,6 +31,12 @@ public class IdleState : EnemyStateBase
                 _enemy.HealHP(_healPerTickAmount);
                 _healTimer = 0f;
             }
+            return;
+        }
+
+        if (_enemy.IsPlayerInSight || _enemy.IsNoiseHeard)
+        {
+            _enemy.ChangeState(EnemyState.Chase);
             return;
         }
 
