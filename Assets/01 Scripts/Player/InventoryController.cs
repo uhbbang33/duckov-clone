@@ -141,7 +141,10 @@ public class InventoryController : MonoBehaviour
         if (open)
             _playerMove.StopMove();
         else
+        {
             _playerMove.RestartMove();
+            _uiManager.CloseSlotMenu();
+        }
 
         if (!open)
             _uiManager.CurrentInfoUI?.HideUI();
