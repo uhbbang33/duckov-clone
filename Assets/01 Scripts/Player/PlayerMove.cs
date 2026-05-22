@@ -95,7 +95,7 @@ public class PlayerMove : MonoBehaviour
 
     private void OnDisable()
     {
-        UnsubscribeInputActions();
+        StopMove();
 
         _sp.OnSPZero -= StopRun;
         _hydration.OnEnterZeroHydration -= EnableZeroHydration;
