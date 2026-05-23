@@ -97,6 +97,7 @@ public class PlayerMove : MonoBehaviour
     {
         StopMove();
 
+        _rb.linearVelocity = Vector3.zero;
         _sp.OnSPZero -= StopRun;
         _hydration.OnEnterZeroHydration -= EnableZeroHydration;
         _hydration.OnExitZeroHydration -= DisableZeroHydration;
