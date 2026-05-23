@@ -43,12 +43,6 @@ public class AttackState : EnemyStateBase
         if (ReloadGun())
             return;
 
-        if (!_enemy.IsPlayerInSight)
-        {
-            _enemy.ChangeState(EnemyState.Chase);
-            return;
-        }
-
         // 적 연발 수
         if (_fireCount >= _gunData.EnemyFireCount)
         {
@@ -58,6 +52,13 @@ public class AttackState : EnemyStateBase
                 _burstCooldownTimer = 0f;
                 _fireCount = 0;
             }
+
+            // 공격을 끝낸 후, 플레이어가 시야에 없으면 chase state로 전환
+            if (!_enemy.IsPlayerInSight)
+            {
+                _enemy.ChangeState(EnemyState.Chase);
+            }
+
             return;
         }
 
@@ -66,14 +67,8 @@ public class AttackState : EnemyStateBase
         if (_attackTimer < (1 / _gunData.Rps) * _enemy.Data.FireIntervalMultiplier)
             return;
 
-        // 사거리
-        if (_enemy.IsPlayerInAttackRange(_attackOffset))
-        {
-            FireGun();
-            _attackTimer = 0f;
-        }
-        else
-            _enemy.ChangeState(EnemyState.Chase);
+        FireGun();
+        _attackTimer = 0f;
     }
 
     public override void Exit()
