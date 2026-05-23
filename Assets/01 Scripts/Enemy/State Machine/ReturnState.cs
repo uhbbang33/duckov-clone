@@ -5,7 +5,7 @@ public class ReturnState : EnemyStateBase
 {
     private float _stateLockTimer;
 
-    private const float _stateLockDuration = 1f;
+    private const float _stateLockDuration = 3f;
 
     public ReturnState(Enemy enemy) : base(enemy) { }
 
@@ -28,7 +28,8 @@ public class ReturnState : EnemyStateBase
 
     public override void Update()
     {
-        if (_enemy.Agent.remainingDistance <= _enemy.Agent.stoppingDistance)
+        if (_enemy.SpawnPosition == _enemy.Agent.destination
+            && _enemy.Agent.remainingDistance <= _enemy.Agent.stoppingDistance)
             _enemy.ChangeState(EnemyState.Idle);
 
         _stateLockTimer += Time.deltaTime;
