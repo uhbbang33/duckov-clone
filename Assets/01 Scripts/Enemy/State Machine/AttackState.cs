@@ -43,6 +43,15 @@ public class AttackState : EnemyStateBase
         if (ReloadGun())
             return;
 
+
+        // 사거리
+        if (_fireCount == _gunData.EnemyFireCount
+            && !_enemy.IsPlayerInAttackRange(_attackOffset))
+        {
+            _enemy.ChangeState(EnemyState.Chase);
+            return;
+        }
+
         // 적 연발 수
         if (_fireCount >= _gunData.EnemyFireCount)
         {
@@ -62,12 +71,6 @@ public class AttackState : EnemyStateBase
             return;
         }
 
-        // 사거리
-        if (!_enemy.IsPlayerInAttackRange(_attackOffset))
-        {
-            _enemy.ChangeState(EnemyState.Chase);
-            return;
-        }
 
         // 공격 쿨타임
         _attackTimer += Time.deltaTime;
