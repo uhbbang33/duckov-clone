@@ -49,6 +49,7 @@ public class SceneLoader : SingletonMonoBehaviour<SceneLoader>
         while (op.progress < 0.9f)
             yield return null;
 
+        Time.timeScale = 1f;
         yield return new WaitForSeconds(_loadDuration);
 
         op.allowSceneActivation = true;
