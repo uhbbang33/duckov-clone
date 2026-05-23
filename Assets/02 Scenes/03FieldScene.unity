@@ -7189,7 +7189,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 1}
-  m_LocalScale: {x: 4, y: 2, z: 1}
+  m_LocalScale: {x: 8, y: 4.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1680202691}
@@ -8069,8 +8069,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.39044836, y: -0.346829, z: 0.16172901, w: 0.83731925}
-  m_LocalPosition: {x: 211, y: 20, z: 61.800003}
+  m_LocalRotation: {x: 0.35355338, y: -0.35355338, z: 0.1464466, w: 0.8535535}
+  m_LocalPosition: {x: 212, y: 20, z: 60.800003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -37706,6 +37706,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7236427537210111462, guid: 6a873d166ebecf54ebe3dd5f54565ecf, type: 3}
+      propertyPath: _gunType
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -44994,7 +44998,7 @@ MonoBehaviour:
     AngularDampingMode: 0
     RotationDamping: {x: 1, y: 1, z: 1}
     QuaternionDamping: 1
-  FollowOffset: {x: 11, y: 20, z: -11}
+  FollowOffset: {x: 12, y: 20, z: -12}
 --- !u!114 &1680202688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45046,15 +45050,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1680202685}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.39044836, y: -0.346829, z: 0.16172901, w: 0.83731925}
-  m_LocalPosition: {x: 211, y: 20, z: 61.800003}
+  m_LocalRotation: {x: 0.35355338, y: -0.35355338, z: 0.1464466, w: 0.8535535}
+  m_LocalPosition: {x: 212, y: 20, z: 60.800003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 279581630}
   - {fileID: 2081990346}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 50, y: -45, z: 0}
+  m_LocalEulerAnglesHint: {x: 45, y: -45, z: 0}
 --- !u!114 &1680202692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50540,7 +50544,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraShakeController
   _impulseSource: {fileID: 6032076664905499570}
-  _speedMultiplier: 0.005
+  _speedMultiplier: 0.001
+  _impulseDuration: 0.3
 --- !u!4 &1859309295
 Transform:
   m_ObjectHideFlags: 0
@@ -56414,6 +56419,18 @@ PrefabInstance:
     - target: {fileID: 4599121727259117945, guid: a59d422a77a28774cb09fd44c4ef55f7, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6377243098170887131, guid: a59d422a77a28774cb09fd44c4ef55f7, type: 3}
+      propertyPath: DefaultVelocity.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6377243098170887131, guid: a59d422a77a28774cb09fd44c4ef55f7, type: 3}
+      propertyPath: ImpulseDefinition.ImpulseShape
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6377243098170887131, guid: a59d422a77a28774cb09fd44c4ef55f7, type: 3}
+      propertyPath: ImpulseDefinition.ImpulseDuration
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8121169921751123638, guid: a59d422a77a28774cb09fd44c4ef55f7, type: 3}
       propertyPath: _cameraShakeController
