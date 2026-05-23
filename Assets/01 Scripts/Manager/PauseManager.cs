@@ -90,7 +90,7 @@ public class PauseManager : SingletonMonoBehaviour<PauseManager>, IUICloseable
 
     public void OnClickConfirmReturnToTitle()
     {
-        _dataManager.SaveDataByScene();
+        _dataManager.SaveDataByScene(SceneName.TitleScene);
 
         _gameManager.Actions.Player.Cancel.performed -= OnPause;
 

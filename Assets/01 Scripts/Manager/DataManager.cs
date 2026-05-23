@@ -106,7 +106,7 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
 
     #region Save
 
-    public void SaveDataByScene()
+    public void SaveDataByScene(string targetScene = null)
     {
         string current = GameManager.Instance.CurrentSceneName;
 
@@ -119,6 +119,9 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
         }
         else if (current == SceneName.FieldScene)
         {
+            if (targetScene == SceneName.TitleScene)
+                return;
+
             _saveAndLoadManager.SaveTime();
             _saveAndLoadManager.SavePlayerStats();
             _saveAndLoadManager.SavePlayerInventory();
