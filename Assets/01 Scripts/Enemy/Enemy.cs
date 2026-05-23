@@ -138,8 +138,6 @@ public class Enemy : MonoBehaviour
 
     public void ChangeState(EnemyState newState)
     {
-        Debug.Log(newState);
-
         _currentState?.Exit();
         _currentState = _stateDictionary[newState];
         _currentState.Enter();
