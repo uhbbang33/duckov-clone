@@ -5,7 +5,7 @@ public class ReturnState : EnemyStateBase
 {
     private float _stateLockTimer;
 
-    private const float _stateLockDuration = 3f;
+    private const float _stateLockDuration = 2f;
 
     public ReturnState(Enemy enemy) : base(enemy) { }
 
