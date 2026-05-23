@@ -214,7 +214,7 @@ public class Enemy : MonoBehaviour
 
     public bool IsPlayerInAttackRange(float offset = 0f)
     {
-        return GetDistanceToPlayer() <= _gunData.Range * _attackRangeMultiplier + offset;
+        return GetDistanceToPlayer() <= _gunData.Range + offset;
     }
 
     public void LostPlayer()
@@ -394,12 +394,12 @@ public class Enemy : MonoBehaviour
 
         // 시야 거리 원
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(eyePosition, 20f);
+        Gizmos.DrawWireSphere(eyePosition, 30f);
 
         // 시야각 좌우 경계선
         Gizmos.color = Color.white;
-        Vector3 leftBoundary = Quaternion.Euler(0, -120f / 2f, 0) * transform.forward * 20f;
-        Vector3 rightBoundary = Quaternion.Euler(0, 120f / 2f, 0) * transform.forward * 20f;
+        Vector3 leftBoundary = Quaternion.Euler(0, -120f / 2f, 0) * transform.forward * 30f;
+        Vector3 rightBoundary = Quaternion.Euler(0, 120f / 2f, 0) * transform.forward * 30f;
         Gizmos.DrawLine(eyePosition, eyePosition + leftBoundary);
         Gizmos.DrawLine(eyePosition, eyePosition + rightBoundary);
 
@@ -415,10 +415,10 @@ public class Enemy : MonoBehaviour
             float angle = -viewAngle / 2f + stepAngle * i;
             Vector3 dir = Quaternion.Euler(0, angle, 0) * transform.forward;
 
-            if (Physics.Raycast(eyePosition, dir, out RaycastHit hit, 20f, _obstacleLayer))
+            if (Physics.Raycast(eyePosition, dir, out RaycastHit hit, 30f, _obstacleLayer))
                 hitPoints[i] = hit.point;
             else
-                hitPoints[i] = eyePosition + dir * 20f;
+                hitPoints[i] = eyePosition + dir * 30f;
         }
 
         // 삼각형 단위로 면 채우기

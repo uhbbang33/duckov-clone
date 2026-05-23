@@ -9,7 +9,7 @@ public class ChaseState : EnemyStateBase
 
     private const float _findDuration = 5f;
     private const float _updateDestinationInterval = 1f;
-    private const float _attackTransitionOffset = -3f;
+    private const float _attackTransitionOffset = 1.5f;
 
     public ChaseState(Enemy enemy) : base(enemy)
     {

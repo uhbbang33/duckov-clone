@@ -19,7 +19,7 @@ public class PlayerEnemyScanner : MonoBehaviour
     private PlayerSoundData _soundData;
     private float _soundLevel;
 
-    private const float _scanRange = 30f;
+    private const float _scanRange = 60f;
     private const float _scanInterval = 0.1f;
 
     public float PlayerSoundLevel

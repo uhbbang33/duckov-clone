@@ -2,13 +2,13 @@
   "EnemyBaseStatsDatas": [
     {
       "MaxHP": 80.0,
-      "WalkSpeed": 2.4,
-      "RunSpeed": 4.68,
-      "SightDistance": 20.0,
+      "WalkSpeed": 3.64,
+      "RunSpeed": 6.2,
+      "SightDistance": 30.0,
       "SightAngle": 120.0,
-      "FireIntervalMultiplier": 2.0,
+      "FireIntervalMultiplier": 1.6,
       "SearchDuration": 5.0,
-      "ChaseRange": 50.0
+      "ChaseRange": 60.0
     }
   ]
 }

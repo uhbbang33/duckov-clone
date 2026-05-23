@@ -12,7 +12,7 @@ public class AttackState : EnemyStateBase
     private int _fireCount;
 
     private const float _turnSpeed = 3f;
-    private const float _attackOffset = -1f;
+    private const float _attackOffset = 3.5f;
     private const float _reloadWalkSpeed = 1f;
     private const float _burstCooldownDuration = 1.5f;
     
