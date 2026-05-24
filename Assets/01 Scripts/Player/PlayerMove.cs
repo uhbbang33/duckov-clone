@@ -384,6 +384,7 @@ public class PlayerMove : MonoBehaviour
             _player.ChangePlayerState(PlayerState.Idle);
 
         _sp.IsReducing = false;
+        _anim.SetBool(PlayerAnimParm.Run, false);
         OnRunCancel?.Invoke();
     }
 
