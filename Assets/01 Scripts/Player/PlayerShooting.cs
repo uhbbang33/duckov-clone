@@ -155,7 +155,7 @@ public class PlayerShooting : MonoBehaviour
             return;
         }
 
-        float speed = spread * _currentGunItem.Value / 10000f;
+        float speed = spread * _currentGunItem.SoundRange / 100f;
         _cameraShakeController.ShakeOnFire(-dir, speed);
 
         // bullet
