@@ -145,9 +145,13 @@ public class PlayerInteractableScanner : MonoBehaviour
         }
     }
 
+#if UNITY_EDITOR
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position + transform.forward * _nearestSphereZOffset + transform.up * _nearestSphereYOffset, _openableDistance);
     }
+
+#endif
 }

@@ -40,7 +40,11 @@ Shader "Custom/CustomLit"
         [HideInInspector] _XRMotionVectorsPass("_XRMotionVectorsPass", Float) = 1.0
 
         [ToggleUI] _ReceiveShadows("Receive Shadows", Float) = 1.0
+        [ToggleUI] _SpecularHighlights("Specular Highlights", Float) = 1.0
+        [ToggleUI] _EnvironmentReflections("Environment Reflections", Float) = 1.0
 
+        _SpecColor("Specular Color", Color) = (0.2, 0.2, 0.2, 1)
+        _SpecGlossMap("Specular Map", 2D) = "white" {}
 
         // ObsoleteProperties
         [HideInInspector] _MainTex("BaseMap", 2D) = "white" {}
@@ -58,6 +62,7 @@ Shader "Custom/CustomLit"
         Tags
         {
             "RenderType" = "Opaque"
+            "Queue" = "Geometry"
             "RenderPipeline" = "UniversalPipeline"
             "UniversalMaterialType" = "SimpleLit"
             "IgnoreProjector" = "True"
@@ -108,15 +113,19 @@ Shader "Custom/CustomLit"
 
             // -------------------------------------
             // Universal Pipeline keywords
-            #pragma shader_feature _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
-            #pragma shader_feature _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
+            #pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE
+            #pragma multi_compile _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
+            //#pragma shader_feature _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
+            //#pragma shader_feature _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
             #pragma shader_feature _ EVALUATE_SH_MIXED EVALUATE_SH_VERTEX
             #pragma shader_feature _ LIGHTMAP_SHADOW_MIXING
             #pragma shader_feature _ SHADOWS_SHADOWMASK
             #pragma shader_feature _ _LIGHT_LAYERS
             #pragma shader_feature _ _CLUSTER_LIGHT_LOOP
-            #pragma shader_feature_fragment _ _ADDITIONAL_LIGHT_SHADOWS
-            #pragma shader_feature_fragment _ _SHADOWS_SOFT
+            //#pragma shader_feature_fragment _ _ADDITIONAL_LIGHT_SHADOWS
+            //#pragma shader_feature_fragment _ _SHADOWS_SOFT
+            #pragma multi_compile_fragment _ _ADDITIONAL_LIGHT_SHADOWS
+            #pragma multi_compile_fragment _ _SHADOWS_SOFT
             #pragma shader_feature_fragment _ _SHADOWS_SOFT_LOW _SHADOWS_SOFT_MEDIUM _SHADOWS_SOFT_HIGH
             #pragma shader_feature_fragment _ _SCREEN_SPACE_OCCLUSION
             #pragma shader_feature_fragment _ _SCREEN_SPACE_IRRADIANCE
@@ -237,7 +246,7 @@ Shader "Custom/CustomLit"
 
             // -------------------------------------
             // Universal Pipeline keywords
-            #pragma shader_feature _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
+            #pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
             #pragma shader_feature_fragment _ _SHADOWS_SOFT
             #pragma shader_feature_fragment _ _SHADOWS_SOFT_LOW _SHADOWS_SOFT_MEDIUM _SHADOWS_SOFT_HIGH
             #pragma shader_feature_fragment _ _DBUFFER_MRT1 _DBUFFER_MRT2 _DBUFFER_MRT3
@@ -367,6 +376,7 @@ Shader "Custom/CustomLit"
         }
     }
 
-    Fallback  "Hidden/Universal Render Pipeline/FallbackError"
-    //CustomEditor "UnityEditor.Rendering.Universal.ShaderGUI.SimpleLitShader"
+    Fallback "Universal Render Pipeline/Simple Lit"
+    //Fallback  "Hidden/Universal Render Pipeline/FallbackError"
+    CustomEditor "UnityEditor.Rendering.Universal.ShaderGUI.SimpleLitShader"
 }

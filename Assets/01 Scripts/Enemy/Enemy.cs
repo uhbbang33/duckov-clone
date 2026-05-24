@@ -386,6 +386,8 @@ public class Enemy : MonoBehaviour
 
     #endregion Coroutine
 
+#if UNITY_EDITOR
+
     private void OnDrawGizmos()
     {
         Vector3 eyePosition = transform.position + new Vector3(0f, _eyeOffset, 0f);
@@ -459,4 +461,6 @@ public class Enemy : MonoBehaviour
             Gizmos.DrawWireSphere(_playerTransform.position, 0.3f);
         }
     }
+
+#endif
 }

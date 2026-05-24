@@ -1,7 +1,5 @@
 using Unity.Cinemachine;
-using Unity.Mathematics;
 using UnityEngine;
-using static UnityEditor.FilePathAttribute;
 
 public class CameraShakeController : MonoBehaviour
 {
