@@ -237,10 +237,17 @@ public class PlayerShooting : MonoBehaviour
 
         // TODO : 장전 시간 및 UI
         float currentReloadTime = 0f;
-        while (currentReloadTime < _currentGunItem.ReloadTime)
+        float reloadTime = _currentGunItem.ReloadTime;
+        while (currentReloadTime < reloadTime)
         {
             yield return _waitforReloadDelay;
             currentReloadTime += _reloadDelay;
+        }
+
+        if (_currentGunItem == null)
+        {
+            _state = PlayerFireState.Idle;
+            yield break;
         }
 
         SoundManager.Instance.PlayReloadSFX(false, _playerShootingAudioSource);

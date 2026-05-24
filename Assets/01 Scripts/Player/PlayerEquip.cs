@@ -269,7 +269,6 @@ public class PlayerEquip : MonoBehaviour
 
     #region Animation Event
 
-    // TODO : 미리 생성 후 불러오는 방식으로
     public void CreateGunPrefab()
     {
         int gunId = _isLeftSlotActivated ? _leftSlotGunId : _rightSlotGunId;
