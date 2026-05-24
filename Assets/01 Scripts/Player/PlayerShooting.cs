@@ -139,7 +139,8 @@ public class PlayerShooting : MonoBehaviour
             || _currentGunObject == null)
             return;
 
-        Reload();
+        if (_state == PlayerFireState.Idle)
+            Reload();
     }
 
     private void Fire()
