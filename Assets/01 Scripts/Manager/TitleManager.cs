@@ -6,7 +6,19 @@ public class TitleManager : SingletonMonoBehaviour<TitleManager>
     [SerializeField] private GameObject _newGamePopup;
     [SerializeField] private AudioSource _audioSource;
 
-    private readonly string _saveFilePath = Path.Combine(Application.dataPath, "Resources", "JsonData", "Save");
+    private string _saveFilePath;
+    //private readonly string _saveFilePath = Path.Combine(Application.dataPath, "Resources", "JsonData", "Save");
+    
+    protected override void Awake()
+    {
+        base.Awake();
+
+        _saveFilePath = Application.persistentDataPath;
+        if (!Directory.Exists(_saveFilePath))
+        {
+            Directory.CreateDirectory(_saveFilePath);
+        }
+    }
 
 
     private void Start()
