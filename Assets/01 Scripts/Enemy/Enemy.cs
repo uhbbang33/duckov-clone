@@ -27,6 +27,7 @@ public class Enemy : MonoBehaviour
     private DataManager _dataManager;
     private PoolManager _poolManager;
     private SoundManager _soundManager;
+    private FieldManager _fieldManager;
 
     private Transform _playerTransform;
     private Transform _muzzleTransform;
@@ -92,6 +93,7 @@ public class Enemy : MonoBehaviour
         _dataManager = DataManager.Instance;
         _poolManager = PoolManager.Instance;
         _soundManager = SoundManager.Instance;
+        _fieldManager = FieldManager.Instance;
 
         _enemyData = _dataManager.GetEnemyData();
         _gunData = _dataManager.GetRandomGunData();
@@ -128,6 +130,8 @@ public class Enemy : MonoBehaviour
         };
 
         ChangeState(EnemyState.Idle);
+
+        _agent.avoidancePriority = ++_fieldManager.EnemyAgentPriority;
     }
 
     private void Update()

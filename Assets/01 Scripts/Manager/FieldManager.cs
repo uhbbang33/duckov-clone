@@ -8,6 +8,8 @@ public class FieldManager : SingletonMonoBehaviour<FieldManager>
     private Box _currentBox;
     private Box _currentOpenBox;
 
+    public int EnemyAgentPriority { get; set; } = 0;
+
     public readonly int BoxSlotNum = 5;
 
     public GameObject[] BoxItemSlots { get { return _boxItemSlots; } }
