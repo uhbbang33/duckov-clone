@@ -253,7 +253,10 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
 
     public void ChangeWeightText(float current, float max)
     {
-        _weightText.text = current.ToString() + "/" + max.ToString() + "kg";
+        _weightText.text = current.ToString("F2")
+            .TrimEnd('0')
+            .TrimEnd('.')
+            + "/" + max.ToString() + "kg";
 
         _weightSlider.value = current / max;
     }
@@ -271,7 +274,11 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     public void ChangeMainUIHPBar(float currentHp, float maxHp)
     {
         _mainUIHPBarSlider.value = currentHp / maxHp;
-        _mainUIHPBarText.text = currentHp.ToString() + " / " + maxHp.ToString();
+        _mainUIHPBarText.text = currentHp.ToString("F2")
+            .TrimEnd('0')
+            .TrimEnd('.')
+            + " / " 
+            + maxHp.ToString();
     }
 
     public void ChangeMainUIHydrationSlider(float current, float max)

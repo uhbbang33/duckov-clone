@@ -64,6 +64,7 @@ public class TitleManager : SingletonMonoBehaviour<TitleManager>
         saveAndLoadManager.DeletePlayerStats();
         saveAndLoadManager.DeletePlayerInventory();
         saveAndLoadManager.DeleteStorage();
+        saveAndLoadManager.DeleteTime();
 
         LoadBunkerScene();
     }

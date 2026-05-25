@@ -20,10 +20,14 @@ public class TimeDecreasingStat : MonoBehaviour
 
     private WaitForSeconds _waitForReduceDelay;
 
+    private const float _currentInit = 100f;
+
     public float Current { get { return _current; } }
 
     private void Awake()
     {
+        _current = _currentInit;
+
         _player = GetComponent<Player>();
         _player.OnPlayerDataInitialized += PlayerSetup;
 

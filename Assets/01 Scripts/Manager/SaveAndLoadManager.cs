@@ -161,5 +161,12 @@ public class SaveAndLoadManager : SingletonMonoBehaviour<SaveAndLoadManager>
         DeleteFile(path);
     }
 
+    public void DeleteTime()
+    {
+        string path = Path.Combine(_savePath, _timeSaveFileName);
+
+        DeleteFile(path);
+    }
+
     #endregion Delete
 }
