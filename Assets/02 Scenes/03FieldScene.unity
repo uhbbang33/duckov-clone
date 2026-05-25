@@ -16559,6 +16559,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MapUIController
   _mapUI: {fileID: 446166830}
   _playerIcon: {fileID: 1173146381}
+  _uiCamera: {fileID: 2081990342}
 --- !u!4 &630965214
 Transform:
   m_ObjectHideFlags: 0

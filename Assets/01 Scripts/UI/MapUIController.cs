@@ -5,6 +5,7 @@ public class MapUIController : MonoBehaviour, IUICloseable
 {
     [SerializeField] private GameObject _mapUI;
     [SerializeField] private GameObject _playerIcon;
+    [SerializeField] private GameObject _uiCamera;
 
     private GameManager _gameManager;
     private UIManager _uiManager;
@@ -38,6 +39,7 @@ public class MapUIController : MonoBehaviour, IUICloseable
             _mapUI.SetActive(true);
             SetPlayerIconTransform();
             _playerMove.StopMove();
+            _uiCamera.SetActive(false);
         }
         else if (ui == (IUICloseable)this)
         {
@@ -56,6 +58,8 @@ public class MapUIController : MonoBehaviour, IUICloseable
         _mapUI.SetActive(false);
 
         _playerMove.RestartMove();
+
+        _uiCamera.SetActive(true);
     }
 
     private void SetPlayerIconTransform()
