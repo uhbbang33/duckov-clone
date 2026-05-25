@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class SaveAndLoadManager : SingletonMonoBehaviour<SaveAndLoadManager>
 {
-    // TODO : 주소 변경 Application.persistentDataPath
-    private readonly string _savePath = Path.Combine("Assets", "Resources", "JsonData", "Save");
+    //private readonly string _savePath = Path.Combine("Assets", "Resources", "JsonData", "Save");
+    private string _savePath;
     private readonly string _statsSaveFileName = "PlayerStatsSave.json";
     private readonly string _inventorySaveFileName = "PlayerInventorySave.json";
     private readonly string _storageSaveFileName = "StorageSave.json";
@@ -35,6 +35,12 @@ public class SaveAndLoadManager : SingletonMonoBehaviour<SaveAndLoadManager>
         base.Awake();
 
         DontDestroyOnLoad(gameObject);
+
+        _savePath = Application.persistentDataPath;
+        if (!Directory.Exists(_savePath))
+        {
+            Directory.CreateDirectory(_savePath);
+        }
     }
 
     private void Start()
