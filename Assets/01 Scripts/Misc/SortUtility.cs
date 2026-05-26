@@ -43,6 +43,7 @@ public static class SortUtility
 
             slots[i].AddItem(sortedItems[i].item, ref quantity);
             slots[i].UI.LinkedQuickSlot = sortedItems[i].likedQuickSlot;
+            slots[i].UI.LinkedQuickSlot?.RefreshUI();
         }
 
         target.OnSortCompleted();
@@ -61,25 +62,24 @@ public static class SortUtility
             .Select(s => (
             s.First().currentItem,
             s.Sum(i => i.quantity),
-            s.First().linkedQuickSlot
+            s.FirstOrDefault(i => i.linkedQuickSlot != null).linkedQuickSlot
             ));
 
 
         foreach (var (item, totalQuantity, linkedQuickSlot) in groupedById)
         {
             int maxStackSize = (int)item.MaxStackSize;
-
-            float durability = 0f;
-            if (item.Type == ItemType.Food || item.Type == ItemType.Medicine)
-            {
-                durability = (item as UsableItem).CurrentDurability;
-            }
             int remainQuantity = totalQuantity;
+
+            QuickSlot slotToAssign = linkedQuickSlot;
 
             while(remainQuantity > 0)
             {
                 int stackSize = Math.Min(remainQuantity, maxStackSize);
-                result.Add((item, stackSize, linkedQuickSlot));
+                
+                result.Add((item, stackSize, slotToAssign));
+                slotToAssign = null;
+
                 remainQuantity -= stackSize;
             }
         }
