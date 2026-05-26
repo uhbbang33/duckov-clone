@@ -69,5 +69,6 @@ public class SceneLoader : SingletonMonoBehaviour<SceneLoader>
         _coroutine = null;
 
         Time.timeScale = 1f;
+        AudioListener.pause = false;
     }
 }
