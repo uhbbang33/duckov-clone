@@ -123,6 +123,7 @@ public class Player : MonoBehaviour
         SaveAndLoadManager saveAndLoadManager = SaveAndLoadManager.Instance;
         saveAndLoadManager.DeletePlayerStats();
         saveAndLoadManager.DeletePlayerInventory();
+        saveAndLoadManager.SaveTime();
 
         if (GameManager.Instance.CurrentSceneName == SceneName.FieldScene)
         {
