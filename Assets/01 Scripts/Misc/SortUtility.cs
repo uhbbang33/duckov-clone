@@ -27,6 +27,7 @@ public static class SortUtility
         var sortedItems = mergedItems
             .OrderBy(slot => _itemTypePriority.GetValueOrDefault(slot.item.Type, int.MaxValue)) // Item Type 오름차순으로
             .ThenByDescending(slot => slot.item.Weight) // 무게 내림차순
+            .ThenBy(slot => slot.item is UsableItem usable ? usable.CurrentDurability : float.MaxValue) // 내구도 오름차순으로
             .ToList();
 
         // 초기화
@@ -50,7 +51,12 @@ public static class SortUtility
     private static List<(Item item, int qauntity, QuickSlot likedQuickSlot)> MergeItem
         (IEnumerable<(Item currentItem, int quantity, QuickSlot linkedQuickSlot)> originItems)
     {
-        var groupedById = originItems
+        var result = new List<(Item, int, QuickSlot)>();
+
+        var stackableItems = originItems.Where(i => i.currentItem.MaxStackSize > 1);
+        var nonStackableItems = originItems.Where(i => i.currentItem.MaxStackSize <= 1);
+
+        var groupedById = stackableItems
             .GroupBy(i => i.currentItem.ID)
             .Select(s => (
             s.First().currentItem,
@@ -58,11 +64,16 @@ public static class SortUtility
             s.First().linkedQuickSlot
             ));
 
-        var result = new List<(Item, int, QuickSlot)>();
 
         foreach (var (item, totalQuantity, linkedQuickSlot) in groupedById)
         {
             int maxStackSize = (int)item.MaxStackSize;
+
+            float durability = 0f;
+            if (item.Type == ItemType.Food || item.Type == ItemType.Medicine)
+            {
+                durability = (item as UsableItem).CurrentDurability;
+            }
             int remainQuantity = totalQuantity;
             bool isFirst = true;
 
@@ -71,6 +82,18 @@ public static class SortUtility
                 int stackSize = Math.Min(remainQuantity, maxStackSize);
                 result.Add((item, stackSize, isFirst ? linkedQuickSlot : null));
                 remainQuantity -= stackSize;
+                isFirst = false;
+            }
+        }
+
+        var nonStackableGroups = nonStackableItems.GroupBy(i => i.currentItem.ID);
+
+        foreach (var group in nonStackableGroups)
+        {
+            bool isFirst = true;
+            foreach (var (item, quantity, linkedQuickSlot) in group)
+            {
+                result.Add((item, 1, isFirst ? linkedQuickSlot : null));
                 isFirst = false;
             }
         }
