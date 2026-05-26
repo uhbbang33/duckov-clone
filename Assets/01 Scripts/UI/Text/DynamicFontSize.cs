@@ -4,10 +4,21 @@ using UnityEngine;
 public class DynamicFontSize : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _text;
-
     [SerializeField] private float _defaultSize;
-
     [SerializeField] private int _startReduceLength;
+
+    private bool _isRefrsh = false;
+
+    private void OnEnable()
+    {
+        if (!_isRefrsh)
+        {
+            if (_text.text != null)
+                SetTextSize();
+
+            _isRefrsh = true;
+        }
+    }
 
     public void SetTextSize()
     {
