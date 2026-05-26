@@ -145,6 +145,7 @@ public class PlayerShooting : MonoBehaviour
 
     private void Fire()
     {
+
         float spread = OnFire?.Invoke() ?? 0f;
 
         Vector3 dir = GetFireDirection(spread);
@@ -218,7 +219,10 @@ public class PlayerShooting : MonoBehaviour
             {
                 _state = PlayerFireState.Firing;
 
-                Fire();
+                if (_player.State != PlayerState.Running
+                    && _player.State != PlayerState.Rolling)
+                    Fire();
+
                 yield return new WaitForSeconds(1.0f / _currentGunItem.Rps);
 
                 _state = PlayerFireState.Idle;

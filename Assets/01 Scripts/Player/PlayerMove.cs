@@ -363,7 +363,7 @@ public class PlayerMove : MonoBehaviour
             _sp.ReduceSPPerSecond(_playerMoveData.RunSPCost);
 
         _player.ChangePlayerState(PlayerState.Running);
-        _playerShooting.IsFirePressed = false;
+        //_playerShooting.IsFirePressed = false;
 
         OnRun?.Invoke();
     }
