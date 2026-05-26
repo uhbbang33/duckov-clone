@@ -75,14 +75,12 @@ public static class SortUtility
                 durability = (item as UsableItem).CurrentDurability;
             }
             int remainQuantity = totalQuantity;
-            bool isFirst = true;
 
             while(remainQuantity > 0)
             {
                 int stackSize = Math.Min(remainQuantity, maxStackSize);
-                result.Add((item, stackSize, isFirst ? linkedQuickSlot : null));
+                result.Add((item, stackSize, linkedQuickSlot));
                 remainQuantity -= stackSize;
-                isFirst = false;
             }
         }
 
@@ -90,11 +88,9 @@ public static class SortUtility
 
         foreach (var group in nonStackableGroups)
         {
-            bool isFirst = true;
             foreach (var (item, quantity, linkedQuickSlot) in group)
             {
-                result.Add((item, 1, isFirst ? linkedQuickSlot : null));
-                isFirst = false;
+                result.Add((item, 1, linkedQuickSlot));
             }
         }
 
