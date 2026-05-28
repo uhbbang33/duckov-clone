@@ -21,7 +21,7 @@ public class ItemInfoUI : MonoBehaviour
 
     [Space(10)]
     [Header("Offset")]
-    [SerializeField] private Vector2 _positionOffest;
+    [SerializeField] private Vector2 _positionOffset;
 
     private PlayerInteract _playerInteract;
     private RectTransform _rectTransform;
@@ -161,10 +161,10 @@ public class ItemInfoUI : MonoBehaviour
     private void FollowMouse()
     {
         Vector2 mousePos = Mouse.current.position.ReadValue();
-        Vector2 targetPos = mousePos + _positionOffest;
+        Vector2 targetPos = mousePos + _positionOffset;
 
         float clampedX = Mathf.Clamp(targetPos.x, 0f, Screen.width - _rectWidth);
-        float clampedY = Mathf.Clamp(targetPos.y, 0f, Screen.height - _rectHeight);
+        float clampedY = Mathf.Clamp(targetPos.y, _rectHeight, Screen.height);
 
         transform.position = new Vector2(clampedX, clampedY);
     }
