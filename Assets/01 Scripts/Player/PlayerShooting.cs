@@ -239,19 +239,22 @@ public class PlayerShooting : MonoBehaviour
         _state = PlayerFireState.Reloading;
 
         SoundManager.Instance.PlayReloadSFX(true, _playerShootingAudioSource);
+        _uiManager.ShowProgressUI(true);
 
-        // TODO : 장전 시간 및 UI
         float currentReloadTime = 0f;
         float reloadTime = _currentGunItem.ReloadTime;
         while (currentReloadTime < reloadTime)
         {
             yield return _waitforReloadDelay;
             currentReloadTime += _reloadDelay;
+
+            _uiManager.ChangeProgressSlider(currentReloadTime, reloadTime);
         }
 
         if (_currentGunItem == null)
         {
             _state = PlayerFireState.Idle;
+            _uiManager.ShowProgressUI(false);
             yield break;
         }
 
@@ -273,6 +276,9 @@ public class PlayerShooting : MonoBehaviour
 
         if (_isFirePressed)
             _fireCoroutine = StartCoroutine(FireRoutine());
+
+
+        _uiManager.ShowProgressUI(false);
 
         yield return null;
     }

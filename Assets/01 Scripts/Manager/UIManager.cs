@@ -36,6 +36,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     [SerializeField] private Slider _weightSlider;
     [SerializeField] private Slider _mainUIHydrationSlider;
     [SerializeField] private Slider _mainUIHungerSlider;
+    [SerializeField] private Slider _progrssSlider;
 
     [Space(5)]
     [Header("SliderBackgroundImage")]
@@ -59,6 +60,7 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     [SerializeField] private GameObject _boxUI;
     [SerializeField] private GameObject _storageUI;
     [SerializeField] private GameObject _shopUI;
+    [SerializeField] private GameObject _progressUI;
 
     [Space(30)]
     [SerializeField] private DefaultHUDSlotUI[] _defaultHUDSlotUI;
@@ -281,6 +283,11 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
             + maxHp.ToString();
     }
 
+    public void ChangeProgressSlider(float current, float max)
+    {
+        _progrssSlider.value = current / max;
+    }
+
     public void ChangeMainUIHydrationSlider(float current, float max)
     {
         _mainUIHydrationSlider.value = current / max;
@@ -361,6 +368,10 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         Cursor.visible = true;
     }
 
+    public void ShowProgressUI(bool show)
+    {
+        _progressUI.SetActive(show);
+    }
 
     #region Stack
 
