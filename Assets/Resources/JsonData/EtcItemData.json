@@ -21,13 +21,93 @@
       "MaxStackSize": 3.0
     },
     {
+      "Id": 8.0,
+      "Rarity": "일반",
+      "ItemType": "Etc",
+      "Name": "R6 배터리",
+      "Value": 200.0,
+      "Weight": 0.08,
+      "WeightValue": 14.0,
+      "MaxStackSize": 3.0
+    },
+    {
+      "Id": 87.0,
+      "Rarity": "일반",
+      "ItemType": "Etc",
+      "Name": "로프",
+      "Value": 255.0,
+      "Weight": 1.03,
+      "WeightValue": 12.0,
+      "MaxStackSize": 3.0
+    },
+    {
+      "Id": 116.0,
+      "Rarity": "일반",
+      "ItemType": "Etc",
+      "Name": "신문",
+      "Value": 347.0,
+      "Weight": 0.25,
+      "WeightValue": 13.0,
+      "MaxStackSize": 3.0
+    },
+    {
+      "Id": 367.0,
+      "Rarity": "일반",
+      "ItemType": "Etc",
+      "Name": "무기 부품",
+      "Value": 449.0,
+      "Weight": 0.38,
+      "WeightValue": 16.0,
+      "MaxStackSize": 10.0
+    },
+    {
+      "Id": 932.0,
+      "Rarity": "일반",
+      "ItemType": "Etc",
+      "Name": "조약돌",
+      "Value": 40.0,
+      "Weight": 0.1,
+      "WeightValue": 15.0,
+      "MaxStackSize": 10.0
+    },
+    {
       "Id": 76.0,
       "Rarity": "고급",
       "ItemType": "Etc",
       "Name": "축구공",
-      "Value": 845.0,
+      "Value": 484.0,
       "Weight": 0.51,
-      "WeightValue": 12.0,
+      "WeightValue": 10.0,
+      "MaxStackSize": 3.0
+    },
+    {
+      "Id": 127.0,
+      "Rarity": "고급",
+      "ItemType": "Etc",
+      "Name": "타이어",
+      "Value": 845.0,
+      "Weight": 2.86,
+      "WeightValue": 8.0,
+      "MaxStackSize": 1.0
+    },
+    {
+      "Id": 117.0,
+      "Rarity": "고급",
+      "ItemType": "Etc",
+      "Name": "노트",
+      "Value": 761.0,
+      "Weight": 0.16,
+      "WeightValue": 11.0,
+      "MaxStackSize": 3.0
+    },
+    {
+      "Id": 80.0,
+      "Rarity": "고급",
+      "ItemType": "Etc",
+      "Name": "주사위",
+      "Value": 1195.0,
+      "Weight": 0.05,
+      "WeightValue": 8.0,
       "MaxStackSize": 3.0
     },
     {
@@ -38,6 +118,26 @@
       "Value": 2837.0,
       "Weight": 2.03,
       "WeightValue": 6.0,
+      "MaxStackSize": 1.0
+    },
+    {
+      "Id": 93.0,
+      "Rarity": "희귀",
+      "ItemType": "Etc",
+      "Name": "금속 통",
+      "Value": 3060.0,
+      "Weight": 5.95,
+      "WeightValue": 6.0,
+      "MaxStackSize": 1.0
+    },
+    {
+      "Id": 125.0,
+      "Rarity": "희귀",
+      "ItemType": "Etc",
+      "Name": "트럼펫",
+      "Value": 4015.0,
+      "Weight": 2.88,
+      "WeightValue": 5.0,
       "MaxStackSize": 3.0
     },
     {
@@ -48,7 +148,7 @@
       "Value": 7515.0,
       "Weight": 18.46,
       "WeightValue": 3.0,
-      "MaxStackSize": 3.0
+      "MaxStackSize": 1.0
     },
     {
       "Id": 328.0,
@@ -58,7 +158,7 @@
       "Value": 21436.0,
       "Weight": 1.5,
       "WeightValue": 1.0,
-      "MaxStackSize": 3.0
+      "MaxStackSize": 1.0
     }
   ]
 }

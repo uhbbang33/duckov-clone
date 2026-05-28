@@ -723,9 +723,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb493fdc5c3eb274baa36aa16f74aaaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ExcelToJson
-  _excelFileName: dt_gun_item
-  _jsonFileName: GunItemData
-  _dataName: GunItemDatas
+  _excelFileName: dt_etc_item
+  _jsonFileName: EtcItemData
+  _dataName: EtcItemDatas
 --- !u!1 &374781739
 GameObject:
   m_ObjectHideFlags: 0
