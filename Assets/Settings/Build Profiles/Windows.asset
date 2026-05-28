@@ -43,7 +43,8 @@ MonoBehaviour:
     - line: '|   accelerometerFrequency: 60'
     - line: '|   companyName: HaeBbang'
     - line: '|   productName: DuckZone'
-    - line: '|   defaultCursor: {instanceID: 0}'
+    - line: '|   defaultCursor: {fileID: 2800000, guid: 494a46d3892c84e46a296f826476cc15,
+        type: 3}'
     - line: '|   cursorHotspot: {x: 0, y: 0}'
     - line: '|   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b:
         0.1254902, a: 1}'
@@ -326,7 +327,15 @@ MonoBehaviour:
     - line: '|   AndroidAppBundleSizeToValidate: 150'
     - line: '|   AndroidReportGooglePlayAppDependencies: 1'
     - line: '|   androidSymbolsSizeThreshold: 800'
-    - line: '|   m_BuildTargetIcons: []'
+    - line: '|   m_BuildTargetIcons:'
+    - line: '|   - m_BuildTarget: '
+    - line: '|     m_Icons:'
+    - line: '|     - serializedVersion: 2'
+    - line: '|       m_Icon: {fileID: 2800000, guid: 4d5b772053aa22e419e52573a65ed0bb,
+        type: 3}'
+    - line: '|       m_Width: 128'
+    - line: '|       m_Height: 128'
+    - line: '|       m_Kind: 0'
     - line: '|   m_BuildTargetPlatformIcons:'
     - line: '|   - m_BuildTarget: iPhone'
     - line: '|     m_Icons:'
