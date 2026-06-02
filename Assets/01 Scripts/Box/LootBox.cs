@@ -34,12 +34,12 @@ public class LootBox : Box
 
 
         // boxSlot 1 - Ammo
-        AmmoData ammoData = dataManager.GetAmmo(_enemyGunData.BulletType);
+        AmmoData ammoData = dataManager.GetAmmo(_enemyGunData.AmmoType);
         AmmoItem ammoItem = ammoData.ToItem() as AmmoItem;
 
-        if (_enemyGunData.BulletType == BulletType.S)
+        if (_enemyGunData.AmmoType == AmmoType.S)
             quantity = Random.Range(52, 91);
-        else if (_enemyGunData.BulletType == BulletType.Sniping)
+        else if (_enemyGunData.AmmoType == AmmoType.Sniping)
             quantity = Random.Range(30, 61);
 
         _boxSlots[1].AddItem(ammoItem, ref quantity);

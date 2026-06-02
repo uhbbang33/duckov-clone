@@ -40,7 +40,7 @@ public class EquipDefaultHUDSlotUI : DefaultHUDSlotUI
             return;
         }
 
-        int ammoCountInInventory = _inventory.GetAmmoCount(gunItem.BulletId);
+        int ammoCountInInventory = _inventory.GetAmmoCount(gunItem.AmmoId);
 
         _ammoCountText.text = gunItem.CurrentAmmoCount.ToString() + "/" + ammoCountInInventory;
     }

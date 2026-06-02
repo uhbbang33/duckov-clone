@@ -35,7 +35,7 @@ public class StarterBox : Box
         _boxSlots[0].AddItem(gunItem, ref quantity);
 
         // boxslot 1 - Ammo
-        AmmoData ammoData = dataManager.GetAmmo(gunData.BulletType);
+        AmmoData ammoData = dataManager.GetAmmo(gunData.AmmoType);
         AmmoItem ammoItem = ammoData.ToItem() as AmmoItem;
         quantity = _ammoNum;
 

@@ -2,7 +2,7 @@
 [System.Serializable]
 public class GunData : ItemData
 {
-    public string BulletType;
+    public string AmmoType;
     public float Damage;
     public float Rps;
     public uint MagazineCapacity;
@@ -14,7 +14,7 @@ public class GunData : ItemData
 
     public override Item ToItem()
     {
-        return new GunItem(Id,Rarity,Name, Value, Weight, WeightValue, BulletType, Damage, Rps, MagazineCapacity, Range, ReloadTime, AdsTime, SoundRange, MaxStackSize);
+        return new GunItem(Id,Rarity,Name, Value, Weight, WeightValue, AmmoType, Damage, Rps, MagazineCapacity, Range, ReloadTime, AdsTime, SoundRange, MaxStackSize);
     }
 }
 

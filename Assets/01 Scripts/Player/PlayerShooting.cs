@@ -190,7 +190,7 @@ public class PlayerShooting : MonoBehaviour
             return;
 
         // 인벤토리에 탄환이 있는지 확인
-        if (!_inventory.HasItem(_currentGunItem.BulletId))
+        if (!_inventory.HasItem(_currentGunItem.AmmoId))
             return;
 
         if (_fireCoroutine != null)
@@ -263,7 +263,7 @@ public class PlayerShooting : MonoBehaviour
         int maxReloadableAmmoCount = (int)_currentGunItem.MagazineCapacity - _currentGunItem.CurrentAmmoCount;
 
         // 인벤토리에서 가져올 수 있는 수량 체크 및 아이템 저장
-        (int, AmmoItem) reloadable = _inventory.ReloadableAmmoCount(_currentGunItem.BulletId, maxReloadableAmmoCount);
+        (int, AmmoItem) reloadable = _inventory.ReloadableAmmoCount(_currentGunItem.AmmoId, maxReloadableAmmoCount);
 
         _currentGunItem.Ammo = reloadable.Item2;
         _currentGunItem.CurrentAmmoCount += reloadable.Item1;

@@ -188,10 +188,10 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
     {
         uint id = 0;
 
-        if (type == BulletType.S)
-            id = BulletId.S;
-        else if (type == BulletType.Sniping)
-            id = BulletId.Sniping;
+        if (type == AmmoType.S)
+            id = AmmoId.S;
+        else if (type == AmmoType.Sniping)
+            id = AmmoId.Sniping;
 
         return GetItemDataByID((int)id) as AmmoData;
     }
@@ -201,12 +201,12 @@ public class DataManager : SingletonMonoBehaviour<DataManager>
         return _enemyDataList.EnemyBaseStatsDatas[0];
     }
 
-    public uint GetBulletId(string bulletType)
+    public uint GetAmmoId(string ammoType)
     {
-        if (bulletType == BulletType.S)
-            return BulletId.S;
-        if (bulletType == BulletType.Sniping)
-            return BulletId.Sniping;
+        if (ammoType == AmmoType.S)
+            return AmmoId.S;
+        if (ammoType == AmmoType.Sniping)
+            return AmmoId.Sniping;
 
         return 0;
     }

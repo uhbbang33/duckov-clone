@@ -1,11 +1,11 @@
 [System.Serializable]
 public class AmmoData : ItemData
 {
-    public string BulletType;
+    public string AmmoType;
 
     public override Item ToItem()
     {
-        return new AmmoItem(Id, Rarity, Name, Value, Weight, WeightValue, MaxStackSize, BulletType);
+        return new AmmoItem(Id, Rarity, Name, Value, Weight, WeightValue, MaxStackSize, AmmoType);
     }
 }
 

@@ -123,7 +123,7 @@ public class ItemInfoUI : MonoBehaviour
     {
         _gunValueText.text =
             item.CurrentAmmoCount + "\n"
-            +item.GunBulletType + "\n"
+            +item.GunAmmoType + "\n"
             + item.Damage.ToString() + "\n"
              + item.Rps.ToString() + "\n"
               + item.MagazineCapacity.ToString() + "\n"
@@ -134,7 +134,7 @@ public class ItemInfoUI : MonoBehaviour
 
     private void SetAmmoValueText(AmmoItem item)
     {
-        _ammoValueText.text = item.AmmoBulletType;
+        _ammoValueText.text = item.AmmoType;
     }
 
     public void ShowUI()

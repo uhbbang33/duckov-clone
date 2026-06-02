@@ -22,7 +22,7 @@ public struct ItemType
     public const string Etc = "Etc"; 
 }
 
-public struct BulletType
+public struct AmmoType
 {
     public const string S = "S";
     public const string Sniping = "저격";
@@ -68,7 +68,7 @@ public struct GunId
     public const int GlockId = 254;
 }
 
-public struct BulletId
+public struct AmmoId
 {
     public const uint S = 595;
     public const uint Sniping = 622;
