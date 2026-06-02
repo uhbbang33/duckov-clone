@@ -84,6 +84,7 @@ public struct PoolId
     public const uint Smoke = 6;
     public const uint BloodSmoke = 7;
     public const uint DroppedItem = 8;
+    public const uint LootBox = 9;
 }
 
 public struct PlayerAnimParm
