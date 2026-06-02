@@ -1,11 +1,14 @@
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public abstract class Box : MonoBehaviour
 {
     protected ItemSlot[] _boxSlots;
     private BoxSlotLoad[] _boxSlotLoad;
-    protected ItemTypeWeight[] _typeWeights;
+    private List<ItemTypeWeight> _weightTable;
+    protected Dictionary<string, int> _typeWeights;
     private InteractableBoxUI _boxInteractableUI;
 
     protected int _slotCnt;
@@ -18,8 +21,7 @@ public abstract class Box : MonoBehaviour
     private Coroutine _currentCoroutine;
     private FieldManager _fieldManager;
 
-    //TODO Define으로
-    private const int _ammoQuantity = 30;
+    private const int _ammoDefaultQuantity = 30;
 
     private void Awake()
     {
@@ -41,19 +43,27 @@ public abstract class Box : MonoBehaviour
         _boxSlotLoad = new BoxSlotLoad[_slotCnt];
         _loaded = new bool[_slotCnt];
 
-        _typeWeights = new ItemTypeWeight[_slotCnt];
-        for (int i = 0; i < _slotCnt; ++i)
-            _typeWeights[i] = new ItemTypeWeight();
+
+        _typeWeights = new Dictionary<string, int>();
 
         SetWeightValue();
 
-        // TODO : 하드코딩
-        _typeWeights[0].Type = ItemType.Gun;
-        _typeWeights[1].Type = ItemType.Ammo;
-        _typeWeights[2].Type = ItemType.Medicine;
-        _typeWeights[3].Type = ItemType.Food;
-        _typeWeights[4].Type = ItemType.Etc;
+        string[] itemTypes = new[]
+        {
+            ItemType.Gun,
+            ItemType.Ammo,
+            ItemType.Medicine,
+            ItemType.Food,
+            ItemType.Etc
+        };
 
+        _weightTable = itemTypes
+            .Select(t => new ItemTypeWeight
+            {
+                Type = t,
+                WeightValue = _typeWeights.GetValueOrDefault(t, 0)
+            })
+            .ToList();
 
         GameManager.Instance.PlayerObject.GetComponent<PlayerInteract>().OnCloseUIEvent += OnCloseUI;
     }
@@ -97,7 +107,7 @@ public abstract class Box : MonoBehaviour
 
             int itemQuantity = 1;
             if (item.Type == ItemType.Ammo)
-                itemQuantity = _ammoQuantity;
+                itemQuantity = _ammoDefaultQuantity;
 
             _boxSlots[i].AddItem(item, ref itemQuantity);
         }
@@ -115,13 +125,13 @@ public abstract class Box : MonoBehaviour
     protected string SetItemType()
     {
         int totalWeightValue = 0;
-        foreach (var w in _typeWeights)
+        foreach (var w in _weightTable)
             totalWeightValue += w.WeightValue;
 
         int random = Random.Range(0, totalWeightValue);
         int current = 0;
 
-        foreach (var w in _typeWeights)
+        foreach (var w in _weightTable)
         {
             current += w.WeightValue;
             if (random < current)

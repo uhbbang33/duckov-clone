@@ -12,11 +12,9 @@ public class LootBox : Box
 
     protected override void SetWeightValue()
     {
-        _typeWeights[0].WeightValue = 0;
-        _typeWeights[1].WeightValue = 0;
-        _typeWeights[2].WeightValue = 5;
-        _typeWeights[3].WeightValue = 5;
-        _typeWeights[4].WeightValue = 5;
+        _typeWeights[ItemType.Medicine] = 5;
+        _typeWeights[ItemType.Food] = 5;
+        _typeWeights[ItemType.Etc] = 5;
     }
 
     protected override void ChangeBoxText()
