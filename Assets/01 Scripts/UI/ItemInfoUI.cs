@@ -23,7 +23,6 @@ public class ItemInfoUI : MonoBehaviour
     [Header("Offset")]
     [SerializeField] private Vector2 _positionOffset;
 
-    private PlayerInteract _playerInteract;
     private RectTransform _rectTransform;
     private UIManager _uiManager;
 
@@ -40,11 +39,17 @@ public class ItemInfoUI : MonoBehaviour
 
     private void Start()
     {
-     // TODO
-        _playerInteract = GameManager.Instance.PlayerObject.GetComponent<PlayerInteract>();
-        _playerInteract.OnCloseUIEvent += HideUI;
-
         _uiManager = UIManager.Instance;
+    }
+
+    private void OnEnable()
+    {
+        GameManager.Instance.Actions.Player.Cancel.performed += OnCancel;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.Instance.Actions.Player.Cancel.performed -= OnCancel;
     }
 
     private void Update()
@@ -141,8 +146,7 @@ public class ItemInfoUI : MonoBehaviour
     {
         if (_uiManager == null) _uiManager = UIManager.Instance;
 
-        if(_uiManager.CurrentInfoUI != null
-            && _uiManager.CurrentInfoUI.gameObject.activeSelf)
+        if(_uiManager.CurrentInfoUI != null)
         {
             _uiManager.CurrentInfoUI.HideUI();
         }
@@ -156,6 +160,11 @@ public class ItemInfoUI : MonoBehaviour
     public void HideUI()
     {
         gameObject.SetActive(false);
+    }
+
+    private void OnCancel(InputAction.CallbackContext context)
+    {
+        HideUI();
     }
 
     private void FollowMouse()
