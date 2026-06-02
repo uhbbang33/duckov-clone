@@ -60,20 +60,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         _inputActions?.Disable();
     }
 
-    // TODO : GameManager?
-    public bool CreateDropItemObject(Item item, int quantity)
-    {
-        GameObject dropItem = PoolManager.Instance.GetObject(PoolId.DroppedItem);
-
-        if (!dropItem.GetComponent<DroppedItem>().InitializeDroppedItem(item, quantity))
-        {
-            Destroy(dropItem);
-            return false;
-        }
-
-        return true;
-    }
-
     public void QuitGame()
     {
         DataManager.Instance.SaveDataByScene();

@@ -4,7 +4,6 @@ public class ItemSlot
 {
     protected Item _currentItem;
     protected ItemSlotUI _ui;
-    private GameManager _gameManager;
     private Inventory _inventory;
 
     protected SlotType _slotType;
@@ -16,7 +15,6 @@ public class ItemSlot
         _currentItem = null;
         _quantity = 0;
         _ui = null;
-        _gameManager = GameManager.Instance;
     }
 
     public Item CurrentItem
@@ -180,21 +178,16 @@ public class ItemSlot
 
     public void DiscardItem()
     {
-        if (_gameManager.CreateDropItemObject(_currentItem, _quantity))
-        {
-            InventorySlotUI inventorySlotUI = (_ui as InventorySlotUI);
+        GetDroppedItemFromPool();
 
-            if (inventorySlotUI != null
-                && inventorySlotUI.LinkedQuickSlot != null)
-                inventorySlotUI.LinkedQuickSlot.UnlinkInventorySlotUI(_currentItem.ID);
+        InventorySlotUI inventorySlotUI = (_ui as InventorySlotUI);
 
-            SubtractItem(_quantity);
-            SoundManager.Instance.PlaySFXOneShot(SFXName.PickItem);
-        }
-        else
-        {
-            Debug.Log("버릴 수 없습니다.");
-        }
+        if (inventorySlotUI != null
+            && inventorySlotUI.LinkedQuickSlot != null)
+            inventorySlotUI.LinkedQuickSlot.UnlinkInventorySlotUI(_currentItem.ID);
+
+        SubtractItem(_quantity);
+        SoundManager.Instance.PlaySFXOneShot(SFXName.PickItem);
     }
 
     public virtual void UnloadAmmo()
@@ -209,12 +202,23 @@ public class ItemSlot
         int ammoCount = gunItem.CurrentAmmoCount;
         if(!_inventory.TryAddItem(ammoItem, ref ammoCount))
         {
-            // 버리기
-            _gameManager.CreateDropItemObject(ammoItem, ammoCount);
+            GetDroppedItemFromPool();
         }
 
         gunItem.CurrentAmmoCount = 0;
         _ui.RefreshUI();
+    }
+
+    private void GetDroppedItemFromPool()
+    {
+        PoolManager poolManager = PoolManager.Instance;
+        GameObject droppedItem = poolManager.GetObject(PoolId.DroppedItem);
+
+        if (!droppedItem.GetComponent<DroppedItem>().InitializeDroppedItem(_currentItem, _quantity))
+        {
+            Debug.Log("버릴 수 없습니다.");
+            poolManager.ReturnObject(PoolId.DroppedItem, droppedItem);
+        }
     }
 
 }
