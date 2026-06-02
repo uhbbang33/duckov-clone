@@ -6,7 +6,6 @@ public class BunkerManager : SingletonMonoBehaviour<BunkerManager>
     [SerializeField] private GameObject[] _shopItemSlots;
 
     [SerializeField] private Storage _storage;
-    [SerializeField] private GameObject _dropItemPrefab;
     [SerializeField] private GameObject _playerObject;
 
     [SerializeField] private AudioSource _audioSource;
@@ -44,19 +43,5 @@ public class BunkerManager : SingletonMonoBehaviour<BunkerManager>
     {
         SoundManager.Instance.PlayBunkerBGM(_audioSource);
         _audioSource.ignoreListenerPause = true;
-    }
-
-    // TODO : PoolManager?
-    public bool CreateDropItemObject(Item item, int quantity)
-    {
-        GameObject dropItem = Instantiate(_dropItemPrefab);
-
-        if (!dropItem.GetComponent<DroppedItem>().InitializeDroppedItem(item, quantity))
-        {
-            Destroy(dropItem);
-            return false;
-        }
-
-        return true;
     }
 }
