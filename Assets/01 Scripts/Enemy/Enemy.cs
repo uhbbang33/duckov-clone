@@ -46,13 +46,11 @@ public class Enemy : MonoBehaviour
     private uint _ammoCnt;
     private int _currentDestinationCount;
 
-    private Vector3 _lootBoxOffset;
     private Vector3 _lastSeenPlayerPosition;
     private Vector3 _spawnPosition;
 
     private WaitForSeconds _waitForShowWarningIcon;
 
-    private const float _attackRangeMultiplier = 0.8f;
     private const float _showWarningIconDuration = 1f;
 
     public HealthPoint HP { get { return _hp; } }
@@ -103,8 +101,6 @@ public class Enemy : MonoBehaviour
         _gun = _gunObject.GetComponent<Gun>();
         _gun.SetRendererEnabled(false);
 
-        //Temp
-        _lootBoxOffset = new Vector3(0, 0.5f, 0f);
 
         DeactivateGun();
         SetPatrolDestination();
@@ -167,11 +163,15 @@ public class Enemy : MonoBehaviour
     private void MakeLootBox()
     {
         GameObject lootBox = _poolManager.GetObject(PoolId.LootBox);
-        lootBox.transform.position = transform.position + _lootBoxOffset;
-        lootBox.transform.rotation = transform.rotation;
 
         if (lootBox.GetComponent<LootBox>() == null)
+        {
             Debug.LogError("LootBox Has not EnemyGunData Property");
+            return;
+        }
+
+        lootBox.transform.position = transform.position;
+        lootBox.transform.rotation = transform.rotation;
 
         lootBox.GetComponent<LootBox>().EnemyGunData = _gunData;
     }
