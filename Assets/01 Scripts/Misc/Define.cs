@@ -1,19 +1,12 @@
 
-public struct SceneName
+public static class SceneName
 {
     public const string TitleScene = "01TitleScene";
     public const string BunkerScene = "02BunkerScene";
     public const string FieldScene = "03FieldScene";
 }
 
-public enum SceneList
-{
-    TITLE,
-    BUNKER,
-    FIELD,
-}
-
-public struct ItemType
+public static class ItemType
 {
     public const string Gun = "Gun";
     public const string Ammo = "Ammo";
@@ -22,33 +15,13 @@ public struct ItemType
     public const string Etc = "Etc"; 
 }
 
-public struct AmmoType
+public static class AmmoType
 {
     public const string S = "S";
     public const string Sniping = "저격";
 }
 
-public enum SlotType
-{
-    INVENTORY,
-    BOX,
-    EQUIP,
-    QUICKSLOT,
-    MAINQUICKSLOT,
-    STORAGE,
-    SHOP
-}
-
-public enum InteractableType
-{
-    BOX,
-    DROPPEDITEM,
-    STORAGE,
-    SHOP,
-    DOOR
-}
-
-public struct RarityLoadingTime
+public static class RarityLoadingTime
 {
     public const float Common = 0.8f;
     public const float Uncommon = 1.5f;
@@ -56,25 +29,25 @@ public struct RarityLoadingTime
     public const float Legendary = 4.8f;
 }
 
-public struct Durability
+public static class Durability
 {
     public const int MaxDurability = 100;
 }
 
-public struct GunId
+public static class GunId
 {
     public const int Mp7Id = 258;
     public const int M700Id = 780;
     public const int GlockId = 254;
 }
 
-public struct AmmoId
+public static class AmmoId
 {
     public const uint S = 595;
     public const uint Sniping = 622;
 }
 
-public struct PoolId
+public static class PoolId
 {
     public const uint Bullet = 1;
     public const uint Mp7 = GunId.Mp7Id;
@@ -87,7 +60,7 @@ public struct PoolId
     public const uint LootBox = 9;
 }
 
-public struct PlayerAnimParm
+public static class PlayerAnimParm
 {
     public const string Walk = "IsWalk";
     public const string Run = "IsRun";
@@ -95,7 +68,7 @@ public struct PlayerAnimParm
     public const string Die = "Die";
 }
 
-public struct EnemyAnimParm
+public static class EnemyAnimParm
 {
     public const string Walk = "IsWalk";
     public const string Run = "IsRun";
@@ -103,17 +76,17 @@ public struct EnemyAnimParm
     public const string Reload = "IsReload";
 }
 
-public struct Tag
+public static class Tag
 {
     public const string Player = "Player";
 }
 
-public struct Layer
+public static class Layer
 {
     public const string Player = "Player";
 }
 
-public struct SFXName
+public static class SFXName
 {
     public const string GameOver = "GameOver";
     public const string MenuHover = "MenuHover";
