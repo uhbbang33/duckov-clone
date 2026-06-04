@@ -15,6 +15,7 @@ public class PlayerEquip : MonoBehaviour
     private InputActions _inputActions;
     private EquipSlot _currentSelectedSlot;
     private PlayerShooting _playerShooting;
+    private GameManager _gameManager;
     private PoolManager _poolManager;
     private DataManager _dataManager;
 
@@ -46,13 +47,16 @@ public class PlayerEquip : MonoBehaviour
 
     private void Start()
     {
-        _inputActions = GameManager.Instance.Actions;
+        _gameManager = GameManager.Instance;
+        _poolManager = PoolManager.Instance;
+        _dataManager = DataManager.Instance;
+
+        _inputActions = _gameManager.Actions;
 
         _inputActions.Player.LeftWeapon.performed += EquipLeftSlotGun;
         _inputActions.Player.RightWeapon.performed += EquipRightSlotGun;
 
-        _poolManager = PoolManager.Instance;
-        _dataManager = DataManager.Instance;
+        _gameManager.Inventory.OnAmmoDictChange += RefreshHUDAmmoCountText;
 
         StartCoroutine(EquipSlotInitRoutine());
     }
@@ -61,6 +65,7 @@ public class PlayerEquip : MonoBehaviour
     {
         _inputActions.Player.LeftWeapon.performed -= EquipLeftSlotGun;
         _inputActions.Player.RightWeapon.performed -= EquipRightSlotGun;
+        _gameManager.Inventory.OnAmmoDictChange -= RefreshHUDAmmoCountText;
     }
 
     public List<int> GetGunSlotIDList()
@@ -245,7 +250,6 @@ public class PlayerEquip : MonoBehaviour
         _currentSelectedSlot = slot;
     }
 
-    // TODO
     public void RefreshHUDAmmoCountText()
     {
         if (_currentSelectedSlot == null)

@@ -81,7 +81,6 @@ public class InventoryController : MonoBehaviour
         _inputActions.Player.Cancel.performed += OnInventoryClose;
 
         _inventory.OnWeightChange += OnWeightChanged;
-        _inventory.OnAmmoDictChange += _playerEquip.RefreshHUDAmmoCountText;
 
         _playerInteract.OnEnableInteractEvent += OnInventoryCloseBlocked;
         _playerInteract.OnDisableInteractEvent += OnInventoryCloseAllowed;
@@ -93,7 +92,6 @@ public class InventoryController : MonoBehaviour
         _inputActions.Player.Cancel.performed -= OnInventoryClose;
 
         _inventory.OnWeightChange -= OnWeightChanged;
-        _inventory.OnAmmoDictChange -= _playerEquip.RefreshHUDAmmoCountText;
 
         _playerInteract.OnEnableInteractEvent -= OnInventoryCloseBlocked;
         _playerInteract.OnDisableInteractEvent -= OnInventoryCloseAllowed;
