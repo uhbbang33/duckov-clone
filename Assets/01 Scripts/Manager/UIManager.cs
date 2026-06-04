@@ -69,7 +69,6 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
     [SerializeField] private GameOverUI _gameOverUI;
     [SerializeField] private Transform _dragCanvasTransform;
 
-    private SoundManager _soundManager;
     private ItemSlot _currentSlot;
     private ItemInfoUI _currentInfoUI = null;
     private InputActions _inputActions;
@@ -100,18 +99,13 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         _hydrationBackgroundOriginColor = _mainUIHydrationSliderBackground.color;
 
         // 커서가 화면 밖으로 못 나가도록
-        //Cursor.lockState = CursorLockMode.Confined;
+        Cursor.lockState = CursorLockMode.Confined;
     }
 
     private void OnEnable()
     {
         _inputActions.UI.Enable();
         _inputActions.UI.CloseSlotMenuUI.performed += OnClick;
-    }
-
-    private void Start()
-    {
-        _soundManager = SoundManager.Instance;
     }
 
     private void OnDisable()
@@ -141,11 +135,6 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
             _buttonsObject.transform.position += _inventorySlotMenuOffset;
         else
             _buttonsObject.transform.position += _boxSlotMenuOffset;
-
-        if (IsUpperHalf(_buttonsObject.transform.position))
-        {
-            // TODO
-        }
 
         _currentSlot = slot;
         ShowButtonsByItemtype();
@@ -191,17 +180,10 @@ public class UIManager : SingletonMonoBehaviour<UIManager>
         else return null;
     }
 
-    private bool IsUpperHalf(Vector3 pos)
-    {
-        Vector3 screenPos = Camera.main.WorldToScreenPoint(pos);
-        return screenPos.y > Screen.height * 0.5f;
-    }
-
     private void ShowButtonsByItemtype()
     {
         string itemType = _currentSlot.CurrentItem.Type;
 
-        // Temp
         _equipButton.SetActive(false);
         _unloadButton.SetActive(false);
         _useButton.SetActive(false);
