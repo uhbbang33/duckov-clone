@@ -73,15 +73,15 @@ public class BoxSlotLoad : MonoBehaviour
         _loadingIcon.SetActive(false);
     }
 
-    public float SetLoadingTime(string rarity)
+    private float SetLoadingTime(string rarity)
     {
-        if (rarity == "일반")
+        if (rarity == ItemRarity.Common)
             return RarityLoadingTime.Common;
-        else if (rarity == "고급")
+        else if (rarity == ItemRarity.Uncommon)
             return RarityLoadingTime.Uncommon;
-        else if (rarity == "희귀")
+        else if (rarity == ItemRarity.Rare)
             return RarityLoadingTime.Rare;
-        else if (rarity == "전설")
+        else if (rarity == ItemRarity.Legendary)
             return RarityLoadingTime.Legendary;
         
         return 0;

@@ -21,6 +21,14 @@ public static class AmmoType
     public const string Sniping = "저격";
 }
 
+public static class ItemRarity
+{
+    public const string Common = "일반";
+    public const string Uncommon = "고급";
+    public const string Rare = "희귀";
+    public const string Legendary = "전설";
+}
+
 public static class RarityLoadingTime
 {
     public const float Common = 0.8f;
