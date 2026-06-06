@@ -8,9 +8,4 @@ public class JunkBox : Box
         _typeWeights[ItemType.Food] = 4;
         _typeWeights[ItemType.Etc] = 10;
     }
-
-    protected override void ChangeBoxText()
-    {
-        UIManager.Instance.ChangeBoxItemCountText("잡화 상자", _filledSlotCnt, _slotCnt);
-    }
 }

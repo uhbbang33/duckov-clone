@@ -13,11 +13,6 @@ public class StarterBox : Box
         _allRarityOpened = true;
     }
 
-    protected override void ChangeBoxText()
-    {
-        UIManager.Instance.ChangeBoxItemCountText("보급 상자", _filledSlotCnt, _slotCnt);
-    }
-
     protected override void SetWeightValue()
     {
     }

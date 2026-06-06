@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[RequireComponent(typeof(InteractableBoxUI))]
 public abstract class Box : MonoBehaviour
 {
+    [SerializeField] private string _boxName;
+
     protected ItemSlot[] _boxSlots;
     private BoxSlotLoad[] _boxSlotLoad;
     private List<ItemTypeWeight> _weightTable;
@@ -69,7 +72,10 @@ public abstract class Box : MonoBehaviour
     }
 
     protected abstract void SetWeightValue();
-    protected abstract void ChangeBoxText();
+    private void ChangeBoxText()
+    {
+        UIManager.Instance.ChangeBoxItemCountText(_boxName, _filledSlotCnt, _slotCnt);
+    }
 
     public void OpenBox()
     {
@@ -122,7 +128,7 @@ public abstract class Box : MonoBehaviour
         return DataManager.Instance.GetRandomItem(type);
     }
 
-    protected string SetItemType()
+    private string SetItemType()
     {
         int totalWeightValue = 0;
         foreach (var w in _weightTable)
