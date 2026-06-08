@@ -11,9 +11,6 @@ public class Enemy : MonoBehaviour
     [SerializeField] private LayerMask _groundLayer;
     [SerializeField] private float _detectPlayerDuration;
     [SerializeField] private Transform _handTransform;
-    [SerializeField] private AudioSource _footStepAudioSource;
-    [SerializeField] private AudioSource _gunAudioSource;
-    [SerializeField] private AudioSource _detectAudioSource;
     [SerializeField] private GameObject _targetingIcon;
     [SerializeField] private GameObject _warningIcon;
     [SerializeField] private List<Transform> _destinationTransformList;
@@ -24,9 +21,10 @@ public class Enemy : MonoBehaviour
     private Animator _anim;
     private HealthPoint _hp;
     private NavMeshAgent _agent;
+    private EnemySound _enemySound;
+
     private DataManager _dataManager;
     private PoolManager _poolManager;
-    private SoundManager _soundManager;
     private FieldManager _fieldManager;
 
     private Transform _playerTransform;
@@ -53,13 +51,13 @@ public class Enemy : MonoBehaviour
 
     private const float _showWarningIconDuration = 1f;
 
-    public HealthPoint HP { get { return _hp; } }
-    public NavMeshAgent Agent { get { return _agent; } }
-    public Transform MuzzleTransform { get { return _muzzleTransform; } }
-    public GameObject GunObject { get { return _gunObject; } }
-    public EnemyData Data {  get { return _enemyData; } }
-    public bool IsPlayerInSight { get { return _isPlayerInSight; } }
-    public bool IsNoiseHeard { get { return _isNoiseHeard; } }
+    public HealthPoint HP => _hp;
+    public NavMeshAgent Agent => _agent;
+    public Transform MuzzleTransform => _muzzleTransform;
+    public GameObject GunObject => _gunObject;
+    public EnemyData Data => _enemyData;
+    public bool IsPlayerInSight => _isPlayerInSight;
+    public bool IsNoiseHeard => _isNoiseHeard;
     public bool HasSeenPlayer
     {
         get { return _hasSeenPlayer; }
@@ -75,8 +73,8 @@ public class Enemy : MonoBehaviour
         get { return _currentDestinationCount; }
         set { _currentDestinationCount = value; }
     }
-    public Vector3 LastSeenPlayerPosition { get { return _lastSeenPlayerPosition; } }
-    public Vector3 SpawnPosition { get { return _spawnPosition; } }
+    public Vector3 LastSeenPlayerPosition => _lastSeenPlayerPosition;
+    public Vector3 SpawnPosition => _spawnPosition;
 
 
     private void Awake()
@@ -84,13 +82,13 @@ public class Enemy : MonoBehaviour
         _anim = GetComponent<Animator>();
         _hp = GetComponent<HealthPoint>();
         _agent = GetComponent<NavMeshAgent>();
+        _enemySound = GetComponent<EnemySound>();
     }
 
     private void Start()
     {
         _dataManager = DataManager.Instance;
         _poolManager = PoolManager.Instance;
-        _soundManager = SoundManager.Instance;
         _fieldManager = FieldManager.Instance;
 
         _enemyData = _dataManager.GetEnemyData();
@@ -230,7 +228,7 @@ public class Enemy : MonoBehaviour
     {
         if (_hasSeenPlayer) return;
 
-        _soundManager.PlaySFXOneShot(SFXName.Quack, _detectAudioSource);
+        _enemySound.PlayDetect();
 
         StartCoroutine(ShowWarningIconCoroutine());
         _hasSeenPlayer = true;
@@ -275,30 +273,6 @@ public class Enemy : MonoBehaviour
 
     #endregion Direction And Distance
 
-    #region Sound
-
-    public void PlayFireSound()
-    {
-        _soundManager.PlayGunSFX(_gunData.Id, _gunAudioSource);
-    }
-
-    public void PlayReloadSound(bool isStart)
-    {
-        _soundManager.PlayReloadSFX(isStart, _gunAudioSource);
-    }
-
-    public void PlayFootStepSound(bool isRun)
-    {
-        _soundManager.PlayFootStepSFX(isRun, _footStepAudioSource);
-    }
-
-    public void StopFootStepSound()
-    {
-        _footStepAudioSource.Stop();
-    }
-
-    #endregion Sound
-
     #region Agent Destination
     private void SetPatrolDestination()
     {
@@ -325,6 +299,15 @@ public class Enemy : MonoBehaviour
     }
 
     #endregion Agent Destination
+
+    #region Sound
+
+    public void PlayFireSound() => _enemySound.PlayFire(_gunData.Id);
+    public void PlayFootStepSound(bool isRun) => _enemySound.PlayFootStep(isRun);
+    public void StopFootStepSound() => _enemySound.StopFootStep();
+    public void PlayReloadSound(bool isStart) => _enemySound.PlayReload(isStart);
+
+    #endregion Sound
 
     #region Show Icon
 
