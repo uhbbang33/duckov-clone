@@ -6,6 +6,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(EnemyDetection))]
 [RequireComponent(typeof(EnemyUI))]
 [RequireComponent(typeof(HealthPoint))]
+[RequireComponent(typeof(EnemyHealth))]
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private LayerMask _groundLayer;
@@ -20,6 +21,7 @@ public class Enemy : MonoBehaviour
     private EnemySound _enemySound;
     private EnemyDetection _enemyDetection;
     private EnemyUI _enemyUI;
+    private EnemyHealth _enemyHealth;
 
     // Manager
     private DataManager _dataManager;
@@ -74,6 +76,7 @@ public class Enemy : MonoBehaviour
         _enemySound = GetComponent<EnemySound>();
         _enemyDetection = GetComponent<EnemyDetection>();
         _enemyUI = GetComponent<EnemyUI>();
+        _enemyHealth = GetComponent<EnemyHealth>();
     }
 
     private void Start()
@@ -101,6 +104,7 @@ public class Enemy : MonoBehaviour
 
         Transform muzzleTransform = _gunObject.GetComponent<Gun>().MuzzleTransform;
         _enemyDetection.Init(_playerTransform, _enemyData, _gunData, muzzleTransform);
+        _enemyHealth.Init(_gunData);
 
         _stateDictionary = new Dictionary<EnemyState, EnemyStateBase>
         {
@@ -137,32 +141,13 @@ public class Enemy : MonoBehaviour
     }
 
     #region Health And Death
-    public void HealHP(float healAmount)
-    {
-        _hp.Heal(healAmount);
-    }
 
+    public void HealHP(float amount) => _enemyHealth.HealHP(amount);
     public void EnemyDeath()
     {
-        MakeLootBox();
-        StopFootStepSound();
+        _enemyHealth.EnemyDeath();
+        
         Destroy(gameObject);
-    }
-
-    private void MakeLootBox()
-    {
-        GameObject lootBox = _poolManager.GetObject(PoolId.LootBox);
-
-        if (lootBox.GetComponent<LootBox>() == null)
-        {
-            Debug.LogError("LootBox Has not EnemyGunData Property");
-            return;
-        }
-
-        lootBox.transform.position = transform.position;
-        lootBox.transform.rotation = transform.rotation;
-
-        lootBox.GetComponent<LootBox>().EnemyGunData = _gunData;
     }
 
     #endregion Health And Death
