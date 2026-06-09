@@ -63,7 +63,7 @@ public class AttackState : EnemyStateBase
             }
 
             // 공격을 끝낸 후, 플레이어가 시야에 없으면 chase state로 전환
-            if (!_enemy.IsPlayerInSight)
+            if (!_enemy.Detection.IsPlayerInSight)
             {
                 _enemy.ChangeState(EnemyState.Chase);
             }
@@ -148,7 +148,7 @@ public class AttackState : EnemyStateBase
 
             _enemy.Agent.isStopped = false;
             _enemy.SetAnimation(EnemyAnimParm.Walk, true);
-            _enemy.Agent.SetDestination(_enemy.LastSeenPlayerPosition);
+            _enemy.Agent.SetDestination(_enemy.Detection.LastSeenPlayerPosition);
             _enemy.Agent.speed = _reloadWalkSpeed;
             return true;
         }

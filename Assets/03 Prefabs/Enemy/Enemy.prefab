@@ -4291,6 +4291,7 @@ GameObject:
   - component: {fileID: 8926998495863260726}
   - component: {fileID: 5262282248127161715}
   - component: {fileID: 3149636840943983077}
+  - component: {fileID: 2297429925159013123}
   m_Layer: 9
   m_Name: Enemy
   m_TagString: Enemy
@@ -4553,6 +4554,22 @@ MonoBehaviour:
   _footStepAudioSource: {fileID: 8989056998622895266}
   _gunAudioSource: {fileID: 5340403610931202596}
   _detectAudioSource: {fileID: 6701365832029075487}
+--- !u!114 &2297429925159013123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7816902416033577882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8b2126b2751b864d92452fcc787c646, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyDetection
+  _obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 705
+  _eyeOffset: 0.7
 --- !u!1 &8024061000680402165
 GameObject:
   m_ObjectHideFlags: 0

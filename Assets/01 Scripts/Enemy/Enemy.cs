@@ -4,17 +4,18 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(EnemySound))]
+[RequireComponent(typeof(EnemyDetection))]
+[RequireComponent(typeof(HealthPoint))]
 public class Enemy : MonoBehaviour
 {
     [SerializeField] private LayerMask _playerLayer;
-    [SerializeField] private LayerMask _obstacleLayer;
     [SerializeField] private LayerMask _groundLayer;
     [SerializeField] private float _detectPlayerDuration;
     [SerializeField] private Transform _handTransform;
     [SerializeField] private GameObject _targetingIcon;
     [SerializeField] private GameObject _warningIcon;
     [SerializeField] private List<Transform> _destinationTransformList;
-    [SerializeField] private float _eyeOffset;
     [SerializeField] private Renderer _renderer;
     [SerializeField] private GameObject _canvas;
     
@@ -22,6 +23,7 @@ public class Enemy : MonoBehaviour
     private HealthPoint _hp;
     private NavMeshAgent _agent;
     private EnemySound _enemySound;
+    private EnemyDetection _enemyDetection;
 
     private DataManager _dataManager;
     private PoolManager _poolManager;
@@ -38,13 +40,10 @@ public class Enemy : MonoBehaviour
     private EnemyStateBase _currentState;
     private Dictionary<EnemyState, EnemyStateBase> _stateDictionary;
 
-    private bool _isPlayerInSight;
-    private bool _isNoiseHeard;
     private bool _hasSeenPlayer;
     private uint _ammoCnt;
     private int _currentDestinationCount;
 
-    private Vector3 _lastSeenPlayerPosition;
     private Vector3 _spawnPosition;
 
     private WaitForSeconds _waitForShowWarningIcon;
@@ -56,8 +55,6 @@ public class Enemy : MonoBehaviour
     public Transform MuzzleTransform => _muzzleTransform;
     public GameObject GunObject => _gunObject;
     public EnemyData Data => _enemyData;
-    public bool IsPlayerInSight => _isPlayerInSight;
-    public bool IsNoiseHeard => _isNoiseHeard;
     public bool HasSeenPlayer
     {
         get { return _hasSeenPlayer; }
@@ -73,9 +70,8 @@ public class Enemy : MonoBehaviour
         get { return _currentDestinationCount; }
         set { _currentDestinationCount = value; }
     }
-    public Vector3 LastSeenPlayerPosition => _lastSeenPlayerPosition;
     public Vector3 SpawnPosition => _spawnPosition;
-
+    public EnemyDetection Detection => _enemyDetection;
 
     private void Awake()
     {
@@ -83,6 +79,7 @@ public class Enemy : MonoBehaviour
         _hp = GetComponent<HealthPoint>();
         _agent = GetComponent<NavMeshAgent>();
         _enemySound = GetComponent<EnemySound>();
+        _enemyDetection = GetComponent<EnemyDetection>();
     }
 
     private void Start()
@@ -96,6 +93,7 @@ public class Enemy : MonoBehaviour
         _ammoCnt = _gunData.MagazineCapacity;
         _gunObject = _poolManager.GetObject(_gunData.Id, _handTransform, true);
         _muzzleTransform = _gunObject.GetComponent<Gun>().MuzzleTransform;
+
         _gun = _gunObject.GetComponent<Gun>();
         _gun.SetRendererEnabled(false);
 
@@ -110,6 +108,8 @@ public class Enemy : MonoBehaviour
         _playerTransform = GameManager.Instance.PlayerObject.transform;
         _spawnPosition = transform.position;
         _waitForShowWarningIcon = new WaitForSeconds(_showWarningIconDuration);
+
+        _enemyDetection.Init(_playerTransform, _enemyData, _gunData);
 
         _stateDictionary = new Dictionary<EnemyState, EnemyStateBase>
         {
@@ -177,50 +177,14 @@ public class Enemy : MonoBehaviour
     #endregion Health And Death
 
     #region Detect Player
-    public void SoundDetectPlayer(bool isDetect)
-    {
-        _isNoiseHeard = isDetect;
-        if (isDetect)
-            UpdateLastSeenPlayerPosition();
-    }
+    public void SoundDetectPlayer(bool isDetect) => _enemyDetection.SoundDetectPlayer(isDetect);
+    public void DetectPlayer() => _enemyDetection.DetectPlayer();
 
-    public void DetectPlayer()
-    {
-        _isPlayerInSight = DetectPlayerBySight();
-    }
-
-    private bool DetectPlayerBySight()
-    {
-        Vector3 dirToPlayer = GetDirectionToPlayer();
-        float distToPlayer = GetDistanceToPlayer();
-
-        // 거리
-        if (distToPlayer > _enemyData.SightDistance)
-            return false;
-
-        // 각도
-        float angle = Vector3.Angle(transform.forward, dirToPlayer);
-        if (angle > _enemyData.SightAngle / 2f)
-            return false;
-
-        // 장애물
-        Vector3 eyePosition = transform.position + Vector3.up * _eyeOffset;
-
-        if (Physics.Raycast(eyePosition, dirToPlayer.normalized, distToPlayer, _obstacleLayer))
-            return false;
-
-        UpdateLastSeenPlayerPosition();
-        return true;
-    }
-
-    public bool IsPlayerInAttackRange(float offset = 0f)
-    {
-        return GetDistanceToPlayer() <= _gunData.Range + offset;
-    }
+    public bool IsPlayerInAttackRange(float offset = 0f) => _enemyDetection.IsPlayerInAttackRange(offset);
 
     public void LostPlayer()
     {
-        _isPlayerInSight = false;
+        _enemyDetection.LostPlayer();
         ShowWarningIcon(false);
     }
 
@@ -232,11 +196,6 @@ public class Enemy : MonoBehaviour
 
         StartCoroutine(ShowWarningIconCoroutine());
         _hasSeenPlayer = true;
-    }
-
-    private void UpdateLastSeenPlayerPosition()
-    {
-        _lastSeenPlayerPosition = _playerTransform.position;
     }
 
     public void SetVisible(bool isShow)
@@ -251,15 +210,6 @@ public class Enemy : MonoBehaviour
     #endregion Detect Player
 
     #region Direction And Distance
-    private Vector3 GetDirectionToPlayer()
-    {
-        return (_playerTransform.position - transform.position).normalized;
-    }
-
-    private float GetDistanceToPlayer()
-    {
-        return Vector3.Distance(transform.position, _playerTransform.position);
-    }
 
     public Vector3 GetMuzzleDirectionToPlayer()
     {
@@ -374,11 +324,12 @@ public class Enemy : MonoBehaviour
 
     #endregion Coroutine
 
+    /*
 #if UNITY_EDITOR
 
     private void OnDrawGizmos()
     {
-        Vector3 eyePosition = transform.position + new Vector3(0f, _eyeOffset, 0f);
+        Vector3 eyePosition = transform.position + new Vector3(0f, 0.7f, 0f);
 
         // 시야 거리 원
         Gizmos.color = Color.yellow;
@@ -451,4 +402,5 @@ public class Enemy : MonoBehaviour
     }
 
 #endif
+    */
 }
