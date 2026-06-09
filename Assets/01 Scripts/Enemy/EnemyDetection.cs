@@ -6,9 +6,11 @@ public class EnemyDetection : MonoBehaviour
     [SerializeField] private float _eyeOffset;
 
     private Transform _playerTransform;
+    private Transform _muzzleTransform;
     private EnemyData _enemyData;
     private GunData _gunData;
 
+    private bool _hasSeenPlayer;
     private bool _isPlayerInSight;
     private bool _isNoiseHeard;
     private Vector3 _lastSeenPlayerPosition;
@@ -16,12 +18,19 @@ public class EnemyDetection : MonoBehaviour
     public bool IsPlayerInSight => _isPlayerInSight;
     public bool IsNoiseHeard => _isNoiseHeard;
     public Vector3 LastSeenPlayerPosition => _lastSeenPlayerPosition;
+    public bool HasSeenPlayer
+    {
+        get { return _hasSeenPlayer; }
+        set { _hasSeenPlayer = value; }
+    }
+    public Transform MuzzleTransform => _muzzleTransform;
 
-    public void Init(Transform player, EnemyData enemyData, GunData gunData)
+    public void Init(Transform player, EnemyData enemyData, GunData gunData, Transform muzzleTransform)
     {
         _playerTransform = player;
         _enemyData = enemyData;
         _gunData = gunData;
+        _muzzleTransform = muzzleTransform;
     }
 
     public void DetectPlayer() => _isPlayerInSight = DetectPlayerBySight();
@@ -66,6 +75,15 @@ public class EnemyDetection : MonoBehaviour
         _lastSeenPlayerPosition = _playerTransform.position;
     }
 
+    public void StartShowWarningIconRoutine(EnemySound sound, EnemyUI ui, MonoBehaviour runner)
+    {
+        if (_hasSeenPlayer) return;
+
+        sound.PlayDetect();
+
+        runner.StartCoroutine(ui.ShowWarningIconCoroutine());
+        _hasSeenPlayer = true;
+    }
 
     #region Direction And Distance
     private Vector3 GetDirectionToPlayer()
@@ -76,6 +94,16 @@ public class EnemyDetection : MonoBehaviour
     private float GetDistanceToPlayer()
     {
         return Vector3.Distance(transform.position, _playerTransform.position);
+    }
+
+    public Vector3 GetMuzzleDirectionToPlayer()
+    {
+        return (_playerTransform.position - _muzzleTransform.position).normalized;
+    }
+
+    public float GetDistanceMuzzleToPlayer()
+    {
+        return Vector3.Distance(_muzzleTransform.position, _playerTransform.position);
     }
     #endregion Direction And Distance
 }

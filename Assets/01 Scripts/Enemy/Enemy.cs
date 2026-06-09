@@ -28,7 +28,6 @@ public class Enemy : MonoBehaviour
 
     // Gun
     private Transform _playerTransform;
-    private Transform _muzzleTransform;
     private GameObject _gunObject;
     private Gun _gun;
     private uint _ammoCnt;
@@ -37,7 +36,6 @@ public class Enemy : MonoBehaviour
     private List<Vector3> _patrolDestinationList;
     private int _currentDestinationCount;
     private Vector3 _spawnPosition;
-    private bool _hasSeenPlayer;
 
     // Data
     private EnemyData _enemyData;
@@ -50,14 +48,8 @@ public class Enemy : MonoBehaviour
 
     public HealthPoint HP => _hp;
     public NavMeshAgent Agent => _agent;
-    public Transform MuzzleTransform => _muzzleTransform;
     public GameObject GunObject => _gunObject;
     public EnemyData Data => _enemyData;
-    public bool HasSeenPlayer
-    {
-        get { return _hasSeenPlayer; }
-        set { _hasSeenPlayer = value; }
-    }
     public uint AmmoCnt
     {
         get { return _ammoCnt; }
@@ -94,8 +86,6 @@ public class Enemy : MonoBehaviour
         _gunData = _dataManager.GetRandomGunData();
         _ammoCnt = _gunData.MagazineCapacity;
         _gunObject = _poolManager.GetObject(_gunData.Id, _handTransform, true);
-        _muzzleTransform = _gunObject.GetComponent<Gun>().MuzzleTransform;
-
         _gun = _gunObject.GetComponent<Gun>();
         _gun.SetRendererEnabled(false);
 
@@ -108,8 +98,9 @@ public class Enemy : MonoBehaviour
 
         _playerTransform = GameManager.Instance.PlayerObject.transform;
         _spawnPosition = transform.position;
-        
-        _enemyDetection.Init(_playerTransform, _enemyData, _gunData);
+
+        Transform muzzleTransform = _gunObject.GetComponent<Gun>().MuzzleTransform;
+        _enemyDetection.Init(_playerTransform, _enemyData, _gunData, muzzleTransform);
 
         _stateDictionary = new Dictionary<EnemyState, EnemyStateBase>
         {
@@ -190,12 +181,7 @@ public class Enemy : MonoBehaviour
 
     public void StartShowWarningIconRoutine()
     {
-        if (_hasSeenPlayer) return;
-
-        _enemySound.PlayDetect();
-
-        StartCoroutine(_enemyUI.ShowWarningIconCoroutine());
-        _hasSeenPlayer = true;
+        _enemyDetection.StartShowWarningIconRoutine(_enemySound, _enemyUI, this);
     }
 
     public void SetVisible(bool show)
@@ -205,20 +191,6 @@ public class Enemy : MonoBehaviour
     }
 
     #endregion Detect Player
-
-    #region Direction And Distance
-
-    public Vector3 GetMuzzleDirectionToPlayer()
-    {
-        return (_playerTransform.position - _muzzleTransform.position).normalized;
-    }
-
-    public float GetDistanceMuzzleToPlayer()
-    {
-        return Vector3.Distance(_muzzleTransform.position, _playerTransform.position);
-    }
-
-    #endregion Direction And Distance
 
     #region Agent Destination
     private void SetPatrolDestination()

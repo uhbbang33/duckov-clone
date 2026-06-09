@@ -14,7 +14,7 @@ public class ReturnState : EnemyStateBase
         _stateLockTimer = 0f;
 
         _enemy.CurrentDestinationCount = 0;
-        _enemy.HasSeenPlayer = false;
+        _enemy.Detection.HasSeenPlayer = false;
 
         _enemy.Agent.isStopped = false;
         _enemy.Agent.speed = _enemy.Data.WalkSpeed;

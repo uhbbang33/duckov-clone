@@ -91,10 +91,10 @@ public class AttackState : EnemyStateBase
     private void FireGun()
     {
         // Bullet
-        Vector3 dir = _enemy.GetMuzzleDirectionToPlayer();
+        Vector3 dir = _enemy.Detection.GetMuzzleDirectionToPlayer();
         dir.y = 0f;
 
-        GameObject bulletObject = _poolManager.GetObject(PoolId.Bullet, _enemy.MuzzleTransform, false);
+        GameObject bulletObject = _poolManager.GetObject(PoolId.Bullet, _enemy.Detection.MuzzleTransform, false);
 
         Bullet bullet = bulletObject.GetComponent<Bullet>();
         bullet.BulletDamage = _gunData.Damage;
@@ -102,7 +102,7 @@ public class AttackState : EnemyStateBase
 
 
         // muzzle effect
-        _poolManager.GetObject(PoolId.MuzzleFlash, _enemy.MuzzleTransform, false);
+        _poolManager.GetObject(PoolId.MuzzleFlash, _enemy.Detection.MuzzleTransform, false);
 
 
         // Sound
@@ -158,11 +158,11 @@ public class AttackState : EnemyStateBase
 
     private void LookPlayer()
     {
-        float dist = _enemy.GetDistanceMuzzleToPlayer();
+        float dist = _enemy.Detection.GetDistanceMuzzleToPlayer();
         if (dist < 1f)
             return;
 
-        Vector3 lookDir = _enemy.GetMuzzleDirectionToPlayer();
+        Vector3 lookDir = _enemy.Detection.GetMuzzleDirectionToPlayer();
         lookDir.y = 0f;
 
         Quaternion targetRotation = Quaternion.LookRotation(lookDir);
