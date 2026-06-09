@@ -63,7 +63,7 @@ public class AttackState : EnemyStateBase
             }
 
             // 공격을 끝낸 후, 플레이어가 시야에 없으면 chase state로 전환
-            if (!_enemy.Detection.IsPlayerInSight)
+            if (!_enemy.IsPlayerInSight)
             {
                 _enemy.ChangeState(EnemyState.Chase);
             }
@@ -91,10 +91,10 @@ public class AttackState : EnemyStateBase
     private void FireGun()
     {
         // Bullet
-        Vector3 dir = _enemy.Detection.GetMuzzleDirectionToPlayer();
+        Vector3 dir = _enemy.GetMuzzleDirectionToPlayer();
         dir.y = 0f;
 
-        GameObject bulletObject = _poolManager.GetObject(PoolId.Bullet, _enemy.Detection.MuzzleTransform, false);
+        GameObject bulletObject = _poolManager.GetObject(PoolId.Bullet, _enemy.MuzzleTransform, false);
 
         Bullet bullet = bulletObject.GetComponent<Bullet>();
         bullet.BulletDamage = _gunData.Damage;
@@ -102,7 +102,7 @@ public class AttackState : EnemyStateBase
 
 
         // muzzle effect
-        _poolManager.GetObject(PoolId.MuzzleFlash, _enemy.Detection.MuzzleTransform, false);
+        _poolManager.GetObject(PoolId.MuzzleFlash, _enemy.MuzzleTransform, false);
 
 
         // Sound
@@ -148,7 +148,7 @@ public class AttackState : EnemyStateBase
 
             _enemy.Agent.isStopped = false;
             _enemy.SetAnimation(EnemyAnimParm.Walk, true);
-            _enemy.Agent.SetDestination(_enemy.Detection.LastSeenPlayerPosition);
+            _enemy.Agent.SetDestination(_enemy.LastSeenPlayerPosition);
             _enemy.Agent.speed = _reloadWalkSpeed;
             return true;
         }
@@ -158,11 +158,11 @@ public class AttackState : EnemyStateBase
 
     private void LookPlayer()
     {
-        float dist = _enemy.Detection.GetDistanceMuzzleToPlayer();
+        float dist = _enemy.GetDistanceMuzzleToPlayer();
         if (dist < 1f)
             return;
 
-        Vector3 lookDir = _enemy.Detection.GetMuzzleDirectionToPlayer();
+        Vector3 lookDir = _enemy.GetMuzzleDirectionToPlayer();
         lookDir.y = 0f;
 
         Quaternion targetRotation = Quaternion.LookRotation(lookDir);

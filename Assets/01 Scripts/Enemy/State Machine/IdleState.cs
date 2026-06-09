@@ -23,7 +23,7 @@ public class IdleState : EnemyStateBase
 
     public override void Update()
     {
-        if (_enemy.Detection.IsPlayerInSight || _enemy.Detection.IsNoiseHeard)
+        if (_enemy.IsPlayerInSight || _enemy.IsNoiseHeard)
         {
             _enemy.ChangeState(EnemyState.Chase);
             return;

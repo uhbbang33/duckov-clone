@@ -75,16 +75,6 @@ public class EnemyDetection : MonoBehaviour
         _lastSeenPlayerPosition = _playerTransform.position;
     }
 
-    public void StartShowWarningIconRoutine(EnemySound sound, EnemyUI ui, MonoBehaviour runner)
-    {
-        if (_hasSeenPlayer) return;
-
-        sound.PlayDetect();
-
-        runner.StartCoroutine(ui.ShowWarningIconCoroutine());
-        _hasSeenPlayer = true;
-    }
-
     #region Direction And Distance
     private Vector3 GetDirectionToPlayer()
     {

@@ -43,6 +43,7 @@ public class Enemy : MonoBehaviour
     private EnemyData _enemyData;
     private GunData _gunData;
     private EnemyStateBase _currentState;
+
     private Dictionary<EnemyState, EnemyStateBase> _stateDictionary;
 
 
@@ -63,8 +64,6 @@ public class Enemy : MonoBehaviour
         set { _currentDestinationCount = value; }
     }
     public Vector3 SpawnPosition => _spawnPosition;
-    public EnemyDetection Detection => _enemyDetection;
-    public EnemyUI UI => _enemyUI;
 
     #endregion Property
 
@@ -155,18 +154,32 @@ public class Enemy : MonoBehaviour
     #region Detect Player
     public void SoundDetectPlayer(bool isDetect) => _enemyDetection.SoundDetectPlayer(isDetect);
     public void DetectPlayer() => _enemyDetection.DetectPlayer();
-
     public bool IsPlayerInAttackRange(float offset = 0f) => _enemyDetection.IsPlayerInAttackRange(offset);
-
     public void LostPlayer()
     {
         _enemyDetection.LostPlayer();
         _enemyUI.ShowWarningIcon(false);
     }
+    public Vector3 GetMuzzleDirectionToPlayer() => _enemyDetection.GetMuzzleDirectionToPlayer();
+    public float GetDistanceMuzzleToPlayer() => _enemyDetection.GetDistanceMuzzleToPlayer();
+    public bool IsPlayerInSight => _enemyDetection.IsPlayerInSight;
+    public bool IsNoiseHeard => _enemyDetection.IsNoiseHeard;
+    public Transform MuzzleTransform => _enemyDetection.MuzzleTransform;
+    public Vector3 LastSeenPlayerPosition => _enemyDetection.LastSeenPlayerPosition;
+    public bool HasSeenPlayer
+    {
+        get { return _enemyDetection.HasSeenPlayer; }
+        set {  _enemyDetection.HasSeenPlayer = value;}
+    }
 
     public void StartShowWarningIconRoutine()
     {
-        _enemyDetection.StartShowWarningIconRoutine(_enemySound, _enemyUI, this);
+        if (_enemyDetection.HasSeenPlayer) return;
+
+        _enemySound.PlayDetect();
+
+        StartCoroutine(_enemyUI.ShowWarningIconCoroutine());
+        _enemyDetection.HasSeenPlayer = true;
     }
 
     public void SetVisible(bool show)
@@ -176,6 +189,12 @@ public class Enemy : MonoBehaviour
     }
 
     #endregion Detect Player
+
+    #region UI
+
+    public void ShowTargetingIcon(bool show) => _enemyUI.ShowTargetingIcon(show);
+
+    #endregion UI
 
     #region Agent Destination
     private void SetPatrolDestination()
