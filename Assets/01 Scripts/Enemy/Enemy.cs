@@ -1,54 +1,52 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(EnemySound))]
 [RequireComponent(typeof(EnemyDetection))]
+[RequireComponent(typeof(EnemyUI))]
 [RequireComponent(typeof(HealthPoint))]
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private LayerMask _playerLayer;
     [SerializeField] private LayerMask _groundLayer;
     [SerializeField] private float _detectPlayerDuration;
     [SerializeField] private Transform _handTransform;
-    [SerializeField] private GameObject _targetingIcon;
-    [SerializeField] private GameObject _warningIcon;
     [SerializeField] private List<Transform> _destinationTransformList;
-    [SerializeField] private Renderer _renderer;
-    [SerializeField] private GameObject _canvas;
     
+    // Component
     private Animator _anim;
     private HealthPoint _hp;
     private NavMeshAgent _agent;
     private EnemySound _enemySound;
     private EnemyDetection _enemyDetection;
+    private EnemyUI _enemyUI;
 
+    // Manager
     private DataManager _dataManager;
     private PoolManager _poolManager;
     private FieldManager _fieldManager;
 
+    // Gun
     private Transform _playerTransform;
     private Transform _muzzleTransform;
     private GameObject _gunObject;
     private Gun _gun;
-    private List<Vector3> _patrolDestinationList;
+    private uint _ammoCnt;
 
+    // Destination
+    private List<Vector3> _patrolDestinationList;
+    private int _currentDestinationCount;
+    private Vector3 _spawnPosition;
+    private bool _hasSeenPlayer;
+
+    // Data
     private EnemyData _enemyData;
     private GunData _gunData;
     private EnemyStateBase _currentState;
     private Dictionary<EnemyState, EnemyStateBase> _stateDictionary;
 
-    private bool _hasSeenPlayer;
-    private uint _ammoCnt;
-    private int _currentDestinationCount;
 
-    private Vector3 _spawnPosition;
-
-    private WaitForSeconds _waitForShowWarningIcon;
-
-    private const float _showWarningIconDuration = 1f;
+    #region Property 
 
     public HealthPoint HP => _hp;
     public NavMeshAgent Agent => _agent;
@@ -72,6 +70,9 @@ public class Enemy : MonoBehaviour
     }
     public Vector3 SpawnPosition => _spawnPosition;
     public EnemyDetection Detection => _enemyDetection;
+    public EnemyUI UI => _enemyUI;
+
+    #endregion Property
 
     private void Awake()
     {
@@ -80,6 +81,7 @@ public class Enemy : MonoBehaviour
         _agent = GetComponent<NavMeshAgent>();
         _enemySound = GetComponent<EnemySound>();
         _enemyDetection = GetComponent<EnemyDetection>();
+        _enemyUI = GetComponent<EnemyUI>();
     }
 
     private void Start()
@@ -97,7 +99,6 @@ public class Enemy : MonoBehaviour
         _gun = _gunObject.GetComponent<Gun>();
         _gun.SetRendererEnabled(false);
 
-
         DeactivateGun();
         SetPatrolDestination();
 
@@ -107,8 +108,7 @@ public class Enemy : MonoBehaviour
 
         _playerTransform = GameManager.Instance.PlayerObject.transform;
         _spawnPosition = transform.position;
-        _waitForShowWarningIcon = new WaitForSeconds(_showWarningIconDuration);
-
+        
         _enemyDetection.Init(_playerTransform, _enemyData, _gunData);
 
         _stateDictionary = new Dictionary<EnemyState, EnemyStateBase>
@@ -185,7 +185,7 @@ public class Enemy : MonoBehaviour
     public void LostPlayer()
     {
         _enemyDetection.LostPlayer();
-        ShowWarningIcon(false);
+        _enemyUI.ShowWarningIcon(false);
     }
 
     public void StartShowWarningIconRoutine()
@@ -194,17 +194,14 @@ public class Enemy : MonoBehaviour
 
         _enemySound.PlayDetect();
 
-        StartCoroutine(ShowWarningIconCoroutine());
+        StartCoroutine(_enemyUI.ShowWarningIconCoroutine());
         _hasSeenPlayer = true;
     }
 
-    public void SetVisible(bool isShow)
+    public void SetVisible(bool show)
     {
-        _renderer.enabled = isShow;
-
-        _canvas.SetActive(isShow);
-
-        _gun.SetRendererEnabled(isShow);
+        _enemyUI.SetVisible(show);
+        _gun.SetRendererEnabled(show);
     }
 
     #endregion Detect Player
@@ -259,26 +256,6 @@ public class Enemy : MonoBehaviour
 
     #endregion Sound
 
-    #region Show Icon
-
-    public void ShowTargetingIcon(bool show)
-    {
-        if (show && _warningIcon.activeSelf == false)
-            _targetingIcon.SetActive(true);
-        else
-            _targetingIcon.SetActive(false);
-    }
-
-    private void ShowWarningIcon(bool show)
-    {
-        if (show && _targetingIcon.activeSelf)
-            ShowTargetingIcon(false);
-
-        _warningIcon.SetActive(show);
-    }
-
-    #endregion Show Icon
-
     #region Event Handler
 
     private void HandleHpChanged()
@@ -312,17 +289,6 @@ public class Enemy : MonoBehaviour
     }
 
     #endregion
-
-    #region Coroutine
-
-    private IEnumerator ShowWarningIconCoroutine()
-    {
-        ShowWarningIcon(true);
-        yield return _waitForShowWarningIcon;
-        ShowWarningIcon(false);
-    }
-
-    #endregion Coroutine
 
     /*
 #if UNITY_EDITOR

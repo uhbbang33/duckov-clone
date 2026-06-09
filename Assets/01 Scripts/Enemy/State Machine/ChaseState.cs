@@ -92,7 +92,7 @@ public class ChaseState : EnemyStateBase
     {
         _enemy.SetAnimation(EnemyAnimParm.Walk, false);
         _enemy.SetAnimation(EnemyAnimParm.Run, false);
-        _enemy.ShowTargetingIcon(false);
+        _enemy.UI.ShowTargetingIcon(false);
     }
 
     private bool TryChangeToAttack()
@@ -117,7 +117,7 @@ public class ChaseState : EnemyStateBase
         _enemy.SetAnimation(EnemyAnimParm.Walk, isFinding);
         _enemy.SetAnimation(EnemyAnimParm.Run, !isFinding);
 
-        _enemy.ShowTargetingIcon(isFinding);
+        _enemy.UI.ShowTargetingIcon(isFinding);
     }
 
     private void ReturnSpawnPoint()
