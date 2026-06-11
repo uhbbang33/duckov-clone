@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EnemyUI : MonoBehaviour
 {
-    [SerializeField] private GameObject _targetingIcon;
+    [SerializeField] private GameObject _findingIcon;
     [SerializeField] private GameObject _warningIcon;
     [SerializeField] private Renderer _renderer;
     [SerializeField] private GameObject _canvas;
@@ -17,23 +17,23 @@ public class EnemyUI : MonoBehaviour
         _waitForShowWarningIcon = new WaitForSeconds(_showWarningIconDuration);
     }
 
-    public void ShowTargetingIcon(bool show)
+    public void ShowFindingIcon(bool show)
     {
         if (show && _warningIcon.activeSelf == false)
-            _targetingIcon.SetActive(true);
+            _findingIcon.SetActive(true);
         else
-            _targetingIcon.SetActive(false);
+            _findingIcon.SetActive(false);
     }
 
     public void ShowWarningIcon(bool show)
     {
-        if (show && _targetingIcon.activeSelf)
-            ShowTargetingIcon(false);
+        if (show && _findingIcon.activeSelf)
+            ShowFindingIcon(false);
 
         _warningIcon.SetActive(show);
     }
 
-    public void SetVisible(bool show)
+    public void SetCanvasVisible(bool show)
     {
         _renderer.enabled = show;
         _canvas.SetActive(show);

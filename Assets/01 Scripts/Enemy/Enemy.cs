@@ -152,7 +152,7 @@ public class Enemy : MonoBehaviour
     #endregion Health And Death
 
     #region Detect Player
-    public void SoundDetectPlayer(bool isDetect) => _enemyDetection.SoundDetectPlayer(isDetect);
+    public void DetectPlayerBySound(bool isDetect) => _enemyDetection.DetectPlayerBySound(isDetect);
     public void DetectPlayer() => _enemyDetection.DetectPlayer();
     public bool IsPlayerInAttackRange(float offset = 0f) => _enemyDetection.IsPlayerInAttackRange(offset);
     public void LostPlayer()
@@ -184,7 +184,7 @@ public class Enemy : MonoBehaviour
 
     public void SetVisible(bool show)
     {
-        _enemyUI.SetVisible(show);
+        _enemyUI.SetCanvasVisible(show);
         _gun.SetRendererEnabled(show);
     }
 
@@ -192,7 +192,7 @@ public class Enemy : MonoBehaviour
 
     #region UI
 
-    public void ShowTargetingIcon(bool show) => _enemyUI.ShowTargetingIcon(show);
+    public void ShowTargetingIcon(bool show) => _enemyUI.ShowFindingIcon(show);
 
     #endregion UI
 

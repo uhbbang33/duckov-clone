@@ -104,7 +104,7 @@ public class PlayerEnemyScanner : MonoBehaviour
             if (enemy != null && !current.Contains(enemy))
             {
                 if (isSound)
-                    enemy.SoundDetectPlayer(false);
+                    enemy.DetectPlayerBySound(false);
                 else
                     enemy.LostPlayer();
             }
@@ -113,7 +113,7 @@ public class PlayerEnemyScanner : MonoBehaviour
         foreach (Enemy enemy in current)
         {
             if (isSound)
-                enemy.SoundDetectPlayer(true);
+                enemy.DetectPlayerBySound(true);
             else
                 enemy.DetectPlayer();
         }

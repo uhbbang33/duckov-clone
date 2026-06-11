@@ -36,7 +36,7 @@ public class EnemyDetection : MonoBehaviour
     public void DetectPlayer() => _isPlayerInSight = DetectPlayerBySight();
     public void LostPlayer() => _isPlayerInSight = false;
 
-    public void SoundDetectPlayer(bool isDetect)
+    public void DetectPlayerBySound(bool isDetect)
     {
         _isNoiseHeard = isDetect;
         if (isDetect)

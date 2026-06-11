@@ -2505,7 +2505,7 @@ GameObject:
   - component: {fileID: 673901468943953236}
   - component: {fileID: 3099762764331229643}
   m_Layer: 5
-  m_Name: Targeting Icon
+  m_Name: Finding Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4293,6 +4293,7 @@ GameObject:
   - component: {fileID: 3149636840943983077}
   - component: {fileID: 2297429925159013123}
   - component: {fileID: 4735631621853503109}
+  - component: {fileID: 5956859703901175026}
   m_Layer: 9
   m_Name: Enemy
   m_TagString: Enemy
@@ -4508,19 +4509,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c9029d0de3b97146baa4ec5c10e3595, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
-  _playerLayer:
-    serializedVersion: 2
-    m_Bits: 256
   _groundLayer:
     serializedVersion: 2
     m_Bits: 128
   _detectPlayerDuration: 3
   _handTransform: {fileID: 6387639141002872610}
-  _targetingIcon: {fileID: 4400918394284861631}
-  _warningIcon: {fileID: 5701181407407358194}
   _destinationTransformList: []
-  _renderer: {fileID: 1754106067936219889}
-  _canvas: {fileID: 3488459840634442246}
 --- !u!114 &5262282248127161715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4579,10 +4573,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 498ff7fd78f9b934a985a85378a1cdbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyUI
-  _targetingIcon: {fileID: 4400918394284861631}
+  _findingIcon: {fileID: 4400918394284861631}
   _warningIcon: {fileID: 5701181407407358194}
   _renderer: {fileID: 1754106067936219889}
   _canvas: {fileID: 3488459840634442246}
+--- !u!114 &5956859703901175026
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7816902416033577882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dbef5edd675d5c41b5993fbdec45bd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
 --- !u!1 &8024061000680402165
 GameObject:
   m_ObjectHideFlags: 0
