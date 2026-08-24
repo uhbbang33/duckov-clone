@@ -54,7 +54,3 @@ Duckov를 모작한 게임으로,
 - 드래그앤드롭, 더블클릭 기반 Item Slot 상호작용
 
 ---
-
-- Coroutine
-
----
