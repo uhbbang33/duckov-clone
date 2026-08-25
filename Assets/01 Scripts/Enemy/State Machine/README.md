@@ -7,7 +7,7 @@
 
 ## FSM 상태 클래스 
 
-## EnemyStateBase
+## ✔ EnemyStateBase
 
 모든 적 상태(State) 클래스의 부모 추상 클래스입니다. 
 
@@ -15,7 +15,7 @@
 
  
 
-## AttackState 
+## ✔ AttackState 
 
 적의 공격 상태를 담당합니다. 
 
@@ -25,7 +25,7 @@
 
  
 
-## ChaseState 
+## ✔ ChaseState 
 
 적의 추적 상태를 담당합니다. 
 
@@ -43,7 +43,7 @@ NavmeshAgent를 활용해 플레이어 위치에 따라 주기적으로 목적�
 
  
 
-## DeathState.cs 
+## ✔ DeathState.cs 
 
 적의 죽음 상태를 담당합니다. 
 
@@ -53,7 +53,7 @@ Enemy.cs의 EnemyDeath()를 호출합니다.
 
  
 
-## FleeState.cs 
+## ✔ FleeState.cs 
 
 적의 도망 상태를 담당합니다. 
 
@@ -63,7 +63,7 @@ Enemy.cs의 EnemyDeath()를 호출합니다.
 
  
 
-## IdleState.cs 
+## ✔ IdleState.cs 
 
 적의 대기 상태를 담당합니다. 
 
@@ -75,7 +75,7 @@ Enemy.cs의 EnemyDeath()를 호출합니다.
 
  
 
-## PatrolState.cs 
+## ✔ PatrolState.cs 
 
 적의 순찰 상태를 담당합니다. 
 
@@ -87,7 +87,7 @@ Enemy.cs의 EnemyDeath()를 호출합니다.
 
  
 
-## ReturnState.cs 
+## ✔ ReturnState.cs 
 
 적의 복귀 상태를 담당합니다. 
 
