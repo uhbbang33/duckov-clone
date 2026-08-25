@@ -5,7 +5,7 @@
 [State Machine 폴더](https://github.com/uhbbang33/duckov-clone/tree/main/Assets/01%20Scripts/Enemy/State%20Machine)
 
 
-## Enemy
+## ✔ Enemy
 
 적 AI의 데이터를 관리합니다. 
 
@@ -20,7 +20,7 @@
 > 서브 컴포넌트와 State 클래스 간의 직접적인 참조를 줄이고, Enemy를 통해 필요한 기능에 접근하도록 구성했습니다.
  
 
-## EnemyDetection
+## ✔ EnemyDetection
 
 플레이어를 감지할 때 사용됩니다. 
 
@@ -38,7 +38,7 @@
 
 
 
-## EnemyHealth
+## ✔ EnemyHealth
 
 적의 HP 회복과 죽음을 관리합니다. 
 
@@ -46,13 +46,13 @@
 
  
 
-## EnemySound
+## ✔ EnemySound
 
 적과 관련된 효과음들을 관리합니다. 
 
  
 
-## EnemyUI 
+## ✔ EnemyUI 
 
 적의 World Space Canvas를 관리합니다. 
 
