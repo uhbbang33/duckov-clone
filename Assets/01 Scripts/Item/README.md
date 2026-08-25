@@ -8,14 +8,14 @@
 
 
 
-## Item
+## ✔ Item
 
 아이템의 기본정보를 담는 클래스입니다. 
 
 Item 클래스(AmmoItem, GunItem, UsableItem)가 상속받아 사용합니다. 
 
  
-## DroppedItem
+## ✔ DroppedItem
 
 플레이어가 버린(드랍한) 아이템 오브젝트를 관리합니다. 
 
@@ -40,13 +40,13 @@ Item 클래스(AmmoItem, GunItem, UsableItem)가 상속받아 사용합니다.
 > 인벤토리에 등록 성공 시 드랍 아이템 오브젝트를 삭제합니다. 
 
  
-## ItemSpriteDictionary
+## ✔ ItemSpriteDictionary
 
 GameResources에 저장되어 있는 Sprite들을 불러와 Dictionary<int, Sprite>에 Id와 함께 저장합니다. 
 
 싱글톤으로 구현했으며, GetItemSprite(int id)로 Sprite를 불러올 수 있도록 구현했습니다. 
  
 
-## ItemTypeWeight.cs 
+## ✔ ItemTypeWeight.cs 
 
 상자의 아이템 타입 가중치를 정할 때 사용하는 클래스입니다. 
