@@ -226,11 +226,11 @@ public class Inventory : ISortableContainer, ISaveableContainer
         int reloadableAmmoCount = 0;
         AmmoItem ammoItem = null;
 
+        if (!HasItem(id))
+            return (reloadableAmmoCount, ammoItem);
+
         for (int i = 0; i < _slotCnt; ++i)
         {
-            if (!HasItem(id))
-                break;
-
             if (_inventorySlots[i].CurrentItem == null)
                 continue;
 
