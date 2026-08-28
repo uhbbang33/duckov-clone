@@ -6,6 +6,10 @@
 파티클이 Object Pooling을 통해 생성된 후, 실행 주기가 끝나면 자동으로 Pool에 반환되도록 하는 클래스입니다. 
 
 코루틴과 파티클의 IsAlive()메서드를 사용해 구현했습니다. 
+
+## ✔ ButtonHoverSound 
+
+버튼에 마우스를 올렸을 때 효과음을 재생하는 클래스입니다. 
  
 
 ## ✔ CameraShakeController 
