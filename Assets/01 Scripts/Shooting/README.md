@@ -1,11 +1,6 @@
 # Shooting
 
-## ✔ AutoReturnParticle 
 
-파티클이 Object Pooing을 통해 생성된 후, 실행 주기가 끝나면 자동으로 Pool에 반환되도록 하는 클래스입니다. 
-
-코루틴과 파티클의 IsAlive()메서드를 사용해 구현했습니다. 
- 
 
 ## ✔ Bullet 
 
