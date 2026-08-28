@@ -1,6 +1,13 @@
 # Misc
 > Utility나 Define, Scene Load 등의 기능을 하는 기타 스크립트를 모아둔 폴더입니다. 
 
+## ✔ AutoReturnParticle 
+
+파티클이 Object Pooling을 통해 생성된 후, 실행 주기가 끝나면 자동으로 Pool에 반환되도록 하는 클래스입니다. 
+
+코루틴과 파티클의 IsAlive()메서드를 사용해 구현했습니다. 
+ 
+
 ## ✔ CameraShakeController 
 
 총기 발사 시 총기의 반동에 따라 카메라 흔들림을 발생시키는 클래스입니다. 
