@@ -25,7 +25,7 @@ ItemSlot의 아이템의 상태가 변경되면 수량, 내구도 수치 등의 
 <img width="406" height="248" alt="image" src="https://github.com/user-attachments/assets/8ecad3f4-68db-43c8-bab1-05fa78fa83b0" />
 
 
-아이템이 들어있는 슬롯을 우클릭하면 아이템의 타입에 따라 사용, 버리기 등의 슬롯 메뉴를 표시됩니다. 
+아이템이 들어있는 슬롯을 우클릭하면 아이템의 타입에 따라 슬롯 메뉴가 표시됩니다. 
 
 ###### Usable Item
 <img width="185" height="124" alt="image" src="https://github.com/user-attachments/assets/dcfb43e5-58fc-4791-bf1a-f7b14f883289" />
@@ -33,10 +33,6 @@ ItemSlot의 아이템의 상태가 변경되면 수량, 내구도 수치 등의 
 ###### Gun Item
 <img width="186" height="161" alt="image" src="https://github.com/user-attachments/assets/c70a832a-f300-4cb7-88d7-bb45e1fb8422" />
 
-
- 
-
- 
 
 ## ✔ BoxSlotUI 
 
@@ -46,9 +42,6 @@ ItemSlotUI를 상속받습니다.
 
 더블클릭 시 인벤토리로 아이템 이동을 시도합니다. 
 
- 
-
- 
 
 ## ✔ EquipSlotUI 
 
@@ -61,9 +54,6 @@ Default HUD의 Equip Default HUD SlotUI와 아이템 이름, 탄약 수량, 이�
 ###### 장비 슬롯 UI
 
 <img width="398" height="209" alt="image" src="https://github.com/user-attachments/assets/653481d8-488b-425e-9d81-c2770f244679" />
-
- 
-
  
 
 ## ✔ InventorySlotUI 
@@ -93,7 +83,6 @@ ItemSlotUI의 OnDoubleClick을 오버라이드하여 열려있는 컨테이너�
 > 상점: 아이템 판매 
 
 
-
 ## ✔ StorageSlotUI 
 
 창고 아이템 슬롯의 UI를 관리하는 클래스입니다. 
@@ -105,8 +94,6 @@ ItemSlotUI의 OnDrop()을 오버라이드하여, 인벤토리에서 창고로 �
 ###### 창고 UI
 
 <img width="429" height="514" alt="image" src="https://github.com/user-attachments/assets/74daeb2b-f1f2-4e14-8c9c-6929f539f8df" />
-
- 
 
  
 
