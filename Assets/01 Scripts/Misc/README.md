@@ -13,37 +13,11 @@
 ## ✔ Define 
 
 매직 넘버와 하드코딩을 줄이기 위해 프로젝트 전반에서 공통으로 사용하는 상수값을 한 곳에서 관리합니다. 
-
- 
-
  
 
 ## ✔ Enums 
 
 프로젝트 전반에서 사용하는 상태 및 유형을 enum으로 정의하여 관리합니다. 
-
- 
-
- 
-
-## ✔ ISaveableContainer 
-
-아이템 슬롯의 저장 기능을 공통으로 사용할 수 있도록 정의한 인터페이스입니다. 
-
- 
-
- 
-
-## ✔ ISortableContainer 
-
-아이템 슬롯의 정렬 기능을 공통으로 사용할 수 있도록 정의한 인터페이스입니다. 
-
-GetSortableSlots()를 통해 정렬 대상 슬롯을 반환하고,  
-
-OnSortCompleted()를 통해 정렬 완료 후 필요한 처리를 구현할 수 있도록 구성했습니다. 
-
- 
-
  
 
 ## ✔ SaveUtility 
@@ -58,9 +32,6 @@ ISaveableContainer에서 슬롯 정보를 가져와 저장에 필요한 데이�
 
 슬롯의 ID, AmmoCount, Quantity, Durability 데이터를 List<int> 형태로 반환합니다. 
 
- 
-
- 
 
 ## ✔ SceneInitializer 
 
@@ -68,13 +39,8 @@ ISaveableContainer에서 슬롯 정보를 가져와 저장에 필요한 데이�
 
 SceneLoader에서 이 이벤트를 구독해 씬 초기화가 완료된 이후에 저장 데이터를 적용하는 작업을 수행합니다. 
 
- 
-
 [DefaultExecutionOrder(1000)] 을 적용하여 다른 MonoBehaviour보다 늦게 실행되도록 구현했습니다. 
 
- 
-
- 
 
 ## ✔ SceneLoader 
 
@@ -92,9 +58,6 @@ LoadSceneAsync()를 사용해 비동기로 씬을 로딩합니다.
 
 SceneInitializer.OnSceneReady를 통해 씬 내 초기화가 완료된 후 저장 데이터를 적용합니다. 
 
- 
-
- 
 
 ## ✔ SingletonMonoBehaviour<T> 
 
@@ -106,15 +69,10 @@ OnDestroy()에서 현재 인스턴스가 제거될 경우 참조를 초기화합
 
 상속받은 클래스는 별도의 싱글톤 구현 없이 Instance를 통해 접근이 가능합니다.  
 
- 
-
- 
 
 ## ✔ SortUtility 
 
 아이템 컨테이너의 아이템을 병합, 정렬하는 정적 유틸리티 클래스입니다. 
-
- 
 
 ISortableContainer를 통해 정렬 대상의 슬롯을 가져와 처리합니다. 
 
