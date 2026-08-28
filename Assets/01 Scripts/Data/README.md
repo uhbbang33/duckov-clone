@@ -1,3 +1,8 @@
+# Data
+
+Data 클래스를 모아둔 폴더입니다.
+---
+
 ### [ConvertProcess](https://github.com/uhbbang33/duckov-clone/tree/main/Assets/01%20Scripts/Data/ConvertProcess)
 - Excel파일을 Json으로 변환하거나 Json을 파싱할때 사용하는 클래스를 모아둔 폴더입니다. 
 
