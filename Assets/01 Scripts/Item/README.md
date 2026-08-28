@@ -6,13 +6,9 @@
 
 아이템을 담는 ItemSlot 클래스와 ItemSlot를 상속받는 클래스를 모아둔 폴더입니다. 
 
+### [Items](http://github.com/uhbbang33/duckov-clone/tree/main/Assets/01%20Scripts/Item/Items)
 
-
-## ✔ Item
-
-아이템의 기본정보를 담는 클래스입니다. 
-
-Item 클래스(AmmoItem, GunItem, UsableItem)가 상속받아 사용합니다. 
+아이템 기본정보를 담는 Item 클래스와 Item을 상속받는 클래스를 모아둔 폴더입니다.
 
  
 ## ✔ DroppedItem
