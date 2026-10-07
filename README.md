@@ -39,7 +39,7 @@ Duckov를 모작한 게임으로,
 
 ## 🎥 플레이 영상
 
-[DuckZone 플레이 영상](https://www.youtube.com/watch?v=KdmuzBZCZdE)
+[DuckZone 플레이 영상](https://youtu.be/eb0I44MPz8Y)
 
 ---
 
