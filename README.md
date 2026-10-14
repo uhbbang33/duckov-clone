@@ -45,12 +45,31 @@ Duckov를 모작한 게임으로,
 
 ## ✨ 주요 기능
 
+- 상자 랜덤 아이템 세팅
 - Input System을 이용한 플레이어 이동 및 사격
 - 적 AI FSM
 - 적 시야/소리 기반 플레이어 감지
 - Object Pool
 - 저장 및 불러오기
-- 상자 랜덤 아이템 세팅
 - 드래그앤드롭, 더블클릭 기반 Item Slot 상호작용
 
 ---
+
+## 📃 스크립트 Readme
+
+- [Box](https://github.com/uhbbang33/duckov-clone/tree/main/Assets/01%20Scripts/Box)
+- [Data](https://github.com/uhbbang33/duckov-clone/tree/main/Assets/01%20Scripts/Data)
+- [Enemy](https://github.com/uhbbang33/duckov-clone/tree/main/Assets/01%20Scripts/Enemy)
+- [Interface](https://github.com/uhbbang33/duckov-clone/tree/main/Assets/01%20Scripts/Interface)
+- [Item](https://github.com/uhbbang33/duckov-clone/tree/main/Assets/01%20Scripts/Item)
+- [Manager](https://github.com/uhbbang33/duckov-clone/tree/main/Assets/01%20Scripts/Manager)
+- [Map](https://github.com/uhbbang33/duckov-clone/tree/main/Assets/01%20Scripts/Map)
+- [Misc](https://github.com/uhbbang33/duckov-clone/tree/main/Assets/01%20Scripts/Misc)
+- [Player](https://github.com/uhbbang33/duckov-clone/tree/main/Assets/01%20Scripts/Player)
+- [FieldOfView](https://github.com/uhbbang33/duckov-clone/tree/main/Assets/01%20Scripts/RenderEffect/FieldOfView)
+- [Stencil](https://github.com/uhbbang33/duckov-clone/tree/main/Assets/01%20Scripts/RenderEffect/Stencil)
+- [Shooting](https://github.com/uhbbang33/duckov-clone/tree/main/Assets/01%20Scripts/Shooting)
+- [Stat](https://github.com/uhbbang33/duckov-clone/tree/main/Assets/01%20Scripts/Stat)
+- [UI](https://github.com/uhbbang33/duckov-clone/tree/main/Assets/01%20Scripts/UI)
+
+
